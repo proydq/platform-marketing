@@ -16,7 +16,13 @@ onMounted(() => {
 
 <template>
   <div>
-    <StatCard title="Tasks" :value="stats.tasks" />
-    <TaskTable :items="taskList" />
+    <div class="dashboard-cards">
+      <StatCard title="Tasks" :value="stats.tasks" />
+      <StatCard title="Users" :value="stats.users" />
+      <StatCard title="Roles" :value="stats.roles" />
+    </div>
+    <div class="task-list">
+      <TaskTable :items="taskList" />
+    </div>
   </div>
 </template>

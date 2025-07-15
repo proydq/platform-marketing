@@ -15,6 +15,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <QuickCrawlForm :preview-data="previewData" />
-  <CrawlTaskTable :items="taskList" />
+  <div>
+    <div class="chart-container">
+      <QuickCrawlForm :preview-data="previewData" />
+    </div>
+    <div class="chart-container">
+      <CrawlTaskTable :items="taskList" />
+    </div>
+  </div>
 </template>
