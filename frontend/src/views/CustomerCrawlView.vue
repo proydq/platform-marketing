@@ -23,5 +23,4 @@ onMounted(() => {
       <CrawlTaskTable :items="taskList" />
     </div>
   </div>
-
 </template>

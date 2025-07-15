@@ -4,7 +4,7 @@ defineProps(['title', 'value'])
 
 <template>
   <el-card class="stat-card">
-    <div>{{ title }}</div>
-    <div>{{ value }}</div>
+    <div class="stat-number">{{ value }}</div>
+    <div class="stat-label">{{ title }}</div>
   </el-card>
 </template>

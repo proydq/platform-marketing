@@ -6,7 +6,6 @@
       <div class="content-area">
         <router-view />
       </div>
-
     </div>
   </div>
 </template>

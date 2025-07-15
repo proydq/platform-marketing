@@ -1,4 +1,4 @@
 [
-  {"id": 1, "name": "Admin"},
-  {"id": 2, "name": "User"}
+  {"id": 1, "name": "超级管理员", "description": "拥有系统所有权限"},
+  {"id": 2, "name": "营销主管", "description": "管理营销活动"}
 ]

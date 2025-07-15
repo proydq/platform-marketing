@@ -26,6 +26,5 @@ onMounted(() => {
     <div class="chart-container">
       <PermissionTree :roles="roleList" />
     </div>
-
   </div>
 </template>

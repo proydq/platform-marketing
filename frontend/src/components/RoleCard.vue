@@ -4,6 +4,12 @@ const props = defineProps(['role'])
 
 <template>
   <el-card class="role-card">
-    <div>{{ props.role.name }}</div>
+    <div class="role-header">
+      <div>
+        <div class="role-name">{{ props.role.name }}</div>
+        <div class="role-description">{{ props.role.description }}</div>
+      </div>
+    </div>
+
   </el-card>
 </template>
