@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+
 import { useRouter, useRoute } from 'vue-router'
 import { hasPermission } from '../composables/permission'
 
@@ -20,6 +21,7 @@ const menuItems = [
   { name: 'Reports', label: '报表分析', icon: '📋', permission: 'report:view' },
   { name: 'Permission', label: '权限管理', icon: '🔐', permission: 'system:permission' },
   { name: 'Settings', label: '系统设置', icon: '⚙️', permission: 'system:setting' }
+
 ]
 
 const visibleItems = menuItems.filter(i => !i.permission || hasPermission(i.permission))
@@ -27,6 +29,7 @@ const visibleItems = menuItems.filter(i => !i.permission || hasPermission(i.perm
 function handleMenuSelect(index) {
   activeMenu.value = index
   router.push({ name: index })
+
 }
 </script>
 
@@ -40,4 +43,5 @@ function handleMenuSelect(index) {
       </el-menu-item>
     </el-menu>
   </div>
+
 </template>
