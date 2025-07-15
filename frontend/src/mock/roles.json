@@ -1,4 +1,41 @@
 [
-  {"id": 1, "name": "超级管理员", "description": "拥有系统所有权限"},
-  {"id": 2, "name": "营销主管", "description": "管理营销活动"}
+  {
+    "id": 1,
+    "name": "超级管理员",
+    "description": "拥有系统所有权限，可以管理用户、角色和系统设置",
+    "permissions": ["customer:crawl", "customer:manage", "content:generate", "email:send", "social:manage", "task:schedule", "behavior:track", "report:view", "system:permission", "system:setting"],
+    "users": [
+      {"id": 1, "name": "系统管理员", "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"}
+    ]
+  },
+  {
+    "id": 2,
+    "name": "营销主管",
+    "description": "负责营销活动的策划和执行，可以管理客户和营销任务",
+    "permissions": ["customer:crawl", "customer:manage", "content:generate", "email:send", "social:manage", "task:schedule", "behavior:track", "report:view"],
+    "users": [
+      {"id": 2, "name": "张营销", "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"},
+      {"id": 3, "name": "李推广", "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"}
+    ]
+  },
+  {
+    "id": 3,
+    "name": "营销专员",
+    "description": "执行具体的营销任务，可以进行客户抓取和邮件发送",
+    "permissions": ["customer:crawl", "customer:manage", "email:send", "behavior:track", "report:view"],
+    "users": [
+      {"id": 4, "name": "王专员", "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"},
+      {"id": 5, "name": "陈助理", "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"}
+    ]
+  },
+  {
+    "id": 4,
+    "name": "数据分析师",
+    "description": "负责数据分析和报表生成",
+    "permissions": ["behavior:track", "report:view"],
+    "users": [
+      {"id": 6, "name": "赵分析", "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"}
+    ]
+  }
+
 ]

@@ -17,9 +17,10 @@ onMounted(() => {
 <template>
   <div>
     <div class="dashboard-cards">
-      <StatCard title="Tasks" :value="stats.tasks" />
-      <StatCard title="Users" :value="stats.users" />
-      <StatCard title="Roles" :value="stats.roles" />
+      <StatCard title="总客户数" :value="stats.totalCustomers" />
+      <StatCard title="今日邮件发送" :value="stats.emailsSent" />
+      <StatCard title="邮件打开率" :value="stats.openRate + '%'" />
+      <StatCard title="运行中任务" :value="stats.runningTasks" />
     </div>
     <div class="task-list">
       <TaskTable :items="taskList" />

@@ -5,13 +5,15 @@ import UserTable from '../components/UserTable.vue'
 import PermissionTree from '../components/PermissionTree.vue'
 import users from '../mock/users.json'
 import roles from '../mock/roles.json'
+import treeData from '../mock/permissionTree.json'
 
 const roleList = ref([])
 const userList = ref([])
-
+const pTree = ref([])
 onMounted(() => {
   roleList.value = roles
   userList.value = users
+  pTree.value = treeData
 })
 </script>
 
@@ -24,7 +26,7 @@ onMounted(() => {
       <UserTable :items="userList" />
     </div>
     <div class="chart-container">
-      <PermissionTree :roles="roleList" />
+      <PermissionTree :data="pTree" />
     </div>
   </div>
 </template>

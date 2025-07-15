@@ -3,28 +3,35 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../store'
 
-const username = ref('')
-const password = ref('')
 const router = useRouter()
 const store = useUserStore()
 
+const form = ref({
+  username: '',
+  password: '',
+  remember: false
+})
+
 function submit() {
-  store.login({ name: username.value, permissions: ['crawl', 'admin'] })
+  store.login({ name: form.value.username, permissions: ['customer:crawl', 'system:permission'] })
+
   router.push('/dashboard')
 }
 </script>
 
 <template>
   <el-form class="login-form" @submit.prevent="submit">
-    <el-form-item label="Username">
-      <el-input v-model="username" />
+    <el-form-item prop="username">
+      <el-input v-model="form.username" placeholder="用户名" prefix-icon="User" />
     </el-form-item>
-    <el-form-item label="Password">
-      <el-input v-model="password" type="password" />
+    <el-form-item prop="password">
+      <el-input v-model="form.password" type="password" placeholder="密码" prefix-icon="Lock" />
     </el-form-item>
-    <el-form-item>
-      <el-button class="login-btn" type="primary" native-type="submit">Login</el-button>
+    <div class="login-options">
+      <el-checkbox v-model="form.remember">记住我</el-checkbox>
+      <a href="#" class="forgot-password">忘记密码？</a>
+    </div>
+    <el-button class="login-btn" type="primary" native-type="submit">登录</el-button>
 
-    </el-form-item>
   </el-form>
 </template>

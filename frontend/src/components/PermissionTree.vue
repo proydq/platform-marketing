@@ -1,10 +1,10 @@
 <script setup>
-const props = defineProps(['roles'])
+const props = defineProps(['data'])
+
 </script>
 
 <template>
   <div class="permission-tree">
-
-    <div v-for="role in props.roles" :key="role.id">{{ role.name }}</div>
+    <el-tree :data="props.data" node-key="id" show-checkbox default-expand-all />
   </div>
 </template>
