@@ -17,8 +17,15 @@ onMounted(() => {
 
 <template>
   <div>
-    <RoleCard v-for="role in roleList" :key="role.id" :role="role" />
-    <UserTable :items="userList" />
-    <PermissionTree :roles="roleList" />
+    <div class="chart-container">
+      <RoleCard v-for="role in roleList" :key="role.id" :role="role" />
+    </div>
+    <div class="chart-container">
+      <UserTable :items="userList" />
+    </div>
+    <div class="chart-container">
+      <PermissionTree :roles="roleList" />
+    </div>
+
   </div>
 </template>
