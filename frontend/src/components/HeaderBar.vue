@@ -42,4 +42,3 @@ const titleMap = {
     </div>
   </div>
 </template>
-

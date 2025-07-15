@@ -14,7 +14,6 @@ const form = ref({
 
 function submit() {
   store.login({ name: form.value.username, permissions: ['customer:crawl', 'system:permission'] })
-
   router.push('/dashboard')
 }
 </script>
@@ -32,6 +31,5 @@ function submit() {
       <a href="#" class="forgot-password">忘记密码？</a>
     </div>
     <el-button class="login-btn" type="primary" native-type="submit">登录</el-button>
-
   </el-form>
 </template>
