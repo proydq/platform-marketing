@@ -24,5 +24,6 @@ onMounted(() => {
     <div class="task-list">
       <TaskTable :items="taskList" />
     </div>
+
   </div>
 </template>

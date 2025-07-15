@@ -16,6 +16,7 @@ function submit() {
 
 <template>
   <el-form class="login-form" @submit.prevent="submit">
+
     <el-form-item label="Username">
       <el-input v-model="username" />
     </el-form-item>
@@ -24,6 +25,7 @@ function submit() {
     </el-form-item>
     <el-form-item>
       <el-button class="login-btn" type="primary" native-type="submit">Login</el-button>
+
     </el-form-item>
   </el-form>
 </template>
