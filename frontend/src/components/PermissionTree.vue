@@ -4,6 +4,7 @@ const props = defineProps(['roles'])
 
 <template>
   <div class="permission-tree">
+
     <div v-for="role in props.roles" :key="role.id">{{ role.name }}</div>
   </div>
 </template>

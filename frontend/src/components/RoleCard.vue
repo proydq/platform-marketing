@@ -10,5 +10,6 @@ const props = defineProps(['role'])
         <div class="role-description">{{ props.role.description }}</div>
       </div>
     </div>
+
   </el-card>
 </template>
