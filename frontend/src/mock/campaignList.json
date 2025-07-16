@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "夏季促销",
+    "channels": ["email", "social"],
+    "status": "running",
+    "startTime": "2024-07-01",
+    "endTime": "2024-07-31",
+    "description": "夏季新品促销活动"
+  },
+  {
+    "id": 2,
+    "name": "黑五大促",
+    "channels": ["email"],
+    "status": "pending",
+    "startTime": "2024-11-25",
+    "endTime": "2024-11-30",
+    "description": "黑色星期五促销"
+  },
+  {
+    "id": 3,
+    "name": "圣诞节礼包",
+    "channels": ["social"],
+    "status": "success",
+    "startTime": "2024-12-10",
+    "endTime": "2024-12-25",
+    "description": "节日庆祝活动"
+  }
+]
