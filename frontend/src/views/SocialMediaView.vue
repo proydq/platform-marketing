@@ -98,13 +98,11 @@ const keyword = ref('')
 const drawerVisible = ref(false)
 const drawerMode = ref('add')
 const form = ref({ id: null, platform: '', name: '', accessToken: '', note: '' })
-
 const logDialogVisible = ref(false)
 const currentAccountId = ref(null)
 
 onMounted(() => {
   accounts.value = accountsData
-
   logs.value = logsData
 })
 
