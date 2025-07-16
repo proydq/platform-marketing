@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <div class="card-container">
+
     <el-row class="action-buttons" justify="space-between" align="middle">
       <el-space>
         <el-button type="primary" @click="openAdd"><span class="icon">➕</span>新增客户</el-button>
@@ -8,6 +8,7 @@
         <el-button type="success" @click="handleExport"><span class="icon">📤</span>导出</el-button>
       </el-space>
     </el-row>
+
     <el-card class="chart-container">
       <el-form inline>
         <el-form-item>
@@ -104,7 +105,7 @@
         <el-table-column prop="action" label="动作" />
       </el-table>
     </el-drawer>
-    </div>
+
   </div>
 </template>
 
