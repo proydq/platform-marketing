@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Daily Email Blast",
+    "desc": "Send promotional emails daily",
+    "cycle": "每天",
+    "startTime": "2024-01-01 08:00",
+    "enabled": true,
+    "tags": ["邮件", "推广"],
+    "lastRun": "2024-06-10 08:00",
+    "status": "success",
+    "actions": ["发送邮件"]
+  },
+  {
+    "id": 2,
+    "name": "Weekly Social Post",
+    "desc": "Post weekly updates",
+    "cycle": "每周",
+    "startTime": "2024-01-01 10:00",
+    "enabled": false,
+    "tags": ["社媒"],
+    "lastRun": "2024-06-07 10:00",
+    "status": "paused",
+    "actions": ["社媒发布"]
+  },
+  {
+    "id": 3,
+    "name": "Monthly Report",
+    "desc": "Generate monthly marketing report",
+    "cycle": "每月",
+    "startTime": "2024-01-01 09:00",
+    "enabled": true,
+    "tags": ["报告"],
+    "lastRun": "2024-06-01 09:00",
+    "status": "running",
+    "actions": ["生成报表"]
+  }
+]
