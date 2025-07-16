@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "LinkedIn客户抓取",
+    "website": "linkedin",
+    "status": "running",
+    "progress": 75,
+    "createTime": "2024-01-15 10:30"
+  },
+  {
+    "id": 2,
+    "name": "邮件营销推送",
+    "website": "email",
+    "status": "success",
+    "progress": 100,
+    "createTime": "2024-01-15 09:15"
+  },
+  {
+    "id": 3,
+    "name": "客户数据清洗",
+    "website": "clean",
+    "status": "pending",
+    "progress": 0,
+    "createTime": "2024-01-15 08:45"
+  },
+  {
+    "id": 4,
+    "name": "Facebook营销",
+    "website": "facebook",
+    "status": "error",
+    "progress": 45,
+    "createTime": "2024-01-15 08:00"
+  }
+]
