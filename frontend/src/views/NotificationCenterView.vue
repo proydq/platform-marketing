@@ -1,13 +1,14 @@
 <template>
   <div class="page-wrapper" style="background:#f6f9fc;">
-    <h2 class="section-title" style="font-size:20px;margin-bottom:16px;">
-      <el-icon><Bell /></el-icon>{{ $t('notification.center') }}
-    </h2>
+    <el-card class="card-container">
+      <h2 class="section-title" style="font-size:20px;margin-bottom:16px;">
+        <el-icon><Bell /></el-icon>{{ $t('notification.center') }}
+      </h2>
 
-    <el-card class="section-card">
-      <el-row class="action-buttons" justify="space-between" align="middle">
-        <el-space>
-          <el-select v-model="typeFilter" :placeholder="$t('notification.type')" style="width:120px">
+      <el-card class="section-card" shadow="never">
+        <el-row class="action-buttons" justify="space-between" align="middle">
+          <el-space>
+            <el-select v-model="typeFilter" :placeholder="$t('notification.type')" style="width:120px">
             <el-option :label="$t('common.all')" value="" />
             <el-option label="Message" value="message" />
             <el-option label="Task" value="task" />
@@ -26,10 +27,10 @@
       </el-row>
     </el-card>
 
-    <div class="notification-list">
-      <transition-group name="fade-list" tag="div">
-        <el-card v-for="item in filtered" :key="item.id" class="notify-card" body-style="padding:0;">
-          <el-row class="notify-row" align="middle">
+      <div class="notification-list">
+        <transition-group name="fade-list" tag="div">
+          <el-card v-for="item in filtered" :key="item.id" class="notify-card" body-style="padding:0;">
+            <el-row class="notify-row" align="middle">
             <el-col :span="1">
               <el-checkbox :model-value="selected.includes(item.id)" @change="toggleSelect(item.id)" />
             </el-col>
@@ -52,17 +53,18 @@
               <el-button text size="small" @click.stop="markRead(item)">{{ $t('notification.markRead') }}</el-button>
               <el-button text size="small" style="color:#f56c6c" @click.stop="remove(item)">{{ $t('notification.delete') }}</el-button>
             </el-col>
-          </el-row>
-        </el-card>
-      </transition-group>
-    </div>
+            </el-row>
+          </el-card>
+        </transition-group>
+      </div>
 
-    <el-drawer v-model="drawer" :title="$t('notification.detail')" size="30%" direction="rtl">
-      <h3>{{ current.title }}</h3>
-      <p class="text-gray">{{ formatTime(current.time) }}</p>
-      <p style="margin:10px 0;">{{ current.content }}</p>
-      <a v-if="current.link" :href="current.link" target="_blank" style="color:#409eff;">{{ $t('notification.view') }}</a>
-    </el-drawer>
+      <el-drawer v-model="drawer" :title="$t('notification.detail')" size="30%" direction="rtl">
+        <h3>{{ current.title }}</h3>
+        <p class="text-gray">{{ formatTime(current.time) }}</p>
+        <p style="margin:10px 0;">{{ current.content }}</p>
+        <a v-if="current.link" :href="current.link" target="_blank" style="color:#409eff;">{{ $t('notification.view') }}</a>
+      </el-drawer>
+    </el-card>
   </div>
 </template>
 
