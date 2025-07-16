@@ -1,51 +1,51 @@
 <template>
   <div class="page-wrapper">
-    <el-card class="action-buttons" style="margin-bottom:20px;">
-      <el-row :gutter="20" align="middle">
-        <el-col :span="12" class="flex items-center">
-          <el-input v-model="search" placeholder="搜索活动" prefix-icon="Search" style="width:220px;margin-right:10px" clearable />
-          <el-select v-model="filterChannel" placeholder="渠道" clearable style="width:120px;margin-right:10px">
+    <el-card class="card-container">
+      <h2 style="margin-bottom:20px;">
+        <span class="icon">📊</span> 营销活动中心
+      </h2>
+      <el-row class="action-buttons" justify="space-between" align="middle">
+        <el-space>
+          <el-select v-model="statusFilter" placeholder="状态" style="width:120px">
+            <el-option label="全部" value="" />
+            <el-option label="未开始" value="pending" />
+            <el-option label="进行中" value="running" />
+            <el-option label="已完成" value="success" />
+            <el-option label="暂停" value="paused" />
+          </el-select>
+          <el-select v-model="channelFilter" placeholder="渠道" style="width:120px">
+            <el-option label="全部" value="" />
             <el-option label="邮件" value="email" />
-            <el-option label="社交媒体" value="social" />
-            <el-option label="短信" value="sms" />
+            <el-option label="社媒" value="social" />
+            <el-option label="微信" value="wechat" />
+            <el-option label="自定义" value="custom" />
           </el-select>
-          <el-select v-model="filterTags" multiple collapse-tags placeholder="标签" style="width:200px">
-            <el-option label="促销" value="promo" />
-            <el-option label="新品" value="new" />
-            <el-option label="节日" value="holiday" />
-          </el-select>
-        </el-col>
-        <el-col :span="12" style="text-align:right;">
-          <el-button-group>
-            <el-button :plain="filterStatus !== 'all'" @click="setStatus('all')">全部</el-button>
-            <el-button :plain="filterStatus !== 'running'" @click="setStatus('running')">进行中</el-button>
-            <el-button :plain="filterStatus !== 'success'" @click="setStatus('success')">已结束</el-button>
-          </el-button-group>
-          <el-button type="primary" style="margin-left:10px" @click="openCreate">➕ 新建活动</el-button>
-        </el-col>
+          <el-input v-model="search" placeholder="搜索活动" clearable style="width:200px" />
+        </el-space>
+        <el-button type="primary" @click="openEdit(false)"><span class="icon">➕</span>新建活动</el-button>
       </el-row>
-    </el-card>
 
-    <el-card>
-      <el-table :data="filteredList" style="width:100%">
-        <el-table-column prop="name" label="名称" min-width="160" />
-        <el-table-column prop="status" label="状态" width="120">
-          <template #default="scope">
-            <span :class="'status-badge status-' + scope.row.status">{{ statusText(scope.row.status) }}</span>
+      <el-table :data="filtered" style="width:100%;margin-top:20px;">
+        <el-table-column prop="name" label="名称" min-width="150" />
+        <el-table-column label="渠道" width="160">
+          <template #default="{ row }">
+            <el-tag v-for="c in row.channels" :key="c" size="small" style="margin-right:4px">{{ channelName(c) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="channels" label="渠道" width="150">
-          <template #default="scope">
-            <el-tag v-for="c in scope.row.channels" :key="c" size="small" style="margin-right:4px">{{ channelName(c) }}</el-tag>
+        <el-table-column label="状态" width="120">
+          <template #default="{ row }">
+            <span :class="'status-badge status-' + row.status">{{ statusText(row.status) }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="startTime" label="开始" width="120" />
-        <el-table-column prop="endTime" label="结束" width="120" />
-        <el-table-column label="操作" width="200">
-          <template #default="scope">
-            <el-button type="text" size="small" @click="viewCampaign(scope.row)">查看</el-button>
-            <el-button type="text" size="small" @click="openEdit(scope.row)">编辑</el-button>
-            <el-popconfirm title="确定删除?" @confirm="deleteCampaign(scope.row)">
+        <el-table-column prop="startTime" label="开始" width="140" />
+        <el-table-column prop="endTime" label="结束" width="140" />
+        <el-table-column label="操作" width="260">
+          <template #default="{ row }">
+            <el-button type="text" size="small" @click="openDetail(row)">查看</el-button>
+            <el-button type="text" size="small" @click="openEdit(true, row)">编辑</el-button>
+            <el-button type="text" size="small" @click="publish(row)">发布</el-button>
+            <el-button type="text" size="small" @click="togglePause(row)">{{ row.status === 'paused' ? '恢复' : '暂停' }}</el-button>
+            <el-popconfirm title="确定删除?" @confirm="remove(row)">
               <el-button type="text" size="small" style="color:#f56c6c">删除</el-button>
             </el-popconfirm>
           </template>
@@ -53,71 +53,80 @@
       </el-table>
     </el-card>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑活动' : '新建活动'" width="600px">
-      <el-form :model="form" label-width="80px" :rules="rules" ref="formRef">
-        <el-form-item label="名称" prop="name">
+    <el-drawer v-model="editDrawer" :title="editMode ? '编辑活动' : '新建活动'" size="40%">
+      <el-form :model="form" label-width="90px" class="form-section">
+        <el-form-item label="名称" required>
           <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="渠道" prop="channels">
+        <el-form-item label="渠道" required>
           <el-select v-model="form.channels" multiple style="width:100%">
-            <el-option v-for="c in channelOptions" :key="c.value" :label="c.label" :value="c.value" />
+            <el-option label="邮件" value="email" />
+            <el-option label="社媒" value="social" />
+            <el-option label="微信" value="wechat" />
+            <el-option label="自定义" value="custom" />
           </el-select>
         </el-form-item>
-        <el-form-item label="时间" required>
-          <el-date-picker v-model="form.startTime" type="date" placeholder="开始" style="width:45%;margin-right:10px" />
-          <el-date-picker v-model="form.endTime" type="date" placeholder="结束" style="width:45%" />
+        <el-form-item label="开始时间">
+          <el-date-picker v-model="form.startTime" type="datetime" style="width:100%" />
         </el-form-item>
-        <el-form-item label="附件">
-          <el-upload v-model:file-list="form.attachments" :auto-upload="false" list-type="text">
-            <el-button type="primary">上传文件</el-button>
-          </el-upload>
+        <el-form-item label="结束时间">
+          <el-date-picker v-model="form.endTime" type="datetime" style="width:100%" />
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input type="textarea" v-model="form.description" />
+        <el-form-item label="内容">
+          <div v-for="(c,i) in form.contents" :key="i" class="campaign-card" style="margin-bottom:10px;">
+            <RichTextEditor v-model="form.contents[i]" />
+          </div>
+          <el-button size="small" @click="addContent">添加内容段</el-button>
         </el-form-item>
+        <el-form-item label="周期设置">
+          <el-select v-model="form.cycle" style="width:100%">
+            <el-option label="单次" value="once" />
+            <el-option label="每天" value="daily" />
+            <el-option label="每周" value="weekly" />
+          </el-select>
+        </el-form-item>
+        <div class="action-buttons" style="justify-content:flex-end;">
+          <el-button @click="editDrawer=false">取消</el-button>
+          <el-button type="primary" @click="save">保存</el-button>
+        </div>
       </el-form>
-      <template #footer>
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="saveCampaign">保存</el-button>
-      </template>
-    </el-dialog>
+    </el-drawer>
 
-    <el-drawer v-model="drawerVisible" title="活动详情" direction="rtl" size="40%">
-      <template v-if="detail">
-        <el-descriptions :title="detail.name" column="1" border style="margin-bottom:20px">
+    <el-drawer v-model="detailDrawer" title="活动详情" direction="rtl" size="40%">
+      <template v-if="current">
+        <el-descriptions :title="current.name" column="1" border style="margin-bottom:20px;">
           <el-descriptions-item label="状态">
-            <el-tag>{{ statusText(detail.status) }}</el-tag>
+            <span :class="'status-badge status-' + current.status">{{ statusText(current.status) }}</span>
           </el-descriptions-item>
           <el-descriptions-item label="渠道">
-            <el-tag v-for="c in detail.channels" :key="c" style="margin-right:4px">{{ channelName(c) }}</el-tag>
+            <el-tag v-for="c in current.channels" :key="c" size="small" style="margin-right:4px">{{ channelName(c) }}</el-tag>
           </el-descriptions-item>
-          <el-descriptions-item label="起止时间">{{ detail.startTime }} - {{ detail.endTime }}</el-descriptions-item>
+          <el-descriptions-item label="起止时间">{{ current.startTime }} - {{ current.endTime }}</el-descriptions-item>
         </el-descriptions>
-        <el-row :gutter="20" style="margin-bottom:20px">
+        <el-row :gutter="20" style="margin-bottom:20px;">
           <el-col :span="8">
             <el-card>
-              <div class="stat-number">{{ detail.metrics.sent }}</div>
+              <div class="stat-number">{{ current.metrics.sent }}</div>
               <div class="stat-label">发送量</div>
             </el-card>
           </el-col>
           <el-col :span="8">
             <el-card>
-              <div class="stat-number">{{ detail.metrics.opens }}</div>
+              <div class="stat-number">{{ current.metrics.opens }}</div>
               <div class="stat-label">打开量</div>
             </el-card>
           </el-col>
           <el-col :span="8">
             <el-card>
-              <div class="stat-number">{{ detail.metrics.clicks }}</div>
+              <div class="stat-number">{{ current.metrics.clicks }}</div>
               <div class="stat-label">点击量</div>
             </el-card>
           </el-col>
         </el-row>
-        <el-steps :active="activeStep" finish-status="success" style="margin-bottom:20px">
-          <el-step v-for="(s,i) in detail.steps" :key="i" :title="s" />
+        <el-steps :active="current.steps ? current.steps.length : 0" finish-status="success" style="margin-bottom:20px;">
+          <el-step v-for="(s,i) in current.steps" :key="i" :title="s" />
         </el-steps>
-        <el-upload :file-list="detail.attachments" list-type="text" disabled />
-        <p style="margin-top:20px">{{ detail.description }}</p>
+        <div v-for="(c,i) in current.contents" :key="i" style="margin-bottom:10px;" v-html="c" />
       </template>
     </el-drawer>
   </div>
@@ -126,19 +135,19 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import campaignData from '../mock/campaignList.json'
+import RichTextEditor from '../components/RichTextEditor.vue'
+import campaignList from '../mock/campaignList.json'
 import campaignDetails from '../mock/campaignDetail.json'
 
 const campaigns = ref([])
+const statusFilter = ref('')
+const channelFilter = ref('')
 const search = ref('')
-const filterStatus = ref('all')
-const filterChannel = ref('')
-const filterTags = ref([])
 
-const dialogVisible = ref(false)
-const drawerVisible = ref(false)
-const isEdit = ref(false)
-const formRef = ref(null)
+const editDrawer = ref(false)
+const detailDrawer = ref(false)
+const editMode = ref(false)
+const current = ref(null)
 
 const form = reactive({
   id: null,
@@ -146,91 +155,78 @@ const form = reactive({
   channels: [],
   startTime: '',
   endTime: '',
-  attachments: [],
-  description: ''
+  contents: [''],
+  cycle: 'once'
 })
-
-const rules = {
-  name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-  channels: [{ required: true, message: '请选择渠道', trigger: 'change' }]
-}
-
-const channelOptions = [
-  { label: '邮件', value: 'email' },
-  { label: '社交媒体', value: 'social' },
-  { label: '短信', value: 'sms' }
-]
-
-const detail = ref(null)
-const activeStep = ref(0)
 
 onMounted(() => {
-  campaigns.value = campaignData
+  campaigns.value = campaignList
 })
 
-const filteredList = computed(() => {
-  let list = campaigns.value
-  if (search.value) {
-    list = list.filter(c => c.name.includes(search.value))
-  }
-  if (filterStatus.value !== 'all') {
-    list = list.filter(c => c.status === filterStatus.value)
-  }
-  if (filterChannel.value) {
-    list = list.filter(c => c.channels.includes(filterChannel.value))
-  }
-  return list
-})
-
-function statusText(val) {
-  const map = { running: '进行中', success: '已结束', pending: '未开始' }
-  return map[val] || val
-}
-
-function channelName(val) {
-  const map = { email: '邮件', social: '社交媒体', sms: '短信' }
-  return map[val] || val
-}
-
-function setStatus(st) {
-  filterStatus.value = st
-}
-
-function openCreate() {
-  isEdit.value = false
-  Object.assign(form, { id: null, name: '', channels: [], startTime: '', endTime: '', attachments: [], description: '' })
-  dialogVisible.value = true
-}
-
-function openEdit(row) {
-  isEdit.value = true
-  Object.assign(form, JSON.parse(JSON.stringify(row)), { attachments: [] })
-  dialogVisible.value = true
-}
-
-function saveCampaign() {
-  formRef.value.validate((valid) => {
-    if (!valid) return
-    if (isEdit.value) {
-      const idx = campaigns.value.findIndex(c => c.id === form.id)
-      if (idx !== -1) campaigns.value[idx] = { ...form }
-    } else {
-      const newId = Math.max(0, ...campaigns.value.map(c => c.id || 0)) + 1
-      campaigns.value.push({ ...form, id: newId })
-    }
-    dialogVisible.value = false
-    ElMessage.success('保存成功')
+const filtered = computed(() => {
+  return campaigns.value.filter(c => {
+    const sOk = !statusFilter.value || c.status === statusFilter.value
+    const cOk = !channelFilter.value || c.channels.includes(channelFilter.value)
+    const qOk = !search.value || c.name.includes(search.value)
+    return sOk && cOk && qOk
   })
+})
+
+function statusText(s) {
+  const map = { pending: '未开始', running: '进行中', success: '已完成', paused: '暂停' }
+  return map[s] || s
 }
 
-function deleteCampaign(row) {
+function channelName(c) {
+  const map = { email: '邮件', social: '社媒', wechat: '微信', custom: '自定义' }
+  return map[c] || c
+}
+
+function openEdit(edit, row) {
+  editMode.value = edit
+  if (edit && row) {
+    Object.assign(form, JSON.parse(JSON.stringify(row)))
+    if (!form.contents || !form.contents.length) form.contents = ['']
+  } else {
+    Object.assign(form, { id: null, name: '', channels: [], startTime: '', endTime: '', contents: [''], cycle: 'once' })
+  }
+  editDrawer.value = true
+}
+
+function addContent() {
+  form.contents.push('')
+}
+
+function save() {
+  if (editMode.value) {
+    const idx = campaigns.value.findIndex(c => c.id === form.id)
+    if (idx !== -1) campaigns.value[idx] = JSON.parse(JSON.stringify(form))
+  } else {
+    form.id = Math.max(0, ...campaigns.value.map(c => c.id)) + 1
+    campaigns.value.push(JSON.parse(JSON.stringify(form)))
+  }
+  editDrawer.value = false
+  ElMessage.success('保存成功')
+}
+
+function remove(row) {
   campaigns.value = campaigns.value.filter(c => c.id !== row.id)
   ElMessage.success('已删除')
 }
 
-function viewCampaign(row) {
-  detail.value = { ...row, ...campaignDetails.find(d => d.id === row.id) }
-  activeStep.value = detail.value.steps ? detail.value.steps.length - 1 : 0
-  drawerVisible.value = true
+function openDetail(row) {
+  current.value = { ...row, ...campaignDetails.find(d => d.id === row.id) }
+  if (!current.value.contents) current.value.contents = row.contents || []
+  detailDrawer.value = true
+}
+
+function publish(row) {
+  row.status = 'running'
+  ElMessage.success('已发布')
+}
+
+function togglePause(row) {
+  row.status = row.status === 'paused' ? 'running' : 'paused'
+  ElMessage.success(row.status === 'paused' ? '已暂停' : '已恢复')
 }
 </script>
