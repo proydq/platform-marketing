@@ -138,7 +138,6 @@ const activeRoleId = ref(null)
 const activeTab = ref('perm')
 const checkedKeys = ref([])
 const treeRefs = ref([])
-
 const roleFormVisible = ref(false)
 const isEditRole = ref(false)
 const roleForm = reactive({ id: null, name: '', description: '' })
@@ -146,7 +145,6 @@ const roleForm = reactive({ id: null, name: '', description: '' })
 const addUserVisible = ref(false)
 const selectedUserId = ref(null)
 const selectedRoleIds = ref([])
-
 const codeToId = {}
 const idToCode = {}
 
@@ -190,7 +188,6 @@ const availableUsers = computed(() => {
   const ids = new Set(assignedUsers.value.map(u => u.id))
   return users.value.filter(u => !ids.has(u.id))
 })
-
 function handleRoleSelect(key) {
   const role = roles.value.find(r => r.id === Number(key))
   if (role) selectRole(role)
@@ -239,7 +236,6 @@ function saveRole() {
   roleFormVisible.value = false
   ElMessage.success('保存成功')
 }
-
 function removeRole(role) {
   ElMessageBox.confirm('确定删除该角色吗?', '提示', { type: 'warning' })
     .then(() => {
@@ -292,7 +288,6 @@ function handleModuleCheck() {
   })
   checkedKeys.value = Array.from(set)
 }
-
 function editRole(role) {
   openRoleForm(true, role)
 }
