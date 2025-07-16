@@ -37,7 +37,6 @@ const routes = [
       { path: 'help-center', name: 'HelpCenter', component: HelpCenterView },
       { path: 'notifications', name: 'NotificationCenter', component: NotificationCenterView },
       { path: 'campaign-center', name: 'CampaignCenter', component: CampaignCenterView },
-
     ],
   },
 ]
