@@ -38,4 +38,3 @@ const securityForm = ref({ passwordLength: 8, twoFactor: false })
     </el-tabs>
   </el-card>
 </template>
-

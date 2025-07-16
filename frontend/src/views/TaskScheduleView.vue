@@ -43,4 +43,3 @@ function addTask() {
     </el-table>
   </el-card>
 </template>
-

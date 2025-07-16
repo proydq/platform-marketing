@@ -32,4 +32,3 @@ function generate() {
     <el-card v-if="result" style="margin-top:20px;">{{ result }}</el-card>
   </el-card>
 </template>
-
