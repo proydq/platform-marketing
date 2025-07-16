@@ -1,38 +1,39 @@
 <template>
-  <div class="page-wrapper">
-    <el-card class="card-container">
+  <div class="page-wrapper page-notification">
+    <div class="notification-wrapper">
       <h2 style="margin-bottom:20px;">
         <span class="icon">🔔</span> {{ $t('notification.center') }}
       </h2>
 
-      <el-row class="action-buttons" justify="space-between" align="middle">
-        <el-space>
-          <el-select v-model="typeFilter" :placeholder="$t('notification.type')" style="width:120px">
-            <el-option :label="$t('common.all')" value="" />
-            <el-option label="Message" value="message" />
-            <el-option label="Task" value="task" />
-            <el-option label="System" value="system" />
-          </el-select>
-          <el-select v-model="statusFilter" :placeholder="$t('notification.status')" style="width:120px">
-            <el-option :label="$t('common.all')" value="" />
-            <el-option :label="$t('notification.unread')" value="unread" />
-            <el-option :label="$t('notification.read')" value="read" />
-          </el-select>
-        </el-space>
-        <el-space>
-          <el-button size="small" :disabled="!selected.length" @click="markSelectedRead">{{ $t('notification.markRead') }}</el-button>
-          <el-button size="small" type="danger" :disabled="!selected.length" @click="deleteSelected">{{ $t('notification.delete') }}</el-button>
-        </el-space>
-      </el-row>
+      <el-card class="section-card" shadow="never" style="margin-bottom:20px;">
+        <el-row align="middle" class="action-buttons">
+          <el-space>
+            <el-select v-model="typeFilter" :placeholder="$t('notification.type')" style="width:120px">
+              <el-option :label="$t('common.all')" value="" />
+              <el-option label="Message" value="message" />
+              <el-option label="Task" value="task" />
+              <el-option label="System" value="system" />
+            </el-select>
+            <el-select v-model="statusFilter" :placeholder="$t('notification.status')" style="width:120px">
+              <el-option :label="$t('common.all')" value="" />
+              <el-option :label="$t('notification.unread')" value="unread" />
+              <el-option :label="$t('notification.read')" value="read" />
+            </el-select>
+          </el-space>
+          <el-space style="margin-left:auto;">
+            <el-button size="small" :disabled="!selected.length" @click="markSelectedRead">{{ $t('notification.markRead') }}</el-button>
+            <el-button size="small" type="danger" :disabled="!selected.length" @click="deleteSelected">{{ $t('notification.delete') }}</el-button>
+          </el-space>
+        </el-row>
+      </el-card>
 
-      <el-divider />
 
       <el-space direction="vertical" style="width:100%;" :size="16">
         <transition-group name="fade-list" tag="div">
           <el-card
             v-for="item in filtered"
             :key="item.id"
-            class="notify-card"
+            class="notification-card"
             shadow="hover"
             style="margin-bottom:10px;"
           >
@@ -64,7 +65,7 @@
         <p style="margin:10px 0;">{{ current.content }}</p>
         <a v-if="current.link" :href="current.link" target="_blank" style="color:#409eff;">{{ $t('notification.view') }}</a>
       </el-drawer>
-    </el-card>
+    </div>
   </div>
 </template>
 
