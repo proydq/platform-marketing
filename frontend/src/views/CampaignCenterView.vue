@@ -130,7 +130,6 @@ const channelFilter = ref('')
 const search = ref('')
 
 const { t } = useI18n()
-
 const editDrawer = ref(false)
 const detailDrawer = ref(false)
 const editMode = ref(false)
@@ -214,6 +213,7 @@ function openDetail(row) {
   if (!current.value.contents) current.value.contents = row.contents || []
   detailDrawer.value = true
 }
+
 
 function publish(row) {
   row.status = 'running'
