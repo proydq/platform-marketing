@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import scheduleData from '../mock/schedules.json'
-
+import ScheduleSelector from '../components/ScheduleSelector.vue'
 const form = ref({ name: '', frequency: '每天', startTime: '' })
 const schedules = ref([])
 
@@ -23,11 +23,7 @@ function addTask() {
         <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="频率">
-        <el-select v-model="form.frequency" style="width:120px">
-          <el-option label="每天" value="每天" />
-          <el-option label="每周" value="每周" />
-          <el-option label="每月" value="每月" />
-        </el-select>
+        <ScheduleSelector v-model="form.frequency" />
       </el-form-item>
       <el-form-item label="开始时间">
         <el-input v-model="form.startTime" placeholder="例如 08:00" />

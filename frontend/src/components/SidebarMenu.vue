@@ -19,7 +19,10 @@ const menuItems = [
   { name: 'BehaviorTrack', label: '行为追踪', icon: '📈', permission: 'behavior:track' },
   { name: 'Reports', label: '报表分析', icon: '📋', permission: 'report:view' },
   { name: 'Permission', label: '权限管理', icon: '🔐', permission: 'system:permission' },
-  { name: 'Settings', label: '系统设置', icon: '⚙️', permission: 'system:setting' }
+  { name: 'Settings', label: '系统设置', icon: '⚙️', permission: 'system:setting' },
+  { name: 'CampaignCenter', label: '营销活动', icon: '🎯' },
+  { name: 'NotificationCenter', label: '通知中心', icon: '🔔' },
+  { name: 'HelpCenter', label: '帮助中心', icon: '❓' }
 ]
 
 const visibleItems = menuItems.filter(i => !i.permission || hasPermission(i.permission))

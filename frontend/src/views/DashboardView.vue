@@ -3,8 +3,7 @@ import { ref, onMounted } from 'vue'
 import StatCard from '../components/StatCard.vue'
 import TaskTable from '../components/TaskTable.vue'
 import statsData from '../mock/stats.json'
-import tasks from '../mock/crawlTasks.json'
-
+import tasks from '../mock/recentTasks.json'
 const stats = ref({})
 const taskList = ref([])
 

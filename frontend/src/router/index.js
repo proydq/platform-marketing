@@ -14,6 +14,9 @@ import SocialMediaView from '../views/SocialMediaView.vue'
 import TaskScheduleView from '../views/TaskScheduleView.vue'
 import BehaviorTrackView from '../views/BehaviorTrackView.vue'
 import ReportsView from '../views/ReportsView.vue'
+import HelpCenterView from '../views/HelpCenterView.vue'
+import NotificationCenterView from '../views/NotificationCenterView.vue'
+import CampaignCenterView from '../views/CampaignCenterView.vue'
 const routes = [
   { path: '/login', name: 'Login', component: LoginView },
   {
@@ -31,6 +34,10 @@ const routes = [
       { path: 'task-schedule', name: 'TaskSchedule', component: TaskScheduleView },
       { path: 'behavior-track', name: 'BehaviorTrack', component: BehaviorTrackView },
       { path: 'reports', name: 'Reports', component: ReportsView },
+      { path: 'help-center', name: 'HelpCenter', component: HelpCenterView },
+      { path: 'notifications', name: 'NotificationCenter', component: NotificationCenterView },
+      { path: 'campaign-center', name: 'CampaignCenter', component: CampaignCenterView },
+
     ],
   },
 ]

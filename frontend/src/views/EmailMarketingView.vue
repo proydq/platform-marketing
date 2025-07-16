@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-
+import RichTextEditor from '../components/RichTextEditor.vue'
 const form = ref({ title: '', group: '', content: '' })
 const groups = ['全部客户', '潜在客户', 'VIP']
 </script>
@@ -18,7 +18,7 @@ const groups = ['全部客户', '潜在客户', 'VIP']
         </el-select>
       </el-form-item>
       <el-form-item label="正文">
-        <el-input v-model="form.content" type="textarea" rows="4" />
+        <RichTextEditor v-model="form.content" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary">发送</el-button>

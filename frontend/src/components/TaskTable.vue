@@ -1,4 +1,6 @@
 <script setup>
+import ProgressRing from './ProgressRing.vue'
+
 const props = defineProps(['items'])
 </script>
 
@@ -15,7 +17,7 @@ const props = defineProps(['items'])
     </el-table-column>
     <el-table-column prop="progress" label="Progress">
       <template #default="scope">
-        <div class="progress-ring">{{ scope.row.progress }}%</div>
+        <ProgressRing :percentage="scope.row.progress" />
       </template>
     </el-table-column>
   </el-table>
