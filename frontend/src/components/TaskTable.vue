@@ -1,5 +1,6 @@
 <script setup>
 import ProgressRing from './ProgressRing.vue'
+
 const props = defineProps(['items'])
 </script>
 

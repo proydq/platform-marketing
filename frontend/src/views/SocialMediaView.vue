@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import accountsData from '../mock/socialPosts.json'
-
 const accounts = ref([])
 
 onMounted(() => {

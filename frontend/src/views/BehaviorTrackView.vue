@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import behaviors from '../mock/behaviorLog.json'
-
 const list = ref([])
 
 onMounted(() => {
