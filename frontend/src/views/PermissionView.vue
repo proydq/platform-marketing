@@ -1,5 +1,6 @@
 <template>
   <div class="page-wrapper page-permission" style="background:#f6f9fc;">
+
       <div class="section-title" style="margin-bottom:10px;">
         角色列表
         <el-button type="primary" circle size="small" @click="openRoleForm(false)">
@@ -269,6 +270,7 @@ function editRole(role) {
   margin-bottom: 12px;
   height: 100%;
 }
+
 .role-card.active {
   border-color: #409eff;
   background: #ecf5ff;
