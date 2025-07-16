@@ -67,7 +67,6 @@
           </template>
         </el-table-column>
       </el-table>
-
       <div style="text-align: right; margin-top: 10px;">
         <el-pagination
           background
@@ -171,7 +170,6 @@ const total = ref(0)
 const page = ref(1)
 const size = 10
 const activeModule = ref('user')
-
 const search = reactive({ keyword: '', type: '', status: '' })
 
 const drawerVisible = ref(false)
@@ -207,7 +205,6 @@ function handlePageChange(val) {
   page.value = val
   fetchList()
 }
-
 function resetSearch() {
   search.keyword = ''
   search.type = ''
