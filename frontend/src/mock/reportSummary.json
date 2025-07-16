@@ -1,0 +1,9 @@
+{
+  "conversionRate": 5.2,
+  "activeUsers": 1200,
+  "source": [
+    {"name":"广告","value":40},
+    {"name":"邮件","value":30},
+    {"name":"社交媒体","value":30}
+  ]
+}

@@ -1,0 +1,4 @@
+[
+  {"name": "每日备份", "frequency": "每天", "startTime": "08:00"},
+  {"name": "周报生成", "frequency": "每周", "startTime": "Monday 09:00"}
+]
