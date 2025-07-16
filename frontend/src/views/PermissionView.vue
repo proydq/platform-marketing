@@ -7,28 +7,32 @@
           <el-icon><CirclePlusFilled /></el-icon>
         </el-button>
       </div>
-      <el-scrollbar wrap-style="overflow-x:auto;overflow-y:hidden;" view-style="display:flex;gap:20px;padding-bottom:10px;">
-        <el-card
+      <el-row :gutter="12" style="padding-bottom:10px;">
+        <el-col
           v-for="role in roles"
           :key="role.id"
-          :class="['role-card', { active: role.id === activeRoleId }]"
-          @click="selectRole(role)"
-          style="position:relative;min-width:200px;flex-shrink:0;">
-          <div class="role-header">
-            <span class="role-name">{{ role.name }}</span>
-            <div>
-              <el-tooltip content="编辑">
-                <el-button :icon="Edit" circle size="small" @click.stop="editRole(role)" />
-              </el-tooltip>
-              <el-tooltip content="删除">
-                <el-button :icon="Delete" circle type="danger" size="small" @click.stop="removeRole(role)" />
-              </el-tooltip>
+          :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+          <el-card
+            class="role-card"
+            :class="{ active: role.id === activeRoleId }"
+            @click="selectRole(role)"
+            style="position:relative;">
+            <div class="role-header">
+              <span class="role-name">{{ role.name }}</span>
+              <div>
+                <el-tooltip content="编辑">
+                  <el-button :icon="Edit" circle size="small" @click.stop="editRole(role)" />
+                </el-tooltip>
+                <el-tooltip content="删除">
+                  <el-button :icon="Delete" circle type="danger" size="small" @click.stop="removeRole(role)" />
+                </el-tooltip>
+              </div>
             </div>
-          </div>
-          <div class="role-description">{{ role.description }}</div>
-          <el-badge :value="role.users.length" class="status-badge" style="position:absolute;top:-6px;right:-6px;" />
-        </el-card>
-      </el-scrollbar>
+            <div class="role-description">{{ role.description }}</div>
+            <el-badge :value="role.users.length" class="status-badge" style="position:absolute;top:-6px;right:-6px;" />
+          </el-card>
+        </el-col>
+      </el-row>
 
       <el-tabs v-model="activeTab" class="perm-tabs" style="margin-top:20px;">
         <el-tab-pane label="权限配置" name="perm">
@@ -262,6 +266,12 @@ function editRole(role) {
 </script>
 
 <style scoped>
+.role-card {
+  cursor: pointer;
+  margin-bottom: 12px;
+  height: 100%;
+}
+
 .role-card.active {
   border-color: #409eff;
   background: #ecf5ff;
