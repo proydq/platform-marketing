@@ -9,11 +9,13 @@
 import { computed } from 'vue'
 import { use } from 'echarts/core'
 import VChart from 'vue-echarts'
-import { PieChart as Pie, LegendComponent, TooltipComponent, TitleComponent } from 'echarts/components'
+import { PieChart } from 'echarts/charts'
+import { LegendComponent, TooltipComponent, TitleComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import { useI18n } from 'vue-i18n'
 
-use([Pie, LegendComponent, TooltipComponent, TitleComponent, CanvasRenderer])
+use([PieChart, LegendComponent, TooltipComponent, TitleComponent, CanvasRenderer])
+
 
 const props = defineProps({
   title: String,

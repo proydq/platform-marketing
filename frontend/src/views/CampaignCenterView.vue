@@ -214,7 +214,6 @@ function openDetail(row) {
   detailDrawer.value = true
 }
 
-
 function publish(row) {
   row.status = 'running'
   ElMessage.success(t('campaign.publish'))

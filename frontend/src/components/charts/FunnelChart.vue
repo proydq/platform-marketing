@@ -9,11 +9,13 @@
 import { computed } from 'vue'
 import { use } from 'echarts/core'
 import VChart from 'vue-echarts'
-import { FunnelChart as Funnel, TooltipComponent, LegendComponent, TitleComponent } from 'echarts/components'
+import { FunnelChart } from 'echarts/charts'
+import { TooltipComponent, LegendComponent, TitleComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import { useI18n } from 'vue-i18n'
 
-use([Funnel, TooltipComponent, LegendComponent, TitleComponent, CanvasRenderer])
+use([FunnelChart, TooltipComponent, LegendComponent, TitleComponent, CanvasRenderer])
+
 
 const props = defineProps({
   title: String,
