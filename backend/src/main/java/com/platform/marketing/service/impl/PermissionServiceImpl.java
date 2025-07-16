@@ -5,6 +5,8 @@ import com.platform.marketing.repository.PermissionRepository;
 import com.platform.marketing.service.PermissionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +28,10 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Page<Permission> search(String keyword, Pageable pageable) {
+    public Page<Permission> search(String keyword, String type, Boolean status, Pageable pageable) {
         if (keyword == null) keyword = "";
-        return permissionRepository
-                .findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(keyword, keyword, pageable);
+        if (type == null) type = "";
+        return permissionRepository.search(keyword, type, status, pageable);
     }
 
     @Override
@@ -43,6 +45,8 @@ public class PermissionServiceImpl implements PermissionService {
         if (permissionRepository.existsByCode(permission.getCode())) {
             throw new IllegalArgumentException("Permission code already exists");
         }
+        permission.setCreatedBy(currentUser());
+        permission.setUpdatedBy(permission.getCreatedBy());
         return permissionRepository.save(permission);
     }
 
@@ -58,6 +62,10 @@ public class PermissionServiceImpl implements PermissionService {
         existing.setName(permission.getName());
         existing.setCode(permission.getCode());
         existing.setDescription(permission.getDescription());
+        existing.setType(permission.getType());
+        existing.setGroup(permission.getGroup());
+        existing.setStatus(permission.isStatus());
+        existing.setUpdatedBy(currentUser());
         return permissionRepository.save(existing);
     }
 
@@ -71,5 +79,10 @@ public class PermissionServiceImpl implements PermissionService {
     @Transactional
     public void deleteBatch(List<String> ids) {
         ids.forEach(permissionRepository::deleteById);
+    }
+
+    private String currentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth != null ? auth.getName() : "anonymous";
     }
 }

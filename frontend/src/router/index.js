@@ -6,6 +6,8 @@ import MainLayout from '../layouts/MainLayout.vue'
 import DashboardView from '../views/DashboardView.vue'
 import CustomerCrawlView from '../views/CustomerCrawlView.vue'
 import PermissionView from '../views/PermissionView.vue'
+import RoleManagement from '../views/RoleManagement.vue'
+import UserManagement from '../views/UserManagement.vue'
 import CustomerManageView from '../views/CustomerManageView.vue'
 import SettingsView from '../views/SettingsView.vue'
 import ContentGenerateView from '../views/ContentGenerateView.vue'
@@ -27,6 +29,8 @@ const routes = [
       { path: 'customer-crawl', name: 'CustomerCrawl', component: CustomerCrawlView },
       { path: 'customer-manage', name: 'CustomerManage', component: CustomerManageView },
       { path: 'permission', name: 'Permission', component: PermissionView },
+      { path: 'roles', name: 'RoleManagement', component: RoleManagement },
+      { path: 'users', name: 'UserManagement', component: UserManagement },
       { path: 'settings', name: 'Settings', component: SettingsView },
       { path: 'content-generate', name: 'ContentGenerate', component: ContentGenerateView },
       { path: 'email-marketing', name: 'EmailMarketing', component: EmailMarketingView },

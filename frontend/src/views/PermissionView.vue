@@ -1,149 +1,396 @@
 <template>
   <div class="page-wrapper">
+    <el-tabs v-model="activeModule" class="mb-3" @tab-click="fetchList">
+      <el-tab-pane label="用户模块" name="user" />
+      <el-tab-pane label="系统模块" name="system" />
+      <el-tab-pane label="内容模块" name="content" />
+    </el-tabs>
+
     <el-card>
-      <div class="action-buttons" style="margin-bottom:10px; display:flex; justify-content:space-between;">
-        <el-space>
-          <el-input v-model="keyword" placeholder="搜索名称或编码" prefix-icon="Search" style="width:200px" />
-          <el-button type="primary" @click="fetchList">搜索</el-button>
-        </el-space>
-        <el-space>
-          <el-button type="primary" @click="openAdd">新增</el-button>
-          <el-button type="danger" :disabled="!multipleSelection.length" @click="removeBatch">删除</el-button>
-        </el-space>
+      <div class="toolbar">
+        <div class="left">
+          <el-input v-model="search.keyword" placeholder="关键字" clearable prefix-icon="Search" style="width:180px" />
+          <el-select v-model="search.type" placeholder="类型" clearable style="width:120px">
+            <el-option label="菜单" value="menu" />
+            <el-option label="接口" value="api" />
+            <el-option label="数据" value="data" />
+          </el-select>
+          <el-select v-model="search.status" placeholder="状态" clearable style="width:120px">
+            <el-option label="启用" :value="true" />
+            <el-option label="停用" :value="false" />
+          </el-select>
+          <el-button type="primary" icon="Search" @click="fetchList">搜索</el-button>
+          <el-button @click="resetSearch">重置</el-button>
+        </div>
+        <div class="right">
+          <el-button type="primary" icon="Plus" @click="openAdd">新建权限</el-button>
+          <el-button icon="Refresh" @click="fetchList">刷新</el-button>
+          <el-button type="danger" icon="Delete" :disabled="!multipleSelection.length" @click="removeBatch">批量删除</el-button>
+        </div>
       </div>
-      <el-table :data="list" border @selection-change="val => multipleSelection = val">
+
+      <el-table
+        :data="list"
+        border
+        style="width: 100%"
+        @selection-change="onSelectionChange"
+        v-loading="loading"
+        empty-text="暂无数据"
+      >
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="name" label="名称" />
-        <el-table-column prop="code" label="编码" />
-        <el-table-column prop="description" label="描述" />
-        <el-table-column prop="createdAt" label="创建时间" width="160" />
-        <el-table-column label="操作" width="120">
+        <el-table-column prop="name" label="权限名称" width="150">
           <template #default="{ row }">
-            <el-button type="text" size="small" @click="openEdit(row)">编辑</el-button>
-            <el-button type="text" size="small" style="color:#f56c6c" @click="remove(row)">删除</el-button>
+            <el-tag>{{ row.name }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="code" label="权限编码" width="160" />
+        <el-table-column prop="type" label="类型" width="100">
+          <template #default="{ row }">
+            <el-tag :type="typeColor(row.type)">{{ typeLabel(row.type) }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="group" label="分组名" width="130" />
+        <el-table-column prop="status" label="启用" width="80">
+          <template #default="{ row }">
+            <el-switch v-model="row.status" @change="toggleStatus(row)" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="createdBy" label="创建人" width="100" />
+        <el-table-column prop="updatedBy" label="修改人" width="100" />
+        <el-table-column prop="createdAt" label="创建时间" width="160">
+          <template #default="{ row }">{{ formatDate(row.createdAt) }}</template>
+        </el-table-column>
+        <el-table-column label="操作" width="120" fixed="right">
+          <template #default="{ row }">
+            <el-button type="text" size="small" icon="Edit" @click="openEdit(row)">编辑</el-button>
+            <el-button type="text" size="small" icon="Delete" style="color:#f56c6c" @click="remove(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div style="text-align:right;margin-top:10px;">
-        <el-pagination background layout="prev, pager, next" :total="total" :page-size="size" :current-page="page" @current-change="val => { page = val; fetchList(); }" />
+
+      <div style="text-align: right; margin-top: 10px;">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :page-size="size"
+          :total="total"
+          :current-page="page"
+          @current-change="handlePageChange"
+        />
       </div>
     </el-card>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑权限' : '新增权限'" width="500px">
-      <el-form :model="form" label-width="80px">
-        <el-form-item label="名称">
-          <el-input v-model="form.name" />
-        </el-form-item>
-        <el-form-item label="编码">
-          <el-input v-model="form.code" />
-        </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.description" />
-        </el-form-item>
+    <el-drawer
+      v-model="drawerVisible"
+      :title="isEdit ? '编辑权限' : '新建权限'"
+      size="480px"
+      destroy-on-close
+    >
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="90px">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="权限名称" prop="name">
+              <el-input v-model="form.name" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="权限编码" prop="code">
+              <el-input v-model="form.code" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="权限类型" prop="type">
+              <el-select v-model="form.type">
+                <el-option label="菜单" value="menu" />
+                <el-option label="接口" value="api" />
+                <el-option label="数据" value="data" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="分组">
+              <el-input v-model="form.group" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="启用">
+              <el-switch v-model="form.status" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="描述">
+              <el-input v-model="form.description" type="textarea" rows="3" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" v-if="isEdit">
+            <el-form-item label="创建人">
+              <el-input v-model="form.createdBy" disabled />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" v-if="isEdit">
+            <el-form-item label="修改人">
+              <el-input v-model="form.updatedBy" disabled />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" v-if="isEdit">
+            <el-form-item label="创建时间">
+              <el-input v-model="form.createdAt" disabled />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" v-if="isEdit">
+            <el-form-item label="修改时间">
+              <el-input v-model="form.updatedAt" disabled />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
-        <el-button @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="saveForm">确定</el-button>
+        <div style="text-align:right">
+          <el-button @click="drawerVisible = false">取消</el-button>
+          <el-button type="primary" @click="saveForm">提交</el-button>
+        </div>
       </template>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { listPermissions, createPermission, updatePermission, deletePermission, deletePermissions } from '../api/permissionApi'
+import {
+  listPermissions,
+  createPermission,
+  updatePermission,
+  deletePermission,
+  deletePermissions
+} from '../api/permissionApi'
 
+const loading = ref(false)
 const list = ref([])
 const total = ref(0)
 const page = ref(1)
 const size = 10
-const keyword = ref('')
+const activeModule = ref('user')
 
-const dialogVisible = ref(false)
+const search = reactive({ keyword: '', type: '', status: '' })
+
+const drawerVisible = ref(false)
 const isEdit = ref(false)
-const form = ref({ id: '', name: '', code: '', description: '' })
+const formRef = ref()
+const form = reactive({
+  id: '',
+  name: '',
+  code: '',
+  type: '',
+  group: '',
+  status: true,
+  description: '',
+  createdBy: '',
+  updatedBy: '',
+  createdAt: '',
+  updatedAt: ''
+})
+
+const rules = {
+  name: [{ required: true, message: '请输入权限名称', trigger: 'blur' }],
+  code: [{ required: true, message: '请输入权限编码', trigger: 'blur' }],
+  type: [{ required: true, message: '请选择权限类型', trigger: 'change' }]
+}
+
 const multipleSelection = ref([])
 
 onMounted(() => {
   fetchList()
 })
 
+function handlePageChange(val) {
+  page.value = val
+  fetchList()
+}
+
+function resetSearch() {
+  search.keyword = ''
+  search.type = ''
+  search.status = ''
+  fetchList()
+}
+
 function fetchList() {
-  listPermissions({ page: page.value - 1, size, keyword: keyword.value }).then(res => {
-    if (res.code === 0) {
-      list.value = res.data.list
-      total.value = res.data.total
-    } else {
-      ElMessage.error(res.message || '加载失败')
-    }
-  }).catch(() => {
-    ElMessage.error('加载失败')
+  loading.value = true
+  listPermissions({
+    page: page.value - 1,
+    size,
+    keyword: search.keyword,
+    type: search.type,
+    status: search.status
   })
+    .then(res => {
+      loading.value = false
+      if (res.code === 0) {
+        list.value = res.data.list
+        total.value = res.data.total
+      } else {
+        ElMessage.error(res.message || '加载失败')
+      }
+    })
+    .catch(() => {
+      loading.value = false
+      ElMessage.error('加载失败')
+    })
 }
 
 function openAdd() {
   isEdit.value = false
-  form.value = { id: '', name: '', code: '', description: '' }
-  dialogVisible.value = true
+  Object.assign(form, {
+    id: '',
+    name: '',
+    code: '',
+    type: '',
+    group: '',
+    status: true,
+    description: ''
+  })
+  drawerVisible.value = true
 }
 
 function openEdit(row) {
   isEdit.value = true
-  form.value = { ...row }
-  dialogVisible.value = true
+  Object.assign(form, row)
+  drawerVisible.value = true
 }
 
 function saveForm() {
-  const data = { name: form.value.name, code: form.value.code, description: form.value.description }
-  if (isEdit.value) {
-    updatePermission(form.value.id, data).then(res => {
-      if (res.code === 0) {
-        ElMessage.success('更新成功')
-        dialogVisible.value = false
-        fetchList()
-      } else {
-        ElMessage.error(res.message || '更新失败')
-      }
-    }).catch(() => ElMessage.error('更新失败'))
-  } else {
-    createPermission(data).then(res => {
-      if (res.code === 0) {
-        ElMessage.success('创建成功')
-        dialogVisible.value = false
-        fetchList()
-      } else {
-        ElMessage.error(res.message || '创建失败')
-      }
-    }).catch(() => ElMessage.error('创建失败'))
-  }
+  formRef.value.validate(valid => {
+    if (!valid) return
+    const data = {
+      name: form.name,
+      code: form.code,
+      description: form.description,
+      type: form.type,
+      group: form.group,
+      status: form.status
+    }
+    if (isEdit.value) {
+      updatePermission(form.id, data)
+        .then(res => {
+          if (res.code === 0) {
+            ElMessage.success('更新成功')
+            drawerVisible.value = false
+            fetchList()
+          } else {
+            ElMessage.error(res.message || '更新失败')
+          }
+        })
+        .catch(() => ElMessage.error('更新失败'))
+    } else {
+      createPermission(data)
+        .then(res => {
+          if (res.code === 0) {
+            ElMessage.success('创建成功')
+            drawerVisible.value = false
+            fetchList()
+          } else {
+            ElMessage.error(res.message || '创建失败')
+          }
+        })
+        .catch(() => ElMessage.error('创建失败'))
+    }
+  })
 }
 
 function remove(row) {
-  ElMessageBox.confirm('确定删除该权限吗?', '提示', { type: 'warning' }).then(() => {
-    deletePermission(row.id).then(res => {
-      if (res.code === 0) {
-        ElMessage.success('已删除')
-        fetchList()
-      } else {
-        ElMessage.error(res.message || '删除失败')
-      }
-    }).catch(() => ElMessage.error('删除失败'))
-  }).catch(() => {})
+  ElMessageBox.confirm('确定删除该权限吗？', '提示', { type: 'warning' })
+    .then(() => {
+      deletePermission(row.id)
+        .then(res => {
+          if (res.code === 0) {
+            ElMessage.success('已删除')
+            fetchList()
+          } else {
+            ElMessage.error(res.message || '删除失败')
+          }
+        })
+        .catch(() => ElMessage.error('删除失败'))
+    })
+    .catch(() => {})
 }
 
 function removeBatch() {
   const ids = multipleSelection.value.map(item => item.id)
   if (!ids.length) return
-  ElMessageBox.confirm('确定删除选中的权限吗?', '提示', { type: 'warning' }).then(() => {
-    deletePermissions(ids).then(res => {
-      if (res.code === 0) {
-        ElMessage.success('已删除')
-        fetchList()
-      } else {
-        ElMessage.error(res.message || '删除失败')
+  ElMessageBox.confirm('确定删除选中的权限吗？', '提示', { type: 'warning' })
+    .then(() => {
+      deletePermissions(ids)
+        .then(res => {
+          if (res.code === 0) {
+            ElMessage.success('已删除')
+            fetchList()
+          } else {
+            ElMessage.error(res.message || '删除失败')
+          }
+        })
+        .catch(() => ElMessage.error('删除失败'))
+    })
+    .catch(() => {})
+}
+
+function onSelectionChange(val) {
+  multipleSelection.value = val
+}
+
+function typeColor(type) {
+  if (type === 'menu') return 'success'
+  if (type === 'api') return 'info'
+  return 'warning'
+}
+
+function typeLabel(type) {
+  if (type === 'menu') return '菜单'
+  if (type === 'api') return '接口'
+  return '数据'
+}
+
+function toggleStatus(row) {
+  updatePermission(row.id, { status: row.status })
+    .then(res => {
+      if (res.code !== 0) {
+        ElMessage.error(res.message || '状态更新失败')
+        row.status = !row.status
       }
-    }).catch(() => ElMessage.error('删除失败'))
-  }).catch(() => {})
+    })
+    .catch(() => {
+      ElMessage.error('状态更新失败')
+      row.status = !row.status
+    })
+}
+
+function formatDate(val) {
+  if (!val) return ''
+  return new Date(val).toLocaleString()
 }
 </script>
+
+<style scoped>
+.page-wrapper {
+  padding: 20px;
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.toolbar .left,
+.toolbar .right {
+  display: flex;
+  align-items: center;
+}
+.toolbar .left > * {
+  margin-right: 10px;
+}
+.toolbar .right > * {
+  margin-left: 10px;
+}
+.mb-3 {
+  margin-bottom: 15px;
+}
+</style>
