@@ -13,7 +13,7 @@ const form = ref({
 })
 
 function submit() {
-  store.login({ name: form.value.username, permissions: ['customer:crawl', 'system:permission'] })
+  store.login({ name: form.value.username, permissions: ['*'] })
   router.push('/dashboard')
 }
 </script>
