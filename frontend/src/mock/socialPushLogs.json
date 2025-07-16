@@ -1,0 +1,12 @@
+[
+  {"id":1,"accountId":1,"time":"2025-06-01 10:00","content":"发布新品信息","platform":"Facebook","status":"成功"},
+  {"id":2,"accountId":1,"time":"2025-06-02 10:00","content":"宣传活动","platform":"Facebook","status":"成功"},
+  {"id":3,"accountId":1,"time":"2025-06-03 10:00","content":"测试推送","platform":"Facebook","status":"失败"},
+  {"id":4,"accountId":2,"time":"2025-06-05 11:00","content":"更新招聘信息","platform":"LinkedIn","status":"成功"},
+  {"id":5,"accountId":2,"time":"2025-06-06 11:00","content":"分享行业新闻","platform":"LinkedIn","status":"成功"},
+  {"id":6,"accountId":2,"time":"2025-06-07 11:00","content":"发布职位空缺","platform":"LinkedIn","status":"失败"},
+  {"id":7,"accountId":3,"time":"2025-06-08 09:00","content":"每日问候","platform":"Twitter","status":"成功"},
+  {"id":8,"accountId":3,"time":"2025-06-09 09:00","content":"产品促销","platform":"Twitter","status":"失败"},
+  {"id":9,"accountId":3,"time":"2025-06-10 09:00","content":"转发用户评价","platform":"Twitter","status":"成功"},
+  {"id":10,"accountId":1,"time":"2025-06-11 10:00","content":"新品预告","platform":"Facebook","status":"成功"}
+]
