@@ -12,6 +12,7 @@ export function savePermissions(roleId, permissions) {
   return request.post(`/api/v1/roles/${roleId}/permissions`, { permissions })
 }
 
+
 export function listPermissions(params) {
   return request.get('/api/v1/permissions', { params })
 }
