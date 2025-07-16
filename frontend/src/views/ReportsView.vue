@@ -27,9 +27,7 @@
           <template #header>
             <span class="section-title"><el-icon><PieChart /></el-icon> 转化漏斗</span>
           </template>
-          <div style="height:300px;display:flex;align-items:center;justify-content:center;color:#999;">
-            漏斗图占位
-          </div>
+          <FunnelChart :data="summary.funnel" />
         </el-card>
       </el-col>
       <el-col :xs="24" :md="12">
@@ -37,9 +35,7 @@
           <template #header>
             <span class="section-title"><el-icon><Histogram /></el-icon> 渠道转化</span>
           </template>
-          <div style="height:300px;display:flex;align-items:center;justify-content:center;color:#999;">
-            柱状图占位
-          </div>
+          <BarChart :data="summary.channels" />
         </el-card>
       </el-col>
       <el-col :xs="24" :md="12">
@@ -47,9 +43,7 @@
           <template #header>
             <span class="section-title"><el-icon><PieChart /></el-icon> 流量来源</span>
           </template>
-          <div style="height:300px;display:flex;align-items:center;justify-content:center;color:#999;">
-            饼图占位
-          </div>
+          <PieChartCmp :data="summary.sources" />
         </el-card>
       </el-col>
       <el-col :xs="24" :md="12">
@@ -57,9 +51,7 @@
           <template #header>
             <span class="section-title"><el-icon><TrendCharts /></el-icon> 活跃趋势</span>
           </template>
-          <div style="height:300px;display:flex;align-items:center;justify-content:center;color:#999;">
-            折线图占位
-          </div>
+          <LineChart :data="period === '7' ? summary.active7 : summary.active30" />
         </el-card>
       </el-col>
     </el-row>
@@ -96,6 +88,10 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { PieChart, Histogram, TrendCharts } from '@element-plus/icons-vue'
+import FunnelChart from '../components/charts/FunnelChart.vue'
+import BarChart from '../components/charts/BarChart.vue'
+import PieChartCmp from '../components/charts/PieChart.vue'
+import LineChart from '../components/charts/LineChart.vue'
 import summaryData from '../mock/reportSummary.json'
 import logData from '../mock/behaviorLog.json'
 

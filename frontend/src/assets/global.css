@@ -289,6 +289,16 @@ body {
     color: #7b1fa2;
 }
 
+.status-unread {
+    background: #e3f2fd;
+    color: #1e88e5;
+}
+
+.status-read {
+    background: #f1f8e9;
+    color: #558b2f;
+}
+
 .action-buttons {
     display: flex;
     gap: 10px;
@@ -380,4 +390,32 @@ body {
 .module-card { box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 8px; margin-bottom: 20px; }
 .user-card { display:flex; align-items:center; gap:10px; padding:10px; }
 .user-card .info { flex:1; }
+
+.notify-card {
+    cursor: pointer;
+    transition: box-shadow .3s, transform .3s;
+}
+.notify-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.campaign-card {
+    transition: box-shadow .3s, transform .3s;
+}
+.campaign-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.fade-list-enter-active,
+.fade-list-leave-active,
+.fade-list-move {
+    transition: all .3s;
+}
+.fade-list-enter-from,
+.fade-list-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
+}
 
