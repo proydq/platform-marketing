@@ -52,7 +52,6 @@
         </el-table-column>
       </el-table>
     </el-card>
-
     <el-drawer v-model="editDrawer" :title="editMode ? $t('campaign.edit') : $t('campaign.new')" size="40%">
       <el-form :model="form" label-width="90px" class="form-section">
         <el-form-item :label="$t('campaign.name')" required>
@@ -146,7 +145,6 @@ const channelFilter = ref('')
 const search = ref('')
 
 const { t } = useI18n()
-
 const editDrawer = ref(false)
 const detailDrawer = ref(false)
 const editMode = ref(false)
