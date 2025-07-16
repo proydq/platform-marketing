@@ -1,0 +1,5 @@
+[
+  {"name": "Alice", "email": "alice@example.com", "source": "LinkedIn", "tags": ["潜在"], "status": "活跃"},
+  {"name": "Bob", "email": "bob@example.com", "source": "Google", "tags": ["VIP"], "status": "活跃"},
+  {"name": "Charlie", "email": "charlie@example.com", "source": "Facebook", "tags": ["普通"], "status": "停用"}
+]
