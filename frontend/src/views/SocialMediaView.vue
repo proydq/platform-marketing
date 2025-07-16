@@ -6,35 +6,9 @@
         <el-option v-for="p in platforms" :key="p" :label="p" :value="p" />
       </el-select>
       <el-input v-model="keyword" placeholder="搜索账号" clearable style="width:200px" />
-      <el-button type="primary" @click="toggleAdd"><span class="icon">➕</span>添加账号</el-button>
+      <el-button type="primary" @click="openAdd"><span class="icon">➕</span>添加账号</el-button>
     </div>
 
-    <el-collapse v-model="addSection" style="margin-bottom:20px;">
-      <el-collapse-item name="add">
-        <template #title>新增账号</template>
-        <el-form :model="addForm" label-width="90px" class="form-section" style="max-width:600px;margin-top:10px;">
-          <el-form-item label="平台类型">
-            <el-select v-model="addForm.platform" placeholder="选择平台">
-              <el-option label="Facebook" value="Facebook" />
-              <el-option label="LinkedIn" value="LinkedIn" />
-              <el-option label="Twitter" value="Twitter" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="账号名">
-            <el-input v-model="addForm.name" />
-          </el-form-item>
-          <el-form-item label="AccessToken">
-            <el-input v-model="addForm.token" />
-          </el-form-item>
-          <el-form-item label="备注">
-            <el-input v-model="addForm.note" />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="addAccount">添加</el-button>
-          </el-form-item>
-        </el-form>
-      </el-collapse-item>
-    </el-collapse>
 
     <el-row :gutter="20">
       <el-col v-for="acc in filteredAccounts" :key="acc.id" :xs="24" :sm="12" :md="8" style="margin-bottom:20px;">
@@ -44,7 +18,7 @@
               <span>{{ acc.platform }}</span>
               <div>
                 <el-tooltip content="编辑">
-                  <el-button text size="small" @click="openDrawer(acc)"><el-icon><Edit /></el-icon></el-button>
+                  <el-button text size="small" @click="openEdit(acc)"><el-icon><Edit /></el-icon></el-button>
                 </el-tooltip>
                 <el-tooltip content="解绑">
                   <el-button text size="small" style="color:#f56c6c" @click="unbind(acc)"><el-icon><Delete /></el-icon></el-button>
@@ -64,31 +38,36 @@
       </el-col>
     </el-row>
 
-    <el-drawer v-model="drawerVisible" title="编辑账号" size="30%">
-      <el-form :model="editForm" label-width="90px" class="form-section">
+    <el-drawer
+      v-model="drawerVisible"
+      :title="drawerMode === 'add' ? '添加账号' : '编辑账号'"
+      size="480px"
+      direction="rtl"
+    >
+      <el-form :model="form" label-width="90px" class="form-section">
         <el-form-item label="平台类型">
-          <el-select v-model="editForm.platform">
+          <el-select v-model="form.platform">
+
             <el-option label="Facebook" value="Facebook" />
             <el-option label="LinkedIn" value="LinkedIn" />
             <el-option label="Twitter" value="Twitter" />
           </el-select>
         </el-form-item>
         <el-form-item label="账号名">
-          <el-input v-model="editForm.name" />
+          <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item label="AccessToken">
-          <el-input v-model="editForm.token" />
+          <el-input v-model="form.accessToken" />
         </el-form-item>
         <el-form-item label="备注">
-          <el-input v-model="editForm.note" />
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-switch v-model="editForm.statusSwitch" active-text="已绑定" inactive-text="已断开" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="saveEdit">保存</el-button>
+          <el-input v-model="form.note" />
         </el-form-item>
       </el-form>
+      <template #footer>
+        <el-button @click="drawerVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveForm">保存</el-button>
+      </template>
+
     </el-drawer>
 
     <el-dialog v-model="logDialogVisible" title="推送日志" width="600px">
@@ -116,15 +95,16 @@ const accounts = ref([])
 const logs = ref([])
 const filterPlatform = ref('')
 const keyword = ref('')
-const addSection = ref([])
-const addForm = ref({ platform: '', name: '', token: '', note: '' })
 const drawerVisible = ref(false)
-const editForm = ref({ id: null, platform: '', name: '', token: '', note: '', status: '已绑定', bindTime: '', statusSwitch: true })
+const drawerMode = ref('add')
+const form = ref({ id: null, platform: '', name: '', accessToken: '', note: '' })
+
 const logDialogVisible = ref(false)
 const currentAccountId = ref(null)
 
 onMounted(() => {
-  accounts.value = accountsData.map(a => ({ ...a, statusSwitch: a.status === '已绑定' }))
+  accounts.value = accountsData
+
   logs.value = logsData
 })
 
@@ -140,29 +120,30 @@ const filteredAccounts = computed(() => {
   return list
 })
 
-function toggleAdd() {
-  addSection.value = addSection.value.length ? [] : ['add']
-}
-
-function addAccount() {
-  const id = accounts.value.length ? Math.max(...accounts.value.map(a => a.id)) + 1 : 1
-  accounts.value.push({ ...addForm.value, id, status: '已绑定', bindTime: new Date().toISOString().split('T')[0], statusSwitch: true })
-  addForm.value = { platform: '', name: '', token: '', note: '' }
-  addSection.value = []
-  ElMessage.success('账号已添加')
-}
-
-function openDrawer(acc) {
-  editForm.value = { ...acc, statusSwitch: acc.status === '已绑定' }
+function openAdd() {
+  drawerMode.value = 'add'
+  form.value = { id: null, platform: '', name: '', accessToken: '', note: '' }
   drawerVisible.value = true
 }
 
-function saveEdit() {
-  const idx = accounts.value.findIndex(a => a.id === editForm.value.id)
-  editForm.value.status = editForm.value.statusSwitch ? '已绑定' : '已断开'
-  accounts.value.splice(idx, 1, { ...editForm.value })
+function openEdit(acc) {
+  drawerMode.value = 'edit'
+  form.value = { id: acc.id, platform: acc.platform, name: acc.name, accessToken: acc.accessToken, note: acc.note }
+  drawerVisible.value = true
+}
+
+function saveForm() {
+  if (drawerMode.value === 'edit') {
+    const idx = accounts.value.findIndex(a => a.id === form.value.id)
+    accounts.value.splice(idx, 1, { ...accounts.value[idx], ...form.value })
+    ElMessage.success('账号信息已更新')
+  } else {
+    const id = accounts.value.length ? Math.max(...accounts.value.map(a => a.id)) + 1 : 1
+    accounts.value.push({ id, status: '已绑定', bindTime: new Date().toISOString().split('T')[0], ...form.value })
+    ElMessage.success('账号已添加')
+  }
   drawerVisible.value = false
-  ElMessage.success('账号信息已更新')
+
 }
 
 function unbind(acc) {
