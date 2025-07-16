@@ -1,17 +1,22 @@
 <template>
-  <div class="page-wrapper page-permission" style="background:#f6f9fc;padding:20px;">
-    <el-row :gutter="20">
-      <el-col :xs="24" :md="6" style="max-width:280px;">
-        <el-card class="section-card">
-          <template #header>
-            <div class="section-title">
-              角色列表
-              <el-button type="primary" circle size="small" @click="openRoleForm(false)">
-                <el-icon><CirclePlusFilled /></el-icon>
-              </el-button>
-            </div>
-          </template>
-          <div v-for="role in roles" :key="role.id" :class="['role-card', {active: role.id === activeRoleId}]" @click="selectRole(role)" style="position:relative;">
+  <div class="page-wrapper page-permission" style="background:#f6f9fc;padding:24px 0;">
+    <div style="max-width:1080px;margin:0 auto;">
+      <div class="section-title" style="margin-bottom:10px;">
+        角色列表
+        <el-button type="primary" circle size="small" @click="openRoleForm(false)">
+          <el-icon><CirclePlusFilled /></el-icon>
+        </el-button>
+      </div>
+      <el-row :gutter="12" style="padding-bottom:10px;">
+        <el-col
+          v-for="role in roles"
+          :key="role.id"
+          :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+          <el-card
+            class="role-card"
+            :class="{ active: role.id === activeRoleId }"
+            @click="selectRole(role)"
+            style="position:relative;">
             <div class="role-header">
               <span class="role-name">{{ role.name }}</span>
               <div>
@@ -25,88 +30,89 @@
             </div>
             <div class="role-description">{{ role.description }}</div>
             <el-badge :value="role.users.length" class="status-badge" style="position:absolute;top:-6px;right:-6px;" />
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :xs="24" :md="18">
-        <el-card class="section-card">
-          <el-tabs v-model="activeTab">
-            <el-tab-pane label="权限配置" name="perm">
-              <el-row :gutter="20">
-                <el-col v-for="m in permissions" :key="m.id" :xs="24" :md="12">
-                  <el-card class="permission-card">
-                    <div class="section-title">
-                      {{ m.label }}
-                      <el-tooltip content="权限说明">
-                        <el-icon><InfoFilled/></el-icon>
-                      </el-tooltip>
-                    </div>
-                    <el-checkbox-group v-model="checkedKeys">
-                      <el-checkbox v-for="c in m.children" :key="c.id" :label="c.id">{{ c.label }}</el-checkbox>
-                    </el-checkbox-group>
-                  </el-card>
-                </el-col>
-              </el-row>
-              <div class="action-buttons" style="justify-content:flex-end;">
-                <el-button type="primary" @click="savePerms">保存权限</el-button>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="用户分配" name="users">
-              <div class="action-buttons">
-                <el-button type="primary" @click="toggleAddUser">
-                  <el-icon><CirclePlusFilled/></el-icon>添加用户
-                </el-button>
-              </div>
-              <el-table :data="assignedUsers" class="section-card" style="width:100%;" v-if="assignedUsers.length">
-                <el-table-column prop="name" label="姓名" />
-                <el-table-column prop="department" label="部门" />
-                <el-table-column label="操作" width="80">
-                  <template #default="scope">
-                    <el-tooltip content="移除">
-                      <el-button :icon="Delete" type="danger" circle size="small" @click="removeUser(scope.row)" />
-                    </el-tooltip>
-                  </template>
-                </el-table-column>
-              </el-table>
-              <el-empty v-else description="无数据" />
-              <el-drawer v-model="addUserVisible" direction="rtl" size="480px" title="添加用户">
-                <el-form label-width="70px" class="form-section">
-                  <el-form-item label="用户">
-                    <el-select v-model="selectedUserId" filterable placeholder="选择用户" style="width:240px;">
-                      <el-option v-for="u in availableUsers" :key="u.id" :label="u.name" :value="u.id" />
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item label="分配角色">
-                    <el-select v-model="selectedRoleIds" multiple style="width:240px;">
-                      <el-option v-for="r in roles" :key="r.id" :label="r.name" :value="r.id" />
-                    </el-select>
-                  </el-form-item>
-                </el-form>
-                <template #footer>
-                  <el-button @click="addUserVisible=false">取消</el-button>
-                  <el-button type="primary" @click="addUser">确定</el-button>
-                </template>
-              </el-drawer>
-            </el-tab-pane>
-          </el-tabs>
-        </el-card>
-      </el-col>
-    </el-row>
+          </el-card>
+        </el-col>
+      </el-row>
 
-    <el-drawer v-model="roleFormVisible" direction="rtl" size="480px" :title="isEditRole ? '编辑角色' : '添加角色'">
-      <el-form :model="roleForm" label-width="70px" class="form-section">
-        <el-form-item label="名称">
-          <el-input v-model="roleForm.name" />
-        </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="roleForm.description" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="roleFormVisible=false">取消</el-button>
-        <el-button type="primary" @click="saveRole">保存</el-button>
-      </template>
-    </el-drawer>
+      <el-tabs v-model="activeTab" class="perm-tabs" style="margin-top:20px;">
+        <el-tab-pane label="权限配置" name="perm">
+          <el-card class="section-card">
+            <el-row :gutter="20">
+              <el-col v-for="m in permissions" :key="m.id" :xs="24" :md="12">
+                <el-card class="permission-card">
+                  <div class="section-title">
+                    {{ m.label }}
+                    <el-tooltip content="权限说明">
+                      <el-icon><InfoFilled /></el-icon>
+                    </el-tooltip>
+                  </div>
+                  <el-checkbox-group v-model="checkedKeys">
+                    <el-checkbox v-for="c in m.children" :key="c.id" :label="c.id">{{ c.label }}</el-checkbox>
+                  </el-checkbox-group>
+                </el-card>
+              </el-col>
+            </el-row>
+            <div class="action-buttons" style="justify-content:flex-end;">
+              <el-button type="primary" @click="savePerms">保存权限</el-button>
+            </div>
+          </el-card>
+        </el-tab-pane>
+        <el-tab-pane label="用户分配" name="users">
+          <el-card class="section-card">
+            <div class="action-buttons">
+              <el-button type="primary" @click="toggleAddUser">
+                <el-icon><CirclePlusFilled/></el-icon>添加用户
+              </el-button>
+            </div>
+            <el-table :data="assignedUsers" style="width:100%;" v-if="assignedUsers.length">
+              <el-table-column prop="name" label="姓名" />
+              <el-table-column prop="department" label="部门" />
+              <el-table-column label="操作" width="80">
+                <template #default="scope">
+                  <el-tooltip content="移除">
+                    <el-button :icon="Delete" type="danger" circle size="small" @click="removeUser(scope.row)" />
+                  </el-tooltip>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-empty v-else description="无数据" />
+          </el-card>
+          <el-drawer v-model="addUserVisible" direction="rtl" size="480px" title="添加用户">
+            <el-form label-width="70px" class="form-section">
+              <el-form-item label="用户">
+                <el-select v-model="selectedUserId" filterable placeholder="选择用户" style="width:240px;">
+                  <el-option v-for="u in availableUsers" :key="u.id" :label="u.name" :value="u.id" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="分配角色">
+                <el-select v-model="selectedRoleIds" multiple style="width:240px;">
+                  <el-option v-for="r in roles" :key="r.id" :label="r.name" :value="r.id" />
+                </el-select>
+              </el-form-item>
+            </el-form>
+            <template #footer>
+              <el-button @click="addUserVisible=false">取消</el-button>
+              <el-button type="primary" @click="addUser">确定</el-button>
+            </template>
+          </el-drawer>
+        </el-tab-pane>
+      </el-tabs>
+
+      <el-drawer v-model="roleFormVisible" direction="rtl" size="480px" :title="isEditRole ? '编辑角色' : '添加角色'">
+        <el-form :model="roleForm" label-width="70px" class="form-section">
+          <el-form-item label="名称">
+            <el-input v-model="roleForm.name" />
+          </el-form-item>
+          <el-form-item label="描述">
+            <el-input v-model="roleForm.description" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <el-button @click="roleFormVisible=false">取消</el-button>
+          <el-button type="primary" @click="saveRole">保存</el-button>
+        </template>
+      </el-drawer>
+    </div>
   </div>
 </template>
 
@@ -167,7 +173,7 @@ watch(activeRoleId, val => {
   }
 })
 
-const assignedUsers = computed(() => currentRole.value ? currentRole.value.users : [])
+const assignedUsers = computed(() => (currentRole.value ? currentRole.value.users : []))
 
 const availableUsers = computed(() => {
   if (!currentRole.value) return []
@@ -258,3 +264,15 @@ function editRole(role) {
   openRoleForm(true, role)
 }
 </script>
+
+<style scoped>
+.role-card {
+  cursor: pointer;
+  margin-bottom: 12px;
+  height: 100%;
+}
+.role-card.active {
+  border-color: #409eff;
+  background: #ecf5ff;
+}
+</style>
