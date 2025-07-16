@@ -20,20 +20,25 @@
             </el-tooltip>
           </el-menu-item>
         </el-menu>
-        <el-card v-if="roleFormVisible" class="role-card">
-          <el-form :model="roleForm" label-width="70px">
+        <el-drawer
+          v-model="roleFormVisible"
+          :title="isEditRole ? '编辑角色' : '添加角色'"
+          size="480px"
+          direction="rtl"
+        >
+          <el-form :model="roleForm" label-width="70px" class="form-section">
             <el-form-item label="名称">
               <el-input v-model="roleForm.name" />
             </el-form-item>
             <el-form-item label="描述">
               <el-input v-model="roleForm.description" />
             </el-form-item>
-            <div class="action-buttons">
-              <el-button type="primary" size="small" @click="saveRole">保存</el-button>
-              <el-button size="small" @click="roleFormVisible = false">取消</el-button>
-            </div>
           </el-form>
-        </el-card>
+          <template #footer>
+            <el-button @click="roleFormVisible = false">取消</el-button>
+            <el-button type="primary" @click="saveRole">保存</el-button>
+          </template>
+        </el-drawer>
       </el-col>
       <el-col :xs="24" :sm="24" :md="18">
         <el-card>
@@ -70,17 +75,31 @@
                   <el-icon><CirclePlusFilled /></el-icon>添加用户
                 </el-button>
               </div>
-              <el-form v-if="addUserVisible" inline style="margin-bottom:10px;">
-                <el-form-item label="用户">
-                  <el-select v-model="selectedUserId" filterable placeholder="选择用户" style="width:200px;">
-                    <el-option v-for="u in availableUsers" :key="u.id" :label="u.name" :value="u.id" />
-                  </el-select>
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" size="small" @click="addUser">确定</el-button>
-                  <el-button size="small" @click="addUserVisible = false">取消</el-button>
-                </el-form-item>
-              </el-form>
+              <el-drawer
+                v-model="addUserVisible"
+                title="添加用户"
+                size="480px"
+                direction="rtl"
+              >
+                <el-form label-width="70px" class="form-section">
+                  <el-form-item label="用户">
+                    <el-select v-model="selectedUserId" filterable placeholder="选择用户" style="width:240px;">
+                      <el-option v-for="u in availableUsers" :key="u.id" :label="u.name" :value="u.id">
+                        <el-avatar size="20" :src="u.avatar" style="margin-right:5px" />{{ u.name }}
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="分配角色">
+                    <el-select v-model="selectedRoleIds" multiple style="width:240px;">
+                      <el-option v-for="r in roles" :key="r.id" :label="r.name" :value="r.id" />
+                    </el-select>
+                  </el-form-item>
+                </el-form>
+                <template #footer>
+                  <el-button @click="addUserVisible = false">取消</el-button>
+                  <el-button type="primary" @click="addUser">确定</el-button>
+                </template>
+              </el-drawer>
               <el-row :gutter="20">
                 <el-col v-for="user in assignedUsers" :key="user.id" :xs="24" :sm="12" :md="8">
                   <el-card class="user-card" shadow="hover">
@@ -125,7 +144,7 @@ const roleForm = reactive({ id: null, name: '', description: '' })
 
 const addUserVisible = ref(false)
 const selectedUserId = ref(null)
-
+const selectedRoleIds = ref([])
 const codeToId = {}
 const idToCode = {}
 
@@ -217,7 +236,7 @@ function saveRole() {
   }
   roleFormVisible.value = false
   ElMessage.success('保存成功')
-}
+}r
 function removeRole(role) {
   ElMessageBox.confirm('确定删除该角色吗?', '提示', { type: 'warning' })
     .then(() => {
@@ -237,15 +256,23 @@ function savePerms() {
 }
 
 function toggleAddUser() {
-  addUserVisible.value = !addUserVisible.value
+  selectedUserId.value = null
+  selectedRoleIds.value = [activeRoleId.value]
+  addUserVisible.value = true
 }
 
 function addUser() {
-  if (!selectedUserId.value || !currentRole.value) return
+  if (!selectedUserId.value || !selectedRoleIds.value.length) return
   const user = users.value.find(u => u.id === selectedUserId.value)
-  currentRole.value.users.push(user)
-  selectedUserId.value = null
+  selectedRoleIds.value.forEach(rid => {
+    const role = roles.value.find(r => r.id === rid)
+    if (role && !role.users.find(u => u.id === user.id)) {
+      role.users.push(user)
+    }
+  })
   addUserVisible.value = false
+  selectedUserId.value = null
+  selectedRoleIds.value = []
   ElMessage.success('已添加用户')
 }
 
