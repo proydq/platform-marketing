@@ -23,6 +23,25 @@ public class Permission {
     @Column(unique = true)
     private String code;
 
+    /**
+     * menu/api/data
+     */
+    private String type;
+
+    /**
+     * group name
+     */
+    @Column(name = "group_name")
+    private String group;
+
+    private boolean status = true;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
+
     private String name;
 
     private String description;
@@ -63,6 +82,46 @@ public class Permission {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public LocalDateTime getCreatedAt() {
