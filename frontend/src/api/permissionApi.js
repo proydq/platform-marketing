@@ -4,6 +4,10 @@ export function listPermissions(params) {
   return request.get('/api/v1/permissions', { params })
 }
 
+export function getPermission(id) {
+  return request.get(`/api/v1/permissions/${id}`)
+}
+
 export function createPermission(data) {
   return request.post('/api/v1/permissions', data)
 }
