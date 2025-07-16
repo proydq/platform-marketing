@@ -20,6 +20,7 @@ function openDialog() {
   roleForm.value = { name: '', description: '' }
   dialogVisible.value = true
 }
+
 </script>
 
 <template>

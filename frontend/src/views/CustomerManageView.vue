@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import customersJson from '../mock/customers.json'
-
 const customers = ref([])
 const page = ref(1)
 const pageSize = 5
@@ -28,6 +27,7 @@ function handleImport() { console.log('import') }
 function handleExport() { console.log('export') }
 function handleClean() { console.log('clean') }
 function showDetail(row) { current.value = row; drawerVisible.value = true }
+
 </script>
 
 <template>
