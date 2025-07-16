@@ -188,7 +188,6 @@ const availableUsers = computed(() => {
   const ids = new Set(assignedUsers.value.map(u => u.id))
   return users.value.filter(u => !ids.has(u.id))
 })
-
 function handleRoleSelect(key) {
   const role = roles.value.find(r => r.id === Number(key))
   if (role) selectRole(role)
@@ -236,7 +235,7 @@ function saveRole() {
   }
   roleFormVisible.value = false
   ElMessage.success('保存成功')
-}r
+}
 function removeRole(role) {
   ElMessageBox.confirm('确定删除该角色吗?', '提示', { type: 'warning' })
     .then(() => {
