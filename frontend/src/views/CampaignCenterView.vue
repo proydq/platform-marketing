@@ -140,6 +140,7 @@ const drawerVisible = ref(false)
 const isEdit = ref(false)
 const formRef = ref(null)
 
+
 const form = reactive({
   id: null,
   name: '',
@@ -234,3 +235,4 @@ function viewCampaign(row) {
   drawerVisible.value = true
 }
 </script>
+

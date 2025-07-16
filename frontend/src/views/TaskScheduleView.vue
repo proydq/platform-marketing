@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue'
 import scheduleData from '../mock/schedules.json'
 import ScheduleSelector from '../components/ScheduleSelector.vue'
-
 const form = ref({ name: '', frequency: '每天', startTime: '' })
 const schedules = ref([])
 

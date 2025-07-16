@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 import RichTextEditor from '../components/RichTextEditor.vue'
-
 const form = ref({ title: '', group: '', content: '' })
 const groups = ['全部客户', '潜在客户', 'VIP']
 </script>
