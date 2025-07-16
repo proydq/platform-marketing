@@ -3,6 +3,8 @@ package com.platform.marketing.service.impl;
 import com.platform.marketing.entity.Permission;
 import com.platform.marketing.repository.PermissionRepository;
 import com.platform.marketing.service.PermissionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,5 +58,20 @@ public class PermissionServiceImpl implements PermissionService {
     @Transactional
     public void delete(String id) {
         permissionRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Permission> findPage(String keyword, Pageable pageable) {
+        if (keyword == null || keyword.isEmpty()) {
+            return permissionRepository.findAll(pageable);
+        }
+        return permissionRepository
+                .findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(keyword, keyword, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAll(List<String> ids) {
+        permissionRepository.deleteAllById(ids);
     }
 }
