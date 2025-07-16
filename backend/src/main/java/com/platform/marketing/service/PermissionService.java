@@ -16,5 +16,5 @@ public interface PermissionService {
     void delete(String id);
     void deleteBatch(List<String> ids);
 
-    Page<Permission> search(String keyword, Pageable pageable);
+    Page<Permission> search(String keyword, String type, Boolean status, Pageable pageable);
 }
