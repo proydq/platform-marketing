@@ -1,0 +1,18 @@
+{
+  "basic": {
+    "siteName": "营销平台",
+    "logoUrl": "",
+    "brandColor": "#409eff",
+    "language": "zh-CN"
+  },
+  "notification": {
+    "enabled": true,
+    "type": "Email",
+    "channel": "邮件"
+  },
+  "security": {
+    "passwordStrength": "中",
+    "deviceLimit": 3,
+    "twoFactor": false
+  }
+}
