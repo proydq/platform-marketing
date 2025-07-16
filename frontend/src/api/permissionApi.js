@@ -8,18 +8,6 @@ export function getPermission(id) {
   return request.get(`/v1/permissions/${id}`)
 }
 
-export function getPermission(id) {
-  return request.get(`/api/v1/permissions/${id}`)
-}
-
-export function getPermission(id) {
-  return request.get(`/api/v1/permissions/${id}`)
-}
-
-export function getPermission(id) {
-  return request.get(`/api/v1/permissions/${id}`)
-}
-
 export function createPermission(data) {
   return request.post('/v1/permissions', data)
 }
