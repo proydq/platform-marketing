@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "系统管理员",
+    "email": "admin@company.com",
+    "role": "超级管理员",
+    "department": "IT部",
+    "status": "在线",
+    "lastLogin": "2024-01-15 10:30",
+    "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+  },
+  {
+    "id": 2,
+    "name": "张营销",
+    "email": "zhang@company.com",
+    "role": "营销主管",
+    "department": "市场部",
+    "status": "在线",
+    "lastLogin": "2024-01-15 09:45",
+    "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+  },
+  {
+    "id": 3,
+    "name": "李推广",
+    "email": "li@company.com",
+    "role": "营销主管",
+    "department": "市场部",
+    "status": "离线",
+    "lastLogin": "2024-01-14 18:20",
+    "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+  },
+  {
+    "id": 4,
+    "name": "王专员",
+    "email": "wang@company.com",
+    "role": "营销专员",
+    "department": "市场部",
+    "status": "在线",
+    "lastLogin": "2024-01-15 08:15",
+    "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+  },
+  {
+    "id": 5,
+    "name": "陈助理",
+    "email": "chen@company.com",
+    "role": "营销专员",
+    "department": "市场部",
+    "status": "离线",
+    "lastLogin": "2024-01-14 17:30",
+    "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+  },
+  {
+    "id": 6,
+    "name": "赵分析",
+    "email": "zhao@company.com",
+    "role": "数据分析师",
+    "department": "技术部",
+    "status": "在线",
+    "lastLogin": "2024-01-15 09:00",
+    "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+  }
+]
