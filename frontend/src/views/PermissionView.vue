@@ -1,5 +1,5 @@
 <template>
-  <div class="page-wrapper page-permission" style="background:#f6f9fc;">
+  <div class="page-wrapper page-permission" style="background:#f6f9fc;" v-loading="loadingRoles">
       <div class="section-title" style="margin-bottom:10px;">
         角色列表
         <el-button type="primary" circle size="small" @click="openRoleForm(false)">
@@ -35,7 +35,7 @@
 
       <el-tabs v-model="activeTab" class="perm-tabs" style="margin-top:20px;">
         <el-tab-pane label="权限配置" name="perm">
-          <el-card class="section-card">
+          <el-card class="section-card" v-loading="loadingPerms">
             <el-row :gutter="20">
               <el-col v-for="m in permissions" :key="m.id" :xs="24" :md="12">
                 <el-card class="permission-card">
@@ -118,13 +118,15 @@
 import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Edit, Delete, CirclePlusFilled, InfoFilled } from '@element-plus/icons-vue'
-import rolesData from '../mock/roles.json'
+import { getRoleList, getPermissionTree, savePermissions } from '../api/permission'
 import permsData from '../mock/permissions.json'
 import usersData from '../mock/users.json'
 
 const roles = ref([])
 const permissions = ref([])
 const users = ref([])
+const loadingRoles = ref(false)
+const loadingPerms = ref(false)
 
 const activeRoleId = ref(null)
 const activeTab = ref('perm')
@@ -151,21 +153,37 @@ function buildMaps(list) {
 }
 
 onMounted(() => {
-  roles.value = rolesData
   permissions.value = permsData
   users.value = usersData
   buildMaps(permsData)
-  if (roles.value.length) {
-    activeRoleId.value = roles.value[0].id
-    checkedKeys.value = roles.value[0].permissions.map(c => codeToId[c]).filter(Boolean)
-  }
+  fetchRoles()
 })
+
+async function fetchRoles() {
+  loadingRoles.value = true
+  try {
+    const res = await getRoleList()
+    if (res.code === 0) {
+      roles.value = (res.data || []).map(r => ({ ...r, permissions: [], users: [] }))
+      if (roles.value.length) {
+        activeRoleId.value = roles.value[0].id
+      }
+      ElMessage.success(res.message || '获取角色列表成功')
+    } else {
+      ElMessage.error(res.message || '获取角色列表失败')
+    }
+  } catch (e) {
+    ElMessage.error('获取角色列表失败')
+  } finally {
+    loadingRoles.value = false
+  }
+}
 
 const currentRole = computed(() => roles.value.find(r => r.id === activeRoleId.value) || null)
 
 watch(activeRoleId, val => {
-  if (val && currentRole.value) {
-    checkedKeys.value = currentRole.value.permissions.map(c => codeToId[c]).filter(Boolean)
+  if (val) {
+    loadPermissions(val)
   } else {
     checkedKeys.value = []
   }
@@ -181,6 +199,24 @@ const availableUsers = computed(() => {
 
 function selectRole(role) {
   activeRoleId.value = role.id
+}
+
+async function loadPermissions(roleId) {
+  loadingPerms.value = true
+  try {
+    const res = await getPermissionTree(roleId)
+    if (res.code === 0) {
+      checkedKeys.value = (res.data || []).map(c => codeToId[c]).filter(Boolean)
+      const role = roles.value.find(r => r.id === roleId)
+      if (role) role.permissions = res.data
+    } else {
+      ElMessage.error(res.message || '获取权限失败')
+    }
+  } catch (e) {
+    ElMessage.error('获取权限失败')
+  } finally {
+    loadingPerms.value = false
+  }
 }
 
 function openRoleForm(edit, role) {
@@ -227,8 +263,23 @@ function removeRole(role) {
 
 function savePerms() {
   if (!currentRole.value) return
-  currentRole.value.permissions = checkedKeys.value.map(id => idToCode[id]).filter(Boolean)
-  ElMessage.success('权限已更新')
+  const perms = checkedKeys.value.map(id => idToCode[id]).filter(Boolean)
+  loadingPerms.value = true
+  savePermissions(currentRole.value.id, perms)
+    .then(res => {
+      if (res.code === 0) {
+        currentRole.value.permissions = perms
+        ElMessage.success(res.message || '权限已更新')
+      } else {
+        ElMessage.error(res.message || '保存权限失败')
+      }
+    })
+    .catch(() => {
+      ElMessage.error('保存权限失败')
+    })
+    .finally(() => {
+      loadingPerms.value = false
+    })
 }
 
 function toggleAddUser() {
