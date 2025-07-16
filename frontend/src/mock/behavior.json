@@ -1,0 +1,4 @@
+[
+  {"customerId": 1, "action": "登录", "time": "2024-01-01 10:00", "ip": "192.168.0.1", "page": "/login"},
+  {"customerId": 2, "action": "查看报表", "time": "2024-01-02 11:30", "ip": "192.168.0.2", "page": "/reports"}
+]
