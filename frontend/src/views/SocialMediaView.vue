@@ -47,6 +47,7 @@
       <el-form :model="form" label-width="90px" class="form-section">
         <el-form-item label="平台类型">
           <el-select v-model="form.platform">
+
             <el-option label="Facebook" value="Facebook" />
             <el-option label="LinkedIn" value="LinkedIn" />
             <el-option label="Twitter" value="Twitter" />
