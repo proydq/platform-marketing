@@ -27,6 +27,7 @@
         </el-row>
       </el-card>
 
+
       <el-space direction="vertical" style="width:100%;" :size="16">
         <transition-group name="fade-list" tag="div">
           <el-card

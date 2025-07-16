@@ -437,6 +437,7 @@ body {
     max-width: 1080px;
 }
 
+
 .campaign-card {
     transition: box-shadow .3s, transform .3s;
 }

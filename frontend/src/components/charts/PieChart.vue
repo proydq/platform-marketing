@@ -16,6 +16,7 @@ import { useI18n } from 'vue-i18n'
 
 use([PieChart, LegendComponent, TooltipComponent, TitleComponent, CanvasRenderer])
 
+
 const props = defineProps({
   title: String,
   data: { type: Array, default: () => [] },
