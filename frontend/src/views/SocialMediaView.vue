@@ -76,5 +76,4 @@ function removeAccount(row) {
       </template>
     </el-dialog>
   </div>
-
 </template>
