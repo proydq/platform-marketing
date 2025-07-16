@@ -1,4 +1,4 @@
 [
-  {"id":1,"title":"新品推广","group":"全部客户","status":"running"},
-  {"id":2,"title":"节日祝福","group":"潜在客户","status":"pending"}
+  {"id": 1, "name": "新品推广", "desc": "推广新品上市", "createdAt": "2023-10-01", "content": "<p>新品上线，快来购买！</p>"},
+  {"id": 2, "name": "节日祝福", "desc": "节日问候邮件", "createdAt": "2023-10-20", "content": "<p>节日快乐！</p>"}
 ]
