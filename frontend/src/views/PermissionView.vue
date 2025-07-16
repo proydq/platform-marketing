@@ -1,327 +1,159 @@
 <template>
-  <div class="page-wrapper page-permission" style="background:#f6f9fc;" v-loading="loadingRoles">
-      <div class="section-title" style="margin-bottom:10px;">
-        角色列表
-        <el-button type="primary" circle size="small" @click="openRoleForm(false)">
-          <el-icon><CirclePlusFilled /></el-icon>
+  <div class="page-wrapper">
+    <el-row class="action-buttons" justify="space-between" align="middle" style="margin-bottom:10px;">
+      <el-space>
+        <el-button type="primary" @click="openForm(false)">
+          <el-icon><CirclePlusFilled/></el-icon>新建权限
         </el-button>
+        <el-button type="danger" :disabled="!selectedIds.length" @click="handleDeleteBatch">批量删除</el-button>
+      </el-space>
+      <el-input v-model="keyword" placeholder="搜索名称或编码" prefix-icon="Search" style="width:200px" clearable @keyup.enter.native="fetchList" />
+    </el-row>
+
+    <el-card class="section-card">
+      <el-table :data="list" row-key="id" @selection-change="val => selectedIds = val.map(i => i.id)">
+        <el-table-column type="selection" width="55" />
+        <el-table-column prop="name" label="名称" min-width="120" />
+        <el-table-column prop="code" label="编码" min-width="120" />
+        <el-table-column prop="description" label="描述" />
+        <el-table-column label="操作" width="120" align="center">
+          <template #default="{ row }">
+            <el-button type="text" @click="openForm(true, row)">编辑</el-button>
+            <el-button type="text" style="color:#f56c6c" @click="handleDelete(row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div style="text-align:right;margin-top:10px;">
+        <el-pagination background layout="prev, pager, next" :total="total" :page-size="size" :current-page="page" @current-change="handlePageChange" />
       </div>
-      <el-row :gutter="12" style="padding-bottom:10px;">
-        <el-col
-          v-for="role in roles"
-          :key="role.id"
-          :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
-          <el-card
-            class="role-card"
-            :class="{ active: role.id === activeRoleId }"
-            @click="selectRole(role)"
-            style="position:relative;">
-            <div class="role-header">
-              <span class="role-name">{{ role.name }}</span>
-              <div>
-                <el-tooltip content="编辑">
-                  <el-button :icon="Edit" circle size="small" @click.stop="editRole(role)" />
-                </el-tooltip>
-                <el-tooltip content="删除">
-                  <el-button :icon="Delete" circle type="danger" size="small" @click.stop="removeRole(role)" />
-                </el-tooltip>
-              </div>
-            </div>
-            <div class="role-description">{{ role.description }}</div>
-            <el-badge :value="role.users.length" class="status-badge" style="position:absolute;top:-6px;right:-6px;" />
-          </el-card>
-        </el-col>
-      </el-row>
+    </el-card>
 
-      <el-tabs v-model="activeTab" class="perm-tabs" style="margin-top:20px;">
-        <el-tab-pane label="权限配置" name="perm">
-          <el-card class="section-card" v-loading="loadingPerms">
-            <el-row :gutter="20">
-              <el-col v-for="m in permissions" :key="m.id" :xs="24" :md="12">
-                <el-card class="permission-card">
-                  <div class="section-title">
-                    {{ m.label }}
-                    <el-tooltip content="权限说明">
-                      <el-icon><InfoFilled /></el-icon>
-                    </el-tooltip>
-                  </div>
-                  <el-checkbox-group v-model="checkedKeys">
-                    <el-checkbox v-for="c in m.children" :key="c.id" :label="c.id">{{ c.label }}</el-checkbox>
-                  </el-checkbox-group>
-                </el-card>
-              </el-col>
-            </el-row>
-            <div class="action-buttons" style="justify-content:flex-end;">
-              <el-button type="primary" @click="savePerms">保存权限</el-button>
-            </div>
-          </el-card>
-        </el-tab-pane>
-        <el-tab-pane label="用户分配" name="users">
-          <el-card class="section-card">
-            <div class="action-buttons">
-              <el-button type="primary" @click="toggleAddUser">
-                <el-icon><CirclePlusFilled/></el-icon>添加用户
-              </el-button>
-            </div>
-            <el-table :data="assignedUsers" style="width:100%;" v-if="assignedUsers.length">
-              <el-table-column prop="name" label="姓名" />
-              <el-table-column prop="department" label="部门" />
-              <el-table-column label="操作" width="80">
-                <template #default="scope">
-                  <el-tooltip content="移除">
-                    <el-button :icon="Delete" type="danger" circle size="small" @click="removeUser(scope.row)" />
-                  </el-tooltip>
-                </template>
-              </el-table-column>
-            </el-table>
-            <el-empty v-else description="无数据" />
-          </el-card>
-          <el-drawer v-model="addUserVisible" direction="rtl" size="480px" title="添加用户">
-            <el-form label-width="70px" class="form-section">
-              <el-form-item label="用户">
-                <el-select v-model="selectedUserId" filterable placeholder="选择用户" style="width:240px;">
-                  <el-option v-for="u in availableUsers" :key="u.id" :label="u.name" :value="u.id" />
-                </el-select>
-              </el-form-item>
-              <el-form-item label="分配角色">
-                <el-select v-model="selectedRoleIds" multiple style="width:240px;">
-                  <el-option v-for="r in roles" :key="r.id" :label="r.name" :value="r.id" />
-                </el-select>
-              </el-form-item>
-            </el-form>
-            <template #footer>
-              <el-button @click="addUserVisible=false">取消</el-button>
-              <el-button type="primary" @click="addUser">确定</el-button>
-            </template>
-          </el-drawer>
-        </el-tab-pane>
-      </el-tabs>
-
-      <el-drawer v-model="roleFormVisible" direction="rtl" size="480px" :title="isEditRole ? '编辑角色' : '添加角色'">
-        <el-form :model="roleForm" label-width="70px" class="form-section">
-          <el-form-item label="名称">
-            <el-input v-model="roleForm.name" />
-          </el-form-item>
-          <el-form-item label="描述">
-            <el-input v-model="roleForm.description" />
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <el-button @click="roleFormVisible=false">取消</el-button>
-          <el-button type="primary" @click="saveRole">保存</el-button>
-        </template>
-      </el-drawer>
+    <el-dialog v-model="formVisible" :title="isEdit ? '编辑权限' : '新建权限'" width="500px">
+      <el-form :model="form" label-width="80px">
+        <el-form-item label="名称">
+          <el-input v-model="form.name" />
+        </el-form-item>
+        <el-form-item label="编码">
+          <el-input v-model="form.code" />
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="form.description" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="formVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveForm">确定</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, watch } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Edit, Delete, CirclePlusFilled, InfoFilled } from '@element-plus/icons-vue'
-import { getRoleList, getPermissionTree, savePermissions } from '../api/permission'
-import permsData from '../mock/permissions.json'
-import usersData from '../mock/users.json'
+import { CirclePlusFilled, Search } from '@element-plus/icons-vue'
+import { listPermissions, createPermission, updatePermission, deletePermission, batchDeletePermission } from '../api/permissionApi'
 
-const roles = ref([])
-const permissions = ref([])
-const users = ref([])
-const loadingRoles = ref(false)
-const loadingPerms = ref(false)
+const list = ref([])
+const total = ref(0)
+const page = ref(1)
+const size = ref(10)
+const keyword = ref('')
+const selectedIds = ref([])
 
-const activeRoleId = ref(null)
-const activeTab = ref('perm')
-const checkedKeys = ref([])
-const roleFormVisible = ref(false)
-const isEditRole = ref(false)
-const roleForm = reactive({ id: null, name: '', description: '' })
+const formVisible = ref(false)
+const isEdit = ref(false)
+const form = reactive({ id: '', name: '', code: '', description: '' })
 
-const addUserVisible = ref(false)
-const selectedUserId = ref(null)
-const selectedRoleIds = ref([])
+onMounted(fetchList)
 
-const codeToId = {}
-const idToCode = {}
-
-function buildMaps(list) {
-  list.forEach(n => {
-    if (n.code) {
-      codeToId[n.code] = n.id
-      idToCode[n.id] = n.code
-    }
-    if (n.children) buildMaps(n.children)
-  })
-}
-
-onMounted(() => {
-  permissions.value = permsData
-  users.value = usersData
-  buildMaps(permsData)
-  fetchRoles()
-})
-
-async function fetchRoles() {
-  loadingRoles.value = true
-  try {
-    const res = await getRoleList()
+function fetchList() {
+  listPermissions({ page: page.value - 1, size: size.value, keyword: keyword.value }).then(res => {
     if (res.code === 0) {
-      roles.value = (res.data || []).map(r => ({ ...r, permissions: [], users: [] }))
-      if (roles.value.length) {
-        activeRoleId.value = roles.value[0].id
-      }
-      ElMessage.success(res.message || '获取角色列表成功')
-    } else {
-      ElMessage.error(res.message || '获取角色列表失败')
-    }
-  } catch (e) {
-    ElMessage.error('获取角色列表失败')
-  } finally {
-    loadingRoles.value = false
-  }
-}
-
-const currentRole = computed(() => roles.value.find(r => r.id === activeRoleId.value) || null)
-
-watch(activeRoleId, val => {
-  if (val) {
-    loadPermissions(val)
-  } else {
-    checkedKeys.value = []
-  }
-})
-
-const assignedUsers = computed(() => (currentRole.value ? currentRole.value.users : []))
-
-const availableUsers = computed(() => {
-  if (!currentRole.value) return []
-  const ids = new Set(assignedUsers.value.map(u => u.id))
-  return users.value.filter(u => !ids.has(u.id))
-})
-
-function selectRole(role) {
-  activeRoleId.value = role.id
-}
-
-async function loadPermissions(roleId) {
-  loadingPerms.value = true
-  try {
-    const res = await getPermissionTree(roleId)
-    if (res.code === 0) {
-      checkedKeys.value = (res.data || []).map(c => codeToId[c]).filter(Boolean)
-      const role = roles.value.find(r => r.id === roleId)
-      if (role) role.permissions = res.data
+      const data = res.data
+      list.value = data.content || data.items || []
+      total.value = data.totalElements ?? data.total ?? 0
     } else {
       ElMessage.error(res.message || '获取权限失败')
     }
-  } catch (e) {
+  }).catch(() => {
     ElMessage.error('获取权限失败')
-  } finally {
-    loadingPerms.value = false
-  }
+  })
 }
 
-function openRoleForm(edit, role) {
-  isEditRole.value = edit
-  if (edit && role) {
-    roleForm.id = role.id
-    roleForm.name = role.name
-    roleForm.description = role.description
+function handlePageChange(val) {
+  page.value = val
+  fetchList()
+}
+
+function openForm(edit, row) {
+  isEdit.value = edit
+  if (edit && row) {
+    form.id = row.id
+    form.name = row.name
+    form.code = row.code
+    form.description = row.description
   } else {
-    roleForm.id = null
-    roleForm.name = ''
-    roleForm.description = ''
+    form.id = ''
+    form.name = ''
+    form.code = ''
+    form.description = ''
   }
-  roleFormVisible.value = true
+  formVisible.value = true
 }
 
-function saveRole() {
-  if (!roleForm.name) {
-    ElMessage.error('名称不能为空')
+function saveForm() {
+  if (!form.name || !form.code) {
+    ElMessage.error('名称和编码不能为空')
     return
   }
-  if (isEditRole.value) {
-    const idx = roles.value.findIndex(r => r.id === roleForm.id)
-    roles.value.splice(idx, 1, { ...roles.value[idx], name: roleForm.name, description: roleForm.description })
-  } else {
-    const newId = roles.value.length ? Math.max(...roles.value.map(r => r.id)) + 1 : 1
-    roles.value.push({ id: newId, name: roleForm.name, description: roleForm.description, permissions: [], users: [] })
-  }
-  roleFormVisible.value = false
-  ElMessage.success('保存成功')
+  const api = isEdit.value ? updatePermission(form.id, form) : createPermission(form)
+  api.then(res => {
+    if (res.code === 0) {
+      ElMessage.success('保存成功')
+      formVisible.value = false
+      fetchList()
+    } else {
+      ElMessage.error(res.message || '保存失败')
+    }
+  }).catch(() => {
+    ElMessage.error('保存失败')
+  })
 }
 
-function removeRole(role) {
-  ElMessageBox.confirm('确定删除该角色吗?', '提示', { type: 'warning' })
-    .then(() => {
-      roles.value = roles.value.filter(r => r.id !== role.id)
-      if (activeRoleId.value === role.id) {
-        activeRoleId.value = roles.value.length ? roles.value[0].id : null
+function handleDelete(row) {
+  ElMessageBox.confirm('确定删除该权限吗？', '提示', { type: 'warning' })
+    .then(() => deletePermission(row.id))
+    .then(res => {
+      if (res.code === 0) {
+        ElMessage.success('已删除')
+        fetchList()
+      } else {
+        ElMessage.error(res.message || '删除失败')
       }
-      ElMessage.success('已删除')
     })
     .catch(() => {})
 }
 
-function savePerms() {
-  if (!currentRole.value) return
-  const perms = checkedKeys.value.map(id => idToCode[id]).filter(Boolean)
-  loadingPerms.value = true
-  savePermissions(currentRole.value.id, perms)
+function handleDeleteBatch() {
+  if (!selectedIds.value.length) return
+  ElMessageBox.confirm('确定删除选中的权限吗？', '提示', { type: 'warning' })
+    .then(() => batchDeletePermission(selectedIds.value))
     .then(res => {
       if (res.code === 0) {
-        currentRole.value.permissions = perms
-        ElMessage.success(res.message || '权限已更新')
+        ElMessage.success('已删除')
+        selectedIds.value = []
+        fetchList()
       } else {
-        ElMessage.error(res.message || '保存权限失败')
+        ElMessage.error(res.message || '删除失败')
       }
     })
-    .catch(() => {
-      ElMessage.error('保存权限失败')
-    })
-    .finally(() => {
-      loadingPerms.value = false
-    })
-}
-
-function toggleAddUser() {
-  selectedUserId.value = null
-  selectedRoleIds.value = [activeRoleId.value]
-  addUserVisible.value = true
-}
-
-function addUser() {
-  if (!selectedUserId.value || !selectedRoleIds.value.length) return
-  const user = users.value.find(u => u.id === selectedUserId.value)
-  selectedRoleIds.value.forEach(rid => {
-    const role = roles.value.find(r => r.id === rid)
-    if (role && !role.users.find(u => u.id === user.id)) {
-      role.users.push(user)
-    }
-  })
-  addUserVisible.value = false
-  selectedUserId.value = null
-  selectedRoleIds.value = []
-  ElMessage.success('已添加用户')
-}
-
-function removeUser(u) {
-  if (!currentRole.value) return
-  currentRole.value.users = currentRole.value.users.filter(item => item.id !== u.id)
-  ElMessage.success('已移除用户')
-}
-
-function editRole(role) {
-  openRoleForm(true, role)
+    .catch(() => {})
 }
 </script>
 
 <style scoped>
-.role-card {
-  cursor: pointer;
-  margin-bottom: 12px;
-  height: 100%;
-}
-.role-card.active {
-  border-color: #409eff;
-  background: #ecf5ff;
+.section-card {
+  margin-top: 10px;
 }
 </style>
