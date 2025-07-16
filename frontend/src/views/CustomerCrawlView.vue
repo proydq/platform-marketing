@@ -1,75 +1,197 @@
-<script setup>
-import { ref, onMounted } from 'vue'
-import previewDataJson from '../mock/previewData.json'
-import tasksJson from '../mock/crawlTasks.json'
-
-const formVisible = ref(false)
-const previewDrawer = ref(false)
-const previewData = ref([])
-const tasks = ref([])
-const currentPreview = ref([])
-
-onMounted(() => {
-  previewData.value = previewDataJson
-  tasks.value = tasksJson
-})
-
-function openCreate() {
-  formVisible.value = true
-}
-
-function showPreview() {
-  currentPreview.value = previewData.value
-  previewDrawer.value = true
-}
-</script>
-
 <template>
   <div class="page-wrapper">
     <el-row class="action-buttons" justify="space-between" align="middle">
       <el-space>
-        <el-button type="primary" @click="openCreate"><span class="icon">➕</span>新建任务</el-button>
-        <el-button type="success" @click="showPreview"><span class="icon">📄</span>预览数据</el-button>
+        <el-button type="primary" @click="openCreate">
+          <span class="icon">➕</span>新增任务
+        </el-button>
+        <el-button type="success" @click="showPreview">
+          <span class="icon">📄</span>预览数据
+        </el-button>
       </el-space>
     </el-row>
 
-    <el-card class="chart-container">
+    <el-card class="chart-container" style="margin-top:20px;">
       <h3 style="margin-bottom:20px;">快速抓取配置</h3>
       <QuickCrawlForm />
     </el-card>
 
-    <el-card class="chart-container">
+    <el-card class="chart-container" style="margin-top:20px;">
       <h3 style="margin-bottom:20px;">任务列表</h3>
       <el-table :data="tasks" style="width:100%">
         <el-table-column prop="name" label="任务名称" min-width="160" show-overflow-tooltip />
-        <el-table-column prop="website" label="平台" width="120" />
+        <el-table-column prop="website" label="平台" min-width="120">
+          <template #default="{ row }">{{ Array.isArray(row.website) ? row.website.join(', ') : row.website }}</template>
+        </el-table-column>
         <el-table-column prop="status" label="状态" width="120" align="center">
-          <template #default="scope">
-            <span :class="'status-badge status-' + scope.row.status">{{ scope.row.status }}</span>
+          <template #default="{ row }">
+            <el-tag :type="tagType(row.status)" size="small">{{ row.status }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="progress" label="进度" width="120" align="center">
-          <template #default="scope">
-            <div class="progress-ring">{{ scope.row.progress }}%</div>
+          <template #default="{ row }">
+            <ProgressRing :percentage="row.progress" />
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" min-width="160" />
+        <el-table-column label="操作" width="160" align="center">
+          <template #default="scope">
+            <el-button type="text" @click="editRow(scope.row, scope.$index)">编辑</el-button>
+            <el-button type="text" style="color:#f56c6c" @click="removeRow(scope.$index)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
 
-    <el-dialog v-model="formVisible" title="新建抓取任务" width="600px">
-      <QuickCrawlForm />
-    </el-dialog>
-
-    <el-drawer v-model="previewDrawer" title="抓取结果预览" size="50%">
-      <el-table :data="currentPreview" max-height="400" style="width:100%">
-        <el-table-column prop="companyName" label="公司" />
-        <el-table-column prop="contactPerson" label="联系人" />
-        <el-table-column prop="email" label="邮箱" />
-        <el-table-column prop="phone" label="电话" />
-        <el-table-column prop="industry" label="行业" />
-        <el-table-column prop="location" label="位置" />
-      </el-table>
+    <el-drawer v-model="formDrawer" title="新建抓取任务" size="40%">
+      <el-form :model="form" label-width="90px">
+        <el-form-item label="任务名称">
+          <el-input v-model="form.name" />
+        </el-form-item>
+        <el-form-item label="平台选择">
+          <el-select v-model="form.platform" multiple style="width:100%">
+            <el-option v-for="p in platforms" :key="p.value" :label="p.label" :value="p.value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="抓取类型">
+          <el-select v-model="form.type">
+            <el-option label="客户信息" value="customer" />
+            <el-option label="留言" value="comment" />
+            <el-option label="文章" value="article" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="执行周期">
+          <el-radio-group v-model="form.cycle">
+            <el-radio label="daily">每天</el-radio>
+            <el-radio label="weekly">每周</el-radio>
+            <el-radio label="once">一次性</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="抓取字段">
+          <el-checkbox-group v-model="form.fields">
+            <el-checkbox label="姓名" />
+            <el-checkbox label="邮箱" />
+            <el-checkbox label="手机号" />
+            <el-checkbox label="公司" />
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="预计条数">
+          <el-input-number v-model="form.amount" :min="1" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="formDrawer = false">取消</el-button>
+        <el-button type="primary" @click="saveTask">保存</el-button>
+      </template>
     </el-drawer>
+
+    <el-dialog v-model="previewDialog" title="数据预览" width="60%">
+      <el-table :data="previewData" max-height="400" style="width:100%">
+        <el-table-column prop="name" label="姓名" />
+        <el-table-column prop="email" label="邮箱" />
+        <el-table-column prop="source" label="来源" />
+        <el-table-column prop="time" label="抓取时间" />
+      </el-table>
+    </el-dialog>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import ProgressRing from '../components/ProgressRing.vue'
+import tasksJson from '../mock/crawlTasks.json'
+import previewJson from '../mock/previewData.json'
+
+const tasks = ref([])
+const previewData = ref([])
+const formDrawer = ref(false)
+const previewDialog = ref(false)
+
+const platforms = [
+  { label: 'LinkedIn', value: 'linkedin' },
+  { label: 'Facebook', value: 'facebook' }
+]
+
+const form = ref({
+  name: '',
+  platform: [],
+  type: 'customer',
+  cycle: 'once',
+  fields: [],
+  amount: 100
+})
+
+const editing = ref(false)
+const currentIndex = ref(-1)
+
+onMounted(() => {
+  tasks.value = tasksJson
+  previewData.value = previewJson
+})
+
+function openCreate() {
+  editing.value = false
+  form.value = {
+    name: '',
+    platform: [],
+    type: 'customer',
+    cycle: 'once',
+    fields: [],
+    amount: 100
+  }
+  formDrawer.value = true
+}
+
+function editRow(row, idx) {
+  editing.value = true
+  currentIndex.value = idx
+  form.value = {
+    name: row.name,
+    platform: Array.isArray(row.website) ? row.website : String(row.website).split(',') ,
+    type: row.type || 'customer',
+    cycle: row.cycle || 'once',
+    fields: row.fields || [],
+    amount: row.amount || 100
+  }
+  formDrawer.value = true
+}
+
+function removeRow(idx) {
+  tasks.value.splice(idx, 1)
+}
+
+function saveTask() {
+  if (editing.value && currentIndex.value > -1) {
+    tasks.value.splice(currentIndex.value, 1, {
+      ...tasks.value[currentIndex.value],
+      name: form.value.name,
+      website: form.value.platform.join(','),
+      type: form.value.type,
+      cycle: form.value.cycle,
+      fields: form.value.fields,
+      amount: form.value.amount
+    })
+  } else {
+    tasks.value.push({
+      id: Date.now(),
+      name: form.value.name,
+      website: form.value.platform.join(','),
+      status: 'pending',
+      progress: 0,
+      createTime: new Date().toLocaleString()
+    })
+  }
+  formDrawer.value = false
+}
+
+function showPreview() {
+  previewDialog.value = true
+}
+
+function tagType(status) {
+  if (status === 'success') return 'success'
+  if (status === 'running') return 'warning'
+  if (status === 'error') return 'danger'
+  return 'info'
+}
+</script>
