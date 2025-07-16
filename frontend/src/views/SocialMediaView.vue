@@ -67,7 +67,6 @@
         <el-button @click="drawerVisible = false">取消</el-button>
         <el-button type="primary" @click="saveForm">保存</el-button>
       </template>
-
     </el-drawer>
 
     <el-dialog v-model="logDialogVisible" title="推送日志" width="600px">
@@ -141,7 +140,6 @@ function saveForm() {
     ElMessage.success('账号已添加')
   }
   drawerVisible.value = false
-
 }
 
 function unbind(acc) {
