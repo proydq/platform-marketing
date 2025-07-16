@@ -2,124 +2,123 @@
   <div class="page-wrapper">
     <el-card class="card-container">
       <h2 style="margin-bottom:20px;">
-        <span class="icon">📊</span> 营销活动中心
+        <span class="icon">📊</span> {{ $t('campaign.center') }}
       </h2>
       <el-row class="action-buttons" justify="space-between" align="middle">
         <el-space>
-          <el-select v-model="statusFilter" placeholder="状态" style="width:120px">
-            <el-option label="全部" value="" />
-            <el-option label="未开始" value="pending" />
-            <el-option label="进行中" value="running" />
-            <el-option label="已完成" value="success" />
-            <el-option label="暂停" value="paused" />
+          <el-select v-model="statusFilter" :placeholder="$t('campaign.status')" style="width:120px">
+            <el-option :label="$t('common.all')" value="" />
+            <el-option :label="$t('campaign.pending')" value="pending" />
+            <el-option :label="$t('campaign.running')" value="running" />
+            <el-option :label="$t('campaign.success')" value="success" />
+            <el-option :label="$t('campaign.pause')" value="paused" />
           </el-select>
-          <el-select v-model="channelFilter" placeholder="渠道" style="width:120px">
-            <el-option label="全部" value="" />
-            <el-option label="邮件" value="email" />
-            <el-option label="社媒" value="social" />
-            <el-option label="微信" value="wechat" />
-            <el-option label="自定义" value="custom" />
+          <el-select v-model="channelFilter" :placeholder="$t('campaign.channel')" style="width:120px">
+            <el-option :label="$t('common.all')" value="" />
+            <el-option label="Email" value="email" />
+            <el-option :label="$t('sidebar.socialMedia')" value="social" />
+            <el-option label="Wechat" value="wechat" />
+            <el-option :label="$t('common.custom')" value="custom" />
           </el-select>
-          <el-input v-model="search" placeholder="搜索活动" clearable style="width:200px" />
+          <el-input v-model="search" :placeholder="$t('campaign.search')" clearable style="width:200px" />
         </el-space>
-        <el-button type="primary" @click="openEdit(false)"><span class="icon">➕</span>新建活动</el-button>
+        <el-button type="primary" @click="openEdit(false)"><span class="icon">➕</span>{{ $t('campaign.new') }}</el-button>
       </el-row>
 
       <el-table :data="filtered" style="width:100%;margin-top:20px;">
-        <el-table-column prop="name" label="名称" min-width="150" />
-        <el-table-column label="渠道" width="160">
+        <el-table-column prop="name" :label="$t('campaign.name')" min-width="150" />
+        <el-table-column :label="$t('campaign.channel')" width="160">
           <template #default="{ row }">
             <el-tag v-for="c in row.channels" :key="c" size="small" style="margin-right:4px">{{ channelName(c) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="120">
+        <el-table-column :label="$t('campaign.status')" width="120">
           <template #default="{ row }">
             <span :class="'status-badge status-' + row.status">{{ statusText(row.status) }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="startTime" label="开始" width="140" />
-        <el-table-column prop="endTime" label="结束" width="140" />
-        <el-table-column label="操作" width="260">
+        <el-table-column prop="startTime" :label="$t('campaign.start')" width="140" />
+        <el-table-column prop="endTime" :label="$t('campaign.end')" width="140" />
+        <el-table-column :label="$t('campaign.operation')" width="260">
           <template #default="{ row }">
-            <el-button type="text" size="small" @click="openDetail(row)">查看</el-button>
-            <el-button type="text" size="small" @click="openEdit(true, row)">编辑</el-button>
-            <el-button type="text" size="small" @click="publish(row)">发布</el-button>
-            <el-button type="text" size="small" @click="togglePause(row)">{{ row.status === 'paused' ? '恢复' : '暂停' }}</el-button>
-            <el-popconfirm title="确定删除?" @confirm="remove(row)">
-              <el-button type="text" size="small" style="color:#f56c6c">删除</el-button>
+            <el-button type="text" size="small" @click="openDetail(row)">{{ $t('campaign.view') }}</el-button>
+            <el-button type="text" size="small" @click="openEdit(true, row)">{{ $t('campaign.edit') }}</el-button>
+            <el-button type="text" size="small" @click="publish(row)">{{ $t('campaign.publish') }}</el-button>
+            <el-button type="text" size="small" @click="togglePause(row)">{{ row.status === 'paused' ? $t('campaign.resume') : $t('campaign.pause') }}</el-button>
+            <el-popconfirm :title="$t('common.deleteConfirm')" @confirm="remove(row)">
+              <el-button type="text" size="small" style="color:#f56c6c">{{ $t('campaign.delete') }}</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
-
-    <el-drawer v-model="editDrawer" :title="editMode ? '编辑活动' : '新建活动'" size="40%">
+    <el-drawer v-model="editDrawer" :title="editMode ? $t('campaign.edit') : $t('campaign.new')" size="40%">
       <el-form :model="form" label-width="90px" class="form-section">
-        <el-form-item label="名称" required>
+        <el-form-item :label="$t('campaign.name')" required>
           <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="渠道" required>
+        <el-form-item :label="$t('campaign.channel')" required>
           <el-select v-model="form.channels" multiple style="width:100%">
-            <el-option label="邮件" value="email" />
-            <el-option label="社媒" value="social" />
-            <el-option label="微信" value="wechat" />
-            <el-option label="自定义" value="custom" />
+            <el-option label="Email" value="email" />
+            <el-option :label="$t('sidebar.socialMedia')" value="social" />
+            <el-option label="Wechat" value="wechat" />
+            <el-option :label="$t('campaign.custom')" value="custom" />
           </el-select>
         </el-form-item>
-        <el-form-item label="开始时间">
+        <el-form-item :label="$t('campaign.start')">
           <el-date-picker v-model="form.startTime" type="datetime" style="width:100%" />
         </el-form-item>
-        <el-form-item label="结束时间">
+        <el-form-item :label="$t('campaign.end')">
           <el-date-picker v-model="form.endTime" type="datetime" style="width:100%" />
         </el-form-item>
-        <el-form-item label="内容">
+        <el-form-item :label="$t('campaign.content')">
           <div v-for="(c,i) in form.contents" :key="i" class="campaign-card" style="margin-bottom:10px;">
             <RichTextEditor v-model="form.contents[i]" />
           </div>
-          <el-button size="small" @click="addContent">添加内容段</el-button>
+          <el-button size="small" @click="addContent">{{ $t('campaign.addContent') }}</el-button>
         </el-form-item>
-        <el-form-item label="周期设置">
+        <el-form-item :label="$t('campaign.cycle')">
           <el-select v-model="form.cycle" style="width:100%">
-            <el-option label="单次" value="once" />
-            <el-option label="每天" value="daily" />
-            <el-option label="每周" value="weekly" />
+            <el-option :label="$t('campaign.once')" value="once" />
+            <el-option :label="$t('campaign.daily')" value="daily" />
+            <el-option :label="$t('campaign.weekly')" value="weekly" />
           </el-select>
         </el-form-item>
         <div class="action-buttons" style="justify-content:flex-end;">
-          <el-button @click="editDrawer=false">取消</el-button>
-          <el-button type="primary" @click="save">保存</el-button>
+          <el-button @click="editDrawer=false">{{ $t('campaign.cancel') }}</el-button>
+          <el-button type="primary" @click="save">{{ $t('campaign.save') }}</el-button>
         </div>
       </el-form>
     </el-drawer>
 
-    <el-drawer v-model="detailDrawer" title="活动详情" direction="rtl" size="40%">
+    <el-drawer v-model="detailDrawer" :title="$t('campaign.detail')" direction="rtl" size="40%">
       <template v-if="current">
         <el-descriptions :title="current.name" column="1" border style="margin-bottom:20px;">
-          <el-descriptions-item label="状态">
+          <el-descriptions-item :label="$t('campaign.status')">
             <span :class="'status-badge status-' + current.status">{{ statusText(current.status) }}</span>
           </el-descriptions-item>
-          <el-descriptions-item label="渠道">
+          <el-descriptions-item :label="$t('campaign.channel')">
             <el-tag v-for="c in current.channels" :key="c" size="small" style="margin-right:4px">{{ channelName(c) }}</el-tag>
           </el-descriptions-item>
-          <el-descriptions-item label="起止时间">{{ current.startTime }} - {{ current.endTime }}</el-descriptions-item>
+          <el-descriptions-item :label="$t('campaign.start') + '/' + $t('campaign.end')">{{ current.startTime }} - {{ current.endTime }}</el-descriptions-item>
         </el-descriptions>
         <el-row :gutter="20" style="margin-bottom:20px;">
           <el-col :span="8">
             <el-card>
               <div class="stat-number">{{ current.metrics.sent }}</div>
-              <div class="stat-label">发送量</div>
+              <div class="stat-label">{{ $t('campaign.sent') }}</div>
             </el-card>
           </el-col>
           <el-col :span="8">
             <el-card>
               <div class="stat-number">{{ current.metrics.opens }}</div>
-              <div class="stat-label">打开量</div>
+              <div class="stat-label">{{ $t('campaign.opens') }}</div>
             </el-card>
           </el-col>
           <el-col :span="8">
             <el-card>
               <div class="stat-number">{{ current.metrics.clicks }}</div>
-              <div class="stat-label">点击量</div>
+              <div class="stat-label">{{ $t('campaign.clicks') }}</div>
             </el-card>
           </el-col>
         </el-row>
@@ -135,6 +134,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 import RichTextEditor from '../components/RichTextEditor.vue'
 import campaignList from '../mock/campaignList.json'
 import campaignDetails from '../mock/campaignDetail.json'
@@ -144,6 +144,7 @@ const statusFilter = ref('')
 const channelFilter = ref('')
 const search = ref('')
 
+const { t } = useI18n()
 const editDrawer = ref(false)
 const detailDrawer = ref(false)
 const editMode = ref(false)
@@ -173,12 +174,12 @@ const filtered = computed(() => {
 })
 
 function statusText(s) {
-  const map = { pending: '未开始', running: '进行中', success: '已完成', paused: '暂停' }
+  const map = { pending: t('campaign.pending'), running: t('campaign.running'), success: t('campaign.success'), paused: t('campaign.pause') }
   return map[s] || s
 }
 
 function channelName(c) {
-  const map = { email: '邮件', social: '社媒', wechat: '微信', custom: '自定义' }
+  const map = { email: 'Email', social: t('sidebar.socialMedia'), wechat: 'Wechat', custom: t('campaign.custom') }
   return map[c] || c
 }
 
@@ -206,12 +207,12 @@ function save() {
     campaigns.value.push(JSON.parse(JSON.stringify(form)))
   }
   editDrawer.value = false
-  ElMessage.success('保存成功')
+  ElMessage.success(t('common.saveSuccess'))
 }
 
 function remove(row) {
   campaigns.value = campaigns.value.filter(c => c.id !== row.id)
-  ElMessage.success('已删除')
+  ElMessage.success(t('common.deleted'))
 }
 
 function openDetail(row) {
@@ -222,11 +223,11 @@ function openDetail(row) {
 
 function publish(row) {
   row.status = 'running'
-  ElMessage.success('已发布')
+  ElMessage.success(t('campaign.publish'))
 }
 
 function togglePause(row) {
   row.status = row.status === 'paused' ? 'running' : 'paused'
-  ElMessage.success(row.status === 'paused' ? '已暂停' : '已恢复')
+  ElMessage.success(row.status === 'paused' ? t('campaign.pause') : t('campaign.resume'))
 }
 </script>
