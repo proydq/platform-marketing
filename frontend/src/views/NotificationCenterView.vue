@@ -27,36 +27,35 @@
 
       <el-divider />
 
-      <el-space direction="vertical" style="width:100%;" :size="16">
-        <transition-group name="fade-list" tag="div">
-          <el-card
-            v-for="item in filtered"
-            :key="item.id"
-            class="notify-card"
-            shadow="hover"
-            style="margin-bottom:10px;"
-          >
-            <template #header>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <el-checkbox :model-value="selected.includes(item.id)" @change="toggleSelect(item.id)" />
-                <span>{{ iconFor(item) }}</span>
-                <span style="flex:1">{{ item.title }}</span>
+      <transition-group name="fade-list" tag="div">
+        <div v-for="item in filtered" :key="item.id">
+          <el-row class="notify-item" align="middle">
+            <el-col :span="1">
+              <el-checkbox :model-value="selected.includes(item.id)" @change="toggleSelect(item.id)" />
+            </el-col>
+            <el-col :span="1" class="icon-col">{{ iconFor(item) }}</el-col>
+            <el-col :span="11">
+              <div class="title-line">
+                <span class="title">{{ item.title }}</span>
                 <span
-                  :class="['status-badge', item.status === 'unread' ? 'status-unread' : 'status-read']"
-                >{{ item.status === 'unread' ? $t('notification.unread') : $t('notification.read') }}</span>
+                  class="status-badge"
+                  :class="item.status === 'unread' ? 'status-unread' : 'status-read'"
+                >
+                  {{ item.status === 'unread' ? $t('notification.unread') : $t('notification.read') }}
+                </span>
               </div>
-            </template>
-
-            <div>{{ item.content }}</div>
-            <div style="text-align:right;margin-top:10px;">
-              {{ formatTime(item.time) }}
+              <div class="desc text-gray">{{ item.content }}</div>
+            </el-col>
+            <el-col :span="6" class="time-col">{{ formatTime(item.time) }}</el-col>
+            <el-col :span="5" class="action-col">
               <el-button text size="small" @click.stop="view(item)">{{ $t('notification.view') }}</el-button>
               <el-button text size="small" @click.stop="markRead(item)">{{ $t('notification.markRead') }}</el-button>
               <el-button text size="small" style="color:#f56c6c" @click.stop="remove(item)">{{ $t('notification.delete') }}</el-button>
-            </div>
-          </el-card>
-        </transition-group>
-      </el-space>
+            </el-col>
+          </el-row>
+          <el-divider />
+        </div>
+      </transition-group>
 
       <el-drawer v-model="drawer" :title="$t('notification.detail')" size="30%" direction="rtl">
         <h3>{{ current.title }}</h3>
@@ -155,6 +154,30 @@ function deleteSelected() {
 <style scoped>
 .text-gray {
   color: #666;
+}
+.notify-item {
+  background: #fff;
+  margin: 0 24px;
+  padding: 0 16px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+.notify-item:hover {
+  background: #f5f7fa;
+}
+.action-col {
+  text-align: right;
+}
+.action-col .el-button + .el-button {
+  margin-left: 8px;
+}
+.title-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 </style>
 
