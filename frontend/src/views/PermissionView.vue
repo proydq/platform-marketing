@@ -118,7 +118,7 @@
 import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Edit, Delete, CirclePlusFilled, InfoFilled } from '@element-plus/icons-vue'
-import { getRoleList, getPermissionTree, savePermissions } from '../api/permission'
+import { getRoleList, getPermissionTree, savePermissions } from '../api/permissionApi'
 import permsData from '../mock/permissions.json'
 import usersData from '../mock/users.json'
 
