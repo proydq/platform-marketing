@@ -52,6 +52,7 @@
         </el-table-column>
       </el-table>
     </el-card>
+
     <el-drawer v-model="editDrawer" :title="editMode ? $t('campaign.edit') : $t('campaign.new')" size="40%">
       <el-form :model="form" label-width="90px" class="form-section">
         <el-form-item :label="$t('campaign.name')" required>
@@ -102,26 +103,9 @@
           </el-descriptions-item>
           <el-descriptions-item :label="$t('campaign.start') + '/' + $t('campaign.end')">{{ current.startTime }} - {{ current.endTime }}</el-descriptions-item>
         </el-descriptions>
-        <el-row :gutter="20" style="margin-bottom:20px;">
-          <el-col :span="8">
-            <el-card>
-              <div class="stat-number">{{ current.metrics.sent }}</div>
-              <div class="stat-label">{{ $t('campaign.sent') }}</div>
-            </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card>
-              <div class="stat-number">{{ current.metrics.opens }}</div>
-              <div class="stat-label">{{ $t('campaign.opens') }}</div>
-            </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card>
-              <div class="stat-number">{{ current.metrics.clicks }}</div>
-              <div class="stat-label">{{ $t('campaign.clicks') }}</div>
-            </el-card>
-          </el-col>
-        </el-row>
+        <el-card class="chart-container" style="margin-bottom:20px;">
+          <FunnelChart :data="metricsFunnel" />
+        </el-card>
         <el-steps :active="current.steps ? current.steps.length : 0" finish-status="success" style="margin-bottom:20px;">
           <el-step v-for="(s,i) in current.steps" :key="i" :title="s" />
         </el-steps>
@@ -135,6 +119,7 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+import FunnelChart from '../components/charts/FunnelChart.vue'
 import RichTextEditor from '../components/RichTextEditor.vue'
 import campaignList from '../mock/campaignList.json'
 import campaignDetails from '../mock/campaignDetail.json'
@@ -149,6 +134,15 @@ const editDrawer = ref(false)
 const detailDrawer = ref(false)
 const editMode = ref(false)
 const current = ref(null)
+const metricsFunnel = computed(() => {
+  if (!current.value || !current.value.metrics) return []
+  return [
+    { step: t('campaign.sent'), value: current.value.metrics.sent },
+    { step: t('campaign.opens'), value: current.value.metrics.opens },
+    { step: t('campaign.clicks'), value: current.value.metrics.clicks }
+  ]
+})
+
 
 const form = reactive({
   id: null,

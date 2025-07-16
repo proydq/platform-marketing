@@ -88,7 +88,8 @@
     "custom": "自定义",
     "deleteConfirm": "确定删除?",
     "saveSuccess": "保存成功",
-    "deleted": "已删除"
+    "deleted": "已删除",
+    "noData": "暂无数据"
   },
   "user": {
     "name": "用户名",

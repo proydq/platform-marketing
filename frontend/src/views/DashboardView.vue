@@ -1,18 +1,24 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import StatCard from '../components/StatCard.vue'
+import LineChart from '../components/charts/LineChart.vue'
 import statsData from '../mock/stats.json'
 import tasksData from '../mock/recentTasks.json'
+import summaryData from '../mock/reportSummary.json'
 
 const stats = ref({})
 const tasks = ref([])
 const drawerVisible = ref(false)
 const currentTask = ref({})
 const chartTab = ref('send')
+const sendTrend = ref([])
+const customerTrend = ref([])
 
 onMounted(() => {
   stats.value = statsData
   tasks.value = tasksData
+  sendTrend.value = summaryData.active7
+  customerTrend.value = summaryData.active30.slice(0, 7)
 })
 
 function viewTask(row) {
@@ -34,10 +40,10 @@ function viewTask(row) {
     <el-card class="chart-container">
       <el-tabs v-model="chartTab">
         <el-tab-pane label="邮件发送量" name="send">
-          <div style="height:300px;display:flex;align-items:center;justify-content:center;color:#999;">📈 图表区域</div>
+          <LineChart :data="sendTrend" />
         </el-tab-pane>
         <el-tab-pane label="客户增长" name="customer">
-          <div style="height:300px;display:flex;align-items:center;justify-content:center;color:#999;">📊 图表区域</div>
+          <LineChart :data="customerTrend" />
         </el-tab-pane>
       </el-tabs>
     </el-card>

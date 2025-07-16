@@ -88,7 +88,8 @@
     "custom": "Custom",
     "deleteConfirm": "Delete this item?",
     "saveSuccess": "Saved",
-    "deleted": "Deleted"
+    "deleted": "Deleted",
+    "noData": "No Data"
   },
   "user": {
     "name": "Name",
