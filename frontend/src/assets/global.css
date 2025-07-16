@@ -152,8 +152,16 @@ body {
 
 .content-area {
     flex: 1;
-    padding: 20px;
+    padding: 24px;
     overflow-y: auto;
+    min-height: calc(100vh - 60px);
+}
+
+.card-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .logo {

@@ -22,7 +22,7 @@ function viewTask(row) {
 </script>
 
 <template>
-  <div>
+  <div class="card-container">
     <div class="dashboard-cards">
       <StatCard title="总客户数" :value="stats.totalCustomers" />
       <StatCard title="今日邮件发送" :value="stats.emailsSent" />
@@ -44,13 +44,13 @@ function viewTask(row) {
     <el-card class="task-list">
       <h3 style="margin-bottom:20px;">最近任务</h3>
       <el-table :data="tasks" style="width:100%">
-        <el-table-column prop="name" label="任务名称" />
-        <el-table-column prop="status" label="状态" width="120">
+        <el-table-column prop="name" label="任务名称" min-width="150" show-overflow-tooltip />
+        <el-table-column prop="status" label="状态" width="120" align="center">
           <template #default="scope">
             <span :class="'status-badge status-' + scope.row.status">{{ scope.row.status }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="progress" label="进度" width="120">
+        <el-table-column prop="progress" label="进度" width="120" align="center">
           <template #default="scope">
             <div class="progress-ring">{{ scope.row.progress }}%</div>
           </template>

@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <div class="action-buttons">
-      <el-button type="primary" @click="openAdd"><span class="icon">➕</span>新增客户</el-button>
-      <el-button @click="handleImport"><span class="icon">📥</span>导入</el-button>
-      <el-button type="success" @click="handleExport"><span class="icon">📤</span>导出</el-button>
-    </div>
-
+  <div class="card-container">
+    <el-row class="action-buttons" justify="space-between" align="middle">
+      <el-space>
+        <el-button type="primary" @click="openAdd"><span class="icon">➕</span>新增客户</el-button>
+        <el-button @click="handleImport"><span class="icon">📥</span>导入</el-button>
+        <el-button type="success" @click="handleExport"><span class="icon">📤</span>导出</el-button>
+      </el-space>
+    </el-row>
     <el-card class="chart-container">
       <el-form inline>
         <el-form-item>
@@ -28,20 +29,20 @@
       </el-form>
 
       <el-table :data="pageData" style="width:100%; margin-top:10px;">
-        <el-table-column prop="name" label="姓名" width="120" />
-        <el-table-column prop="company" label="公司" width="160" />
-        <el-table-column prop="email" label="邮箱" width="220" />
-        <el-table-column prop="status" label="状态" width="100">
+        <el-table-column prop="name" label="姓名" min-width="120" show-overflow-tooltip />
+        <el-table-column prop="company" label="公司" min-width="160" show-overflow-tooltip />
+        <el-table-column prop="email" label="邮箱" min-width="200" show-overflow-tooltip />
+        <el-table-column prop="status" label="状态" width="100" align="center">
           <template #default="{ row }">
             <span :class="'status-badge status-' + (row.status === '活跃' ? 'success' : 'error')">{{ row.status }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="tags" label="标签" width="180">
+        <el-table-column prop="tags" label="标签" min-width="160">
           <template #default="{ row }">
             <el-tag v-for="tag in row.tags" :key="tag" size="small" style="margin-right:4px">{{ tag }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column label="操作" width="150" align="center">
           <template #default="{ row }">
             <el-button type="text" @click="view(row)">查看</el-button>
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
@@ -193,4 +194,3 @@ function handleExport() {
   ElMessage.info('导出功能开发中...')
 }
 </script>
-

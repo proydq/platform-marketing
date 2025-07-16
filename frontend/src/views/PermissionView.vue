@@ -23,11 +23,12 @@ function openDialog() {
 </script>
 
 <template>
-  <div>
-    <div class="action-buttons">
-      <el-button type="primary" @click="openDialog"><span class="icon">➕</span>新建角色</el-button>
-    </div>
-
+  <div class="card-container">
+    <el-row class="action-buttons" justify="space-between" align="middle">
+      <el-space>
+        <el-button type="primary" @click="openDialog"><span class="icon">➕</span>新建角色</el-button>
+      </el-space>
+    </el-row>
     <el-card class="chart-container">
       <RoleCard v-for="r in roles" :key="r.id" :role="r" />
     </el-card>

@@ -25,11 +25,13 @@ function showPreview() {
 </script>
 
 <template>
-  <div>
-    <div class="action-buttons">
-      <el-button type="primary" @click="openCreate"><span class="icon">➕</span>新建任务</el-button>
-      <el-button type="success" @click="showPreview"><span class="icon">📄</span>预览数据</el-button>
-    </div>
+  <div class="card-container">
+    <el-row class="action-buttons" justify="space-between" align="middle">
+      <el-space>
+        <el-button type="primary" @click="openCreate"><span class="icon">➕</span>新建任务</el-button>
+        <el-button type="success" @click="showPreview"><span class="icon">📄</span>预览数据</el-button>
+      </el-space>
+    </el-row>
 
     <el-card class="chart-container">
       <h3 style="margin-bottom:20px;">快速抓取配置</h3>
@@ -39,19 +41,19 @@ function showPreview() {
     <el-card class="chart-container">
       <h3 style="margin-bottom:20px;">任务列表</h3>
       <el-table :data="tasks" style="width:100%">
-        <el-table-column prop="name" label="任务名称" />
-        <el-table-column prop="website" label="平台" />
-        <el-table-column prop="status" label="状态" width="120">
+        <el-table-column prop="name" label="任务名称" min-width="160" show-overflow-tooltip />
+        <el-table-column prop="website" label="平台" width="120" />
+        <el-table-column prop="status" label="状态" width="120" align="center">
           <template #default="scope">
             <span :class="'status-badge status-' + scope.row.status">{{ scope.row.status }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="progress" label="进度" width="120">
+        <el-table-column prop="progress" label="进度" width="120" align="center">
           <template #default="scope">
             <div class="progress-ring">{{ scope.row.progress }}%</div>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" />
+        <el-table-column prop="createTime" label="创建时间" min-width="160" />
       </el-table>
     </el-card>
 
