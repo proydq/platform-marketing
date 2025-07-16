@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/permissions")
+@RequestMapping("/v1/permissions")
 public class PermissionController {
 
     private final PermissionService permissionService;
@@ -24,10 +24,20 @@ public class PermissionController {
     @GetMapping
     @PreAuthorize("hasPermission('permission:list')")
     public ResponseEntity<ResponsePageDataEntity<Permission>> list(@RequestParam(defaultValue = "") String keyword,
+                                                                   @RequestParam(defaultValue = "") String type,
+                                                                   @RequestParam(required = false) Boolean status,
                                                                    @RequestParam(defaultValue = "0") int page,
                                                                    @RequestParam(defaultValue = "10") int size) {
-        Page<Permission> p = permissionService.search(keyword, PageRequest.of(page, size));
+        Page<Permission> p = permissionService.search(keyword, type, status, PageRequest.of(page, size));
         return ResponseEntity.success(new ResponsePageDataEntity<>(p.getTotalElements(), p.getContent()));
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasPermission('permission:read')")
+    public ResponseEntity<Permission> get(@PathVariable String id) {
+        return permissionService.findById(id)
+                .map(ResponseEntity::success)
+                .orElse(ResponseEntity.fail(404, "Not Found"));
     }
 
     @PostMapping
