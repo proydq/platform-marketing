@@ -54,4 +54,5 @@ function generate() {
     </el-dialog>
   </el-card>
 </div>
+
 </template>

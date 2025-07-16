@@ -24,6 +24,7 @@ function openDialog() {
 
 <template>
   <div class="page-wrapper">
+
     <el-row class="action-buttons" justify="space-between" align="middle">
       <el-space>
         <el-button type="primary" @click="openDialog"><span class="icon">➕</span>新建角色</el-button>
@@ -56,5 +57,6 @@ function openDialog() {
         <el-button type="primary" @click="dialogVisible = false">保存</el-button>
       </template>
     </el-dialog>
+
   </div>
 </template>

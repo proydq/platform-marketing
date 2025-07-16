@@ -23,6 +23,7 @@ function viewTask(row) {
 
 <template>
   <div class="page-wrapper">
+
     <div class="dashboard-cards">
       <StatCard title="总客户数" :value="stats.totalCustomers" />
       <StatCard title="今日邮件发送" :value="stats.emailsSent" />
@@ -72,5 +73,6 @@ function viewTask(row) {
         <el-step title="完成" />
       </el-steps>
     </el-drawer>
+
   </div>
 </template>

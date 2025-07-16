@@ -46,4 +46,5 @@ function view(row) { current.value = row; drawer.value = true }
     <p>来源页面：{{ current.page }}</p>
   </el-drawer>
 </div>
+
 </template>
