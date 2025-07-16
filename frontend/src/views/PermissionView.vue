@@ -271,6 +271,7 @@ function editRole(role) {
   margin-bottom: 12px;
   height: 100%;
 }
+
 .role-card.active {
   border-color: #409eff;
   background: #ecf5ff;

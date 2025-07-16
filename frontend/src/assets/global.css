@@ -416,14 +416,27 @@ body {
 .user-card { display:flex; align-items:center; gap:10px; padding:10px; }
 .user-card .info { flex:1; }
 
-.notify-card {
+.notification-card {
     cursor: pointer;
     transition: box-shadow .3s, transform .3s;
 }
-.notify-card:hover {
+.notification-card:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     transform: translateY(-2px);
 }
+
+.page-notification {
+    background: #f6f9fc;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.notification-wrapper {
+    width: 100%;
+    max-width: 1080px;
+}
+
 
 .campaign-card {
     transition: box-shadow .3s, transform .3s;
