@@ -25,5 +25,23 @@
     "startTime": "2024-12-10",
     "endTime": "2024-12-25",
     "description": "节日庆祝活动"
+  },
+  {
+    "id": 4,
+    "name": "春节问候",
+    "channels": ["wechat"],
+    "status": "paused",
+    "startTime": "2025-01-20",
+    "endTime": "2025-02-01",
+    "description": "微信红包问候"
+  },
+  {
+    "id": 5,
+    "name": "新品发布",
+    "channels": ["custom"],
+    "status": "pending",
+    "startTime": "2025-03-10",
+    "endTime": "2025-03-20",
+    "description": "多渠道新品推广"
   }
 ]
