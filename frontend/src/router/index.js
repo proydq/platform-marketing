@@ -14,8 +14,6 @@ import SocialMediaView from '../views/SocialMediaView.vue'
 import TaskScheduleView from '../views/TaskScheduleView.vue'
 import BehaviorTrackView from '../views/BehaviorTrackView.vue'
 import ReportsView from '../views/ReportsView.vue'
-
-
 const routes = [
   { path: '/login', name: 'Login', component: LoginView },
   {
