@@ -1,4 +1,12 @@
 [
-  {"customerId":1,"action":"登录","time":"2024-01-01 10:00","ip":"192.168.0.1","page":"/login"},
-  {"customerId":2,"action":"查看报表","time":"2024-01-02 11:30","ip":"192.168.0.2","page":"/reports"}
+  {"time":"2025-06-01 09:00","userId":1001,"channel":"广告","action":"访问","status":"成功"},
+  {"time":"2025-06-01 09:20","userId":1002,"channel":"邮件","action":"注册","status":"成功"},
+  {"time":"2025-06-02 10:05","userId":1003,"channel":"SEO","action":"试用","status":"失败"},
+  {"time":"2025-06-03 11:15","userId":1001,"channel":"社媒","action":"付费","status":"成功"},
+  {"time":"2025-06-04 12:30","userId":1004,"channel":"广告","action":"访问","status":"成功"},
+  {"time":"2025-06-05 13:45","userId":1005,"channel":"社媒","action":"注册","status":"成功"},
+  {"time":"2025-06-06 14:10","userId":1006,"channel":"广告","action":"试用","status":"失败"},
+  {"time":"2025-06-06 16:40","userId":1007,"channel":"邮件","action":"注册","status":"成功"},
+  {"time":"2025-06-07 17:05","userId":1008,"channel":"SEO","action":"付费","status":"成功"},
+  {"time":"2025-06-07 18:20","userId":1009,"channel":"社媒","action":"访问","status":"成功"}
 ]

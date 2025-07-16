@@ -374,3 +374,10 @@ body {
     gap: 10px;
     margin-top: 15px;
 }
+
+.page-permission { background: #f6f9fc; padding: 20px; }
+.role-menu { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 10px 0; margin-bottom: 20px; }
+.module-card { box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 8px; margin-bottom: 20px; }
+.user-card { display:flex; align-items:center; gap:10px; padding:10px; }
+.user-card .info { flex:1; }
+
