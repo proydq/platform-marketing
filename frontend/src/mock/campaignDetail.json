@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "metrics": {"sent": 5000, "opens": 4200, "clicks": 1800},
+    "steps": ["计划", "进行中", "复盘"],
+    "attachments": [
+      {"name": "promo-assets.zip"}
+    ]
+  },
+  {
+    "id": 2,
+    "metrics": {"sent": 2000, "opens": 1500, "clicks": 400},
+    "steps": ["计划", "未开始", ""],
+    "attachments": []
+  },
+  {
+    "id": 3,
+    "metrics": {"sent": 3000, "opens": 2500, "clicks": 900},
+    "steps": ["计划", "完成", "总结"],
+    "attachments": [{"name": "report.pdf"}]
+  }
+]

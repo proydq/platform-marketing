@@ -1,0 +1,6 @@
+[
+  {"id":1,"name":"LinkedIn客户抓取","status":"running","progress":75},
+  {"id":2,"name":"邮件营销推送","status":"success","progress":100},
+  {"id":3,"name":"客户数据清洗","status":"pending","progress":0},
+  {"id":4,"name":"Facebook营销","status":"error","progress":45}
+]
