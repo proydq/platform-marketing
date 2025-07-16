@@ -30,6 +30,14 @@ public class PermissionController {
         return ResponseEntity.success(new ResponsePageDataEntity<>(p.getTotalElements(), p.getContent()));
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasPermission('permission:read')")
+    public ResponseEntity<Permission> get(@PathVariable String id) {
+        return permissionService.findById(id)
+                .map(ResponseEntity::success)
+                .orElse(ResponseEntity.fail(404, "Not Found"));
+    }
+
     @PostMapping
     @PreAuthorize("hasPermission('permission:create')")
     public ResponseEntity<Permission> create(@RequestBody Permission permission) {
