@@ -17,7 +17,6 @@ import ReportsView from '../views/ReportsView.vue'
 import HelpCenterView from '../views/HelpCenterView.vue'
 import NotificationCenterView from '../views/NotificationCenterView.vue'
 import CampaignCenterView from '../views/CampaignCenterView.vue'
-
 const routes = [
   { path: '/login', name: 'Login', component: LoginView },
   {
