@@ -1,92 +1,79 @@
 <template>
-  <div class="page-wrapper page-permission">
+  <div class="page-wrapper page-permission" style="background:#f6f9fc;padding:20px;">
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :md="6">
-        <div class="action-buttons" style="margin-bottom:10px;">
-          <el-button type="primary" @click="openRoleForm(false)">
-            <el-icon><CirclePlusFilled /></el-icon>添加角色
-          </el-button>
-        </div>
-        <el-menu class="role-menu" :default-active="activeRoleId + ''" @select="handleRoleSelect">
-          <el-menu-item v-for="role in roles" :key="role.id" :index="role.id + ''">
-            <el-icon><UserFilled /></el-icon>
-            <span>{{ role.name }}</span>
-            <el-badge :value="role.users.length" style="margin-left:auto;margin-right:8px;" />
-            <el-tooltip content="编辑">
-              <el-icon size="14" @click.stop="editRole(role)"><Edit /></el-icon>
-            </el-tooltip>
-            <el-tooltip content="删除">
-              <el-icon size="14" @click.stop="removeRole(role)" style="margin-left:5px;"><Delete /></el-icon>
-            </el-tooltip>
-          </el-menu-item>
-        </el-menu>
-        <el-drawer
-          v-model="roleFormVisible"
-          :title="isEditRole ? '编辑角色' : '添加角色'"
-          size="480px"
-          direction="rtl"
-        >
-          <el-form :model="roleForm" label-width="70px" class="form-section">
-            <el-form-item label="名称">
-              <el-input v-model="roleForm.name" />
-            </el-form-item>
-            <el-form-item label="描述">
-              <el-input v-model="roleForm.description" />
-            </el-form-item>
-          </el-form>
-          <template #footer>
-            <el-button @click="roleFormVisible = false">取消</el-button>
-            <el-button type="primary" @click="saveRole">保存</el-button>
+      <el-col :xs="24" :md="6" style="max-width:280px;">
+        <el-card class="section-card">
+          <template #header>
+            <div class="section-title">
+              角色列表
+              <el-button type="primary" circle size="small" @click="openRoleForm(false)">
+                <el-icon><CirclePlusFilled /></el-icon>
+              </el-button>
+            </div>
           </template>
-        </el-drawer>
+          <div v-for="role in roles" :key="role.id" :class="['role-card', {active: role.id === activeRoleId}]" @click="selectRole(role)" style="position:relative;">
+            <div class="role-header">
+              <span class="role-name">{{ role.name }}</span>
+              <div>
+                <el-tooltip content="编辑">
+                  <el-button :icon="Edit" circle size="small" @click.stop="editRole(role)" />
+                </el-tooltip>
+                <el-tooltip content="删除">
+                  <el-button :icon="Delete" circle type="danger" size="small" @click.stop="removeRole(role)" />
+                </el-tooltip>
+              </div>
+            </div>
+            <div class="role-description">{{ role.description }}</div>
+            <el-badge :value="role.users.length" class="status-badge" style="position:absolute;top:-6px;right:-6px;" />
+          </div>
+        </el-card>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="18">
-        <el-card>
+      <el-col :xs="24" :md="18">
+        <el-card class="section-card">
           <el-tabs v-model="activeTab">
             <el-tab-pane label="权限配置" name="perm">
               <el-row :gutter="20">
-                <el-col v-for="(m, i) in permissions" :key="m.id" :xs="24" :sm="12">
-                  <el-card class="module-card">
-                    <template #header>
-                      <span>{{ m.label }}</span>
-                      <el-tooltip content="权限说明" placement="top">
-                        <el-icon><InfoFilled /></el-icon>
+                <el-col v-for="m in permissions" :key="m.id" :xs="24" :md="12">
+                  <el-card class="permission-card">
+                    <div class="section-title">
+                      {{ m.label }}
+                      <el-tooltip content="权限说明">
+                        <el-icon><InfoFilled/></el-icon>
                       </el-tooltip>
-                    </template>
-                    <el-tree
-                      :ref="el => registerTree(el, i)"
-                      :data="m.children"
-                      node-key="id"
-                      show-checkbox
-                      check-strictly
-                      default-expand-all
-                      @check="handleModuleCheck"
-                    />
+                    </div>
+                    <el-checkbox-group v-model="checkedKeys">
+                      <el-checkbox v-for="c in m.children" :key="c.id" :label="c.id">{{ c.label }}</el-checkbox>
+                    </el-checkbox-group>
                   </el-card>
                 </el-col>
               </el-row>
-              <div class="action-buttons">
+              <div class="action-buttons" style="justify-content:flex-end;">
                 <el-button type="primary" @click="savePerms">保存权限</el-button>
               </div>
             </el-tab-pane>
             <el-tab-pane label="用户分配" name="users">
               <div class="action-buttons">
                 <el-button type="primary" @click="toggleAddUser">
-                  <el-icon><CirclePlusFilled /></el-icon>添加用户
+                  <el-icon><CirclePlusFilled/></el-icon>添加用户
                 </el-button>
               </div>
-              <el-drawer
-                v-model="addUserVisible"
-                title="添加用户"
-                size="480px"
-                direction="rtl"
-              >
+              <el-table :data="assignedUsers" class="section-card" style="width:100%;" v-if="assignedUsers.length">
+                <el-table-column prop="name" label="姓名" />
+                <el-table-column prop="department" label="部门" />
+                <el-table-column label="操作" width="80">
+                  <template #default="scope">
+                    <el-tooltip content="移除">
+                      <el-button :icon="Delete" type="danger" circle size="small" @click="removeUser(scope.row)" />
+                    </el-tooltip>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <el-empty v-else description="无数据" />
+              <el-drawer v-model="addUserVisible" direction="rtl" size="480px" title="添加用户">
                 <el-form label-width="70px" class="form-section">
                   <el-form-item label="用户">
                     <el-select v-model="selectedUserId" filterable placeholder="选择用户" style="width:240px;">
-                      <el-option v-for="u in availableUsers" :key="u.id" :label="u.name" :value="u.id">
-                        <el-avatar size="20" :src="u.avatar" style="margin-right:5px" />{{ u.name }}
-                      </el-option>
+                      <el-option v-for="u in availableUsers" :key="u.id" :label="u.name" :value="u.id" />
                     </el-select>
                   </el-form-item>
                   <el-form-item label="分配角色">
@@ -96,36 +83,37 @@
                   </el-form-item>
                 </el-form>
                 <template #footer>
-                  <el-button @click="addUserVisible = false">取消</el-button>
+                  <el-button @click="addUserVisible=false">取消</el-button>
                   <el-button type="primary" @click="addUser">确定</el-button>
                 </template>
               </el-drawer>
-              <el-row :gutter="20">
-                <el-col v-for="user in assignedUsers" :key="user.id" :xs="24" :sm="12" :md="8">
-                  <el-card class="user-card" shadow="hover">
-                    <el-avatar :src="user.avatar" :size="40" />
-                    <div class="info">
-                      <div class="role-name">{{ user.name }}</div>
-                      <div class="role-description">{{ user.department }}</div>
-                    </div>
-                    <el-tooltip content="移除">
-                      <el-icon @click="removeUser(user)" style="cursor:pointer;color:#f56c6c;"><Delete /></el-icon>
-                    </el-tooltip>
-                  </el-card>
-                </el-col>
-              </el-row>
             </el-tab-pane>
           </el-tabs>
         </el-card>
       </el-col>
     </el-row>
+
+    <el-drawer v-model="roleFormVisible" direction="rtl" size="480px" :title="isEditRole ? '编辑角色' : '添加角色'">
+      <el-form :model="roleForm" label-width="70px" class="form-section">
+        <el-form-item label="名称">
+          <el-input v-model="roleForm.name" />
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="roleForm.description" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="roleFormVisible=false">取消</el-button>
+        <el-button type="primary" @click="saveRole">保存</el-button>
+      </template>
+    </el-drawer>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, watch, nextTick } from 'vue'
+import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Edit, Delete, UserFilled, CirclePlusFilled, InfoFilled } from '@element-plus/icons-vue'
+import { Edit, Delete, CirclePlusFilled, InfoFilled } from '@element-plus/icons-vue'
 import rolesData from '../mock/roles.json'
 import permsData from '../mock/permissions.json'
 import usersData from '../mock/users.json'
@@ -137,7 +125,6 @@ const users = ref([])
 const activeRoleId = ref(null)
 const activeTab = ref('perm')
 const checkedKeys = ref([])
-const treeRefs = ref([])
 const roleFormVisible = ref(false)
 const isEditRole = ref(false)
 const roleForm = reactive({ id: null, name: '', description: '' })
@@ -145,6 +132,7 @@ const roleForm = reactive({ id: null, name: '', description: '' })
 const addUserVisible = ref(false)
 const selectedUserId = ref(null)
 const selectedRoleIds = ref([])
+
 const codeToId = {}
 const idToCode = {}
 
@@ -167,7 +155,6 @@ onMounted(() => {
     activeRoleId.value = roles.value[0].id
     checkedKeys.value = roles.value[0].permissions.map(c => codeToId[c]).filter(Boolean)
   }
-  syncTrees()
 })
 
 const currentRole = computed(() => roles.value.find(r => r.id === activeRoleId.value) || null)
@@ -178,7 +165,6 @@ watch(activeRoleId, val => {
   } else {
     checkedKeys.value = []
   }
-  syncTrees()
 })
 
 const assignedUsers = computed(() => currentRole.value ? currentRole.value.users : [])
@@ -188,23 +174,9 @@ const availableUsers = computed(() => {
   const ids = new Set(assignedUsers.value.map(u => u.id))
   return users.value.filter(u => !ids.has(u.id))
 })
-function handleRoleSelect(key) {
-  const role = roles.value.find(r => r.id === Number(key))
-  if (role) selectRole(role)
-}
 
 function selectRole(role) {
   activeRoleId.value = role.id
-}
-
-function registerTree(el, index) {
-  if (el) treeRefs.value[index] = el
-}
-
-function syncTrees() {
-  nextTick(() => {
-    treeRefs.value.forEach(tr => tr && tr.setCheckedKeys(checkedKeys.value))
-  })
 }
 
 function openRoleForm(edit, role) {
@@ -236,6 +208,7 @@ function saveRole() {
   roleFormVisible.value = false
   ElMessage.success('保存成功')
 }
+
 function removeRole(role) {
   ElMessageBox.confirm('确定删除该角色吗?', '提示', { type: 'warning' })
     .then(() => {
@@ -281,15 +254,7 @@ function removeUser(u) {
   ElMessage.success('已移除用户')
 }
 
-function handleModuleCheck() {
-  const set = new Set()
-  treeRefs.value.forEach(tr => {
-    if (tr) tr.getCheckedKeys().forEach(k => set.add(k))
-  })
-  checkedKeys.value = Array.from(set)
-}
 function editRole(role) {
   openRoleForm(true, role)
 }
 </script>
-

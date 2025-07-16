@@ -143,7 +143,6 @@ const metricsFunnel = computed(() => {
   ]
 })
 
-
 const form = reactive({
   id: null,
   name: '',
@@ -214,6 +213,7 @@ function openDetail(row) {
   if (!current.value.contents) current.value.contents = row.contents || []
   detailDrawer.value = true
 }
+
 
 function publish(row) {
   row.status = 'running'
