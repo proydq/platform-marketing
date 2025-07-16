@@ -30,7 +30,6 @@ function openDialog() {
         <el-button type="primary" @click="openDialog"><span class="icon">➕</span>新建角色</el-button>
       </el-space>
     </el-row>
-
     <el-card class="chart-container">
       <RoleCard v-for="r in roles" :key="r.id" :role="r" />
     </el-card>
