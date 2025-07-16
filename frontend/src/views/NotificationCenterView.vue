@@ -1,13 +1,14 @@
 <template>
-  <div class="page-wrapper">
+  <div class="page-wrapper" style="background:#f6f9fc;">
     <el-card class="card-container">
-      <h2 style="margin-bottom:20px;">
-        <span class="icon">🔔</span> {{ $t('notification.center') }}
+      <h2 class="section-title" style="font-size:20px;margin-bottom:16px;">
+        <el-icon><Bell /></el-icon>{{ $t('notification.center') }}
       </h2>
 
-      <el-row class="action-buttons" justify="space-between" align="middle">
-        <el-space>
-          <el-select v-model="typeFilter" :placeholder="$t('notification.type')" style="width:120px">
+      <el-card class="section-card" shadow="never">
+        <el-row class="action-buttons" justify="space-between" align="middle">
+          <el-space>
+            <el-select v-model="typeFilter" :placeholder="$t('notification.type')" style="width:120px">
             <el-option :label="$t('common.all')" value="" />
             <el-option label="Message" value="message" />
             <el-option label="Task" value="task" />
@@ -24,39 +25,38 @@
           <el-button size="small" type="danger" :disabled="!selected.length" @click="deleteSelected">{{ $t('notification.delete') }}</el-button>
         </el-space>
       </el-row>
+    </el-card>
 
-      <el-divider />
-
-      <el-space direction="vertical" style="width:100%;" :size="16">
+      <div class="notification-list">
         <transition-group name="fade-list" tag="div">
-          <el-card
-            v-for="item in filtered"
-            :key="item.id"
-            class="notify-card"
-            shadow="hover"
-            style="margin-bottom:10px;"
-          >
-            <template #header>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <el-checkbox :model-value="selected.includes(item.id)" @change="toggleSelect(item.id)" />
-                <span>{{ iconFor(item) }}</span>
-                <span style="flex:1">{{ item.title }}</span>
+          <el-card v-for="item in filtered" :key="item.id" class="notify-card" body-style="padding:0;">
+            <el-row class="notify-row" align="middle">
+            <el-col :span="1">
+              <el-checkbox :model-value="selected.includes(item.id)" @change="toggleSelect(item.id)" />
+            </el-col>
+            <el-col :span="1" class="icon-col">{{ iconFor(item) }}</el-col>
+            <el-col :span="11">
+              <div class="title-line">
+                <span class="title">{{ item.title }}</span>
                 <span
-                  :class="['status-badge', item.status === 'unread' ? 'status-unread' : 'status-read']"
-                >{{ item.status === 'unread' ? $t('notification.unread') : $t('notification.read') }}</span>
+                  class="status-badge"
+                  :class="item.status === 'unread' ? 'status-unread' : 'status-read'"
+                >
+                  {{ item.status === 'unread' ? $t('notification.unread') : $t('notification.read') }}
+                </span>
               </div>
-            </template>
-
-            <div>{{ item.content }}</div>
-            <div style="text-align:right;margin-top:10px;">
-              {{ formatTime(item.time) }}
+              <div class="desc text-gray">{{ item.content }}</div>
+            </el-col>
+            <el-col :span="6" class="time-col">{{ formatTime(item.time) }}</el-col>
+            <el-col :span="5" class="action-col">
               <el-button text size="small" @click.stop="view(item)">{{ $t('notification.view') }}</el-button>
               <el-button text size="small" @click.stop="markRead(item)">{{ $t('notification.markRead') }}</el-button>
               <el-button text size="small" style="color:#f56c6c" @click.stop="remove(item)">{{ $t('notification.delete') }}</el-button>
-            </div>
+            </el-col>
+            </el-row>
           </el-card>
         </transition-group>
-      </el-space>
+      </div>
 
       <el-drawer v-model="drawer" :title="$t('notification.detail')" size="30%" direction="rtl">
         <h3>{{ current.title }}</h3>
@@ -71,6 +71,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
+import { Bell } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
 import data from '../mock/notifications.json'
 
@@ -156,5 +157,33 @@ function deleteSelected() {
 .text-gray {
   color: #666;
 }
+.notification-list {
+  margin-top: 16px;
+}
+.notify-card {
+  margin-bottom: 16px;
+}
+.notify-row {
+  background: #fff;
+  padding: 0 16px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+.notify-row:hover {
+  background: #f5f7fa;
+}
+.action-col {
+  text-align: right;
+}
+.action-col .el-button + .el-button {
+  margin-left: 8px;
+}
+.title-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
 </style>
-
