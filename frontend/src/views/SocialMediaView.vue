@@ -25,7 +25,7 @@ function removeAccount(row) {
 </script>
 
 <template>
-  <div>
+  <div class="page-wrapper">
     <div class="action-buttons">
       <el-button type="primary" @click="dialogVisible = true"><span class="icon">➕</span>添加账号</el-button>
     </div>

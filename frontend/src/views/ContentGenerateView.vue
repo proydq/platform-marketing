@@ -14,6 +14,7 @@ function generate() {
 </script>
 
 <template>
+  <div class="page-wrapper">
   <el-card>
     <h2>📄 AI内容生成</h2>
     <el-form :model="form" label-width="100px">
@@ -52,4 +53,6 @@ function generate() {
       </template>
     </el-dialog>
   </el-card>
+</div>
+
 </template>

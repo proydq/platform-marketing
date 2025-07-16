@@ -18,6 +18,7 @@ function view(row) { current.value = row; drawer.value = true }
 </script>
 
 <template>
+  <div class="page-wrapper">
   <el-card>
     <h2>📄 行为追踪</h2>
     <div class="action-buttons">
@@ -44,4 +45,6 @@ function view(row) { current.value = row; drawer.value = true }
     <p>IP：{{ current.ip }}</p>
     <p>来源页面：{{ current.page }}</p>
   </el-drawer>
+</div>
+
 </template>

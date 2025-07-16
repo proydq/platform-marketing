@@ -25,7 +25,8 @@ function showPreview() {
 </script>
 
 <template>
-  <div class="card-container">
+  <div class="page-wrapper">
+    <div class="card-container">
     <el-row class="action-buttons" justify="space-between" align="middle">
       <el-space>
         <el-button type="primary" @click="openCreate"><span class="icon">➕</span>新建任务</el-button>
@@ -71,5 +72,6 @@ function showPreview() {
         <el-table-column prop="location" label="位置" />
       </el-table>
     </el-drawer>
+    </div>
   </div>
 </template>

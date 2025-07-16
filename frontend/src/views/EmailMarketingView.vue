@@ -19,7 +19,7 @@ function openCreate() {
 </script>
 
 <template>
-  <div>
+  <div class="page-wrapper">
     <div class="action-buttons">
       <el-button type="primary" @click="openCreate"><span class="icon">➕</span>新建邮件</el-button>
     </div>

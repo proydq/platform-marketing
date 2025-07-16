@@ -5,6 +5,7 @@ const tab = ref('line')
 </script>
 
 <template>
+  <div class="page-wrapper">
   <el-card>
     <h2>📄 报表分析</h2>
     <el-tabs v-model="tab">
@@ -19,4 +20,5 @@ const tab = ref('line')
       </el-tab-pane>
     </el-tabs>
   </el-card>
+</div>
 </template>

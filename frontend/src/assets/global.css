@@ -157,6 +157,13 @@ body {
     min-height: calc(100vh - 60px);
 }
 
+.page-wrapper {
+    min-height: calc(100vh - 60px);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
 .card-container {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;

@@ -1,5 +1,6 @@
 <template>
-  <div class="card-container">
+  <div class="page-wrapper">
+    <div class="card-container">
     <el-row class="action-buttons" justify="space-between" align="middle">
       <el-space>
         <el-button type="primary" @click="openAdd"><span class="icon">➕</span>新增客户</el-button>
@@ -103,6 +104,7 @@
         <el-table-column prop="action" label="动作" />
       </el-table>
     </el-drawer>
+    </div>
   </div>
 </template>
 

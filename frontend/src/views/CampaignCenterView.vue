@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-wrapper">
     <el-card class="action-buttons" style="margin-bottom:20px;">
       <el-row :gutter="20" align="middle">
         <el-col :span="12" class="flex items-center">
@@ -139,6 +139,7 @@ const dialogVisible = ref(false)
 const drawerVisible = ref(false)
 const isEdit = ref(false)
 const formRef = ref(null)
+
 const form = reactive({
   id: null,
   name: '',

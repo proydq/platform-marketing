@@ -19,7 +19,7 @@ function addTask() {
 </script>
 
 <template>
-  <div>
+  <div class="page-wrapper">
     <div class="action-buttons">
       <el-button type="primary" @click="openDialog"><span class="icon">➕</span>新建任务</el-button>
     </div>

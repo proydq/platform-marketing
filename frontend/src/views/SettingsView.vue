@@ -6,6 +6,7 @@ const securityForm = ref({ passwordLength: 8, twoFactor: false })
 </script>
 
 <template>
+  <div class="page-wrapper">
   <el-card>
     <h2>📄 系统设置</h2>
     <el-tabs tab-position="left">
@@ -42,4 +43,5 @@ const securityForm = ref({ passwordLength: 8, twoFactor: false })
       </el-tab-pane>
     </el-tabs>
   </el-card>
+</div>
 </template>
