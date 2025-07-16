@@ -47,6 +47,7 @@
       <el-form :model="form" label-width="90px" class="form-section">
         <el-form-item label="平台类型">
           <el-select v-model="form.platform">
+
             <el-option label="Facebook" value="Facebook" />
             <el-option label="LinkedIn" value="LinkedIn" />
             <el-option label="Twitter" value="Twitter" />
@@ -66,6 +67,7 @@
         <el-button @click="drawerVisible = false">取消</el-button>
         <el-button type="primary" @click="saveForm">保存</el-button>
       </template>
+
     </el-drawer>
 
     <el-dialog v-model="logDialogVisible" title="推送日志" width="600px">
@@ -139,6 +141,7 @@ function saveForm() {
     ElMessage.success('账号已添加')
   }
   drawerVisible.value = false
+
 }
 
 function unbind(acc) {
