@@ -23,3 +23,8 @@ export function deletePermission(id) {
 export function deletePermissions(ids) {
   return request.delete('/v1/permissions', { data: ids })
 }
+
+export function getPermissionTree(params) {
+  return request.get('/v1/permissions/tree', { params })
+
+}
