@@ -60,4 +60,11 @@ public class UserServiceImpl implements UserService {
         user.setStatus(status);
         userRepository.save(user);
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
 }
