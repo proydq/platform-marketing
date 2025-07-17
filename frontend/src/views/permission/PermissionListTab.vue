@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="toolbar mb-3 flex justify-between items-center">
+  <el-card class="page-card">
+    <div class="toolbar mb-4 flex justify-between items-center gap-2">
       <div class="filters flex items-center gap-2">
         <el-input v-model="searchKeyword" placeholder="权限名称/编码" clearable style="width: 220px" />
         <el-select v-model="searchType" placeholder="类型" clearable style="width: 120px">
@@ -14,7 +14,7 @@
         </el-select>
         <el-button type="primary" icon="Search" @click="fetchData">搜索</el-button>
       </div>
-      <div class="actions">
+      <div class="actions flex gap-2">
         <el-button type="danger" icon="Delete" :disabled="!selection.length" @click="handleBatchDelete">批量删除</el-button>
         <el-button type="primary" icon="Plus" @click="openDialog">新增权限</el-button>
       </div>
@@ -23,6 +23,7 @@
     <el-table
       :data="permissionList"
       border
+      size="small"
       v-loading="loading"
       style="width: 100%"
       @selection-change="selection = $event"
@@ -37,6 +38,9 @@
             v-model="row.status"
             :active-value="true"
             :inactive-value="false"
+            inline-prompt
+            active-text="启"
+            inactive-text="禁"
             @change="toggleStatus(row)"
           />
         </template>
@@ -49,16 +53,22 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination
-      v-model:current-page="page"
-      v-model:page-size="size"
-      :total="total"
-      layout="total, prev, pager, next"
-      @current-change="fetchData"
-    />
+    <div class="text-right mt-4">
+      <el-pagination
+        background
+        v-model:current-page="page"
+        v-model:page-size="size"
+        :total="total"
+        layout="total, prev, pager, next"
+        @current-change="fetchData"
+      />
+    </div>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑权限' : '新建权限'" width="500px">
-      <el-form :model="form" label-width="100px">
+    <el-dialog class="page-dialog" v-model="dialogVisible" width="500px">
+      <template #title>
+        <strong>{{ isEdit ? '编辑权限' : '新建权限' }}</strong>
+      </template>
+      <el-form class="dialog-form" :model="form" label-width="100px">
         <el-form-item label="权限名称">
           <el-input v-model="form.name" />
         </el-form-item>
@@ -84,7 +94,7 @@
           />
         </el-form-item>
         <el-form-item label="状态">
-          <el-switch v-model="form.status" :active-value="true" :inactive-value="false" />
+          <el-switch v-model="form.status" :active-value="true" :inactive-value="false" inline-prompt active-text="启" inactive-text="禁" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -92,7 +102,7 @@
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
-  </div>
+  </el-card>
 </template>
 
 <script setup>
@@ -107,6 +117,7 @@ import {
   updatePermissionStatus,
   deletePermissionsBatch
 } from '../../api/permission'
+import '@/assets/css/permission-ui-enhanced.css'
 
 const permissionList = ref([])
 const total = ref(0)
@@ -179,7 +190,7 @@ function openDialog(item) {
 function save() {
   saving.value = true
   const fn = isEdit.value ? updatePermission : createPermission
-  fn(form.id, form)
+  fn(form)
     .then(() => {
       ElMessage.success('保存成功')
       dialogVisible.value = false
