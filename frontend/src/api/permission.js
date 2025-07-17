@@ -27,12 +27,12 @@ export function createPermission(data) {
 
 /**
  * 更新权限项
- * PUT /v1/permissions/{id}
+ * POST /v1/permissions/update
  */
-export function updatePermission(id, data) {
+export function updatePermission(data) {
   return request({
-    url: `/v1/permissions/${id}`,
-    method: 'put',
+    url: '/v1/permissions/update',
+    method: 'post',
     data
   })
 }
@@ -74,12 +74,12 @@ export function fetchPermissionTree() {
 
 /**
  * 切换权限状态（启用/禁用）
- * PUT /v1/permissions/{id}/status
+ * POST /v1/permissions/update-status
  */
 export function updatePermissionStatus(id, status) {
   return request({
-    url: `/v1/permissions/${id}/status`,
-    method: 'put',
-    data: { status }
+    url: '/v1/permissions/update-status',
+    method: 'post',
+    data: { id, status }
   })
 }

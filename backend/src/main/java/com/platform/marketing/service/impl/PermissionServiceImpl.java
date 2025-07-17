@@ -85,6 +85,16 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    @Transactional
+    public void updateStatus(String id, boolean status) {
+        Permission p = permissionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Permission not found"));
+        p.setStatus(status);
+        p.setUpdatedBy(currentUser());
+        permissionRepository.save(p);
+    }
+
+    @Override
     public List<com.platform.marketing.dto.PermissionTreeNode> getTree() {
         List<Permission> all = permissionRepository.findAll();
         java.util.Map<String, com.platform.marketing.dto.PermissionTreeNode> map = new java.util.HashMap<>();

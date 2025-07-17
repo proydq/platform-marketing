@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="toolbar mb-3 flex justify-between items-center">
+  <el-card class="page-card">
+    <div class="toolbar mb-4 flex justify-between items-center gap-2">
       <div class="filters flex items-center gap-2">
         <el-input v-model="searchKeyword" placeholder="权限名称/编码" clearable style="width: 220px" />
         <el-select v-model="searchType" placeholder="类型" clearable style="width: 120px">
@@ -14,15 +14,16 @@
         </el-select>
         <el-button type="primary" icon="Search" @click="fetchData">搜索</el-button>
       </div>
-      <div class="actions">
+      <div class="actions flex gap-2">
         <el-button type="danger" icon="Delete" :disabled="!selection.length" @click="handleBatchDelete">批量删除</el-button>
-        <el-button type="primary" icon="Plus" @click="openDialog">新增权限</el-button>
+        <el-button type="primary" icon="Plus" @click="openDialog(false)">新增权限</el-button>
       </div>
     </div>
 
     <el-table
       :data="permissionList"
       border
+      size="small"
       v-loading="loading"
       style="width: 100%"
       @selection-change="selection = $event"
@@ -37,28 +38,37 @@
             v-model="row.status"
             :active-value="true"
             :inactive-value="false"
+            inline-prompt
+            active-text="启"
+            inactive-text="禁"
             @change="toggleStatus(row)"
           />
         </template>
       </el-table-column>
       <el-table-column label="操作" width="180">
         <template #default="{ row }">
-          <el-button size="small" @click="openDialog(row)">编辑</el-button>
+          <el-button size="small" @click="openDialog(true, row)">编辑</el-button>
           <el-button size="small" type="danger" @click="handleDelete(row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-pagination
-      v-model:current-page="page"
-      v-model:page-size="size"
-      :total="total"
-      layout="total, prev, pager, next"
-      @current-change="fetchData"
-    />
+    <div class="text-right mt-4">
+      <el-pagination
+        background
+        v-model:current-page="page"
+        v-model:page-size="size"
+        :total="total"
+        layout="total, prev, pager, next"
+        @current-change="fetchData"
+      />
+    </div>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑权限' : '新建权限'" width="500px">
-      <el-form :model="form" label-width="100px">
+    <el-drawer class="page-dialog" v-model="drawerVisible" size="400px" direction="rtl">
+      <template #title>
+        <strong>{{ isEdit ? '编辑权限' : '新增权限' }}</strong>
+      </template>
+      <el-form class="dialog-form" :model="form" label-width="100px">
         <el-form-item label="权限名称">
           <el-input v-model="form.name" />
         </el-form-item>
@@ -84,15 +94,15 @@
           />
         </el-form-item>
         <el-form-item label="状态">
-          <el-switch v-model="form.status" :active-value="true" :inactive-value="false" />
+          <el-switch v-model="form.status" :active-value="true" :inactive-value="false" inline-prompt active-text="启" inactive-text="禁" />
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="drawerVisible = false">取消</el-button>
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
-    </el-dialog>
-  </div>
+    </el-drawer>
+  </el-card>
 </template>
 
 <script setup>
@@ -107,6 +117,7 @@ import {
   updatePermissionStatus,
   deletePermissionsBatch
 } from '../../api/permission'
+import '@/assets/css/permission-ui-enhanced.css'
 
 const permissionList = ref([])
 const total = ref(0)
@@ -118,7 +129,7 @@ const searchStatus = ref()
 const selection = ref([])
 const loading = ref(false)
 const saving = ref(false)
-const dialogVisible = ref(false)
+const drawerVisible = ref(false)
 const isEdit = ref(false)
 const treeOptions = ref([])
 
@@ -158,12 +169,11 @@ function loadTree() {
   })
 }
 
-function openDialog(item) {
-  if (item) {
-    isEdit.value = true
-    Object.assign(form, item)
+function openDialog(edit = false, data = null) {
+  isEdit.value = edit
+  if (edit && data) {
+    Object.assign(form, data)
   } else {
-    isEdit.value = false
     Object.assign(form, {
       id: '',
       name: '',
@@ -173,16 +183,16 @@ function openDialog(item) {
       status: true
     })
   }
-  dialogVisible.value = true
+  drawerVisible.value = true
 }
 
 function save() {
   saving.value = true
   const fn = isEdit.value ? updatePermission : createPermission
-  fn(form.id, form)
+  fn(form)
     .then(() => {
       ElMessage.success('保存成功')
-      dialogVisible.value = false
+      drawerVisible.value = false
       fetchData()
     })
     .finally(() => (saving.value = false))

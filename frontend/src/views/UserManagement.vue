@@ -60,7 +60,7 @@ function loadRoles(){
 function fetchList() {
   fetchUsers ({ page: page.value - 1, size, ...search }).then(res => {
     if(res.code===0){
-      list.value=res.data.list
+      list.value=res.data.rows
       total.value=res.data.total
     }
   })
