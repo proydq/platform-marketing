@@ -33,12 +33,13 @@ export function createRole(data) {
 }
 
 /**
- * 更新角色信息（✅ 修复路径问题，必须带 id）
+ * 更新角色信息
+ * POST /v1/roles/update
  */
-export function updateRole(id, data) {
+export function updateRole(data) {
   return request({
-    url: `/v1/roles/${id}`,
-    method: 'put',
+    url: '/v1/roles/update',
+    method: 'post',
     data
   })
 }
@@ -60,7 +61,9 @@ export function bindPermissions(roleId, permissionIds) {
   return request({
     url: `/v1/roles/${roleId}/permissions`,
     method: 'post',
-    data: permissionIds
+    data: {
+      permissions: permissionIds
+    }
   })
 }
 export function fetchRolePermissions(roleId) {

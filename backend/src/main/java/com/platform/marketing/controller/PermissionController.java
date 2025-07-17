@@ -40,16 +40,16 @@ public class PermissionController {
                 .orElse(ResponseEntity.fail(404, "Not Found"));
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     @PreAuthorize("hasPermission('permission:create')")
     public ResponseEntity<Permission> create(@RequestBody Permission permission) {
         return ResponseEntity.success(permissionService.create(permission));
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/update")
     @PreAuthorize("hasPermission('permission:update')")
-    public ResponseEntity<Permission> update(@PathVariable String id, @RequestBody Permission permission) {
-        return ResponseEntity.success(permissionService.update(id, permission));
+    public ResponseEntity<Permission> update(@RequestBody Permission permission) {
+        return ResponseEntity.success(permissionService.update(permission.getId(), permission));
     }
 
     @GetMapping("/tree")
@@ -65,10 +65,22 @@ public class PermissionController {
         return ResponseEntity.success(null);
     }
 
-    @DeleteMapping
+    @PostMapping("/delete-batch")
     @PreAuthorize("hasPermission('permission:delete')")
     public ResponseEntity<Void> deleteBatch(@RequestBody List<String> ids) {
         permissionService.deleteBatch(ids);
+        return ResponseEntity.success(null);
+    }
+
+    @PostMapping("/update-status")
+    @PreAuthorize("hasPermission('permission:update')")
+    public ResponseEntity<Void> updateStatus(@RequestBody java.util.Map<String, Object> body) {
+        String id = (String) body.get("id");
+        Boolean status = (Boolean) body.get("status");
+        if (id == null || status == null) {
+            return ResponseEntity.fail(400, "id and status required");
+        }
+        permissionService.updateStatus(id, status);
         return ResponseEntity.success(null);
     }
 }

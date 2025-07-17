@@ -26,12 +26,12 @@ export function createUser(data) {
 
 /**
  * 更新用户信息
- * PUT /v1/users/{id}
+ * POST /v1/users/update
  */
-export function updateUser(id, data) {
+export function updateUser(data) {
   return request({
-    url: `/v1/users/${id}`,
-    method: 'put',
+    url: '/v1/users/update',
+    method: 'post',
     data
   })
 }
@@ -60,13 +60,13 @@ export function resetUserPassword(id) {
 
 /**
  * 更新用户状态（启用/禁用）
- * PUT /v1/users/{id}/status
+ * POST /v1/users/update-status
  */
 export function updateUserStatus(id, status) {
   return request({
-    url: `/v1/users/${id}/status`,
-    method: 'put',
-    data: { status }
+    url: '/v1/users/update-status',
+    method: 'post',
+    data: { id, status }
   })
 }
 /**

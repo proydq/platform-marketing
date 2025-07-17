@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../store'
 import { useI18n } from 'vue-i18n'
+import { ElMessage } from 'element-plus'
+import { login as loginApi, getCurrentUser } from '../api/auth'
 
 const router = useRouter()
 const store = useUserStore()
@@ -14,9 +16,20 @@ const form = ref({
   remember: false
 })
 
-function submit() {
-  store.login({ name: form.value.username, permissions: ['*'] })
-  router.push('/dashboard')
+async function submit() {
+  try {
+    const res = await loginApi({
+      username: form.value.username,
+      password: form.value.password
+    })
+    const token = res.data.token
+    store.setToken(token)
+    const userRes = await getCurrentUser()
+    store.setUser(userRes.data)
+    router.push('/')
+  } catch (e) {
+    ElMessage.error('登录失败')
+  }
 }
 </script>
 
