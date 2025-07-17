@@ -52,8 +52,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = useUserStore()
-  if (to.path !== '/login' && !store.isLoggedIn) {
+  const loggedIn = store.isLoggedIn
+  if (!loggedIn && to.path !== '/login') {
     next('/login')
+  } else if (loggedIn && to.path === '/login') {
+    next('/')
   } else {
     next()
   }
