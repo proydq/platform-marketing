@@ -1,54 +1,133 @@
 <template>
-  <div>
-    <el-card :loading="loading">
-      <PermissionTree ref="treeRef" :data="permissionTree" />
-      <div style="text-align:right;margin-top:10px;">
-        <el-button type="primary" icon="Check" :loading="saving" @click="save">保存</el-button>
-      </div>
-    </el-card>
+  <div class="permission-tree-tab">
+    <div class="toolbar mb-3 flex justify-between items-center">
+      <el-button type="primary" icon="Plus" @click="openAddDialog">新增权限</el-button>
+    </div>
+
+    <el-tree
+      :data="treeData"
+      :props="defaultProps"
+      node-key="id"
+      :expand-on-click-node="false"
+      ref="treeRef"
+      highlight-current
+      default-expand-all
+    >
+      <template #default="{ node, data }">
+        <span class="tree-node">
+          {{ data.name }}（{{ data.code }}）
+          <el-button type="text" size="small" @click.stop="openEditDialog(data)">编辑</el-button>
+          <el-button type="text" size="small" style="color:red;" @click.stop="remove(data.id)">删除</el-button>
+        </span>
+      </template>
+    </el-tree>
+
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑权限' : '新增权限'" width="500px">
+      <el-form :model="form" label-width="100px">
+        <el-form-item label="权限名称">
+          <el-input v-model="form.name" />
+        </el-form-item>
+        <el-form-item label="权限编码">
+          <el-input v-model="form.code" />
+        </el-form-item>
+        <el-form-item label="权限类型">
+          <el-select v-model="form.type" placeholder="请选择">
+            <el-option label="目录" value="目录" />
+            <el-option label="菜单" value="菜单" />
+            <el-option label="按钮" value="按钮" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="上级权限">
+          <el-tree-select
+            v-model="form.parent_id"
+            :data="treeData"
+            :props="defaultProps"
+            check-strictly
+            clearable
+            placeholder="请选择上级"
+            style="width: 100%"
+          />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" :loading="saving" @click="save">保存</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { ElMessage } from 'element-plus'
-import PermissionTree from '../../components/PermissionTree.vue'
-import { getPermissionTree } from '../../api/permission'
+import { ref, reactive, onMounted } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import {
+  fetchPermissionTree,
+  createPermission,
+  updatePermission,
+  deletePermission
+} from '../../api/permission'
 
-const permissionTree = ref([])
-const loading = ref(false)
+const treeData = ref([])
+const defaultProps = { label: 'name', children: 'children' }
+const dialogVisible = ref(false)
+const isEdit = ref(false)
 const saving = ref(false)
 const treeRef = ref()
 
-onMounted(fetchTree)
+const form = reactive({
+  id: '',
+  name: '',
+  code: '',
+  type: '',
+  parent_id: ''
+})
 
-function fetchTree() {
-  loading.value = true
-  getPermissionTree()
-    .then(res => {
-      permissionTree.value = res.data.tree || res.data
-      treeRef.value?.setCheckedKeys(res.data.checked || [])
-    })
-    .finally(() => {
-      loading.value = false
-    })
+onMounted(loadTree)
+
+function loadTree() {
+  fetchPermissionTree().then(res => {
+    treeData.value = res.data || []
+  })
 }
 
+function openAddDialog() {
+  isEdit.value = false
+  Object.assign(form, { id: '', name: '', code: '', type: '', parent_id: '' })
+  dialogVisible.value = true
+}
 
-function save(){
-  const checked = treeRef.value?.getCheckedKeys() || []
+function openEditDialog(data) {
+  isEdit.value = true
+  Object.assign(form, data)
+  dialogVisible.value = true
+}
+
+function save() {
   saving.value = true
-  // normally submit selected permissions via API
-  Promise.resolve()
+  const fn = isEdit.value ? updatePermission : createPermission
+  fn(form.id, form)
     .then(() => {
       ElMessage.success('保存成功')
+      dialogVisible.value = false
+      loadTree()
     })
-    .finally(() => {
-      saving.value = false
+    .finally(() => (saving.value = false))
+}
+
+function remove(id) {
+  ElMessageBox.confirm('确认删除该权限？', '提示', { type: 'warning' })
+    .then(() => deletePermission(id))
+    .then(() => {
+      ElMessage.success('删除成功')
+      loadTree()
     })
 }
 </script>
 
 <style scoped>
+.tree-node {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>
-

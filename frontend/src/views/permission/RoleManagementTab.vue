@@ -3,13 +3,19 @@
     <div class="toolbar mb-3">
       <el-button type="primary" icon="Plus" @click="openDialog">新建角色</el-button>
     </div>
-    <el-row :gutter="20" v-loading="loading">
-      <el-col :span="8" v-for="role in roles" :key="role.id">
-        <RoleCard :role="role" @edit="openDialog" @delete="remove" />
-      </el-col>
-    </el-row>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑角色' : '创建角色'" width="500px">
+    <el-table :data="roles" border v-loading="loading" style="width: 100%">
+      <el-table-column prop="name" label="角色名称" />
+      <el-table-column prop="description" label="角色描述" />
+      <el-table-column label="操作" width="180">
+        <template #default="{ row }">
+          <el-button type="primary" size="small" @click="openDialog(row)">编辑</el-button>
+          <el-button type="danger" size="small" @click="remove(row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑角色' : '新建角色'" width="600px">
       <el-form :model="form" label-width="80px">
         <el-form-item label="名称">
           <el-input v-model="form.name" />
@@ -18,117 +24,110 @@
           <el-input v-model="form.description" />
         </el-form-item>
       </el-form>
+
       <el-tree
         ref="treeRef"
-        class="permission-tree"
         :data="treeData"
         node-key="id"
         show-checkbox
-        :default-expanded-keys="expandedKeys"
+        :props="{ label: 'name', children: 'children' }"
+        :default-checked-keys="checkedKeys"
+        class="permission-tree"
       />
+
       <template #footer>
-        <el-button @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" icon="Check" :loading="saving" @click="save">保存</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, nextTick } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import RoleCard from '../../components/RoleCard.vue'
-import { getRoleList, createRole, updateRole, deleteRole, bindRolePermissions } from '../../api/role'
-import { getPermissionTree } from '../../api/permission'
+import {
+  fetchRoles, createRole, updateRole, deleteRole,
+  fetchRolePermissions, bindPermissions
+} from '../../api/role'
+import { fetchPermissionTree } from '../../api/permission'
 
 const roles = ref([])
 const loading = ref(false)
+const saving = ref(false)
 const treeData = ref([])
-const expandedKeys = ref([])
+const checkedKeys = ref([])
 const dialogVisible = ref(false)
 const isEdit = ref(false)
-const saving = ref(false)
 const form = reactive({ id: '', name: '', description: '' })
 const treeRef = ref()
 
-onMounted(fetchRoles)
+onMounted(() => {
+  loadRoles()
+  loadPermissionTree()
+})
 
-function fetchRoles() {
+function loadRoles() {
   loading.value = true
-  getRoleList()
-    .then(res => {
-      roles.value = res.data || []
-    })
-    .catch(() => {
-      ElMessage.error('加载失败')
-    })
-    .finally(() => {
-      loading.value = false
-    })
+  fetchRoles().then(res => {
+    roles.value = res.data || []
+  }).finally(() => loading.value = false)
+}
+
+function loadPermissionTree() {
+  fetchPermissionTree().then(res => {
+    treeData.value = res.data || []
+  })
 }
 
 function openDialog(role) {
   if (role) {
     isEdit.value = true
     Object.assign(form, role)
+    fetchRolePermissions(role.id).then(res => {
+      checkedKeys.value = res.data || []
+    })
   } else {
     isEdit.value = false
     Object.assign(form, { id: '', name: '', description: '' })
+    checkedKeys.value = []
   }
-  loadTree()
   dialogVisible.value = true
 }
 
-function loadTree() {
-  getPermissionTree({ roleId: form.id }).then(res => {
-    treeData.value = res.data.tree || res.data
-    expandedKeys.value = treeData.value.map(n => n.id)
-    nextTick(() => {
-      treeRef.value?.setCheckedKeys(res.data.checked || [])
-    })
-  })
-}
-
 function save() {
-  const permissions = treeRef.value?.getCheckedKeys() || []
-  const data = { name: form.name, description: form.description }
   saving.value = true
-  const req = isEdit.value ? updateRole(form.id, data) : createRole(data)
-  req
-    .then(res => {
-      const roleId = isEdit.value ? form.id : res.data.id
-      return bindRolePermissions(roleId, permissions)
-    })
-    .then(() => {
-      ElMessage.success('保存成功')
-      dialogVisible.value = false
-      fetchRoles()
-    })
-    .catch(() => {
-      ElMessage.error('保存失败')
-    })
-    .finally(() => {
-      saving.value = false
-    })
+  const handler = isEdit.value ? updateRole : createRole
+  const payload = { ...form }
+
+  handler(form.id, payload).then(res => {
+    const roleId = res.data.id
+    const permissionIds = treeRef.value.getCheckedKeys()
+    return bindPermissions(roleId, permissionIds)
+  }).then(() => {
+    ElMessage.success('保存成功')
+    dialogVisible.value = false
+    loadRoles()
+  }).catch(() => {
+    ElMessage.error('保存失败')
+  }).finally(() => saving.value = false)
 }
 
-function remove(role) {
-  deleteRole(role.id)
-    .then(() => {
-      ElMessage.success('已删除')
-      fetchRoles()
-    })
-    .catch(() => ElMessage.error('删除失败'))
-
+function remove(id) {
+  deleteRole(id).then(() => {
+    ElMessage.success('删除成功')
+    loadRoles()
+  })
 }
 </script>
 
 <style scoped>
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
+.permission-tree {
+  margin-top: 10px;
+  border: 1px solid #ebeef5;
+  border-radius: 6px;
+  padding: 10px;
+  max-height: 300px;
+  overflow: auto;
 }
-.mb-3 { margin-bottom: 15px; }
 </style>
-

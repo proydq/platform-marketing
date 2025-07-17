@@ -1,153 +1,133 @@
 <template>
-  <div class="page-permission">
-    <el-row :gutter="20">
-      <el-col :span="8">
-        <div class="role-menu">
-          <div class="toolbar" style="margin-bottom:10px; justify-content:space-between;">
-            <el-button type="primary" icon="Plus" @click="openDialog">{{ t('common.create') }}</el-button>
-            <el-button type="danger" icon="Delete" :disabled="!selectedRole" @click="removeRole">{{ t('common.delete') }}</el-button>
-          </div>
-          <el-scrollbar height="600px">
-            <el-card v-for="item in roles" :key="item.id" class="role-card" @click="selectRole(item)" :class="{ active: item.id===selectedRole?.id }">
-              <div class="role-header">
-                <div>
-                  <div class="role-name">{{ item.name }}</div>
-                  <div class="role-description">{{ item.description }}</div>
-                </div>
-                <el-tag size="small">{{ item.permissionCount }}</el-tag>
-              </div>
-              <div class="text-xs text-gray-500">{{ formatDate(item.updatedAt) }}</div>
-            </el-card>
-          </el-scrollbar>
-        </div>
-      </el-col>
-      <el-col :span="16">
-        <el-card class="module-card">
-          <template #header>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span>{{ selectedRole ? selectedRole.name : t('common.all') }}</span>
-              <el-button type="primary" icon="Check" :disabled="!selectedRole" @click="savePermissions">{{ t('common.save') }}</el-button>
-            </div>
-          </template>
-          <permission-tree :data="treeData" v-if="treeData.length" />
-          <div v-else class="text-center py-10">{{ t('common.noData') }}</div>
-        </el-card>
-      </el-col>
-    </el-row>
+  <div>
+    <div class="toolbar mb-3">
+      <el-button type="primary" icon="Plus" @click="openDialog">新建角色</el-button>
+    </div>
 
-    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="400px">
-      <el-form :model="roleForm" label-width="80px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="roleForm.name" />
+    <el-table :data="roles" border v-loading="loading" style="width: 100%">
+      <el-table-column prop="name" label="角色名称" />
+      <el-table-column prop="description" label="角色描述" />
+      <el-table-column label="操作" width="180">
+        <template #default="{ row }">
+          <el-button type="primary" size="small" @click="openDialog(row)">编辑</el-button>
+          <el-button type="danger" size="small" @click="remove(row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑角色' : '新建角色'" width="600px">
+      <el-form :model="form" label-width="80px">
+        <el-form-item label="名称">
+          <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="描述" prop="description">
-          <el-input v-model="roleForm.description" />
+        <el-form-item label="描述">
+          <el-input v-model="form.description" />
         </el-form-item>
       </el-form>
+
+      <el-tree
+        ref="treeRef"
+        :data="treeData"
+        node-key="id"
+        show-checkbox
+        :props="{ label: 'name', children: 'children' }"
+        :default-checked-keys="checkedKeys"
+        class="permission-tree"
+      />
+
       <template #footer>
-        <el-button @click="dialogVisible=false">{{ t('common.cancel') }}</el-button>
-        <el-button type="primary" @click="saveRole">{{ t('common.save') }}</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { getRoleList, createRole, updateRole, deleteRole, bindRolePermissions } from '../api/role'
-import PermissionTree from '../components/PermissionTree.vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-
-const { t } = useI18n()
+import {
+  fetchRoles, createRole, updateRole, deleteRole,
+  fetchRolePermissions, bindPermissions
+} from '../api/role'
+import { fetchPermissionTree } from '../api/permission'
 
 const roles = ref([])
+const loading = ref(false)
+const saving = ref(false)
 const treeData = ref([])
-const selectedRole = ref(null)
+const checkedKeys = ref([])
 const dialogVisible = ref(false)
-const roleForm = reactive({ id:'', name:'', description:'' })
 const isEdit = ref(false)
+const form = reactive({ id: '', name: '', description: '' })
+const treeRef = ref()
 
-onMounted(loadRoles)
+onMounted(() => {
+  loadRoles()
+  loadPermissionTree()
+})
 
 function loadRoles() {
-  getRoleList().then(res => {
-    if(res.code===0) roles.value = res.data
-  })
+  loading.value = true
+  fetchRoles().then(res => {
+    roles.value = res.data || []
+  }).finally(() => loading.value = false)
 }
 
-function selectRole(role) {
-  selectedRole.value = role
-  loadTree(role.id)
-}
-
-function loadTree(roleId) {
-  getPermissionTree({ roleId }).then(res => {
-    if(res.code===0) treeData.value = res.data
+function loadPermissionTree() {
+  fetchPermissionTree().then(res => {
+    treeData.value = res.data || []
   })
 }
 
 function openDialog(role) {
-  if(role) {
+  if (role) {
     isEdit.value = true
-    Object.assign(roleForm, role)
+    Object.assign(form, role)
+    fetchRolePermissions(role.id).then(res => {
+      checkedKeys.value = res.data || []
+    })
   } else {
     isEdit.value = false
-    Object.assign(roleForm,{ id:'', name:'', description:'' })
+    Object.assign(form, { id: '', name: '', description: '' })
+    checkedKeys.value = []
   }
   dialogVisible.value = true
 }
 
-function saveRole() {
-  const api = isEdit.value ? updateRole(roleForm.id, roleForm) : createRole(roleForm)
-  api.then(res => {
-    if(res.code===0){
-      ElMessage.success(t('common.saveSuccess'))
-      dialogVisible.value=false
-      loadRoles()
-    }
+function save() {
+  saving.value = true
+  const handler = isEdit.value ? updateRole : createRole
+  const payload = { ...form }
+
+  handler(form.id, payload).then(res => {
+    const roleId = res.data.id
+    const permissionIds = treeRef.value.getCheckedKeys()
+    return bindPermissions(roleId, permissionIds)
+  }).then(() => {
+    ElMessage.success('保存成功')
+    dialogVisible.value = false
+    loadRoles()
+  }).catch(() => {
+    ElMessage.error('保存失败')
+  }).finally(() => saving.value = false)
+}
+
+function remove(id) {
+  deleteRole(id).then(() => {
+    ElMessage.success('删除成功')
+    loadRoles()
   })
 }
-
-function removeRole() {
-  if(!selectedRole.value) return
-  deleteRole(selectedRole.value.id).then(res=>{
-    if(res.code===0){
-      ElMessage.success(t('common.deleted'))
-      selectedRole.value=null
-      treeData.value=[]
-      loadRoles()
-    }
-  })
-}
-
-function savePermissions() {
-  if(!selectedRole.value) return
-  const codes = collectChecked(treeData.value)
-  bindRolePermissions(selectedRole.value.id, codes).then(res=>{
-    if(res.code===0) ElMessage.success(t('common.saveSuccess'))
-  })
-}
-
-function collectChecked(nodes) {
-  let arr=[]
-  nodes.forEach(n=>{
-    if(n.checked) arr.push(n.code)
-    if(n.children) arr=arr.concat(collectChecked(n.children))
-  })
-  return arr
-}
-
-function formatDate(val) {
-  if(!val) return ''
-  return new Date(val).toLocaleDateString()
-}
-
-const dialogTitle = computed(() => isEdit.value ? t('common.edit') : t('common.create'))
 </script>
 
 <style scoped>
-.active {
-  border-color: #409eff;
+.permission-tree {
+  margin-top: 10px;
+  border: 1px solid #ebeef5;
+  border-radius: 6px;
+  padding: 10px;
+  max-height: 300px;
+  overflow: auto;
 }
 </style>

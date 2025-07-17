@@ -1,30 +1,85 @@
 import request from '../utils/request'
 
-export function listPermissions(params) {
-  return request.get('/v1/permissions', { params })
+/**
+ * 查询权限分页列表
+ * GET /v1/permissions
+ * 支持查询参数：page, size, keyword, type, status
+ */
+export function fetchPermissions(params) {
+  return request({
+    url: '/v1/permissions',
+    method: 'get',
+    params
+  })
 }
 
-export function getPermission(id) {
-  return request.get(`/v1/permissions/${id}`)
-}
-
+/**
+ * 创建权限项
+ * POST /v1/permissions
+ */
 export function createPermission(data) {
-  return request.post('/v1/permissions', data)
+  return request({
+    url: '/v1/permissions',
+    method: 'post',
+    data
+  })
 }
 
+/**
+ * 更新权限项
+ * PUT /v1/permissions/{id}
+ */
 export function updatePermission(id, data) {
-  return request.put(`/v1/permissions/${id}`, data)
+  return request({
+    url: `/v1/permissions/${id}`,
+    method: 'put',
+    data
+  })
 }
 
+/**
+ * 删除单个权限项
+ * DELETE /v1/permissions/{id}
+ */
 export function deletePermission(id) {
-  return request.delete(`/v1/permissions/${id}`)
+  return request({
+    url: `/v1/permissions/${id}`,
+    method: 'delete'
+  })
 }
 
-export function deletePermissions(ids) {
-  return request.delete('/v1/permissions', { data: ids })
+/**
+ * 批量删除权限项
+ * POST /v1/permissions/delete-batch
+ * @param {Array<string>} ids - 权限ID数组
+ */
+export function deletePermissionsBatch(ids) {
+  return request({
+    url: '/v1/permissions/delete-batch',
+    method: 'post',
+    data: ids
+  })
 }
 
-export function getPermissionTree(params) {
-  return request.get('/v1/permissions/tree', { params })
+/**
+ * 获取权限树结构
+ * GET /v1/permissions/tree
+ */
+export function fetchPermissionTree() {
+  return request({
+    url: '/v1/permissions/tree',
+    method: 'get'
+  })
 }
 
+/**
+ * 切换权限状态（启用/禁用）
+ * PUT /v1/permissions/{id}/status
+ */
+export function updatePermissionStatus(id, status) {
+  return request({
+    url: `/v1/permissions/${id}/status`,
+    method: 'put',
+    data: { status }
+  })
+}

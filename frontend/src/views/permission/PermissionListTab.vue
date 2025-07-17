@@ -1,209 +1,167 @@
 <template>
-  <div class="permission-list">
-    <el-card>
-      <template #header>
-        <div class="card-header">
-          <span>权限列表</span>
-          <div class="toolbar">
-            <el-button type="primary" icon="Plus" @click="openDialog()">新增</el-button>
-            <el-button type="danger" icon="Delete" :disabled="!multipleSelection.length" @click="removeBatch">删除选中</el-button>
-            <el-button icon="Refresh" @click="fetchList">刷新</el-button>
-          </div>
-        </div>
-        <el-form :inline="true" :model="search" class="mt-2" @submit.prevent>
-          <el-form-item label="关键词">
-            <el-input v-model="search.keyword" placeholder="名称/编码" clearable />
-          </el-form-item>
-          <el-form-item label="类型">
-            <el-select v-model="search.type" placeholder="全部" clearable style="width:120px">
-              <el-option label="目录" value="目录" />
-              <el-option label="菜单" value="菜单" />
-              <el-option label="按钮" value="按钮" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="search.status" placeholder="全部" clearable style="width:120px">
-              <el-option label="启用" :value="true" />
-              <el-option label="禁用" :value="false" />
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="Search" @click="fetchList">搜索</el-button>
-            <el-button @click="resetSearch">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </template>
-
-      <el-table
-        :data="list"
-        border
-        style="width: 100%"
-        v-loading="loading"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="55" />
-        <el-table-column prop="name" label="名称" width="160" />
-        <el-table-column prop="code" label="编码" width="160" />
-        <el-table-column prop="type" label="类型" width="100" />
-        <el-table-column prop="url" label="路由" />
-        <el-table-column prop="method" label="方法" width="100" />
-        <el-table-column label="状态" width="90">
-          <template #default="{ row }">
-            <el-switch v-model="row.status" @change="val => toggleStatus(row)" />
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="160">
-          <template #default="{ row }">
-            <el-button type="text" size="small" icon="Edit" @click="openDialog(row)">编辑</el-button>
-            <el-button type="text" size="small" icon="Delete" style="color:#f56c6c" @click="remove(row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <div style="text-align:right;margin-top:10px;">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :current-page="page"
-          :page-size="size"
-          :total="total"
-          @current-change="handlePageChange"
-        />
+  <div>
+    <div class="toolbar mb-3 flex justify-between items-center">
+      <div class="filters flex items-center gap-2">
+        <el-input v-model="searchKeyword" placeholder="权限名称/编码" clearable style="width: 220px" />
+        <el-select v-model="searchType" placeholder="类型" clearable style="width: 120px">
+          <el-option label="目录" value="目录" />
+          <el-option label="菜单" value="菜单" />
+          <el-option label="按钮" value="按钮" />
+        </el-select>
+        <el-select v-model="searchStatus" placeholder="状态" clearable style="width: 120px">
+          <el-option label="启用" :value="true" />
+          <el-option label="禁用" :value="false" />
+        </el-select>
+        <el-button type="primary" icon="Search" @click="fetchData">搜索</el-button>
       </div>
-    </el-card>
+      <div class="actions">
+        <el-button type="danger" icon="Delete" :disabled="!selection.length" @click="handleBatchDelete">批量删除</el-button>
+        <el-button type="primary" icon="Plus" @click="openDialog">新增权限</el-button>
+      </div>
+    </div>
 
-    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="500px">
-      <el-form ref="formRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="名称" prop="name">
+    <el-table
+      :data="permissionList"
+      border
+      v-loading="loading"
+      style="width: 100%"
+      @selection-change="selection = $event"
+    >
+      <el-table-column type="selection" width="50" />
+      <el-table-column prop="name" label="权限名称" />
+      <el-table-column prop="code" label="权限编码" />
+      <el-table-column prop="type" label="类型" width="80" />
+      <el-table-column prop="status" label="状态" width="100">
+        <template #default="{ row }">
+          <el-switch
+            v-model="row.status"
+            :active-value="true"
+            :inactive-value="false"
+            @change="toggleStatus(row)"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="180">
+        <template #default="{ row }">
+          <el-button size="small" @click="openDialog(row)">编辑</el-button>
+          <el-button size="small" type="danger" @click="handleDelete(row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-pagination
+      v-model:current-page="page"
+      v-model:page-size="size"
+      :total="total"
+      layout="total, prev, pager, next"
+      @current-change="fetchData"
+    />
+
+    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑权限' : '新建权限'" width="500px">
+      <el-form :model="form" label-width="100px">
+        <el-form-item label="权限名称">
           <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="编码" prop="code">
+        <el-form-item label="权限编码">
           <el-input v-model="form.code" />
         </el-form-item>
-        <el-form-item label="类型" prop="type">
+        <el-form-item label="权限类型">
           <el-select v-model="form.type" placeholder="请选择">
             <el-option label="目录" value="目录" />
             <el-option label="菜单" value="菜单" />
             <el-option label="按钮" value="按钮" />
           </el-select>
         </el-form-item>
-        <el-form-item label="路由">
-          <el-input v-model="form.url" />
+        <el-form-item label="上级权限">
+          <el-tree-select
+            v-model="form.parent_id"
+            :data="treeOptions"
+            :props="{ label: 'name', children: 'children' }"
+            clearable
+            check-strictly
+            placeholder="请选择"
+            style="width: 100%"
+          />
         </el-form-item>
-        <el-form-item label="方法">
-          <el-select v-model="form.method" placeholder="请选择">
-            <el-option label="GET" value="GET" />
-            <el-option label="POST" value="POST" />
-            <el-option label="PUT" value="PUT" />
-            <el-option label="DELETE" value="DELETE" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="启用">
-          <el-switch v-model="form.status" />
-        </el-form-item>
-        <el-form-item label="说明">
-          <el-input v-model="form.description" type="textarea" />
+        <el-form-item label="状态">
+          <el-switch v-model="form.status" :active-value="true" :inactive-value="false" />
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" icon="Check" :loading="saving" @click="save">保存</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
-  listPermissions,
+  fetchPermissions,
   createPermission,
   updatePermission,
   deletePermission,
-  deletePermissions
+  fetchPermissionTree,
+  updatePermissionStatus,
+  deletePermissionsBatch
 } from '../../api/permission'
 
-
-const list = ref([])
+const permissionList = ref([])
 const total = ref(0)
 const page = ref(1)
-const size = 10
+const size = ref(10)
+const searchKeyword = ref('')
+const searchType = ref('')
+const searchStatus = ref()
+const selection = ref([])
 const loading = ref(false)
 const saving = ref(false)
 const dialogVisible = ref(false)
 const isEdit = ref(false)
-const multipleSelection = ref([])
-const formRef = ref()
+const treeOptions = ref([])
 
 const form = reactive({
   id: '',
   name: '',
   code: '',
   type: '',
-  url: '',
-  method: '',
-  status: true,
-  description: ''
+  parent_id: '',
+  status: true
 })
 
-const rules = {
-  name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-  code: [{ required: true, message: '请输入编码', trigger: 'blur' }],
-  type: [{ required: true, message: '请选择类型', trigger: 'change' }]
-}
+onMounted(() => {
+  fetchData()
+  loadTree()
+})
 
-const search = reactive({ keyword: '', type: '', status: '' })
-
-const dialogTitle = computed(() => (isEdit.value ? '编辑权限' : '新增权限'))
-
-onMounted(fetchList)
-
-function fetchList() {
+function fetchData() {
   loading.value = true
-  listPermissions({
+  fetchPermissions({
     page: page.value - 1,
-    size,
-    keyword: search.keyword,
-    type: search.type,
-    status: search.status
+    size: size.value,
+    keyword: searchKeyword.value,
+    type: searchType.value,
+    status: searchStatus.value
   })
     .then(res => {
-      if (res.code === 0) {
-        list.value = res.data.list
-        total.value = res.data.total
-      } else {
-        ElMessage.error(res.message || '加载失败')
-      }
+      permissionList.value = res.data.rows || []
+      total.value = res.data.total
     })
-    .catch(() => {
-      ElMessage.error('加载失败')
-    })
-    .finally(() => {
-      loading.value = false
-    })
+    .finally(() => (loading.value = false))
 }
 
-function resetSearch() {
-  search.keyword = ''
-  search.type = ''
-  search.status = ''
-  fetchList()
+function loadTree() {
+  fetchPermissionTree().then(res => {
+    treeOptions.value = res.data || []
+  })
 }
 
-function handlePageChange(p) {
-  page.value = p
-  fetchList()
-}
-
-function handleSelectionChange(val) {
-  multipleSelection.value = val
-}
-
-function openDialog(row) {
-  if (row) {
+function openDialog(item) {
+  if (item) {
     isEdit.value = true
-    Object.assign(form, row)
+    Object.assign(form, item)
   } else {
     isEdit.value = false
     Object.assign(form, {
@@ -211,102 +169,48 @@ function openDialog(row) {
       name: '',
       code: '',
       type: '',
-      url: '',
-      method: '',
-      status: true,
-      description: ''
+      parent_id: '',
+      status: true
     })
   }
   dialogVisible.value = true
 }
 
 function save() {
-  formRef.value.validate(valid => {
-    if (!valid) return
-    saving.value = true
-    const api = isEdit.value ? updatePermission(form.id, form) : createPermission(form)
-    api
-      .then(res => {
-        if (res.code === 0) {
-          ElMessage.success('保存成功')
-          dialogVisible.value = false
-          fetchList()
-        } else {
-          ElMessage.error(res.message || '保存失败')
-        }
-      })
-      .catch(() => {
-        ElMessage.error('保存失败')
-      })
-      .finally(() => {
-        saving.value = false
-      })
-  })
+  saving.value = true
+  const fn = isEdit.value ? updatePermission : createPermission
+  fn(form.id, form)
+    .then(() => {
+      ElMessage.success('保存成功')
+      dialogVisible.value = false
+      fetchData()
+    })
+    .finally(() => (saving.value = false))
 }
 
-function remove(row) {
-  ElMessageBox.confirm('确认删除该权限?', '提示', { type: 'warning' })
+function handleDelete(id) {
+  ElMessageBox.confirm('确认删除该权限吗？', '提示', { type: 'warning' })
+    .then(() => deletePermission(id))
     .then(() => {
-      deletePermission(row.id)
-        .then(res => {
-          if (res.code === 0) {
-            ElMessage.success('已删除')
-            fetchList()
-          } else {
-            ElMessage.error(res.message || '删除失败')
-          }
-        })
-        .catch(() => {
-          ElMessage.error('删除失败')
-        })
+      ElMessage.success('删除成功')
+      fetchData()
     })
 }
 
-function removeBatch() {
-  const ids = multipleSelection.value.map(item => item.id)
+function handleBatchDelete() {
+  const ids = selection.value.map(i => i.id)
   if (!ids.length) return
-  ElMessageBox.confirm('确认删除选中权限?', '提示', { type: 'warning' }).then(() => {
-    deletePermissions(ids)
-      .then(res => {
-        if (res.code === 0) {
-          ElMessage.success('已删除')
-          fetchList()
-        } else {
-          ElMessage.error(res.message || '删除失败')
-        }
-      })
-      .catch(() => {
-        ElMessage.error('删除失败')
-      })
-  })
+  ElMessageBox.confirm(`确认批量删除选中项？`, '警告', { type: 'warning' })
+    .then(() => deletePermissionsBatch(ids))
+    .then(() => {
+      ElMessage.success('删除成功')
+      fetchData()
+    })
 }
 
 function toggleStatus(row) {
-  updatePermission(row.id, { ...row, status: row.status })
-    .then(res => {
-      if (res.code !== 0) {
-        ElMessage.error(res.message || '更新失败')
-        row.status = !row.status
-      }
-    })
-    .catch(() => {
-      ElMessage.error('更新失败')
-      row.status = !row.status
-    })
-  }
+  updatePermissionStatus(row.id, row.status)
+    .then(() => ElMessage.success('状态更新成功'))
+    .catch(() => ElMessage.error('状态更新失败'))
+}
 </script>
-
-<style scoped>
-.permission-list .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.toolbar {
-  display: flex;
-  gap: 10px;
-}
-.mt-2 {
-  margin-top: 10px;
-}
-</style>

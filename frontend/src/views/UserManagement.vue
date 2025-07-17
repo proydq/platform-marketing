@@ -33,8 +33,8 @@ import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import UserTable from '../components/UserTable.vue'
 import UserDialog from '../components/UserDialog.vue'
-import { getUserList, importUsers } from '../api/user'
-import { getRoleList } from '../api/role'
+import { fetchUsers , importUsers } from '../api/user'
+import { fetchRoles  } from '../api/role'
 import { ElMessage } from 'element-plus'
 
 const { t } = useI18n()
@@ -54,11 +54,11 @@ onMounted(() => {
 })
 
 function loadRoles(){
-  getRoleList().then(res=>{ if(res.code===0) roles.value=res.data })
+  fetchRoles().then(res=>{ if(res.code===0) roles.value=res.data })
 }
 
 function fetchList() {
-  getUserList({ page: page.value - 1, size, ...search }).then(res => {
+  fetchUsers ({ page: page.value - 1, size, ...search }).then(res => {
     if(res.code===0){
       list.value=res.data.list
       total.value=res.data.total
