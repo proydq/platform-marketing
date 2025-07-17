@@ -293,6 +293,7 @@ function toggleStatus(row) {
       ElMessage.error('更新失败')
       row.status = !row.status
     })
+  }
 </script>
 
 <style scoped>
