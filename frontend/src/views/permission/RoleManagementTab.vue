@@ -98,6 +98,7 @@ function openDialog(role) {
   } else {
     isEdit.value = false
     Object.assign(form, { id: '', name: '', description: '' })
+
   }
   dialogVisible.value = true
 }
@@ -126,6 +127,7 @@ function save() {
 function remove(role) {
   roles.value = roles.value.filter(r => r.id !== role.id)
   ElMessage.success('已删除')
+
 }
 </script>
 

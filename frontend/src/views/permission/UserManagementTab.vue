@@ -86,6 +86,7 @@ function fetchList() {
 
 function handlePageChange(val) {
   page.value = val
+
 }
 
 function openDialog(user){
@@ -120,6 +121,7 @@ function remove(row) {
 
 function resetPwd() {
   ElMessage.success('已重置')
+
 }
 </script>
 
