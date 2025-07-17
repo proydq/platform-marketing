@@ -24,7 +24,8 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<Role> createRole(@RequestBody Role role) {
+    public ResponseEntity<Role> create(@RequestBody Role role) {
+        role.setId(java.util.UUID.randomUUID().toString());
         return ResponseEntity.success(roleService.create(role));
     }
 
