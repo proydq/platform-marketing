@@ -34,6 +34,13 @@ public class Permission {
     @Column(name = "group_name")
     private String group;
 
+    @Column(name = "parent_id", length = 36)
+    private String parentId;
+
+    private String url;
+
+    private String method;
+
     private boolean status = true;
 
     @Column(name = "created_by")
@@ -98,6 +105,30 @@ public class Permission {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public boolean isStatus() {

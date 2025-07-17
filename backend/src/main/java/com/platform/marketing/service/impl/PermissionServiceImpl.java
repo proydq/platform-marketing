@@ -63,6 +63,9 @@ public class PermissionServiceImpl implements PermissionService {
         existing.setCode(permission.getCode());
         existing.setDescription(permission.getDescription());
         existing.setType(permission.getType());
+        existing.setParentId(permission.getParentId());
+        existing.setUrl(permission.getUrl());
+        existing.setMethod(permission.getMethod());
         existing.setGroup(permission.getGroup());
         existing.setStatus(permission.isStatus());
         existing.setUpdatedBy(currentUser());
@@ -79,6 +82,39 @@ public class PermissionServiceImpl implements PermissionService {
     @Transactional
     public void deleteBatch(List<String> ids) {
         ids.forEach(permissionRepository::deleteById);
+    }
+
+    @Override
+    public List<com.platform.marketing.dto.PermissionTreeNode> getTree() {
+        List<Permission> all = permissionRepository.findAll();
+        java.util.Map<String, com.platform.marketing.dto.PermissionTreeNode> map = new java.util.HashMap<>();
+        for (Permission p : all) {
+            com.platform.marketing.dto.PermissionTreeNode node = new com.platform.marketing.dto.PermissionTreeNode();
+            node.setId(p.getId());
+            node.setName(p.getName());
+            node.setCode(p.getCode());
+            node.setParentId(p.getParentId());
+            node.setType(p.getType());
+            node.setUrl(p.getUrl());
+            node.setMethod(p.getMethod());
+            node.setStatus(p.isStatus());
+            node.setDescription(p.getDescription());
+            map.put(p.getId(), node);
+        }
+        List<com.platform.marketing.dto.PermissionTreeNode> roots = new java.util.ArrayList<>();
+        for (com.platform.marketing.dto.PermissionTreeNode n : map.values()) {
+            if (n.getParentId() == null || n.getParentId().isEmpty()) {
+                roots.add(n);
+            } else {
+                com.platform.marketing.dto.PermissionTreeNode parent = map.get(n.getParentId());
+                if (parent != null) {
+                    parent.getChildren().add(n);
+                } else {
+                    roots.add(n);
+                }
+            }
+        }
+        return roots;
     }
 
     private String currentUser() {
