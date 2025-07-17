@@ -15,3 +15,15 @@ export function updateUser(id, data) {
 export function importUsers(formData) {
   return request.post('/v1/users/import', formData)
 }
+
+export function createUser(data) {
+  return request.post('/v1/users', data)
+}
+
+export function deleteUser(id) {
+  return request.delete(`/v1/users/${id}`)
+}
+
+export function resetUserPassword(id) {
+  return request.post(`/v1/users/${id}/reset-password`)
+}
