@@ -10,23 +10,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import PermissionTree from '../../components/PermissionTree.vue'
-import { getPermissionTree } from '../../api/permissionApi'
 
-const permissionTree = ref([])
+const permissionTree = ref([
+  {
+    id: 1,
+    label: '用户管理',
+    children: [
+      { id: 11, label: '新增用户' },
+      { id: 12, label: '删除用户' }
+    ]
+  },
+  {
+    id: 2,
+    label: '内容管理',
+    children: [
+      { id: 21, label: '编辑内容' },
+      { id: 22, label: '发布内容' }
+    ]
+  },
+  {
+    id: 3,
+    label: '统计报表'
+  }
+])
 const treeRef = ref()
 
-onMounted(loadTree)
-
-function loadTree(){
-  getPermissionTree().then(res => {
-    if(res.code === 0){
-      permissionTree.value = res.data
-    }
-  })
-}
 
 function save(){
   const checked = treeRef.value?.getCheckedKeys() || []

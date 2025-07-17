@@ -39,70 +39,95 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import RoleCard from '../../components/RoleCard.vue'
-import { getRoleList, createRole, updateRole, deleteRole } from '../../api/roleApi'
-import { getPermissionTree } from '../../api/permissionApi'
 
-const roles = ref([])
-const treeData = ref([])
-const expandedKeys = ref([])
+const roles = ref([
+  {
+    id: 1,
+    name: '管理员',
+    description: '拥有全部权限',
+    permissions: ['add_user', 'delete_user', 'view_reports'],
+    users: [
+      { id: 1, name: '张三', avatar: '' },
+      { id: 2, name: '李四', avatar: '' }
+    ]
+  },
+  {
+    id: 2,
+    name: '编辑',
+    description: '内容管理',
+    permissions: ['edit_content', 'publish_content'],
+    users: [{ id: 3, name: '王五', avatar: '' }]
+  }
+])
+const treeData = ref([
+  {
+    id: 1,
+    label: '用户管理',
+    children: [
+      { id: 11, label: '新增用户' },
+      { id: 12, label: '删除用户' }
+    ]
+  },
+  {
+    id: 2,
+    label: '内容管理',
+    children: [
+      { id: 21, label: '编辑内容' },
+      { id: 22, label: '发布内容' }
+    ]
+  },
+  {
+    id: 3,
+    label: '统计报表',
+    children: []
+  }
+])
+const expandedKeys = ref(treeData.value.slice(0, 4).map(n => n.id))
 const dialogVisible = ref(false)
 const isEdit = ref(false)
-const form = reactive({ id:'', name:'', description:'' })
+const form = reactive({ id: '', name: '', description: '' })
 const treeRef = ref()
 
-onMounted(loadRoles)
-
-function loadRoles(){
-  getRoleList().then(res => {
-    if(res.code === 0) roles.value = res.data
-  })
-}
-
-function openDialog(role){
-  if(role){
+function openDialog(role) {
+  if (role) {
     isEdit.value = true
     Object.assign(form, role)
-    loadTree(role.id)
-  }else{
+  } else {
     isEdit.value = false
-    Object.assign(form,{ id:'', name:'', description:'' })
-    loadTree()
+    Object.assign(form, { id: '', name: '', description: '' })
+
   }
   dialogVisible.value = true
 }
 
-function loadTree(roleId){
-  getPermissionTree({ roleId }).then(res => {
-    if(res.code === 0){
-      treeData.value = res.data
-      expandedKeys.value = treeData.value.slice(0,4).map(n=>n.id)
-    }
-  })
-}
-
-function save(){
+function save() {
   const permissions = treeRef.value?.getCheckedKeys() || []
-  const data = { name: form.name, description: form.description, permissions }
-  const api = isEdit.value ? updateRole(form.id, data) : createRole(data)
-  api.then(res => {
-    if(res.code === 0){
-      ElMessage.success('保存成功')
-      dialogVisible.value = false
-      loadRoles()
+  if (isEdit.value) {
+    const index = roles.value.findIndex(r => r.id === form.id)
+    if (index !== -1) {
+      roles.value[index] = { ...roles.value[index], ...form, permissions }
     }
-  })
+    ElMessage.success('更新成功')
+  } else {
+    roles.value.push({
+      id: Date.now(),
+      name: form.name,
+      description: form.description,
+      permissions,
+      users: []
+    })
+    ElMessage.success('创建成功')
+  }
+  dialogVisible.value = false
 }
 
-function remove(role){
-  deleteRole(role.id).then(res => {
-    if(res.code === 0){
-      ElMessage.success('已删除')
-      loadRoles()
-    }
-  })
+function remove(role) {
+  roles.value = roles.value.filter(r => r.id !== role.id)
+  ElMessage.success('已删除')
+
 }
 </script>
 

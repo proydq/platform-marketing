@@ -60,45 +60,33 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getUserList, updateUser, importUsers } from '../../api/userApi'
-import { createUser, deleteUser, resetUserPassword } from '../../api/userApi'
-import { getRoleList } from '../../api/roleApi'
 
-const list = ref([])
-const total = ref(0)
+const roles = ref([
+  { id: 1, name: '管理员' },
+  { id: 2, name: '编辑' }
+])
+
+const list = ref([
+  { id: 1, name: '张三', email: 'zhangsan@example.com', role: '管理员', department: '技术部', status: 'online', avatar: '' },
+  { id: 2, name: '李四', email: 'lisi@example.com', role: '编辑', department: '内容部', status: 'offline', avatar: '' }
+])
+const total = ref(list.value.length)
 const page = ref(1)
 const size = 10
 
-const roles = ref([])
 const dialogVisible = ref(false)
 const isEdit = ref(false)
-const form = reactive({ id:'', name:'', email:'', role:'', department:'' })
+const form = reactive({ id: '', name: '', email: '', role: '', department: '' })
 
-onMounted(() => {
-  loadRoles()
-  fetchList()
-})
-
-function loadRoles(){
-  getRoleList().then(res => {
-    if(res.code === 0) roles.value = res.data
-  })
+function fetchList() {
+  ElMessage.success('已刷新')
 }
 
-function fetchList(){
-  getUserList({ page: page.value - 1, size }).then(res => {
-    if(res.code === 0){
-      list.value = res.data.list
-      total.value = res.data.total
-    }
-  })
-}
-
-function handlePageChange(val){
+function handlePageChange(val) {
   page.value = val
-  fetchList()
+
 }
 
 function openDialog(user){
@@ -112,30 +100,28 @@ function openDialog(user){
   dialogVisible.value = true
 }
 
-function save(){
-  const api = isEdit.value ? updateUser(form.id, form) : createUser(form)
-  api.then(res => {
-    if(res.code === 0){
-      ElMessage.success('保存成功')
-      dialogVisible.value = false
-      fetchList()
-    }
-  })
+function save() {
+  if (isEdit.value) {
+    const index = list.value.findIndex(u => u.id === form.id)
+    if (index !== -1) list.value[index] = { ...form }
+    ElMessage.success('保存成功')
+  } else {
+    list.value.push({ ...form, id: Date.now(), status: 'offline', avatar: '' })
+    ElMessage.success('新增成功')
+  }
+  total.value = list.value.length
+  dialogVisible.value = false
 }
 
-function remove(row){
-  deleteUser(row.id).then(res => {
-    if(res.code === 0){
-      ElMessage.success('已删除')
-      fetchList()
-    }
-  })
+function remove(row) {
+  list.value = list.value.filter(u => u.id !== row.id)
+  total.value = list.value.length
+  ElMessage.success('已删除')
 }
 
-function resetPwd(row){
-  resetUserPassword(row.id).then(res => {
-    if(res.code === 0) ElMessage.success('已重置')
-  })
+function resetPwd() {
+  ElMessage.success('已重置')
+
 }
 </script>
 
