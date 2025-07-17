@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     Page<User> search(@Param("kw") String keyword, Pageable pageable);
 
     java.util.Optional<User> findByUsername(String username);
+    boolean existsByUsername(String username);
 }
