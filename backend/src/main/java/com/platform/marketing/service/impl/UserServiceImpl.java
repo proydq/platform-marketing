@@ -45,4 +45,19 @@ public class UserServiceImpl implements UserService {
     public void delete(String id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public void resetPassword(String id) {
+        // In a real system we would update the password here
+        userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(String id, boolean status) {
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        user.setStatus(status);
+        userRepository.save(user);
+    }
 }

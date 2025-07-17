@@ -104,8 +104,8 @@ function save() {
   const handler = isEdit.value ? updateRole : createRole
   const payload = { ...form }
 
-  handler(form.id, payload).then(res => {
-    const roleId = res.data.id
+  handler(payload).then(res => {
+    const roleId = res.data.id || form.id
     const permissionIds = treeRef.value.getCheckedKeys()
     return bindPermissions(roleId, permissionIds)
   }).then(() => {

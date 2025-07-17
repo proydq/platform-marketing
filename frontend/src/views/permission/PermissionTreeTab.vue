@@ -111,7 +111,7 @@ function openEditDialog(data) {
 function save() {
   saving.value = true
   const fn = isEdit.value ? updatePermission : createPermission
-  fn(form.id, form)
+  fn(form)
     .then(() => {
       ElMessage.success('保存成功')
       dialogVisible.value = false

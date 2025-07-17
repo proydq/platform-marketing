@@ -28,9 +28,9 @@ public class RoleController {
         return ResponseEntity.success(roleService.create(role));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Role> updateRole(@PathVariable String id, @RequestBody Role role) {
-        return ResponseEntity.success(roleService.update(id, role));
+    @PostMapping("/update")
+    public ResponseEntity<Role> updateRole(@RequestBody Role role) {
+        return ResponseEntity.success(roleService.update(role.getId(), role));
     }
 
     @GetMapping("/{id}/permissions")

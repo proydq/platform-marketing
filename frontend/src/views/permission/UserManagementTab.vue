@@ -128,7 +128,7 @@ function openDialog(user) {
 function save() {
   saving.value = true
   const fn = isEdit.value ? updateUser : createUser
-  fn(form.id, form)
+  fn(form)
     .then(() => {
       ElMessage.success('保存成功')
       dialogVisible.value = false
