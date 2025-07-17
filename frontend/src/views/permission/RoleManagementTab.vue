@@ -28,46 +28,26 @@
       />
       <template #footer>
         <el-button @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" icon="Check" @click="save">保存</el-button>
+        <el-button type="primary" icon="Check" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import RoleCard from '../../components/RoleCard.vue'
-import { getRoleList, createRole, updateRole, deleteRole } from '../../api/roleApi'
+import { getRoleList, createRole, updateRole, deleteRole, bindRolePermissions } from '../../api/role'
+import { getPermissionTree } from '../../api/permission'
 
 const roles = ref([])
 const loading = ref(false)
-const treeData = ref([
-  {
-    id: 1,
-    label: '用户管理',
-    children: [
-      { id: 11, label: '新增用户' },
-      { id: 12, label: '删除用户' }
-    ]
-  },
-  {
-    id: 2,
-    label: '内容管理',
-    children: [
-      { id: 21, label: '编辑内容' },
-      { id: 22, label: '发布内容' }
-    ]
-  },
-  {
-    id: 3,
-    label: '统计报表',
-    children: []
-  }
-])
-const expandedKeys = ref(treeData.value.slice(0, 4).map(n => n.id))
+const treeData = ref([])
+const expandedKeys = ref([])
 const dialogVisible = ref(false)
 const isEdit = ref(false)
+const saving = ref(false)
 const form = reactive({ id: '', name: '', description: '' })
 const treeRef = ref()
 
@@ -94,23 +74,41 @@ function openDialog(role) {
   } else {
     isEdit.value = false
     Object.assign(form, { id: '', name: '', description: '' })
-
   }
+  loadTree()
   dialogVisible.value = true
+}
+
+function loadTree() {
+  getPermissionTree({ roleId: form.id }).then(res => {
+    treeData.value = res.data.tree || res.data
+    expandedKeys.value = treeData.value.map(n => n.id)
+    nextTick(() => {
+      treeRef.value?.setCheckedKeys(res.data.checked || [])
+    })
+  })
 }
 
 function save() {
   const permissions = treeRef.value?.getCheckedKeys() || []
-  const data = { name: form.name, description: form.description, permissions }
+  const data = { name: form.name, description: form.description }
+  saving.value = true
   const req = isEdit.value ? updateRole(form.id, data) : createRole(data)
   req
+    .then(res => {
+      const roleId = isEdit.value ? form.id : res.data.id
+      return bindRolePermissions(roleId, permissions)
+    })
     .then(() => {
-      ElMessage.success(isEdit.value ? '更新成功' : '创建成功')
+      ElMessage.success('保存成功')
       dialogVisible.value = false
       fetchRoles()
     })
     .catch(() => {
       ElMessage.error('保存失败')
+    })
+    .finally(() => {
+      saving.value = false
     })
 }
 

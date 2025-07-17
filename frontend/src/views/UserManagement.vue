@@ -33,8 +33,8 @@ import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import UserTable from '../components/UserTable.vue'
 import UserDialog from '../components/UserDialog.vue'
-import { getUserList, importUsers } from '../api/userApi'
-import { getRoleList } from '../api/roleApi'
+import { getUserList, importUsers } from '../api/user'
+import { getRoleList } from '../api/role'
 import { ElMessage } from 'element-plus'
 
 const { t } = useI18n()

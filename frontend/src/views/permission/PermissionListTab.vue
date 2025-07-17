@@ -49,7 +49,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { fetchPermissions, createPermission, updatePermission, deletePermission } from '../../api/permission'
+import { listPermissions, createPermission, updatePermission, deletePermission } from '../../api/permission'
 
 const list = ref([])
 const total = ref(0)
@@ -65,7 +65,7 @@ onMounted(fetchList)
 
 function fetchList() {
   loading.value = true
-  fetchPermissions({ page: page.value - 1, size }).then(res => {
+  listPermissions({ page: page.value - 1, size }).then(res => {
     if (res.code === 0) {
       list.value = res.data.list
       total.value = res.data.total

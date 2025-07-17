@@ -1,7 +1,11 @@
 import request from '../utils/request'
 
-export function fetchPermissions(params) {
+export function listPermissions(params) {
   return request.get('/v1/permissions', { params })
+}
+
+export function getPermission(id) {
+  return request.get(`/v1/permissions/${id}`)
 }
 
 export function createPermission(data) {
@@ -15,3 +19,12 @@ export function updatePermission(id, data) {
 export function deletePermission(id) {
   return request.delete(`/v1/permissions/${id}`)
 }
+
+export function deletePermissions(ids) {
+  return request.delete('/v1/permissions', { data: ids })
+}
+
+export function getPermissionTree(params) {
+  return request.get('/v1/permissions/tree', { params })
+}
+

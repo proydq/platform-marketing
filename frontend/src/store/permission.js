@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { listPermissions } from '../api/permissionApi'
+import { listPermissions } from '../api/permission'
 
 export const usePermissionStore = defineStore('permission', {
   state: () => ({

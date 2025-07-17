@@ -55,7 +55,7 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { getRoleList, createRole, updateRole, deleteRole, bindRolePermissions } from '../api/roleApi'
+import { getRoleList, createRole, updateRole, deleteRole, bindRolePermissions } from '../api/role'
 import PermissionTree from '../components/PermissionTree.vue'
 import { ElMessage } from 'element-plus'
 
