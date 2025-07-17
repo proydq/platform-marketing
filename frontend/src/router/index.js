@@ -5,7 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import MainLayout from '../layouts/MainLayout.vue'
 import DashboardView from '../views/DashboardView.vue'
 import CustomerCrawlView from '../views/CustomerCrawlView.vue'
-import PermissionView from '../views/PermissionView.vue'
+import PermissionManagement from '../views/PermissionManagement.vue'
 import RoleManagement from '../views/RoleManagement.vue'
 import UserManagement from '../views/UserManagement.vue'
 import CustomerManageView from '../views/CustomerManageView.vue'
@@ -28,7 +28,7 @@ const routes = [
       { path: 'dashboard', name: 'Dashboard', component: DashboardView },
       { path: 'customer-crawl', name: 'CustomerCrawl', component: CustomerCrawlView },
       { path: 'customer-manage', name: 'CustomerManage', component: CustomerManageView },
-      { path: 'permission', name: 'Permission', component: PermissionView },
+      { path: 'permission', name: 'Permission', component: PermissionManagement },
       { path: 'roles', name: 'RoleManagement', component: RoleManagement },
       { path: 'users', name: 'UserManagement', component: UserManagement },
       { path: 'settings', name: 'Settings', component: SettingsView },
