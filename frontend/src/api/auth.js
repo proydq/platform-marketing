@@ -11,6 +11,7 @@ export function login(credentials) {
 export function getCurrentUser() {
   return request({
     url: '/v1/auth/me',
+
     method: 'get'
   })
 }
