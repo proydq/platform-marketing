@@ -1,0 +1,31 @@
+/* 权限管理模块统一样式 */
+.page-card {
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #fff;
+}
+
+.toolbar.mb-4 {
+  margin-bottom: 16px;
+}
+
+.toolbar.gap-2 > * + * {
+  margin-left: 8px;
+}
+
+.page-card .el-table--small .cell {
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+.page-dialog .el-dialog__title {
+  font-weight: 600;
+}
+
+.page-dialog .el-form-item {
+  margin-bottom: 16px;
+}
+
+.text-right {
+  text-align: right;
+}

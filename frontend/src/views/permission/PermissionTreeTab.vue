@@ -1,6 +1,6 @@
 <template>
-  <div class="permission-tree-tab">
-    <div class="toolbar mb-3 flex justify-between items-center">
+  <el-card class="page-card">
+    <div class="toolbar mb-4 text-right gap-2">
       <el-button type="primary" icon="Plus" @click="openAddDialog">新增权限</el-button>
     </div>
 
@@ -16,14 +16,19 @@
       <template #default="{ node, data }">
         <span class="tree-node">
           {{ data.name }}（{{ data.code }}）
-          <el-button type="text" size="small" @click.stop="openEditDialog(data)">编辑</el-button>
-          <el-button type="text" size="small" style="color:red;" @click.stop="remove(data.id)">删除</el-button>
+          <span class="actions">
+            <el-button type="text" size="small" @click.stop="openEditDialog(data)">编辑</el-button>
+            <el-button type="text" size="small" style="color:red" @click.stop="remove(data.id)">删除</el-button>
+          </span>
         </span>
       </template>
     </el-tree>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑权限' : '新增权限'" width="500px">
-      <el-form :model="form" label-width="100px">
+    <el-dialog class="page-dialog" v-model="dialogVisible" width="500px">
+      <template #title>
+        <strong>{{ isEdit ? '编辑权限' : '新增权限' }}</strong>
+      </template>
+      <el-form class="dialog-form" :model="form" label-width="100px">
         <el-form-item label="权限名称">
           <el-input v-model="form.name" />
         </el-form-item>
@@ -54,7 +59,7 @@
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
-  </div>
+  </el-card>
 </template>
 
 <script setup>
@@ -66,6 +71,7 @@ import {
   updatePermission,
   deletePermission
 } from '../../api/permission'
+import '@/assets/css/permission-ui-enhanced.css'
 
 const treeData = ref([])
 const defaultProps = { label: 'name', children: 'children' }
