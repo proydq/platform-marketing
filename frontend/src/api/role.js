@@ -61,7 +61,9 @@ export function bindPermissions(roleId, permissionIds) {
   return request({
     url: `/v1/roles/${roleId}/permissions`,
     method: 'post',
-    data: permissionIds
+    data: {
+      permissions: permissionIds
+    }
   })
 }
 export function fetchRolePermissions(roleId) {
