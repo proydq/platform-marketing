@@ -16,7 +16,7 @@
       </div>
       <div class="actions flex gap-2">
         <el-button type="danger" icon="Delete" :disabled="!selection.length" @click="handleBatchDelete">批量删除</el-button>
-        <el-button type="primary" icon="Plus" @click="openDialog">新增权限</el-button>
+        <el-button type="primary" icon="Plus" @click="openDialog(false)">新增权限</el-button>
       </div>
     </div>
 
@@ -47,7 +47,7 @@
       </el-table-column>
       <el-table-column label="操作" width="180">
         <template #default="{ row }">
-          <el-button size="small" @click="openDialog(row)">编辑</el-button>
+          <el-button size="small" @click="openDialog(true, row)">编辑</el-button>
           <el-button size="small" type="danger" @click="handleDelete(row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -64,9 +64,9 @@
       />
     </div>
 
-    <el-dialog class="page-dialog" v-model="dialogVisible" width="500px">
+    <el-drawer class="page-dialog" v-model="drawerVisible" size="400px" direction="rtl">
       <template #title>
-        <strong>{{ isEdit ? '编辑权限' : '新建权限' }}</strong>
+        <strong>{{ isEdit ? '编辑权限' : '新增权限' }}</strong>
       </template>
       <el-form class="dialog-form" :model="form" label-width="100px">
         <el-form-item label="权限名称">
@@ -98,10 +98,10 @@
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="drawerVisible = false">取消</el-button>
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
-    </el-dialog>
+    </el-drawer>
   </el-card>
 </template>
 
@@ -129,7 +129,7 @@ const searchStatus = ref()
 const selection = ref([])
 const loading = ref(false)
 const saving = ref(false)
-const dialogVisible = ref(false)
+const drawerVisible = ref(false)
 const isEdit = ref(false)
 const treeOptions = ref([])
 
@@ -169,12 +169,11 @@ function loadTree() {
   })
 }
 
-function openDialog(item) {
-  if (item) {
-    isEdit.value = true
-    Object.assign(form, item)
+function openDialog(edit = false, data = null) {
+  isEdit.value = edit
+  if (edit && data) {
+    Object.assign(form, data)
   } else {
-    isEdit.value = false
     Object.assign(form, {
       id: '',
       name: '',
@@ -184,7 +183,7 @@ function openDialog(item) {
       status: true
     })
   }
-  dialogVisible.value = true
+  drawerVisible.value = true
 }
 
 function save() {
@@ -193,7 +192,7 @@ function save() {
   fn(form)
     .then(() => {
       ElMessage.success('保存成功')
-      dialogVisible.value = false
+      drawerVisible.value = false
       fetchData()
     })
     .finally(() => (saving.value = false))

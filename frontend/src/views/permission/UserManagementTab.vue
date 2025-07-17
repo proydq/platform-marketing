@@ -2,7 +2,7 @@
   <el-card class="page-card">
     <div class="toolbar mb-4 flex justify-between items-center gap-2">
       <el-input v-model="searchKeyword" placeholder="搜索用户" clearable style="width: 240px" />
-      <el-button type="primary" icon="Plus" @click="openDialog">新建用户</el-button>
+      <el-button type="primary" icon="Plus" @click="openDialog(false)">新建用户</el-button>
     </div>
 
     <el-table :data="userList" border size="small" v-loading="loading" style="width: 100%">
@@ -16,7 +16,7 @@
       </el-table-column>
       <el-table-column label="操作" width="220">
         <template #default="{ row }">
-          <el-button size="small" @click="openDialog(row)">编辑</el-button>
+          <el-button size="small" @click="openDialog(true, row)">编辑</el-button>
           <el-button size="small" type="warning" @click="resetPassword(row.id)">重置密码</el-button>
           <el-button size="small" type="danger" @click="remove(row.id)">删除</el-button>
         </template>
@@ -34,9 +34,9 @@
       />
     </div>
 
-    <el-dialog class="page-dialog" v-model="dialogVisible" width="500px">
+    <el-drawer class="page-dialog" v-model="drawerVisible" direction="rtl" size="400px">
       <template #title>
-        <strong>{{ isEdit ? '编辑用户' : '新建用户' }}</strong>
+        <strong>{{ isEdit ? '编辑用户' : '新增用户' }}</strong>
       </template>
       <el-form class="dialog-form" :model="form" label-width="100px">
         <el-form-item label="用户名">
@@ -61,10 +61,10 @@
       </el-form>
 
       <template #footer>
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="drawerVisible = false">取消</el-button>
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
-    </el-dialog>
+    </el-drawer>
   </el-card>
 </template>
 
@@ -85,7 +85,7 @@ const size = ref(10)
 const searchKeyword = ref('')
 const loading = ref(false)
 const saving = ref(false)
-const dialogVisible = ref(false)
+const drawerVisible = ref(false)
 const isEdit = ref(false)
 const roleOptions = ref([])
 
@@ -114,15 +114,14 @@ function fetchData() {
     .finally(() => (loading.value = false))
 }
 
-function openDialog(user) {
-  if (user) {
-    isEdit.value = true
-    Object.assign(form, user)
+function openDialog(edit = false, data = null) {
+  isEdit.value = edit
+  if (edit && data) {
+    Object.assign(form, data)
   } else {
-    isEdit.value = false
     Object.assign(form, { id: '', username: '', email: '', roleId: '', status: true })
   }
-  dialogVisible.value = true
+  drawerVisible.value = true
 }
 
 function save() {
@@ -131,7 +130,7 @@ function save() {
   fn(form)
     .then(() => {
       ElMessage.success('保存成功')
-      dialogVisible.value = false
+      drawerVisible.value = false
       fetchData()
     })
     .finally(() => (saving.value = false))
