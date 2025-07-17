@@ -22,7 +22,7 @@ export const usePermissionStore = defineStore('permission', {
       }).then(res => {
         this.loading = false
         if (res.code === 0) {
-          this.list = res.data.list
+          this.list = res.data.rows
           this.total = res.data.total
         }
       }).catch(() => {

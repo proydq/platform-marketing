@@ -21,6 +21,8 @@ public class Role {
 
     private String description;
 
+    private boolean status = true;
+
     public String getId() {
         return id;
     }
@@ -43,5 +45,13 @@ public class Role {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
