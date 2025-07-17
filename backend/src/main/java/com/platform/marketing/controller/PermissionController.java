@@ -40,7 +40,7 @@ public class PermissionController {
                 .orElse(ResponseEntity.fail(404, "Not Found"));
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     @PreAuthorize("hasPermission('permission:create')")
     public ResponseEntity<Permission> create(@RequestBody Permission permission) {
         return ResponseEntity.success(permissionService.create(permission));

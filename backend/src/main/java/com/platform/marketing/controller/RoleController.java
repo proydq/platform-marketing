@@ -23,6 +23,16 @@ public class RoleController {
         return ResponseEntity.success(roleService.findAllRoles());
     }
 
+    @PostMapping
+    public ResponseEntity<Role> createRole(@RequestBody Role role) {
+        return ResponseEntity.success(roleService.create(role));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Role> updateRole(@PathVariable String id, @RequestBody Role role) {
+        return ResponseEntity.success(roleService.update(id, role));
+    }
+
     @GetMapping("/{id}/permissions")
     public ResponseEntity<List<String>> getRolePermissions(@PathVariable String id) {
         List<String> list = roleService.getPermissions(id);
@@ -35,3 +45,5 @@ public class RoleController {
         return ResponseEntity.success(null);
     }
 }
+
+
