@@ -1,17 +1,17 @@
 <template>
-  <div>
-    <div class="toolbar mb-3 flex justify-between items-center">
+  <el-card class="page-card">
+    <div class="toolbar mb-4 flex justify-between items-center gap-2">
       <el-input v-model="searchKeyword" placeholder="搜索用户" clearable style="width: 240px" />
       <el-button type="primary" icon="Plus" @click="openDialog">新建用户</el-button>
     </div>
 
-    <el-table :data="userList" border v-loading="loading" style="width: 100%">
+    <el-table :data="userList" border size="small" v-loading="loading" style="width: 100%">
       <el-table-column prop="username" label="用户名" />
       <el-table-column prop="email" label="邮箱" />
       <el-table-column prop="roleName" label="角色" />
       <el-table-column prop="status" label="状态" width="100">
         <template #default="{ row }">
-          <el-switch v-model="row.status" @change="toggleStatus(row)" />
+          <el-switch v-model="row.status" inline-prompt active-text="启" inactive-text="禁" @change="toggleStatus(row)" />
         </template>
       </el-table-column>
       <el-table-column label="操作" width="220">
@@ -23,16 +23,22 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination
-      v-model:current-page="page"
-      v-model:page-size="size"
-      :total="total"
-      layout="total, prev, pager, next"
-      @current-change="fetchData"
-    />
+    <div class="text-right mt-4">
+      <el-pagination
+        background
+        v-model:current-page="page"
+        v-model:page-size="size"
+        :total="total"
+        layout="total, prev, pager, next"
+        @current-change="fetchData"
+      />
+    </div>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑用户' : '新建用户'" width="500px">
-      <el-form :model="form" label-width="100px">
+    <el-dialog class="page-dialog" v-model="dialogVisible" width="500px">
+      <template #title>
+        <strong>{{ isEdit ? '编辑用户' : '新建用户' }}</strong>
+      </template>
+      <el-form class="dialog-form" :model="form" label-width="100px">
         <el-form-item label="用户名">
           <el-input v-model="form.username" />
         </el-form-item>
@@ -50,7 +56,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="状态">
-          <el-switch v-model="form.status" />
+          <el-switch v-model="form.status" inline-prompt active-text="启" inactive-text="禁" />
         </el-form-item>
       </el-form>
 
@@ -59,7 +65,7 @@
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
-  </div>
+  </el-card>
 </template>
 
 <script setup>
@@ -70,6 +76,7 @@ import {
   resetUserPassword, updateUserStatus
 } from '../../api/user'
 import { fetchRoles } from '../../api/role'
+import '@/assets/css/permission-ui-enhanced.css'
 
 const userList = ref([])
 const total = ref(0)

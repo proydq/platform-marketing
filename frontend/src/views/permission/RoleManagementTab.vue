@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <div class="toolbar mb-3">
+  <el-card class="page-card">
+    <div class="toolbar mb-4 flex gap-2">
       <el-button type="primary" icon="Plus" @click="openDialog">新建角色</el-button>
     </div>
 
-    <el-table :data="roles" border v-loading="loading" style="width: 100%">
+    <el-table :data="roles" border size="small" v-loading="loading" style="width: 100%">
       <el-table-column prop="name" label="角色名称" />
       <el-table-column prop="description" label="角色描述" />
       <el-table-column label="操作" width="180">
@@ -15,8 +15,11 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog v-model="dialogVisible" :title="isEdit ? '编辑角色' : '新建角色'" width="600px">
-      <el-form :model="form" label-width="80px">
+    <el-dialog class="page-dialog" v-model="dialogVisible" width="600px">
+      <template #title>
+        <strong>{{ isEdit ? '编辑角色' : '新建角色' }}</strong>
+      </template>
+      <el-form class="dialog-form" :model="form" label-width="80px">
         <el-form-item label="名称">
           <el-input v-model="form.name" />
         </el-form-item>
@@ -40,7 +43,7 @@
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
-  </div>
+  </el-card>
 </template>
 
 <script setup>
@@ -51,6 +54,7 @@ import {
   fetchRolePermissions, bindPermissions
 } from '../../api/role'
 import { fetchPermissionTree } from '../../api/permission'
+import '@/assets/css/permission-ui-enhanced.css'
 
 const roles = ref([])
 const loading = ref(false)
