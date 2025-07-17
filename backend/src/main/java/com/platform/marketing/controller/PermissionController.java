@@ -52,6 +52,12 @@ public class PermissionController {
         return ResponseEntity.success(permissionService.update(id, permission));
     }
 
+    @GetMapping("/tree")
+    @PreAuthorize("hasPermission('permission:list')")
+    public ResponseEntity<List<com.platform.marketing.dto.PermissionTreeNode>> tree() {
+        return ResponseEntity.success(permissionService.getTree());
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasPermission('permission:delete')")
     public ResponseEntity<Void> delete(@PathVariable String id) {

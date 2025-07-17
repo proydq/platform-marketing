@@ -8,6 +8,9 @@
       <el-tab-pane label="角色管理" name="roles">
         <RoleManagementTab v-if="active==='roles'" />
       </el-tab-pane>
+      <el-tab-pane label="权限列表" name="list">
+        <PermissionListTab v-if="active==='list'" />
+      </el-tab-pane>
       <el-tab-pane label="用户管理" name="users">
         <UserManagementTab v-if="active==='users'" />
       </el-tab-pane>
@@ -21,6 +24,7 @@
 <script setup>
 import { ref } from 'vue'
 import RoleManagementTab from './permission/RoleManagementTab.vue'
+import PermissionListTab from './permission/PermissionListTab.vue'
 import UserManagementTab from './permission/UserManagementTab.vue'
 import PermissionTreeTab from './permission/PermissionTreeTab.vue'
 

@@ -17,4 +17,6 @@ public interface PermissionService {
     void deleteBatch(List<String> ids);
 
     Page<Permission> search(String keyword, String type, Boolean status, Pageable pageable);
+
+    List<com.platform.marketing.dto.PermissionTreeNode> getTree();
 }
