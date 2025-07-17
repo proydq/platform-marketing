@@ -40,7 +40,7 @@ public class PermissionController {
                 .orElse(ResponseEntity.fail(404, "Not Found"));
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     @PreAuthorize("hasPermission('permission:create')")
     public ResponseEntity<Permission> create(@RequestBody Permission permission) {
         return ResponseEntity.success(permissionService.create(permission));
@@ -65,10 +65,21 @@ public class PermissionController {
         return ResponseEntity.success(null);
     }
 
-    @DeleteMapping
+    @PostMapping("/delete-batch")
     @PreAuthorize("hasPermission('permission:delete')")
     public ResponseEntity<Void> deleteBatch(@RequestBody List<String> ids) {
         permissionService.deleteBatch(ids);
+        return ResponseEntity.success(null);
+    }
+
+    @PutMapping("/{id}/status")
+    @PreAuthorize("hasPermission('permission:update')")
+    public ResponseEntity<Void> updateStatus(@PathVariable String id, @RequestBody java.util.Map<String, Boolean> body) {
+        Boolean status = body.get("status");
+        if (status == null) {
+            return ResponseEntity.fail(400, "status required");
+        }
+        permissionService.updateStatus(id, status);
         return ResponseEntity.success(null);
     }
 }

@@ -33,6 +33,18 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
+    public Role create(Role role) {
+        return roleRepository.save(role);
+    }
+
+    public Role update(String id, Role role) {
+        Role existing = roleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Role not found"));
+        existing.setName(role.getName());
+        existing.setDescription(role.getDescription());
+        return roleRepository.save(existing);
+    }
+
     public List<String> getPermissions(String roleId) {
         List<RolePermission> list = rolePermissionRepository.findByIdRoleId(roleId);
         return list.stream()
@@ -54,3 +66,4 @@ public class RoleService {
         }
     }
 }
+

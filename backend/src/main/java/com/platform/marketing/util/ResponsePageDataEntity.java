@@ -4,14 +4,14 @@ import java.util.List;
 
 public class ResponsePageDataEntity<T> {
     private long total;
-    private List<T> list;
+    private List<T> rows;
 
     public ResponsePageDataEntity() {
     }
 
-    public ResponsePageDataEntity(long total, List<T> list) {
+    public ResponsePageDataEntity(long total, List<T> rows) {
         this.total = total;
-        this.list = list;
+        this.rows = rows;
     }
 
     public long getTotal() {
@@ -22,11 +22,11 @@ public class ResponsePageDataEntity<T> {
         this.total = total;
     }
 
-    public List<T> getList() {
-        return list;
+    public List<T> getRows() {
+        return rows;
     }
 
-    public void setList(List<T> list) {
-        this.list = list;
+    public void setRows(List<T> rows) {
+        this.rows = rows;
     }
 }
