@@ -34,6 +34,12 @@ public class RoleController {
         return ResponseEntity.success(roleService.update(role.getId(), role));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRole(@PathVariable String id) {
+        roleService.delete(id);
+        return ResponseEntity.success(null);
+    }
+
     @GetMapping("/{id}/permissions")
     public ResponseEntity<List<String>> getRolePermissions(@PathVariable String id) {
         List<String> list = roleService.getPermissions(id);

@@ -42,7 +42,12 @@ public class RoleService {
                 .orElseThrow(() -> new IllegalArgumentException("Role not found"));
         existing.setName(role.getName());
         existing.setDescription(role.getDescription());
+        existing.setStatus(role.isStatus());
         return roleRepository.save(existing);
+    }
+
+    public void delete(String id) {
+        roleRepository.deleteById(id);
     }
 
     public List<String> getPermissions(String roleId) {
