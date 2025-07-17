@@ -23,6 +23,23 @@ public class RoleController {
         return ResponseEntity.success(roleService.findAllRoles());
     }
 
+    @PostMapping
+    public ResponseEntity<Role> create(@RequestBody Role role) {
+        role.setId(java.util.UUID.randomUUID().toString());
+        return ResponseEntity.success(roleService.create(role));
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Role> updateRole(@RequestBody Role role) {
+        return ResponseEntity.success(roleService.update(role.getId(), role));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRole(@PathVariable String id) {
+        roleService.delete(id);
+        return ResponseEntity.success(null);
+    }
+
     @GetMapping("/{id}/permissions")
     public ResponseEntity<List<String>> getRolePermissions(@PathVariable String id) {
         List<String> list = roleService.getPermissions(id);
@@ -35,3 +52,5 @@ public class RoleController {
         return ResponseEntity.success(null);
     }
 }
+
+
