@@ -3,13 +3,9 @@
     <div class="toolbar mb-3">
       <el-button type="primary" icon="Plus" @click="openDialog">新建角色</el-button>
     </div>
-    <el-row :gutter="20">
+    <el-row :gutter="20" v-loading="loading">
       <el-col :span="8" v-for="role in roles" :key="role.id">
-        <RoleCard :role="role" />
-        <div style="text-align:right; margin-top:6px;">
-          <el-button type="primary" size="small" icon="Edit" @click="openDialog(role)">编辑</el-button>
-          <el-button type="danger" size="small" icon="Delete" @click="remove(role)">删除</el-button>
-        </div>
+        <RoleCard :role="role" @edit="openDialog" @delete="remove" />
       </el-col>
     </el-row>
 
@@ -32,64 +28,44 @@
       />
       <template #footer>
         <el-button @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" icon="Check" @click="save">保存</el-button>
+        <el-button type="primary" icon="Check" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import RoleCard from '../../components/RoleCard.vue'
+import { getRoleList, createRole, updateRole, deleteRole, bindRolePermissions } from '../../api/role'
+import { getPermissionTree } from '../../api/permission'
 
-const roles = ref([
-  {
-    id: 1,
-    name: '管理员',
-    description: '拥有全部权限',
-    permissions: ['add_user', 'delete_user', 'view_reports'],
-    users: [
-      { id: 1, name: '张三', avatar: '' },
-      { id: 2, name: '李四', avatar: '' }
-    ]
-  },
-  {
-    id: 2,
-    name: '编辑',
-    description: '内容管理',
-    permissions: ['edit_content', 'publish_content'],
-    users: [{ id: 3, name: '王五', avatar: '' }]
-  }
-])
-const treeData = ref([
-  {
-    id: 1,
-    label: '用户管理',
-    children: [
-      { id: 11, label: '新增用户' },
-      { id: 12, label: '删除用户' }
-    ]
-  },
-  {
-    id: 2,
-    label: '内容管理',
-    children: [
-      { id: 21, label: '编辑内容' },
-      { id: 22, label: '发布内容' }
-    ]
-  },
-  {
-    id: 3,
-    label: '统计报表',
-    children: []
-  }
-])
-const expandedKeys = ref(treeData.value.slice(0, 4).map(n => n.id))
+const roles = ref([])
+const loading = ref(false)
+const treeData = ref([])
+const expandedKeys = ref([])
 const dialogVisible = ref(false)
 const isEdit = ref(false)
+const saving = ref(false)
 const form = reactive({ id: '', name: '', description: '' })
 const treeRef = ref()
+
+onMounted(fetchRoles)
+
+function fetchRoles() {
+  loading.value = true
+  getRoleList()
+    .then(res => {
+      roles.value = res.data || []
+    })
+    .catch(() => {
+      ElMessage.error('加载失败')
+    })
+    .finally(() => {
+      loading.value = false
+    })
+}
 
 function openDialog(role) {
   if (role) {
@@ -98,35 +74,51 @@ function openDialog(role) {
   } else {
     isEdit.value = false
     Object.assign(form, { id: '', name: '', description: '' })
-
   }
+  loadTree()
   dialogVisible.value = true
+}
+
+function loadTree() {
+  getPermissionTree({ roleId: form.id }).then(res => {
+    treeData.value = res.data.tree || res.data
+    expandedKeys.value = treeData.value.map(n => n.id)
+    nextTick(() => {
+      treeRef.value?.setCheckedKeys(res.data.checked || [])
+    })
+  })
 }
 
 function save() {
   const permissions = treeRef.value?.getCheckedKeys() || []
-  if (isEdit.value) {
-    const index = roles.value.findIndex(r => r.id === form.id)
-    if (index !== -1) {
-      roles.value[index] = { ...roles.value[index], ...form, permissions }
-    }
-    ElMessage.success('更新成功')
-  } else {
-    roles.value.push({
-      id: Date.now(),
-      name: form.name,
-      description: form.description,
-      permissions,
-      users: []
+  const data = { name: form.name, description: form.description }
+  saving.value = true
+  const req = isEdit.value ? updateRole(form.id, data) : createRole(data)
+  req
+    .then(res => {
+      const roleId = isEdit.value ? form.id : res.data.id
+      return bindRolePermissions(roleId, permissions)
     })
-    ElMessage.success('创建成功')
-  }
-  dialogVisible.value = false
+    .then(() => {
+      ElMessage.success('保存成功')
+      dialogVisible.value = false
+      fetchRoles()
+    })
+    .catch(() => {
+      ElMessage.error('保存失败')
+    })
+    .finally(() => {
+      saving.value = false
+    })
 }
 
 function remove(role) {
-  roles.value = roles.value.filter(r => r.id !== role.id)
-  ElMessage.success('已删除')
+  deleteRole(role.id)
+    .then(() => {
+      ElMessage.success('已删除')
+      fetchRoles()
+    })
+    .catch(() => ElMessage.error('删除失败'))
 
 }
 </script>
