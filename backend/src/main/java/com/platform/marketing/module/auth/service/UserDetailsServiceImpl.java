@@ -1,7 +1,7 @@
 package com.platform.marketing.module.auth.service;
 
 import com.platform.marketing.module.auth.entity.User;
-import com.platform.marketing.module.auth.repository.UserRepository;
+import com.platform.marketing.module.user.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
