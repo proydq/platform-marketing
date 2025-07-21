@@ -29,4 +29,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
      * @return optional user
      */
     Optional<User> findByUsernameAndIsDeletedFalse(String username);
+
 }
