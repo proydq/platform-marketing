@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class RoleService {
@@ -51,12 +50,10 @@ public class RoleService {
     }
 
     public List<String> getPermissions(String roleId) {
-        List<RolePermission> list = rolePermissionRepository.findByIdRoleId(roleId);
-        return list.stream()
-                .map(rp -> permissionRepository.findById(rp.getId().getPermissionId()))
-                .filter(Optional::isPresent)
-                .map(opt -> opt.get().getCode())
-                .collect(Collectors.toList());
+        if (roleId == null) {
+            return java.util.Collections.emptyList();
+        }
+        return permissionRepository.findCodesByRoleId(roleId);
     }
 
     @Transactional
