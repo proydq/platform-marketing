@@ -14,9 +14,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import RoleManagement from './RoleManagement.vue'
-import UserManagement from './UserManagement.vue'
-import PermissionConfig from './PermissionConfig.vue'
+import RoleManagement from './permission/RoleManagement.vue'
+import UserManagement from './permission/UserManagement.vue'
+import PermissionConfig from './permission/PermissionConfig.vue'
 
 const activeTab = ref('roles')
 </script>
