@@ -18,9 +18,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
-
 @Configuration
 public class SecurityConfig {
 

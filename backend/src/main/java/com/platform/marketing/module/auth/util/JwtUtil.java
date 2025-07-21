@@ -3,10 +3,8 @@ package com.platform.marketing.module.auth.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,7 +16,6 @@ public class JwtUtil {
 
     @Value("${jwt.expiration}")
     private long expiration;
-
     public String generateToken(UUID userId, String username) {
         Date now = new Date();
         Date exp = new Date(now.getTime() + expiration);
