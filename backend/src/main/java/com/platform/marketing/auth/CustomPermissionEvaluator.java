@@ -21,10 +21,11 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
             return false;
         }
         String perm = permission.toString();
+        log.info("\uD83D\uDD10 正在验证权限: {}", perm);
         boolean result = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .anyMatch(perm::equals);
-        log.debug("Evaluate permission '{}' result={}", perm, result);
+        log.info("\u2705 验证结果: {}", result);
 
         return result;
     }
