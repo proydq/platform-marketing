@@ -15,6 +15,9 @@ public interface PermissionRepository extends JpaRepository<Permission, String> 
     Optional<Permission> findByCode(String code);
     boolean existsByCode(String code);
 
+    @Query("SELECT p.code FROM Permission p JOIN RolePermission rp ON p.id = rp.id.permissionId WHERE rp.id.roleId = :roleId")
+    java.util.List<String> findCodesByRoleId(@Param("roleId") String roleId);
+
     Page<Permission> findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(String name,
                                                                              String code,
                                                                              Pageable pageable);
