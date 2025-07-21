@@ -1,6 +1,6 @@
 package com.platform.marketing.module.auth.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 public class LoginDTO {
     @NotBlank

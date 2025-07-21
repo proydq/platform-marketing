@@ -4,7 +4,7 @@ import com.platform.marketing.module.auth.dto.LoginDTO;
 import com.platform.marketing.module.auth.dto.LoginVO;
 import com.platform.marketing.module.auth.dto.Result;
 import com.platform.marketing.module.auth.service.AuthService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

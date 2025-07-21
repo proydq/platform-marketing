@@ -1,6 +1,6 @@
 package com.platform.marketing.module.auth.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
