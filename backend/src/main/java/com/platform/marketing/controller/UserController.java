@@ -58,4 +58,10 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.success(null);
     }
+
+    @GetMapping("/test/hello")
+    @org.springframework.security.access.prepost.PreAuthorize("hasPermission('test:hello')")
+    public ResponseEntity<String> hello() {
+        return ResponseEntity.success("hello");
+    }
 }
