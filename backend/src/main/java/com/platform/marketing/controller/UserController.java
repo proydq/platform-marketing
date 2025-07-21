@@ -58,4 +58,16 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.success(null);
     }
+
+    @GetMapping("/{id}/roles")
+    public ResponseEntity<java.util.List<String>> getUserRoles(@PathVariable String id) {
+        java.util.List<String> roleIds = userService.getRoleIdsByUser(id);
+        return ResponseEntity.success(roleIds);
+    }
+
+    @PostMapping("/{id}/roles")
+    public ResponseEntity<Void> assignRoles(@PathVariable String id, @RequestBody java.util.List<String> roleIds) {
+        userService.assignRoles(id, roleIds);
+        return ResponseEntity.success(null);
+    }
 }
