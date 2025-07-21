@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Slf4j
-@Component
+// @Component
 public class SuperAdminInitializer implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
