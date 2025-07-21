@@ -4,7 +4,7 @@ import com.platform.marketing.module.auth.dto.LoginDTO;
 import com.platform.marketing.module.auth.dto.LoginVO;
 import com.platform.marketing.module.auth.dto.UserVO;
 import com.platform.marketing.module.auth.entity.User;
-import com.platform.marketing.module.auth.repository.UserRepository;
+import com.platform.marketing.module.user.repository.UserRepository;
 import com.platform.marketing.module.auth.util.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
