@@ -5,8 +5,146 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/BackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/BackendApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/MethodSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/MethodSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/CustomPermissionEvaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/CustomPermissionEvaluator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/JwtFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/JwtFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/LoginResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/LoginResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SuperAdminInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SuperAdminInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/PermissionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/PermissionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/RoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/PermissionRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/PermissionRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/PermissionTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/PermissionTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Permission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/RolePermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/RolePermission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/RolePermissionId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/RolePermissionId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/PermissionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/PermissionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/RolePermissionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/RolePermissionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/PermissionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/RoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/PermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/PermissionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/util/ResponseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/util/ResponseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/util/ResponsePageDataEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/util/ResponsePageDataEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/JwtFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/JwtFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/.vscode/extensions.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.vscode/extensions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/permission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/role.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/role.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/assets/css/permission-ui-enhanced.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/assets/css/permission-ui-enhanced.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/assets/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/assets/global.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CampaignStatusTag.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CampaignStatusTag.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CrawlDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CrawlDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/CrawlTaskTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/CrawlTaskTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HeaderBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HeaderBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/HelpDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/HelpDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/LoginForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/PermissionTree.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/PermissionTree.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/ProgressRing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ProgressRing.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/QuickCrawlForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/QuickCrawlForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/RichTextEditor.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/RichTextEditor.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/RoleCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/RoleCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/RoleDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/RoleDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/ScheduleSelector.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/ScheduleSelector.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/SidebarMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/SidebarMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/StatCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/StatCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/TaskTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/TaskTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/UserDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/UserDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/UserTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/UserTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/charts/BarChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/charts/BarChart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/charts/FunnelChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/charts/FunnelChart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/charts/LineChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/charts/LineChart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/charts/PieChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/charts/PieChart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/composables/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/composables/permission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/i18n/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/i18n/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/layouts/MainLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/layouts/MainLayout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/locales/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/locales/zh.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/locales/zh.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/behavior.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/behavior.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/behaviorLog.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/behaviorLog.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/campaignDetail.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/campaignDetail.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/campaignList.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/campaignList.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/crawlTasks.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/crawlTasks.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/customers.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/customers.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/emailCampaigns.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/emailCampaigns.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/generatedContent.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/generatedContent.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/notifications.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/notifications.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/permissionTree.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/permissionTree.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/permissions.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/permissions.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/previewData.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/previewData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/recentTasks.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/recentTasks.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/reportSummary.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/reportSummary.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/roles.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/roles.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/schedules.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/schedules.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/sendRecords.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/sendRecords.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/socialAccounts.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/socialAccounts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/socialPosts.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/socialPosts.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/socialPushLogs.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/socialPushLogs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/stats.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/taskList.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/taskList.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/mock/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/mock/users.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/store/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/store/permission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/BehaviorTrackView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/BehaviorTrackView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/CampaignCenterView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/CampaignCenterView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/ComingSoon.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/ComingSoon.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/ContentGenerateView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/ContentGenerateView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/CustomerCrawlView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/CustomerCrawlView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/CustomerManageView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/CustomerManageView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/DashboardView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/DashboardView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/EmailMarketingView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/EmailMarketingView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/HelpCenterView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/HelpCenterView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/LoginView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/LoginView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/NotificationCenterView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/NotificationCenterView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/PermissionView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/PermissionView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/ReportsView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/ReportsView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/RoleManagement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/RoleManagement.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/SettingsView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/SettingsView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/SocialMediaView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/SocialMediaView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/TaskScheduleView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/TaskScheduleView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/UserManagement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/UserManagement.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/permission/PermissionListTab.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/permission/PermissionListTab.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/permission/PermissionTreeTab.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/permission/PermissionTreeTab.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/permission/RoleManagementTab.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/permission/RoleManagementTab.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/permission/UserManagementTab.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/permission/UserManagementTab.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,9 +160,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2zx7M7FeB5btqDX7K9FT8GhNtY4" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -46,6 +184,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "b43fdd98b1fd705ae4c3a10cf25aad8a",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -67,6 +206,7 @@
       <option name="presentableId" value="Default" />
       <updated>1752660823515</updated>
       <workItem from="1752660824520" duration="23139000" />
+      <workItem from="1753077122426" duration="1269000" />
     </task>
     <servers />
   </component>
