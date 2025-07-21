@@ -21,4 +21,13 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Page<User> search(@Param("kw") String keyword, Pageable pageable);
 
     Optional<User> findByIdAndIsDeletedFalse(UUID id);
+
+    /**
+     * Find user by username and not deleted.
+     *
+     * @param username username
+     * @return optional user
+     */
+    Optional<User> findByUsernameAndIsDeletedFalse(String username);
+
 }
