@@ -53,6 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 log.debug("Set authentication for {}", username);
             } else {
                 log.debug("Invalid JWT token");
+
             }
         }
 
