@@ -7,13 +7,5 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL8Dialect
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-
 server:
   port: 8080
-
-jwt:
-  secret: xZ#e9gqXx8zN0vH4n@7zLpW19^tqA3Ub
-  expiration: 3600000
