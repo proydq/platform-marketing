@@ -23,11 +23,13 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByIdAndIsDeletedFalse(UUID id);
 
     /**
-     * Find user by username and not deleted.
+     * Find an active user by username.
+     * <p>
+     * This query is primarily used during login to exclude logically
+     * deleted accounts.
      *
      * @param username username
      * @return optional user
      */
     Optional<User> findByUsernameAndIsDeletedFalse(String username);
-
 }
