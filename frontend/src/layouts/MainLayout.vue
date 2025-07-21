@@ -76,13 +76,11 @@ const menuList = [
   { path: '/behavior-track', title: '行为追踪', icon: View },
   { path: '/reports', title: '报表统计', icon: DataLine },
   { path: '/permission', title: '权限管理', icon: Lock },
-  { path: '/roles', title: '角色管理', icon: UserFilled },
-  { path: '/users', title: '用户管理', icon: User },
   { path: '/settings', title: '系统设置', icon: Setting },
   { path: '/content-generate', title: '内容生成', icon: EditPen },
 ]
 
-const systemPaths = ['/permission', '/roles', '/users', '/settings']
+const systemPaths = ['/permission', '/settings']
 const systemMenus = menuList.filter((m) => systemPaths.includes(m.path))
 const otherMenus = menuList.filter((m) => !systemPaths.includes(m.path))
 
