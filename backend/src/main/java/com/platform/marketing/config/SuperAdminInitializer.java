@@ -9,6 +9,7 @@ import com.platform.marketing.repository.RoleRepository;
 import com.platform.marketing.repository.PermissionRepository;
 import com.platform.marketing.repository.RolePermissionRepository;
 import com.platform.marketing.repository.UserRepository;
+import com.platform.marketing.repository.UserRoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,17 +27,20 @@ public class SuperAdminInitializer implements CommandLineRunner {
     private final PermissionRepository permissionRepository;
     private final RolePermissionRepository rolePermissionRepository;
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
     public SuperAdminInitializer(RoleRepository roleRepository,
                                  PermissionRepository permissionRepository,
                                  RolePermissionRepository rolePermissionRepository,
                                  UserRepository userRepository,
+                                 UserRoleRepository userRoleRepository,
                                  PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.permissionRepository = permissionRepository;
         this.rolePermissionRepository = rolePermissionRepository;
         this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -71,8 +75,9 @@ public class SuperAdminInitializer implements CommandLineRunner {
             admin.setId(UUID.randomUUID().toString());
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("admin123"));
-            admin.setRoleId(role.getId());
             userRepository.save(admin);
+            userRoleRepository.save(new com.platform.marketing.entity.UserRole(
+                    new com.platform.marketing.entity.UserRoleId(admin.getId(), role.getId())));
             log.info("Created admin user");
         }
     }

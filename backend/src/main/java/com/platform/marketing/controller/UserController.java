@@ -31,31 +31,22 @@ public class UserController {
         return ResponseEntity.success(userService.create(user));
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<User> update(@RequestBody User user) {
-        return ResponseEntity.success(userService.update(user.getId(), user));
-    }
-
-    @PostMapping("/{id}/reset-password")
-    public ResponseEntity<Void> resetPassword(@PathVariable String id) {
-        userService.resetPassword(id);
-        return ResponseEntity.success(null);
-    }
-
-    @PostMapping("/update-status")
-    public ResponseEntity<Void> updateStatus(@RequestBody java.util.Map<String, Object> body) {
-        String id = (String) body.get("id");
-        Boolean status = (Boolean) body.get("status");
-        if (id == null || status == null) {
-            return ResponseEntity.fail(400, "id and status required");
-        }
-        userService.updateStatus(id, status);
-        return ResponseEntity.success(null);
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         userService.delete(id);
+        return ResponseEntity.success(null);
+    }
+
+    @GetMapping("/{id}/roles")
+    public ResponseEntity<java.util.List<String>> getUserRoles(@PathVariable String id) {
+        java.util.List<String> roleIds = userService.getRoleIdsByUser(id);
+        return ResponseEntity.success(roleIds);
+    }
+
+    @PostMapping("/{id}/roles")
+    public ResponseEntity<Void> assignRoles(@PathVariable String id, @RequestBody java.util.List<String> roleIds) {
+        userService.assignRoles(id, roleIds);
         return ResponseEntity.success(null);
     }
 }

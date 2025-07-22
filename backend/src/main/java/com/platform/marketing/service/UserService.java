@@ -9,7 +9,9 @@ public interface UserService {
     User create(User user);
     User update(String id, User user);
     void delete(String id);
-    void resetPassword(String id);
-    void updateStatus(String id, boolean status);
     User findByUsername(String username);
+
+    void assignRoles(String userId, java.util.List<String> roleIds);
+
+    java.util.List<String> getRoleIdsByUser(String userId);
 }

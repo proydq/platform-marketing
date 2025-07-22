@@ -34,12 +34,16 @@ public class AuthController {
     public ResponseEntity<UserInfoDTO> me(Authentication auth) {
         String username = auth.getName();
         User user = userService.findByUsername(username);
+        java.util.List<String> roleIds = userService.getRoleIdsByUser(user.getId());
         String roleName = "";
-        if (user.getRoleId() != null) {
-            roleName = roleRepository.findById(user.getRoleId())
+        java.util.List<String> perms = new java.util.ArrayList<>();
+        if (!roleIds.isEmpty()) {
+            roleName = roleRepository.findById(roleIds.get(0))
                     .map(Role::getName).orElse("");
+            for (String rid : roleIds) {
+                perms.addAll(roleService.getPermissions(rid));
+            }
         }
-        List<String> perms = roleService.getPermissions(user.getRoleId());
         UserInfoDTO dto = new UserInfoDTO();
         dto.setUsername(user.getUsername());
         dto.setRoleName(roleName);

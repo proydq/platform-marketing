@@ -1,4 +1,4 @@
-package com.platform.marketing;
+package com.platform.marketing.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.PermissionEvaluator;

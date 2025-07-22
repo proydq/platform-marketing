@@ -35,12 +35,15 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> me(Authentication auth) {
         String username = auth.getName();
         User user = userService.findByUsername(username);
+        java.util.List<String> roleIds = userService.getRoleIdsByUser(user.getId());
         String roleName = "";
-        if (user.getRoleId() != null) {
-            roleName = roleRepository.findById(user.getRoleId())
+        java.util.List<String> perms = java.util.Collections.emptyList();
+        if (!roleIds.isEmpty()) {
+            String rid = roleIds.get(0);
+            roleName = roleRepository.findById(rid)
                     .map(Role::getName).orElse("");
+            perms = roleService.getPermissions(rid);
         }
-        List<String> perms = roleService.getPermissions(user.getRoleId());
         Map<String, Object> map = new HashMap<>();
         map.put("username", user.getUsername());
         map.put("roleName", roleName);
