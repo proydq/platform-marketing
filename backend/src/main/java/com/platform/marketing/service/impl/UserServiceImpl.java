@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User update(String id, User user) {
         User existing = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
         existing.setUsername(user.getUsername());
         existing.setEmail(user.getEmail());
         existing.setStatus(user.isStatus());
