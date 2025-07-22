@@ -2,7 +2,12 @@
   <el-card class="page-card">
     <div class="toolbar mb-4 flex justify-between items-center gap-2">
       <el-input v-model="searchKeyword" placeholder="搜索用户" clearable style="width: 240px" />
-      <el-button type="primary" icon="Plus" @click="openDialog(false)">新建用户</el-button>
+      <el-button
+        v-if="hasPermission('user:create')"
+        type="primary"
+        icon="Plus"
+        @click="openCreateDialog"
+      >新增用户</el-button>
     </div>
 
     <el-table :data="userList" border size="small" v-loading="loading" style="width: 100%">
@@ -72,6 +77,8 @@
       </template>
     </el-drawer>
     <UserRoleDialog ref="roleDialog" @saved="fetchData" />
+    <UserFormDialog ref="createDialog" @saved="fetchData" />
+
   </el-card>
 </template>
 
@@ -80,8 +87,10 @@ import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { hasPermission } from '../../composables/permission'
 import UserRoleDialog from '../../components/user/UserRoleDialog.vue'
+import UserFormDialog from '../../components/user/UserFormDialog.vue'
+
 import {
-  fetchUsers, createUser, updateUser, deleteUser,
+  fetchUsers, updateUser, deleteUser,
   resetUserPassword, updateUserStatus
 } from '../../api/user'
 import { fetchRoles } from '../../api/role'
@@ -98,6 +107,8 @@ const drawerVisible = ref(false)
 const isEdit = ref(false)
 const roleOptions = ref([])
 const roleDialog = ref()
+const createDialog = ref()
+
 
 const form = reactive({
   id: '',
@@ -136,8 +147,7 @@ function openDialog(edit = false, data = null) {
 
 function save() {
   saving.value = true
-  const fn = isEdit.value ? updateUser : createUser
-  fn(form)
+  updateUser(form)
     .then(() => {
       ElMessage.success('保存成功')
       drawerVisible.value = false
@@ -165,6 +175,10 @@ function resetPassword(id) {
   ElMessageBox.confirm('确认重置该用户密码吗？', '警告', { type: 'warning' })
     .then(() => resetUserPassword(id))
     .then(() => ElMessage.success('密码已重置'))
+}
+
+function openCreateDialog() {
+  createDialog.value.open()
 }
 
 function openRoleDialog(row) {
