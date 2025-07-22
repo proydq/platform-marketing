@@ -44,6 +44,18 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         existing.setUsername(user.getUsername());
         existing.setEmail(user.getEmail());
+        existing.setStatus(user.isStatus());
+        return userRepository.save(existing);
+    }
+
+    @Override
+    @Transactional
+    public User update(User user) {
+        User existing = userRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        existing.setUsername(user.getUsername());
+        existing.setEmail(user.getEmail());
+        existing.setStatus(user.isStatus());
         return userRepository.save(existing);
     }
 
