@@ -3,6 +3,7 @@ package com.platform.marketing.auth;
 import com.platform.marketing.entity.User;
 import com.platform.marketing.service.RoleService;
 import com.platform.marketing.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserService userService;
     private final RoleService roleService;
-    public UserDetailsServiceImpl(UserService userService,
+
+    public UserDetailsServiceImpl(@Lazy UserService userService,
                                   RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;

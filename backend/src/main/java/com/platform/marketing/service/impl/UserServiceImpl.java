@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,14 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
-                           UserRoleRepository userRoleRepository) {
+                           UserRoleRepository userRoleRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -41,9 +45,21 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User update(String id, User user) {
         User existing = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
         existing.setUsername(user.getUsername());
         existing.setEmail(user.getEmail());
+        existing.setStatus(user.isStatus());
+        return userRepository.save(existing);
+    }
+
+    @Override
+    @Transactional
+    public User update(User user) {
+        User existing = userRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        existing.setUsername(user.getUsername());
+        existing.setEmail(user.getEmail());
+        existing.setStatus(user.isStatus());
         return userRepository.save(existing);
     }
 
@@ -79,5 +95,23 @@ public class UserServiceImpl implements UserService {
             ids.add(ur.getId().getRoleId());
         }
         return ids;
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(String id, Boolean status) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setStatus(status);
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(String id, String newPassword) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }

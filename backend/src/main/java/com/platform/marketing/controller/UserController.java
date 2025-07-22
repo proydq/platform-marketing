@@ -34,6 +34,36 @@ public class UserController {
         return ResponseEntity.success(userService.create(user));
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasPermission('user:update')")
+    public ResponseEntity<User> update(@PathVariable String id, @RequestBody User user) {
+        user.setId(id);
+        return ResponseEntity.success(userService.update(user));
+    }
+
+    @PostMapping("/update-status")
+    @PreAuthorize("hasPermission('user:update')")
+    public ResponseEntity<Void> updateStatus(@RequestBody java.util.Map<String, Object> body) {
+        String id = (String) body.get("id");
+        Boolean status = (Boolean) body.get("status");
+        if (id == null || status == null) {
+            return ResponseEntity.fail(400, "id and status required");
+        }
+        userService.updateStatus(id, status);
+        return ResponseEntity.success(null);
+    }
+
+    @PostMapping("/{id}/reset-password")
+    @PreAuthorize("hasPermission('user:reset-password')")
+    public ResponseEntity<Void> resetPassword(@PathVariable String id, @RequestBody java.util.Map<String, String> body) {
+        String password = body.get("password");
+        if (password == null) {
+            return ResponseEntity.fail(400, "password required");
+        }
+        userService.resetPassword(id, password);
+        return ResponseEntity.success(null);
+    }
+
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasPermission('user:delete')")
