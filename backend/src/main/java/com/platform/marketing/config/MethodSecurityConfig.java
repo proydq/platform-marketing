@@ -20,6 +20,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     protected CustomMethodSecurityExpressionHandler createExpressionHandler() {
         CustomMethodSecurityExpressionHandler handler = new CustomMethodSecurityExpressionHandler();
         handler.setPermissionEvaluator(permissionEvaluator);
+        setExpressionHandler(handler);
         return handler;
     }
 }
