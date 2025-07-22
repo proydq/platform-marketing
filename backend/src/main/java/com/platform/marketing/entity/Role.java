@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "sys_role")
 public class Role {
 
     @Id

@@ -1,30 +1,28 @@
 package com.platform.marketing.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.PermissionEvaluator;
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import com.platform.marketing.auth.CustomPermissionEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 @Configuration
-@EnableMethodSecurity
-public class MethodSecurityConfig {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(MethodSecurityConfig.class);
 
-    private final PermissionEvaluator permissionEvaluator;
+    private final CustomPermissionEvaluator permissionEvaluator;
 
-    public MethodSecurityConfig(PermissionEvaluator permissionEvaluator) {
+    public MethodSecurityConfig(CustomPermissionEvaluator permissionEvaluator) {
         this.permissionEvaluator = permissionEvaluator;
-        log.info("\uD83D\uDFE2 MethodSecurityConfig 初始化了！");
+        log.info("\uD83D\uDFE2 MethodSecurityConfig 初始化成功！");
     }
 
-    @Bean
-    public MethodSecurityExpressionHandler methodSecurityExpressionHandler() {
+    @Override
+    protected DefaultMethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler handler = new DefaultMethodSecurityExpressionHandler();
         handler.setPermissionEvaluator(permissionEvaluator);
         return handler;
