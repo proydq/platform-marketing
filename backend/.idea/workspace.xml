@@ -6,17 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/MethodSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/MethodSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Permission.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/MethodSecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/MethodSecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/CustomPermissionEvaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/CustomPermissionEvaluator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/RoleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/RoleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Permission.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Permission.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Role.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +72,7 @@
       <option name="presentableId" value="Default" />
       <updated>1752660823515</updated>
       <workItem from="1752660824520" duration="23139000" />
-      <workItem from="1753088557414" duration="11540000" />
+      <workItem from="1753088557414" duration="13004000" />
     </task>
     <servers />
   </component>

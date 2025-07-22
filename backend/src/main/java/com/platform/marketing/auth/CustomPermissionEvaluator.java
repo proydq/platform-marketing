@@ -3,9 +3,6 @@ package com.platform.marketing.auth;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -13,20 +10,17 @@ import java.io.Serializable;
 @Component
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 
-    private static final Logger log = LoggerFactory.getLogger(CustomPermissionEvaluator.class);
-
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
-        if (authentication == null || permission == null) {
-            return false;
-        }
-        String perm = permission.toString();
-        boolean result = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(perm::equals);
-        log.debug("Evaluate permission '{}' result={}", perm, result);
+        if (authentication == null || permission == null) return false;
 
-        return result;
+        String permissionStr = permission.toString();
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (permissionStr.equals(authority.getAuthority())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
