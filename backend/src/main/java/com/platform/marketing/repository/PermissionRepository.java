@@ -31,4 +31,12 @@ public interface PermissionRepository extends JpaRepository<Permission, String> 
                             @Param("type") String type,
                             @Param("status") Boolean status,
                             Pageable pageable);
+
+    @Query(value = "SELECT DISTINCT p.code FROM sys_user u " +
+            "JOIN user_role ur ON u.id = ur.user_id " +
+            "JOIN role_permission rp ON ur.role_id = rp.role_id " +
+            "JOIN sys_permission p ON rp.permission_id = p.id " +
+            "WHERE u.username = :username",
+            nativeQuery = true)
+    java.util.List<String> findPermissionCodesByUsername(@Param("username") String username);
 }

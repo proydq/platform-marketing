@@ -17,6 +17,12 @@
       <el-table-column label="操作" width="220">
         <template #default="{ row }">
           <el-button size="small" @click="openDialog(true, row)">编辑</el-button>
+          <el-button
+            v-if="hasPermission('user:update')"
+            size="small"
+            type="primary"
+            @click="openRoleDialog(row)"
+          >分配角色</el-button>
           <el-button size="small" type="warning" @click="resetPassword(row.id)">重置密码</el-button>
           <el-button size="small" type="danger" @click="remove(row.id)">删除</el-button>
         </template>
@@ -65,12 +71,15 @@
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-drawer>
+    <UserRoleDialog ref="roleDialog" @saved="fetchData" />
   </el-card>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { hasPermission } from '../../composables/permission'
+import UserRoleDialog from '../../components/user/UserRoleDialog.vue'
 import {
   fetchUsers, createUser, updateUser, deleteUser,
   resetUserPassword, updateUserStatus
@@ -88,6 +97,7 @@ const saving = ref(false)
 const drawerVisible = ref(false)
 const isEdit = ref(false)
 const roleOptions = ref([])
+const roleDialog = ref()
 
 const form = reactive({
   id: '',
@@ -155,5 +165,9 @@ function resetPassword(id) {
   ElMessageBox.confirm('确认重置该用户密码吗？', '警告', { type: 'warning' })
     .then(() => resetUserPassword(id))
     .then(() => ElMessage.success('密码已重置'))
+}
+
+function openRoleDialog(row) {
+  roleDialog.value.open(row.id)
 }
 </script>
