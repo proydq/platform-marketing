@@ -5,48 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/BackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/BackendApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/config/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/controller/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/dto/LoginDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/dto/LoginVO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/dto/Result.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/dto/UserVO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/service/AuthService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/service/UserDetailsServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/auth/util/JwtUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/permission/controller/PermissionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/permission/dto/PermissionQueryDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/permission/dto/PermissionSaveDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/permission/dto/PermissionVO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/permission/entity/Permission.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/permission/repository/PermissionRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/permission/service/PermissionService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/permission/service/impl/PermissionServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/role/controller/RoleController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/role/dto/RoleQueryDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/role/dto/RoleSaveDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/role/dto/RoleVO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/role/entity/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/role/repository/RoleRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/role/service/RoleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/role/service/impl/RoleServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/user/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/user/dto/UserQueryDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/user/dto/UserSaveDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/user/dto/UserVO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/user/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/user/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/user/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/module/user/service/impl/UserServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/api/permission.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/permission.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/api/role.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/role.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing.zip" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/UserServiceImpl.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +25,7 @@
     <option name="skipTests" value="true" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -108,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1752660823515</updated>
       <workItem from="1752660824520" duration="23139000" />
-      <workItem from="1753088557414" duration="394000" />
+      <workItem from="1753088557414" duration="6444000" />
     </task>
     <servers />
   </component>

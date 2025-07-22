@@ -11,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -50,7 +53,6 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void assignRoles(String userId, java.util.List<String> roleIds) {
+    public void assignRoles(String userId, List<String> roleIds) {
         userRoleRepository.deleteByIdUserId(userId);
         if (roleIds != null) {
             for (String roleId : roleIds) {
@@ -70,41 +72,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public java.util.List<String> getRoleIdsByUser(String userId) {
-        java.util.List<UserRole> list = userRoleRepository.findByIdUserId(userId);
-        java.util.List<String> ids = new java.util.ArrayList<>();
+    public List<String> getRoleIdsByUser(String userId) {
+        List<UserRole> list = userRoleRepository.findByIdUserId(userId);
+        List<String> ids = new ArrayList<>();
         for (UserRole ur : list) {
             ids.add(ur.getId().getRoleId());
         }
         return ids;
     }
-
-    @Override
-    @Transactional
-    public void assignRoles(String userId, java.util.List<String> roleIds) {
-        userRoleRepository.deleteByIdUserId(userId);
-        if (roleIds != null) {
-            for (String roleId : roleIds) {
-                UserRoleId id = new UserRoleId(userId, roleId);
-                userRoleRepository.save(new UserRole(id));
-            }
-            if (!roleIds.isEmpty()) {
-                userRepository.findById(userId).ifPresent(u -> {
-                    u.setRoleId(roleIds.get(0));
-                    userRepository.save(u);
-                });
-            }
-        }
-    }
-
-    @Override
-    public java.util.List<String> getRoleIdsByUser(String userId) {
-        java.util.List<UserRole> list = userRoleRepository.findByIdUserId(userId);
-        java.util.List<String> ids = new java.util.ArrayList<>();
-        for (UserRole ur : list) {
-            ids.add(ur.getId().getRoleId());
-        }
-        return ids;
-    }
-
 }
