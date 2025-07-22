@@ -5,6 +5,7 @@ import com.platform.marketing.entity.Role;
 import com.platform.marketing.service.RoleService;
 import com.platform.marketing.util.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -19,34 +20,40 @@ public class RoleController {
     }
 
     @GetMapping
+    @PreAuthorize("hasPermission('role:view')")
     public ResponseEntity<List<Role>> getRoles() {
         return ResponseEntity.success(roleService.findAllRoles());
     }
 
     @PostMapping
+    @PreAuthorize("hasPermission('role:create')")
     public ResponseEntity<Role> create(@RequestBody Role role) {
         role.setId(java.util.UUID.randomUUID().toString());
         return ResponseEntity.success(roleService.create(role));
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasPermission('role:update')")
     public ResponseEntity<Role> updateRole(@RequestBody Role role) {
         return ResponseEntity.success(roleService.update(role.getId(), role));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasPermission('role:delete')")
     public ResponseEntity<Void> deleteRole(@PathVariable String id) {
         roleService.delete(id);
         return ResponseEntity.success(null);
     }
 
     @GetMapping("/{id}/permissions")
+    @PreAuthorize("hasPermission('role:view')")
     public ResponseEntity<List<String>> getRolePermissions(@PathVariable String id) {
         List<String> list = roleService.getPermissions(id);
         return ResponseEntity.success(list);
     }
 
     @PostMapping("/{id}/permissions")
+    @PreAuthorize("hasPermission('role:update')")
     public ResponseEntity<Void> saveRolePermissions(@PathVariable String id, @RequestBody PermissionRequest request) {
         roleService.savePermissions(id, request.getPermissions());
         return ResponseEntity.success(null);
