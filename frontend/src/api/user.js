@@ -81,3 +81,27 @@ export function importUsers(fileFormData) {
     data: fileFormData
   })
 }
+
+
+/**
+ * 获取用户已分配的角色ID列表
+ * GET /v1/users/{id}/roles
+ */
+export function fetchUserRoles(id) {
+  return request({
+    url: `/v1/users/${id}/roles`,
+    method: 'get'
+  })
+}
+
+/**
+ * 提交用户角色分配结果
+ * POST /v1/users/{id}/roles
+ */
+export function assignUserRoles(id, roleIds) {
+  return request({
+    url: `/v1/users/${id}/roles`,
+    method: 'post',
+    data: roleIds
+  })
+}
