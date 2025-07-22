@@ -57,11 +57,11 @@ public class RoleService {
     }
 
     @Transactional
-    public void savePermissions(String roleId, List<String> codes) {
+    public void savePermissions(String roleId, List<String> permissionIds) {
         rolePermissionRepository.deleteByIdRoleId(roleId);
-        for (String code : codes) {
-            Permission perm = permissionRepository.findByCode(code)
-                    .orElseThrow(() -> new IllegalArgumentException("Permission not found: " + code));
+        for (String permissionId : permissionIds) {
+            Permission perm = permissionRepository.findById(permissionId)
+                    .orElseThrow(() -> new IllegalArgumentException("Permission not found: " + permissionId));
             RolePermissionId id = new RolePermissionId(roleId, perm.getId());
             RolePermission rp = new RolePermission(id);
             rolePermissionRepository.save(rp);
