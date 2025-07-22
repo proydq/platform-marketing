@@ -27,7 +27,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username);
-        List<String> perms = roleService.getPermissions(user.getRoleId());
+        java.util.List<String> roleIds = userService.getRoleIdsByUser(user.getId());
+        java.util.Set<String> perms = new java.util.HashSet<>();
+        for (String rid : roleIds) {
+            perms.addAll(roleService.getPermissions(rid));
+        }
         List<GrantedAuthority> authorities = perms.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

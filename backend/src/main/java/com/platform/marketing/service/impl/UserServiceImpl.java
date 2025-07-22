@@ -41,8 +41,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         existing.setUsername(user.getUsername());
         existing.setEmail(user.getEmail());
-        existing.setRoleId(user.getRoleId());
-        existing.setStatus(user.isStatus());
         return userRepository.save(existing);
     }
 
@@ -52,25 +50,33 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional
-    public void resetPassword(String id) {
-        // In a real system we would update the password here
-        userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
-    }
-
-    @Override
-    @Transactional
-    public void updateStatus(String id, boolean status) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        user.setStatus(status);
-        userRepository.save(user);
-    }
 
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    @Override
+    @Transactional
+    public void assignRoles(String userId, java.util.List<String> roleIds) {
+        userRoleRepository.deleteByIdUserId(userId);
+        if (roleIds != null) {
+            for (String roleId : roleIds) {
+                UserRoleId id = new UserRoleId(userId, roleId);
+                userRoleRepository.save(new UserRole(id));
+            }
+        }
+    }
+
+    @Override
+    public java.util.List<String> getRoleIdsByUser(String userId) {
+        java.util.List<UserRole> list = userRoleRepository.findByIdUserId(userId);
+        java.util.List<String> ids = new java.util.ArrayList<>();
+        for (UserRole ur : list) {
+            ids.add(ur.getId().getRoleId());
+        }
+        return ids;
     }
 
     @Override

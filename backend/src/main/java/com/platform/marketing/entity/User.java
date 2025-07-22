@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(name = "sys_user")
 public class User {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -22,24 +22,15 @@ public class User {
 
     private String email;
 
-    @Column(name = "role_id")
-    private String roleId;
-
-    private boolean status = true;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Column(name = "create_time")
+    private LocalDateTime createTime;
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
+        this.createTime = LocalDateTime.now();
     }
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
+    // no update timestamp column
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -53,15 +44,7 @@ public class User {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getRoleId() { return roleId; }
-    public void setRoleId(String roleId) { this.roleId = roleId; }
+    public LocalDateTime getCreateTime() { return createTime; }
+    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
 
-    public boolean isStatus() { return status; }
-    public void setStatus(boolean status) { this.status = status; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }
