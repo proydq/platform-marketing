@@ -22,6 +22,8 @@ public class User {
 
     private String email;
 
+    private boolean status = true;
+
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
@@ -43,6 +45,9 @@ public class User {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public boolean isStatus() { return status; }
+    public void setStatus(boolean status) { this.status = status; }
 
     public LocalDateTime getCreateTime() { return createTime; }
     public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }

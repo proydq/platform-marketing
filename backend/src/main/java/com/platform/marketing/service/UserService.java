@@ -8,8 +8,13 @@ public interface UserService {
     Page<User> search(String keyword, Pageable pageable);
     User create(User user);
     User update(String id, User user);
+    User update(User user);
     void delete(String id);
     User findByUsername(String username);
+
+    void updateStatus(String id, Boolean status);
+
+    void resetPassword(String id, String newPassword);
 
     void assignRoles(String userId, java.util.List<String> roleIds);
 
