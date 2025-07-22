@@ -1,6 +1,7 @@
 package com.platform.marketing.auth;
 
 import org.springframework.security.access.expression.SecurityExpressionRoot;
+import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.core.Authentication;
 
@@ -12,9 +13,34 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
     private Object filterObject;
     private Object returnObject;
     private Object target;
+    private PermissionEvaluator permissionEvaluator;
 
     public CustomMethodSecurityExpressionRoot(Authentication authentication) {
         super(authentication);
+    }
+
+    public PermissionEvaluator getPermissionEvaluator() {
+        return permissionEvaluator;
+    }
+
+    @Override
+    public void setPermissionEvaluator(PermissionEvaluator permissionEvaluator) {
+        super.setPermissionEvaluator(permissionEvaluator);
+        this.permissionEvaluator = permissionEvaluator;
+    }
+
+    /**
+     * Exposes the configured {@link PermissionEvaluator} because
+     * {@link SecurityExpressionRoot#getPermissionEvaluator()} is protected.
+     */
+    public PermissionEvaluator getPermissionEvaluator() {
+        return permissionEvaluator;
+    }
+
+    @Override
+    public void setPermissionEvaluator(PermissionEvaluator permissionEvaluator) {
+        super.setPermissionEvaluator(permissionEvaluator);
+        this.permissionEvaluator = permissionEvaluator;
     }
 
     /**
