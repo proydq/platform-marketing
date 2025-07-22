@@ -26,12 +26,12 @@ export function createUser(data) {
 
 /**
  * 更新用户信息
- * POST /v1/users/update
+ * PUT /v1/users/{id}
  */
-export function updateUser(data) {
+export function updateUser(id, data) {
   return request({
-    url: '/v1/users/update',
-    method: 'post',
+    url: `/v1/users/${id}`,
+    method: 'put',
     data
   })
 }

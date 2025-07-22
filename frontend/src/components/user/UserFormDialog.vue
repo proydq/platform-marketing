@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" title="新增用户" width="500px">
+  <el-dialog v-model="visible" :title="mode === 'create' ? '新增用户' : '编辑用户'" width="500px">
     <el-form ref="formRef" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="form.username" />
@@ -24,7 +24,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import { createUser } from '../../api/user'
+import { createUser, updateUser } from '../../api/user'
 
 const props = defineProps({
   mode: { type: String, default: 'create' }
@@ -40,6 +40,7 @@ const form = reactive({
   password: '',
   status: true
 })
+const editId = ref(null)
 
 const rules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -47,29 +48,45 @@ const rules = {
     { required: true, message: '请输入邮箱', trigger: 'blur' },
     { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
   ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码不少于6位', trigger: 'blur' }
-  ]
+  password: props.mode === 'create'
+    ? [
+        { required: true, message: '请输入密码', trigger: 'blur' },
+        { min: 6, message: '密码不少于6位', trigger: 'blur' }
+      ]
+    : []
 }
 
-function open() {
+function open(data = null) {
   visible.value = true
-  Object.assign(form, { username: '', email: '', password: '', status: true })
+  if (props.mode === 'edit' && data) {
+    editId.value = data.id
+    Object.assign(form, {
+      username: data.username,
+      email: data.email,
+      status: data.status,
+      password: ''
+    })
+  } else {
+    editId.value = null
+    Object.assign(form, { username: '', email: '', password: '', status: true })
+  }
 }
 
 function submit() {
   formRef.value.validate(valid => {
     if (!valid) return
     loading.value = true
-    createUser({
+    const payload = {
       username: form.username,
       email: form.email,
-      password: form.password,
       status: form.status
-    })
+    }
+    const req = props.mode === 'create'
+      ? createUser({ ...payload, password: form.password })
+      : updateUser(editId.value, payload)
+    req
       .then(() => {
-        ElMessage.success('新增成功')
+        ElMessage.success(props.mode === 'create' ? '新增成功' : '修改成功')
         visible.value = false
         emit('saved')
       })
