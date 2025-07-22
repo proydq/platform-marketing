@@ -58,6 +58,27 @@ public class SuperAdminInitializer implements CommandLineRunner {
             log.info("Created role {}", roleName);
         }
 
+        if (permissionRepository.count() == 0) {
+            Permission p1 = new Permission();
+            p1.setId(UUID.randomUUID().toString());
+            p1.setCode("permission:list");
+            p1.setName("Permission List");
+            permissionRepository.save(p1);
+
+            Permission p2 = new Permission();
+            p2.setId(UUID.randomUUID().toString());
+            p2.setCode("user:add");
+            p2.setName("Add User");
+            permissionRepository.save(p2);
+
+            Permission p3 = new Permission();
+            p3.setId(UUID.randomUUID().toString());
+            p3.setCode("role:view");
+            p3.setName("View Role");
+            permissionRepository.save(p3);
+            log.info("Inserted default permissions");
+        }
+
         List<RolePermission> existing = rolePermissionRepository.findByIdRoleId(role.getId());
         if (existing.isEmpty()) {
             List<Permission> permissions = permissionRepository.findAll();

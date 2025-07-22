@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "sys_user_role")
+@Table(name = "sys_permission")
 public class Permission {
 
     @Id
