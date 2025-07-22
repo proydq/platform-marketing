@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
  * Method security expression handler creating {@link CustomMethodSecurityExpressionRoot}.
  */
 @Component
+
 public class CustomMethodSecurityExpressionHandler extends DefaultMethodSecurityExpressionHandler {
 
     @Override
