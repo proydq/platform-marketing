@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+
 import java.util.*;
 
 @Service
@@ -38,6 +39,7 @@ public class MenuServiceImpl implements MenuService {
     public Menu create(Menu menu) {
         menu.setCreatedBy(currentUser());
         menu.setUpdatedBy(menu.getCreatedBy());
+
         return menuRepository.save(menu);
     }
 
@@ -60,6 +62,7 @@ public class MenuServiceImpl implements MenuService {
         existing.setHidden(menu.getHidden());
         existing.setRemark(menu.getRemark());
         existing.setUpdatedBy(currentUser());
+
         return menuRepository.save(existing);
     }
 
@@ -79,6 +82,7 @@ public class MenuServiceImpl implements MenuService {
                 .orElseThrow(() -> new IllegalArgumentException("Menu not found"));
         menu.setStatus(status);
         menu.setUpdatedBy(currentUser());
+
         menuRepository.save(menu);
     }
 
