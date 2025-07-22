@@ -12,6 +12,10 @@ public interface UserService {
     void delete(String id);
     User findByUsername(String username);
 
+    void updateStatus(String id, Boolean status);
+
+    void resetPassword(String id, String newPassword);
+
     void assignRoles(String userId, java.util.List<String> roleIds);
 
     java.util.List<String> getRoleIdsByUser(String userId);
