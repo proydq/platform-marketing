@@ -33,6 +33,20 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot
     }
 
     /**
+     * Exposes the configured {@link PermissionEvaluator} because
+     * {@link SecurityExpressionRoot#getPermissionEvaluator()} is protected.
+     */
+    public PermissionEvaluator getPermissionEvaluator() {
+        return permissionEvaluator;
+    }
+
+    @Override
+    public void setPermissionEvaluator(PermissionEvaluator permissionEvaluator) {
+        super.setPermissionEvaluator(permissionEvaluator);
+        this.permissionEvaluator = permissionEvaluator;
+    }
+
+    /**
      * Check permission string using the configured {@code PermissionEvaluator}.
      *
      * @param permission permission name
