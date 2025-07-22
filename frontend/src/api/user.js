@@ -26,12 +26,12 @@ export function createUser(data) {
 
 /**
  * 更新用户信息
- * POST /v1/users/update
+ * PUT /v1/users/{id}
  */
-export function updateUser(data) {
+export function updateUser(id, data) {
   return request({
-    url: '/v1/users/update',
-    method: 'post',
+    url: `/v1/users/${id}`,
+    method: 'put',
     data
   })
 }
@@ -79,5 +79,29 @@ export function importUsers(fileFormData) {
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data' },
     data: fileFormData
+  })
+}
+
+
+/**
+ * 获取用户已分配的角色ID列表
+ * GET /v1/users/{id}/roles
+ */
+export function fetchUserRoles(id) {
+  return request({
+    url: `/v1/users/${id}/roles`,
+    method: 'get'
+  })
+}
+
+/**
+ * 提交用户角色分配结果
+ * POST /v1/users/{id}/roles
+ */
+export function assignUserRoles(id, roleIds) {
+  return request({
+    url: `/v1/users/${id}/roles`,
+    method: 'post',
+    data: roleIds
   })
 }
