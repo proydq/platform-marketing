@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -78,7 +79,11 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<MenuTreeNode> getTree() {
-        List<Menu> all = menuRepository.findAll();
+
+        List<Menu> all = menuRepository.findAll()
+                .stream()
+                .filter(m -> m.getStatus() != null && m.getStatus())
+                .collect(Collectors.toList()); // ✅ Java 9 支持
         Map<String, MenuTreeNode> map = new HashMap<>();
         for (Menu m : all) {
             MenuTreeNode node = new MenuTreeNode();
