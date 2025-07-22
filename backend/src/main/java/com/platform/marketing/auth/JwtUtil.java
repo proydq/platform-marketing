@@ -22,13 +22,17 @@ public class JwtUtil {
     private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
 
     public String generateToken(org.springframework.security.core.userdetails.UserDetails user) {
-        Date now = new Date();
         List<String> auths = user.getAuthorities().stream()
                 .map(org.springframework.security.core.GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
+        return generateToken(user.getUsername(), auths);
+    }
+
+    public String generateToken(String username, List<String> authorities) {
+        Date now = new Date();
         return Jwts.builder()
-                .setSubject(user.getUsername())
-                .claim("auth", auths)
+                .setSubject(username)
+                .claim("auth", authorities)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + expireMs))
                 .signWith(SignatureAlgorithm.HS256, secret)
