@@ -11,16 +11,17 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
     private final CustomPermissionEvaluator permissionEvaluator;
+    private final CustomMethodSecurityExpressionHandler expressionHandler;
 
-    public MethodSecurityConfig(CustomPermissionEvaluator permissionEvaluator) {
+    public MethodSecurityConfig(CustomPermissionEvaluator permissionEvaluator,
+                               CustomMethodSecurityExpressionHandler expressionHandler) {
         this.permissionEvaluator = permissionEvaluator;
+        this.expressionHandler = expressionHandler;
     }
 
     @Override
     protected CustomMethodSecurityExpressionHandler createExpressionHandler() {
-        CustomMethodSecurityExpressionHandler handler = new CustomMethodSecurityExpressionHandler();
-        handler.setPermissionEvaluator(permissionEvaluator);
-        setExpressionHandler(handler);
-        return handler;
+        expressionHandler.setPermissionEvaluator(permissionEvaluator);
+        return expressionHandler;
     }
 }
