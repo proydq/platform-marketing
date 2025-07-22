@@ -34,6 +34,13 @@ public class UserController {
         return ResponseEntity.success(userService.create(user));
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasPermission('user:update')")
+    public ResponseEntity<User> update(@PathVariable String id, @RequestBody User user) {
+        user.setId(id);
+        return ResponseEntity.success(userService.update(user));
+    }
+
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasPermission('user:delete')")
