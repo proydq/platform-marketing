@@ -79,4 +79,32 @@ public class UserServiceImpl implements UserService {
         return ids;
     }
 
+    @Override
+    @Transactional
+    public void assignRoles(String userId, java.util.List<String> roleIds) {
+        userRoleRepository.deleteByIdUserId(userId);
+        if (roleIds != null) {
+            for (String roleId : roleIds) {
+                UserRoleId id = new UserRoleId(userId, roleId);
+                userRoleRepository.save(new UserRole(id));
+            }
+            if (!roleIds.isEmpty()) {
+                userRepository.findById(userId).ifPresent(u -> {
+                    u.setRoleId(roleIds.get(0));
+                    userRepository.save(u);
+                });
+            }
+        }
+    }
+
+    @Override
+    public java.util.List<String> getRoleIdsByUser(String userId) {
+        java.util.List<UserRole> list = userRoleRepository.findByIdUserId(userId);
+        java.util.List<String> ids = new java.util.ArrayList<>();
+        for (UserRole ur : list) {
+            ids.add(ur.getId().getRoleId());
+        }
+        return ids;
+    }
+
 }
