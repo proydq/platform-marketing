@@ -7,19 +7,27 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 /**
- * Method security expression handler creating {@link CustomMethodSecurityExpressionRoot}.
+ * Custom handler using {@link CustomMethodSecurityExpressionRoot} and the
+ * injected {@link CustomPermissionEvaluator}.
  */
 @Component
-
 public class CustomMethodSecurityExpressionHandler extends DefaultMethodSecurityExpressionHandler {
+
+    private final CustomPermissionEvaluator permissionEvaluator;
+
+    public CustomMethodSecurityExpressionHandler(CustomPermissionEvaluator permissionEvaluator) {
+        this.permissionEvaluator = permissionEvaluator;
+        setPermissionEvaluator(permissionEvaluator);
+    }
 
     @Override
     protected MethodSecurityExpressionOperations createSecurityExpressionRoot(Authentication authentication,
                                                                               MethodInvocation invocation) {
         CustomMethodSecurityExpressionRoot root = new CustomMethodSecurityExpressionRoot(authentication);
-        root.setPermissionEvaluator(getPermissionEvaluator());
+        root.setPermissionEvaluator(this.permissionEvaluator);
         root.setTrustResolver(getTrustResolver());
         root.setRoleHierarchy(getRoleHierarchy());
+        root.setThis(invocation.getThis());
         return root;
     }
 }

@@ -2,47 +2,40 @@ package com.platform.marketing.auth;
 
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
-
 import org.springframework.security.core.Authentication;
 
 /**
- * Custom expression root exposing {@code hasPermission(String)} to SpEL.
+ * Custom expression root providing {@code hasPermission(String)} support.
  */
-public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot
-        implements MethodSecurityExpressionOperations {
+public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot implements MethodSecurityExpressionOperations {
 
     private Object filterObject;
     private Object returnObject;
     private Object target;
-
 
     public CustomMethodSecurityExpressionRoot(Authentication authentication) {
         super(authentication);
     }
 
     /**
-     * Check permission string using the configured {@code PermissionEvaluator}.
+     * Evaluate a permission against the current {@link Authentication}.
      *
-     * @param permission permission name
-     * @return {@code true} if the current user has the permission
+     * @param permission permission identifier
+     * @return {@code true} if the permission is granted
      */
     public boolean hasPermission(String permission) {
-        return permission != null && hasPermission((Object) null, permission);
+        if (permission == null) {
+            return false;
+        }
+        return getPermissionEvaluator().hasPermission(getAuthentication(), null, permission);
     }
 
-    @Override
-    public Object getThis() {
-        return target;
-    }
-
-    @Override
-    public void setThis(Object target) {
-        this.target = target;
-    }
-
+    // ------------------------------------------------------------------
+    // Methods from {@link MethodSecurityExpressionOperations}
+    // ------------------------------------------------------------------
     @Override
     public Object getFilterObject() {
-        return filterObject;
+        return this.filterObject;
     }
 
     @Override
@@ -52,7 +45,7 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot
 
     @Override
     public Object getReturnObject() {
-        return returnObject;
+        return this.returnObject;
     }
 
     @Override
@@ -60,4 +53,13 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot
         this.returnObject = returnObject;
     }
 
+    @Override
+    public Object getThis() {
+        return this.target;
+    }
+
+    @Override
+    public void setThis(Object target) {
+        this.target = target;
+    }
 }
