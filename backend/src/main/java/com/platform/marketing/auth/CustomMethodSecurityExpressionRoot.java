@@ -19,24 +19,12 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
         super(authentication);
     }
 
+    // ✅ 保留一份 getPermissionEvaluator
     public PermissionEvaluator getPermissionEvaluator() {
         return permissionEvaluator;
     }
 
-    @Override
-    public void setPermissionEvaluator(PermissionEvaluator permissionEvaluator) {
-        super.setPermissionEvaluator(permissionEvaluator);
-        this.permissionEvaluator = permissionEvaluator;
-    }
-
-    /**
-     * Exposes the configured {@link PermissionEvaluator} because
-     * {@link SecurityExpressionRoot#getPermissionEvaluator()} is protected.
-     */
-    public PermissionEvaluator getPermissionEvaluator() {
-        return permissionEvaluator;
-    }
-
+    // ✅ 保留一份 setPermissionEvaluator
     @Override
     public void setPermissionEvaluator(PermissionEvaluator permissionEvaluator) {
         super.setPermissionEvaluator(permissionEvaluator);
@@ -56,9 +44,6 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
         return getPermissionEvaluator().hasPermission(getAuthentication(), null, permission);
     }
 
-    // ------------------------------------------------------------------
-    // Methods from {@link MethodSecurityExpressionOperations}
-    // ------------------------------------------------------------------
     @Override
     public Object getFilterObject() {
         return this.filterObject;
@@ -84,7 +69,6 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
         return this.target;
     }
 
-    @Override
     public void setThis(Object target) {
         this.target = target;
     }
