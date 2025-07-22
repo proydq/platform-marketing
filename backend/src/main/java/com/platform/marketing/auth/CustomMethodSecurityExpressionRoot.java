@@ -2,6 +2,7 @@ package com.platform.marketing.auth;
 
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
+
 import org.springframework.security.core.Authentication;
 
 /**
@@ -13,6 +14,7 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot
     private Object filterObject;
     private Object returnObject;
     private Object target;
+
 
     public CustomMethodSecurityExpressionRoot(Authentication authentication) {
         super(authentication);
@@ -57,4 +59,5 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot
     public void setReturnObject(Object returnObject) {
         this.returnObject = returnObject;
     }
+
 }
