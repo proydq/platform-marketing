@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/MenuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/MenuServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/permission/UserManagement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/permission/UserManagement.vue" afterDir="false" />
     </list>

@@ -82,8 +82,9 @@ public class MenuServiceImpl implements MenuService {
 
         List<Menu> all = menuRepository.findAll()
                 .stream()
-                .filter(m -> m.getStatus() != null && m.getStatus())
-                .collect(Collectors.toList()); // ✅ Java 9 支持
+                .filter(m -> m.getStatus() != null && m.getStatus())   // status = true
+                .filter(m -> "menu".equals(m.getType()))              // type = 'menu'
+                .collect(Collectors.toList());
         Map<String, MenuTreeNode> map = new HashMap<>();
         for (Menu m : all) {
             MenuTreeNode node = new MenuTreeNode();
