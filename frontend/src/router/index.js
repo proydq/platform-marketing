@@ -16,7 +16,7 @@ import BehaviorTrackView from "../views/analytics/BehaviorTrackView.vue";
 import ReportsView from "../views/report/ReportsView.vue";
 import HelpCenterView from "../views/support/HelpCenterView.vue";
 import NotificationCenterView from "../views/notification/NotificationCenterView.vue";
-import CampaignCenterView from "../views/CampaignCenterView.vue";
+import CampaignCenterView from "../views/marketing/CampaignCenterView.vue";
 import MenuManagement from "../views/system/MenuManagement.vue";
 const routes = [
   { path: "/login", name: "Login", component: LoginView },

@@ -223,10 +223,10 @@
 import { ref, reactive, computed, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
-import FunnelChart from "../components/charts/FunnelChart.vue";
-import RichTextEditor from "../components/RichTextEditor.vue";
-import campaignList from "../mock/campaignList.json";
-import campaignDetails from "../mock/campaignDetail.json";
+import FunnelChart from "../../components/charts/FunnelChart.vue";
+import RichTextEditor from "../../components/RichTextEditor.vue";
+import campaignList from "../../mock/campaignList.json";
+import campaignDetails from "../../mock/campaignDetail.json";
 
 const campaigns = ref([]);
 const statusFilter = ref("");
