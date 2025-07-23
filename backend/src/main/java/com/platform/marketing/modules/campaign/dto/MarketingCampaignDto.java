@@ -2,6 +2,7 @@ package com.platform.marketing.modules.campaign.dto;
 
 import java.time.LocalDateTime;
 
+import com.platform.marketing.modules.campaign.entity.MarketingCampaign;
 public class MarketingCampaignDto {
     private String id;
     private String name;
@@ -92,5 +93,30 @@ public class MarketingCampaignDto {
 
     public void setUpdatedTime(LocalDateTime updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public static MarketingCampaignDto fromEntity(MarketingCampaign entity) {
+        MarketingCampaignDto dto = new MarketingCampaignDto();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setStatus(entity.getStatus());
+        dto.setChannel(entity.getChannel());
+        dto.setStartTime(entity.getStartTime());
+        dto.setEndTime(entity.getEndTime());
+        dto.setDescription(entity.getDescription());
+        dto.setCreatedBy(entity.getCreatedBy());
+        dto.setCreatedTime(entity.getCreatedTime());
+        dto.setUpdatedTime(entity.getUpdatedTime());
+        return dto;
+    }
+
+    public static void copyToEntity(MarketingCampaignDto dto, MarketingCampaign entity) {
+        entity.setName(dto.getName());
+        entity.setStatus(dto.getStatus());
+        entity.setChannel(dto.getChannel());
+        entity.setStartTime(dto.getStartTime());
+        entity.setEndTime(dto.getEndTime());
+        entity.setDescription(dto.getDescription());
+        entity.setCreatedBy(dto.getCreatedBy());
     }
 }

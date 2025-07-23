@@ -3,6 +3,7 @@ package com.platform.marketing.modules.campaign.service.impl;
 import com.platform.marketing.modules.campaign.entity.MarketingCampaign;
 import com.platform.marketing.modules.campaign.repository.MarketingCampaignRepository;
 import com.platform.marketing.modules.campaign.service.MarketingCampaignService;
+import com.platform.marketing.modules.campaign.dto.MarketingCampaignDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,22 +35,18 @@ public class MarketingCampaignServiceImpl implements MarketingCampaignService {
 
     @Override
     @Transactional
-    public MarketingCampaign create(MarketingCampaign campaign) {
-        return marketingCampaignRepository.save(campaign);
+    public MarketingCampaign create(MarketingCampaignDto campaign) {
+        MarketingCampaign entity = new MarketingCampaign();
+        MarketingCampaignDto.copyToEntity(campaign, entity);
+        return marketingCampaignRepository.save(entity);
     }
 
     @Override
     @Transactional
-    public MarketingCampaign update(String id, MarketingCampaign campaign) {
+    public MarketingCampaign update(String id, MarketingCampaignDto campaign) {
         MarketingCampaign existing = marketingCampaignRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Campaign not found"));
-        existing.setName(campaign.getName());
-        existing.setStatus(campaign.getStatus());
-        existing.setChannel(campaign.getChannel());
-        existing.setStartTime(campaign.getStartTime());
-        existing.setEndTime(campaign.getEndTime());
-        existing.setDescription(campaign.getDescription());
-        existing.setCreatedBy(campaign.getCreatedBy());
+        MarketingCampaignDto.copyToEntity(campaign, existing);
         return marketingCampaignRepository.save(existing);
     }
 

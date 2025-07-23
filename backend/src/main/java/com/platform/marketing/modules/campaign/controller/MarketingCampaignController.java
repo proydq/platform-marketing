@@ -1,6 +1,8 @@
 package com.platform.marketing.modules.campaign.controller;
 
 import com.platform.marketing.modules.campaign.entity.MarketingCampaign;
+import com.platform.marketing.modules.campaign.dto.MarketingCampaignDto;
+import com.platform.marketing.modules.campaign.dto.UpdateCampaignStatusDto;
 import com.platform.marketing.modules.campaign.service.MarketingCampaignService;
 import com.platform.marketing.util.ResponseEntity;
 import com.platform.marketing.util.ResponsePageDataEntity;
@@ -40,13 +42,13 @@ public class MarketingCampaignController {
 
     @PostMapping
     @PreAuthorize("hasPermission('campaign:create')")
-    public ResponseEntity<MarketingCampaign> create(@RequestBody MarketingCampaign campaign) {
+    public ResponseEntity<MarketingCampaign> create(@RequestBody MarketingCampaignDto campaign) {
         return ResponseEntity.success(marketingCampaignService.create(campaign));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasPermission('campaign:update')")
-    public ResponseEntity<MarketingCampaign> update(@PathVariable String id, @RequestBody MarketingCampaign campaign) {
+    public ResponseEntity<MarketingCampaign> update(@PathVariable String id, @RequestBody MarketingCampaignDto campaign) {
         return ResponseEntity.success(marketingCampaignService.update(id, campaign));
     }
 
@@ -57,15 +59,13 @@ public class MarketingCampaignController {
         return ResponseEntity.success(null);
     }
 
-    @PostMapping("/update-status")
+    @PatchMapping("/status")
     @PreAuthorize("hasPermission('campaign:status:update')")
-    public ResponseEntity<Void> updateStatus(@RequestBody java.util.Map<String, Object> body) {
-        String id = (String) body.get("id");
-        String status = (String) body.get("status");
-        if (id == null || status == null) {
+    public ResponseEntity<Void> updateStatus(@RequestBody UpdateCampaignStatusDto dto) {
+        if (dto.getId() == null || dto.getStatus() == null) {
             return ResponseEntity.fail(400, "id and status required");
         }
-        marketingCampaignService.updateStatus(id, status);
+        marketingCampaignService.updateStatus(dto.getId(), dto.getStatus());
         return ResponseEntity.success(null);
     }
 }
