@@ -11,24 +11,38 @@
       </el-space>
     </el-row>
 
-    <el-card class="chart-container" style="margin-top:20px;">
-      <h3 style="margin-bottom:20px;">快速抓取配置</h3>
+    <el-card class="chart-container" style="margin-top: 20px">
+      <h3 style="margin-bottom: 20px">快速抓取配置</h3>
       <QuickCrawlForm />
     </el-card>
 
-    <el-card class="chart-container" style="margin-top:20px;">
-      <h3 style="margin-bottom:20px;">任务列表</h3>
-      <el-table :data="tasks" style="width:100%">
-        <el-table-column prop="name" label="任务名称" min-width="160" show-overflow-tooltip />
+    <el-card class="chart-container" style="margin-top: 20px">
+      <h3 style="margin-bottom: 20px">任务列表</h3>
+      <el-table :data="tasks" style="width: 100%">
+        <el-table-column
+          prop="name"
+          label="任务名称"
+          min-width="160"
+          show-overflow-tooltip
+        />
         <el-table-column prop="website" label="平台" min-width="120">
-          <template #default="{ row }">{{ Array.isArray(row.website) ? row.website.join(', ') : row.website }}</template>
+          <template #default="{ row }">{{
+            Array.isArray(row.website) ? row.website.join(", ") : row.website
+          }}</template>
         </el-table-column>
         <el-table-column prop="status" label="状态" width="120" align="center">
           <template #default="{ row }">
-            <el-tag :type="tagType(row.status)" size="small">{{ row.status }}</el-tag>
+            <el-tag :type="tagType(row.status)" size="small">{{
+              row.status
+            }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="progress" label="进度" width="120" align="center">
+        <el-table-column
+          prop="progress"
+          label="进度"
+          width="120"
+          align="center"
+        >
           <template #default="{ row }">
             <ProgressRing :percentage="row.progress" />
           </template>
@@ -36,8 +50,15 @@
         <el-table-column prop="createTime" label="创建时间" min-width="160" />
         <el-table-column label="操作" width="160" align="center">
           <template #default="scope">
-            <el-button type="text" @click="editRow(scope.row, scope.$index)">编辑</el-button>
-            <el-button type="text" style="color:#f56c6c" @click="removeRow(scope.$index)">删除</el-button>
+            <el-button type="text" @click="editRow(scope.row, scope.$index)"
+              >编辑</el-button
+            >
+            <el-button
+              type="text"
+              style="color: #f56c6c"
+              @click="removeRow(scope.$index)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -49,8 +70,13 @@
           <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item label="平台选择">
-          <el-select v-model="form.platform" multiple style="width:100%">
-            <el-option v-for="p in platforms" :key="p.value" :label="p.label" :value="p.value" />
+          <el-select v-model="form.platform" multiple style="width: 100%">
+            <el-option
+              v-for="p in platforms"
+              :key="p.value"
+              :label="p.label"
+              :value="p.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="抓取类型">
@@ -86,7 +112,7 @@
     </el-drawer>
 
     <el-dialog v-model="previewDialog" title="数据预览" width="60%">
-      <el-table :data="previewData" max-height="400" style="width:100%">
+      <el-table :data="previewData" max-height="400" style="width: 100%">
         <el-table-column prop="name" label="姓名" />
         <el-table-column prop="email" label="邮箱" />
         <el-table-column prop="source" label="来源" />
@@ -97,67 +123,69 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import ProgressRing from '../components/ProgressRing.vue'
-import tasksJson from '../mock/crawlTasks.json'
-import previewJson from '../mock/previewData.json'
+import { ref, onMounted } from "vue";
+import ProgressRing from "@/components/ProgressRing.vue";
+import tasksJson from "@/mock/crawlTasks.json";
+import previewJson from "@/mock/previewData.json";
 
-const tasks = ref([])
-const previewData = ref([])
-const formDrawer = ref(false)
-const previewDialog = ref(false)
+const tasks = ref([]);
+const previewData = ref([]);
+const formDrawer = ref(false);
+const previewDialog = ref(false);
 
 const platforms = [
-  { label: 'LinkedIn', value: 'linkedin' },
-  { label: 'Facebook', value: 'facebook' }
-]
+  { label: "LinkedIn", value: "linkedin" },
+  { label: "Facebook", value: "facebook" },
+];
 
 const form = ref({
-  name: '',
+  name: "",
   platform: [],
-  type: 'customer',
-  cycle: 'once',
+  type: "customer",
+  cycle: "once",
   fields: [],
-  amount: 100
-})
+  amount: 100,
+});
 
-const editing = ref(false)
-const currentIndex = ref(-1)
+const editing = ref(false);
+const currentIndex = ref(-1);
 
 onMounted(() => {
-  tasks.value = tasksJson
-  previewData.value = previewJson
-})
+  tasks.value = tasksJson;
+  previewData.value = previewJson;
+});
 
 function openCreate() {
-  editing.value = false
+  editing.value = false;
   form.value = {
-    name: '',
+    name: "",
     platform: [],
-    type: 'customer',
-    cycle: 'once',
+    type: "customer",
+    cycle: "once",
     fields: [],
-    amount: 100
-  }
-  formDrawer.value = true
+    amount: 100,
+  };
+  formDrawer.value = true;
 }
 
 function editRow(row, idx) {
-  editing.value = true
-  currentIndex.value = idx
+  editing.value = true;
+  currentIndex.value = idx;
   form.value = {
     name: row.name,
-    platform: Array.isArray(row.website) ? row.website : String(row.website).split(',') ,
-    type: row.type || 'customer',
-    cycle: row.cycle || 'once',
+    platform: Array.isArray(row.website)
+      ? row.website
+      : String(row.website).split(","),
+    type: row.type || "customer",
+    cycle: row.cycle || "once",
     fields: row.fields || [],
-    amount: row.amount || 100
-  }
-  formDrawer.value = true
+    amount: row.amount || 100,
+  };
+  formDrawer.value = true;
 }
 
 function removeRow(idx) {
-  tasks.value.splice(idx, 1)
+  tasks.value.splice(idx, 1);
 }
 
 function saveTask() {
@@ -165,33 +193,33 @@ function saveTask() {
     tasks.value.splice(currentIndex.value, 1, {
       ...tasks.value[currentIndex.value],
       name: form.value.name,
-      website: form.value.platform.join(','),
+      website: form.value.platform.join(","),
       type: form.value.type,
       cycle: form.value.cycle,
       fields: form.value.fields,
-      amount: form.value.amount
-    })
+      amount: form.value.amount,
+    });
   } else {
     tasks.value.push({
       id: Date.now(),
       name: form.value.name,
-      website: form.value.platform.join(','),
-      status: 'pending',
+      website: form.value.platform.join(","),
+      status: "pending",
       progress: 0,
-      createTime: new Date().toLocaleString()
-    })
+      createTime: new Date().toLocaleString(),
+    });
   }
-  formDrawer.value = false
+  formDrawer.value = false;
 }
 
 function showPreview() {
-  previewDialog.value = true
+  previewDialog.value = true;
 }
 
 function tagType(status) {
-  if (status === 'success') return 'success'
-  if (status === 'running') return 'warning'
-  if (status === 'error') return 'danger'
-  return 'info'
+  if (status === "success") return "success";
+  if (status === "running") return "warning";
+  if (status === "error") return "danger";
+  return "info";
 }
 </script>

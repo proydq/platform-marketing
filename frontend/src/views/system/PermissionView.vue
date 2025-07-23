@@ -13,14 +13,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import RoleManagement from './permission/RoleManagement.vue'
-import UserManagement from './permission/UserManagement.vue'
-import PermissionConfig from './permission/PermissionConfig.vue'
+import { ref } from "vue";
+import RoleManagement from "@/views/permission/RoleManagement.vue";
+import UserManagement from "@/views/permission/UserManagement.vue";
+import PermissionConfig from "@/views/permission/PermissionConfig.vue";
 
-const activeTab = ref('roles')
+const activeTab = ref("roles");
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>

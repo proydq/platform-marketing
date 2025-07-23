@@ -1,11 +1,25 @@
 <template>
   <el-card class="page-card">
     <div class="toolbar mb-4 flex justify-between items-center gap-2">
-      <el-input v-model="keyword" placeholder="搜索客户" clearable style="width:240px" @keyup.enter="fetchData" />
-      <el-button type="primary" icon="Plus" @click="openAdd">新增客户</el-button>
+      <el-input
+        v-model="keyword"
+        placeholder="搜索客户"
+        clearable
+        style="width: 240px"
+        @keyup.enter="fetchData"
+      />
+      <el-button type="primary" icon="Plus" @click="openAdd"
+        >新增客户</el-button
+      >
     </div>
 
-    <el-table :data="list" border size="small" v-loading="loading" style="width:100%">
+    <el-table
+      :data="list"
+      border
+      size="small"
+      v-loading="loading"
+      style="width: 100%"
+    >
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="email" label="邮箱" />
       <el-table-column prop="phone" label="电话" />
@@ -30,14 +44,16 @@
             size="small"
             type="primary"
             @click="openDetail(row)"
-          >查看</el-button>
+            >查看</el-button
+          >
           <el-button size="small" @click="openEdit(row)">编辑</el-button>
           <el-button
             v-if="hasPermission('customer:delete')"
             size="small"
             type="danger"
             @click="remove(row)"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -55,7 +71,7 @@
 
     <el-dialog v-model="dialogVisible" width="500px">
       <template #title>
-        <strong>{{ isEdit ? '编辑客户' : '新增客户' }}</strong>
+        <strong>{{ isEdit ? "编辑客户" : "新增客户" }}</strong>
       </template>
       <el-form :model="form" label-width="80px">
         <el-form-item label="名称">
@@ -82,7 +98,9 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="saving" @click="save">保存</el-button>
+        <el-button type="primary" :loading="saving" @click="save"
+          >保存</el-button
+        >
       </template>
     </el-dialog>
     <CustomerDetailDrawer ref="detailDrawer" />
@@ -90,97 +108,108 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { hasPermission } from '@/composables/permission'
-import CustomerDetailDrawer from '../components/customer/CustomerDetailDrawer.vue'
+import { ref, reactive, onMounted } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { hasPermission } from "@/composables/permission";
+import CustomerDetailDrawer from "@/components/customer/CustomerDetailDrawer.vue";
 import {
   getCustomerList,
   createCustomer,
   updateCustomer,
   deleteCustomer,
-  updateCustomerStatus
-} from '@/api/customer'
+  updateCustomerStatus,
+} from "@/api/customer";
 
-const list = ref([])
-const total = ref(0)
-const page = ref(1)
-const size = ref(10)
-const keyword = ref('')
-const loading = ref(false)
+const list = ref([]);
+const total = ref(0);
+const page = ref(1);
+const size = ref(10);
+const keyword = ref("");
+const loading = ref(false);
 
-const dialogVisible = ref(false)
-const isEdit = ref(false)
-const saving = ref(false)
-const detailDrawer = ref()
+const dialogVisible = ref(false);
+const isEdit = ref(false);
+const saving = ref(false);
+const detailDrawer = ref();
 
 const form = reactive({
-  id: '',
-  name: '',
-  email: '',
-  phone: '',
-  source: '',
-  status: 'active',
-  remark: ''
-})
+  id: "",
+  name: "",
+  email: "",
+  phone: "",
+  source: "",
+  status: "active",
+  remark: "",
+});
 
-onMounted(fetchData)
+onMounted(fetchData);
 
 function fetchData() {
-  loading.value = true
-  getCustomerList({ page: page.value - 1, size: size.value, keyword: keyword.value })
-    .then(res => {
-      list.value = res.data.rows || []
-      total.value = res.data.total || 0
+  loading.value = true;
+  getCustomerList({
+    page: page.value - 1,
+    size: size.value,
+    keyword: keyword.value,
+  })
+    .then((res) => {
+      list.value = res.data.rows || [];
+      total.value = res.data.total || 0;
     })
-    .finally(() => (loading.value = false))
+    .finally(() => (loading.value = false));
 }
 
 function openAdd() {
-  isEdit.value = false
-  Object.assign(form, { id: '', name: '', email: '', phone: '', source: '', status: 'active', remark: '' })
-  dialogVisible.value = true
+  isEdit.value = false;
+  Object.assign(form, {
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+    source: "",
+    status: "active",
+    remark: "",
+  });
+  dialogVisible.value = true;
 }
 
 function openEdit(row) {
-  isEdit.value = true
-  Object.assign(form, row)
-  dialogVisible.value = true
+  isEdit.value = true;
+  Object.assign(form, row);
+  dialogVisible.value = true;
 }
 
 function openDetail(row) {
-  detailDrawer.value.open(row.id)
-
+  detailDrawer.value.open(row.id);
 }
 
 function save() {
-  saving.value = true
-  const handler = isEdit.value ? updateCustomer.bind(null, form.id) : createCustomer
+  saving.value = true;
+  const handler = isEdit.value
+    ? updateCustomer.bind(null, form.id)
+    : createCustomer;
   handler({ ...form })
     .then(() => {
-      ElMessage.success('保存成功')
-      dialogVisible.value = false
-      fetchData()
+      ElMessage.success("保存成功");
+      dialogVisible.value = false;
+      fetchData();
     })
-    .finally(() => (saving.value = false))
+    .finally(() => (saving.value = false));
 }
 
 function remove(row) {
-  ElMessageBox.confirm('确定删除该客户吗？', '警告', { type: 'warning' })
+  ElMessageBox.confirm("确定删除该客户吗？", "警告", { type: "warning" })
     .then(() => deleteCustomer(row.id))
     .then(() => {
-      ElMessage.success('删除成功')
-      fetchData()
-    })
+      ElMessage.success("删除成功");
+      fetchData();
+    });
 }
 
 function changeStatus(row) {
   updateCustomerStatus({ id: row.id, status: row.status })
-    .then(() => ElMessage.success('状态已更新'))
-    .catch(() => ElMessage.error('更新失败'))
+    .then(() => ElMessage.success("状态已更新"))
+    .catch(() => ElMessage.error("更新失败"));
 }
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>

@@ -1,35 +1,34 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import StatCard from '../components/StatCard.vue'
-import LineChart from '../components/charts/LineChart.vue'
-import statsData from '../mock/stats.json'
-import tasksData from '../mock/recentTasks.json'
-import summaryData from '../mock/reportSummary.json'
+import { ref, onMounted } from "vue";
+import StatCard from "@/components/StatCard.vue";
+import LineChart from "@/components/charts/LineChart.vue";
+import statsData from "@/mock/stats.json";
+import tasksData from "@/mock/recentTasks.json";
+import summaryData from "@/mock/reportSummary.json";
 
-const stats = ref({})
-const tasks = ref([])
-const drawerVisible = ref(false)
-const currentTask = ref({})
-const chartTab = ref('send')
-const sendTrend = ref([])
-const customerTrend = ref([])
+const stats = ref({});
+const tasks = ref([]);
+const drawerVisible = ref(false);
+const currentTask = ref({});
+const chartTab = ref("send");
+const sendTrend = ref([]);
+const customerTrend = ref([]);
 
 onMounted(() => {
-  stats.value = statsData
-  tasks.value = tasksData
-  sendTrend.value = summaryData.active7
-  customerTrend.value = summaryData.active30.slice(0, 7)
-})
+  stats.value = statsData;
+  tasks.value = tasksData;
+  sendTrend.value = summaryData.active7;
+  customerTrend.value = summaryData.active30.slice(0, 7);
+});
 
 function viewTask(row) {
-  currentTask.value = row
-  drawerVisible.value = true
+  currentTask.value = row;
+  drawerVisible.value = true;
 }
 </script>
 
 <template>
   <div class="page-wrapper">
-
     <div class="dashboard-cards">
       <StatCard title="总客户数" :value="stats.totalCustomers" />
       <StatCard title="今日邮件发送" :value="stats.emailsSent" />
@@ -49,15 +48,27 @@ function viewTask(row) {
     </el-card>
 
     <el-card class="task-list">
-      <h3 style="margin-bottom:20px;">最近任务</h3>
-      <el-table :data="tasks" style="width:100%">
-        <el-table-column prop="name" label="任务名称" min-width="150" show-overflow-tooltip />
+      <h3 style="margin-bottom: 20px">最近任务</h3>
+      <el-table :data="tasks" style="width: 100%">
+        <el-table-column
+          prop="name"
+          label="任务名称"
+          min-width="150"
+          show-overflow-tooltip
+        />
         <el-table-column prop="status" label="状态" width="120" align="center">
           <template #default="scope">
-            <span :class="'status-badge status-' + scope.row.status">{{ scope.row.status }}</span>
+            <span :class="'status-badge status-' + scope.row.status">{{
+              scope.row.status
+            }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="progress" label="进度" width="120" align="center">
+        <el-table-column
+          prop="progress"
+          label="进度"
+          width="120"
+          align="center"
+        >
           <template #default="scope">
             <div class="progress-ring">{{ scope.row.progress }}%</div>
           </template>
@@ -73,12 +84,16 @@ function viewTask(row) {
     <el-drawer v-model="drawerVisible" title="任务详情" size="30%">
       <p>名称：{{ currentTask.name }}</p>
       <p>状态：{{ currentTask.status }}</p>
-      <el-steps :active="currentTask.progress === 100 ? 3 : currentTask.progress > 0 ? 2 : 1" finish-status="success">
+      <el-steps
+        :active="
+          currentTask.progress === 100 ? 3 : currentTask.progress > 0 ? 2 : 1
+        "
+        finish-status="success"
+      >
         <el-step title="创建" />
         <el-step title="执行" />
         <el-step title="完成" />
       </el-steps>
     </el-drawer>
-
   </div>
 </template>
