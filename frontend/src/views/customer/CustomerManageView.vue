@@ -93,7 +93,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { hasPermission } from '@/composables/permission'
-import CustomerDetailDrawer from '../components/customer/CustomerDetailDrawer.vue'
+import CustomerDetailDrawer from '@/components/customer/CustomerDetailDrawer.vue'
 import {
   getCustomerList,
   createCustomer,

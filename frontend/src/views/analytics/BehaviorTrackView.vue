@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import logs from '../mock/behaviorLog.json'
+import logs from '@/mock/behaviorLog.json'
 
 const list = ref([])
 const actionFilter = ref('')

@@ -59,8 +59,8 @@
 import { ref, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { hasPermission } from '../../composables/permission'
-import UserRoleDialog from '../../components/user/UserRoleDialog.vue'
-import UserFormDialog from '../../components/user/UserFormDialog.vue'
+import UserRoleDialog from '../@/components/user/UserRoleDialog.vue'
+import UserFormDialog from '../@/components/user/UserFormDialog.vue'
 import {
   fetchUsers, deleteUser,
   resetUserPassword, updateUserStatus

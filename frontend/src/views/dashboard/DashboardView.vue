@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import StatCard from '../components/StatCard.vue'
-import LineChart from '../components/charts/LineChart.vue'
-import statsData from '../mock/stats.json'
-import tasksData from '../mock/recentTasks.json'
-import summaryData from '../mock/reportSummary.json'
+import StatCard from '@/components/StatCard.vue'
+import LineChart from '@/components/charts/LineChart.vue'
+import statsData from '@/mock/stats.json'
+import tasksData from '@/mock/recentTasks.json'
+import summaryData from '@/mock/reportSummary.json'
 
 const stats = ref({})
 const tasks = ref([])

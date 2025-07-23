@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '../store'
+import { useUserStore } from '@/store'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 import { login as loginApi, getCurrentUser } from '../api/auth'

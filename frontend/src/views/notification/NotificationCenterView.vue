@@ -73,7 +73,7 @@ import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import { Bell } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
-import data from '../mock/notifications.json'
+import data from '@/mock/notifications.json'
 
 const list = ref([...data])
 const typeFilter = ref('')

@@ -96,7 +96,7 @@ import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { Setting } from '@element-plus/icons-vue'
-import data from '../mock/settings.json'
+import data from '@/mock/settings.json'
 
 const activeTab = ref('basic')
 const basicForm = ref({ ...data.basic })

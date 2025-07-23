@@ -87,8 +87,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import RichTextEditor from '../components/RichTextEditor.vue'
-import data from '../mock/generatedContent.json'
+import RichTextEditor from '@/components/RichTextEditor.vue'
+import data from '@/mock/generatedContent.json'
 
 const keyword = ref('')
 const styleOpt = ref('')

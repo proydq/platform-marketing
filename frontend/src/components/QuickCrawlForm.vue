@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import preview from '../mock/previewData.json'
+import preview from '@/mock/previewData.json'
 
 const form = ref({
   website: '',

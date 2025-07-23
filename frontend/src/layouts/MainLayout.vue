@@ -40,7 +40,7 @@
 import { ref, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import HeaderBar from "../components/HeaderBar.vue";
+import HeaderBar from "@/components/HeaderBar.vue";
 import { fetchMenuTree } from "@/api/menu";
 import * as Icons from "@element-plus/icons-vue";
 

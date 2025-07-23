@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { useUserStore } from '../store'
+import { useUserStore } from '@/store'
 import { useI18n } from 'vue-i18n'
 
 const store = useUserStore()

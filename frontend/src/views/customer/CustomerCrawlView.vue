@@ -98,9 +98,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import ProgressRing from '../components/ProgressRing.vue'
-import tasksJson from '../mock/crawlTasks.json'
-import previewJson from '../mock/previewData.json'
+import ProgressRing from '@/components/ProgressRing.vue'
+import tasksJson from '@/mock/crawlTasks.json'
+import previewJson from '@/mock/previewData.json'
 
 const tasks = ref([])
 const previewData = ref([])

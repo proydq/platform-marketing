@@ -88,12 +88,12 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { PieChart, Histogram, TrendCharts } from '@element-plus/icons-vue'
-import FunnelChart from '../components/charts/FunnelChart.vue'
-import BarChart from '../components/charts/BarChart.vue'
-import PieChartCmp from '../components/charts/PieChart.vue'
-import LineChart from '../components/charts/LineChart.vue'
-import summaryData from '../mock/reportSummary.json'
-import logData from '../mock/behaviorLog.json'
+import FunnelChart from '@/components/charts/FunnelChart.vue'
+import BarChart from '@/components/charts/BarChart.vue'
+import PieChartCmp from '@/components/charts/PieChart.vue'
+import LineChart from '@/components/charts/LineChart.vue'
+import summaryData from '@/mock/reportSummary.json'
+import logData from '@/mock/behaviorLog.json'
 
 const dateRange = ref('')
 const dimension = ref('source')
