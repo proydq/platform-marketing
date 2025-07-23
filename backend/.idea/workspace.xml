@@ -7,10 +7,9 @@
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/controller/MarketingCampaignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/controller/MarketingCampaignController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/dto/MarketingCampaignDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/dto/MarketingCampaignDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/controller/MarketingCampaignController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/controller/MarketingCampaignController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/dto/MarketingCampaignDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/dto/MarketingCampaignDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/controller/MarketingCampaignController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/api/campaign.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/campaign.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/request.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/marketing/CampaignCenterView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/marketing/CampaignCenterView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/vite.config.js" afterDir="false" />
     </list>

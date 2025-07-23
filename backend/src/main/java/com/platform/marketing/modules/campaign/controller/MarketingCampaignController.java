@@ -81,7 +81,6 @@ public class MarketingCampaignController {
         marketingCampaignService.updateStatus(dto.getId(), dto.getStatus());
         return ResponseEntity.<Void>success(null);
     }
-
     @PostMapping("/publish")
     @PreAuthorize("hasPermission('campaign:publish')")
     public ResponseEntity<Void> publish(@RequestBody java.util.Map<String, String> body) {
@@ -110,31 +109,4 @@ public class MarketingCampaignController {
                 .orElse(ResponseEntity.<Void>fail(404, "Not Found"));
     }
 
-    @PostMapping("/publish")
-    @PreAuthorize("hasPermission('campaign:publish')")
-    public ResponseEntity<Void> publish(@RequestBody java.util.Map<String, String> body) {
-        String id = body.get("id");
-        if (id == null) {
-            return ResponseEntity.fail(400, "id required");
-        }
-        marketingCampaignService.updateStatus(id, "running");
-        return ResponseEntity.success(null);
-    }
-
-    @PostMapping("/toggle")
-    @PreAuthorize("hasPermission('campaign:toggle')")
-    public ResponseEntity<Void> toggle(@RequestBody java.util.Map<String, String> body) {
-        String id = body.get("id");
-        if (id == null) {
-            return ResponseEntity.fail(400, "id required");
-        }
-        return marketingCampaignService.findById(id)
-                .map(campaign -> {
-                    String current = campaign.getStatus();
-                    String status = "paused".equals(current) ? "running" : "paused";
-                    marketingCampaignService.updateStatus(id, status);
-                    return ResponseEntity.success(null);
-                })
-                .orElse(ResponseEntity.fail(404, "Not Found"));
-    }
 }
