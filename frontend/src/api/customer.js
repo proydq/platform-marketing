@@ -37,6 +37,17 @@ export function updateCustomer(id, data) {
 }
 
 /**
+ * 查询客户详情
+ * GET /v1/customers/{id}
+ */
+export function getCustomer(id) {
+  return request({
+    url: `/v1/customers/${id}`,
+    method: 'get'
+  })
+}
+
+/**
  * 删除客户
  * DELETE /v1/customers/{id}
  */
