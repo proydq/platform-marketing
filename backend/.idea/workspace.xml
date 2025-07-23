@@ -5,56 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/BackendApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/AuthController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/AuthService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/CustomMethodSecurityExpressionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/CustomMethodSecurityExpressionRoot.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/CustomPermissionEvaluator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/JwtAuthenticationFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/JwtUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/LoginRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/LoginResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserDetailsServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserInfoDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/MethodSecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/MenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/PermissionController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/RoleController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/MenuTreeNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/PermissionRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/PermissionTreeNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Permission.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Role.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/RolePermission.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/RolePermissionId.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/UserRole.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/UserRoleId.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/MenuRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/PermissionRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RolePermissionRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RoleRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/UserRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/UserRoleRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/MenuService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/PermissionService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/RoleService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/MenuServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/PermissionServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/UserServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/util/ResponseEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/util/ResponsePageDataEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mapper/PermissionMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/api/marketingCampaign.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/marketingCampaign.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
