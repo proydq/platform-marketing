@@ -1,7 +1,7 @@
 <template>
   <div class="system-container">
     <div class="sidebar">
-      <div class="logo">🌍 {{ t('sidebar.brand') }}</div>
+      <div class="logo">🌍 {{ t("sidebar.brand") }}</div>
       <el-menu :default-active="activeMenu" @select="handleSelect">
         <el-menu-item
           v-for="item in otherMenus"
@@ -37,64 +37,59 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import HeaderBar from '../components/HeaderBar.vue'
-import {
-  Odometer,
-  Promotion,
-  Bell,
-  QuestionFilled,
-  Search,
-  User,
-  Message,
-  Share,
-  Clock,
-  View,
-  DataLine,
-  Lock,
-  UserFilled,
-  Setting,
-  Menu,
-  EditPen,
-} from '@element-plus/icons-vue'
+import { ref, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
+import HeaderBar from "../components/HeaderBar.vue";
+import { fetchMenuTree } from "@/api/menu";
+import * as Icons from "@element-plus/icons-vue";
 
-const router = useRouter()
-const route = useRoute()
-const { t } = useI18n()
+const router = useRouter();
+const route = useRoute();
+const { t } = useI18n();
 
-const menuList = [
-  { path: '/dashboard', title: '控制台', icon: Odometer },
-  { path: '/campaign-center', title: '营销活动', icon: Promotion },
-  { path: '/notifications', title: '通知中心', icon: Bell },
-  { path: '/help-center', title: '帮助中心', icon: QuestionFilled },
-  { path: '/customer-crawl', title: '客户采集', icon: Search },
-  { path: '/customer-manage', title: '客户管理', icon: User },
-  { path: '/email-marketing', title: '邮件营销', icon: Message },
-  { path: '/social-media', title: '社交营销', icon: Share },
-  { path: '/task-schedule', title: '任务调度', icon: Clock },
-  { path: '/behavior-track', title: '行为追踪', icon: View },
-  { path: '/reports', title: '报表统计', icon: DataLine },
-  { path: '/permission', title: '权限管理', icon: Lock },
-  { path: '/settings', title: '系统设置', icon: Setting },
-  { path: '/system/menu', title: '菜单管理', icon: Menu },
-  { path: '/content-generate', title: '内容生成', icon: EditPen },
-]
-
-const systemPaths = ['/permission', '/settings', '/system/menu']
-const systemMenus = menuList.filter((m) => systemPaths.includes(m.path))
-const otherMenus = menuList.filter((m) => !systemPaths.includes(m.path))
-
-const activeMenu = ref(route.path)
+const activeMenu = ref(route.path);
 watch(
   () => route.path,
-  (val) => {
-    activeMenu.value = val
-  }
-)
+  (val) => (activeMenu.value = val)
+);
+
+// 动态菜单列表
+const otherMenus = ref([]);
+const systemMenus = ref([]);
+
+onMounted(async () => {
+  const res = await fetchMenuTree();
+  const all = flatten(res.data || []);
+
+  // 自动识别“系统管理”菜单
+  systemMenus.value = all.filter(
+    (i) =>
+      i.path?.startsWith("/permission") ||
+      i.path?.startsWith("/settings") ||
+      i.path?.startsWith("/system/")
+  );
+  otherMenus.value = all.filter((i) => !systemMenus.value.includes(i));
+});
+
+// 将树结构拍平为一维菜单数组
+function flatten(tree) {
+  const result = [];
+  const walk = (nodes) => {
+    nodes.forEach((node) => {
+      result.push({
+        path: node.path,
+        title: node.name,
+        icon: Icons[node.icon] || Icons.Menu,
+      });
+      if (node.children?.length) walk(node.children);
+    });
+  };
+  walk(tree);
+  return result;
+}
 
 function handleSelect(index) {
-  router.push(index)
+  router.push(index);
 }
 </script>
