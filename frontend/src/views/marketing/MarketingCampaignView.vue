@@ -48,6 +48,7 @@
         :total="total"
         layout="total, prev, pager, next"
         @current-change="fetchData"
+        @size-change="fetchData"
       />
     </div>
 
@@ -93,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import marketingApi from '@/api/marketingCampaign'
 
@@ -120,6 +121,13 @@ const form = reactive({
 })
 
 onMounted(fetchData)
+watch(
+  [() => query.channel, () => query.status],
+  () => {
+    page.value = 1
+    fetchData()
+  }
+)
 
 function fetchData() {
   loading.value = true
@@ -198,7 +206,7 @@ function statusText(s) {
 }
 
 function tagType(s) {
-  const map = { running: 'success', paused: 'warning', ended: 'info' }
+  const map = { draft: 'info', running: 'success', paused: 'warning', ended: 'info' }
   return map[s] || ''
 }
 </script>
