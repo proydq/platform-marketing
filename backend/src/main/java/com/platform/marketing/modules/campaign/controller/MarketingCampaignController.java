@@ -69,17 +69,45 @@ public class MarketingCampaignController {
     @PreAuthorize("hasPermission('campaign:delete')")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         marketingCampaignService.delete(id);
-        return ResponseEntity.success(null);
+        return ResponseEntity.<Void>success(null);
     }
 
     @PatchMapping("/status")
     @PreAuthorize("hasPermission('campaign:status:update')")
     public ResponseEntity<Void> updateStatus(@RequestBody UpdateCampaignStatusDto dto) {
         if (dto.getId() == null || dto.getStatus() == null) {
-            return ResponseEntity.fail(400, "id and status required");
+            return ResponseEntity.<Void>fail(400, "id and status required");
         }
         marketingCampaignService.updateStatus(dto.getId(), dto.getStatus());
-        return ResponseEntity.success(null);
+        return ResponseEntity.<Void>success(null);
+    }
+
+    @PostMapping("/publish")
+    @PreAuthorize("hasPermission('campaign:publish')")
+    public ResponseEntity<Void> publish(@RequestBody java.util.Map<String, String> body) {
+        String id = body.get("id");
+        if (id == null) {
+            return ResponseEntity.<Void>fail(400, "id required");
+        }
+        marketingCampaignService.updateStatus(id, "running");
+        return ResponseEntity.<Void>success(null);
+    }
+
+    @PostMapping("/toggle")
+    @PreAuthorize("hasPermission('campaign:toggle')")
+    public ResponseEntity<Void> toggle(@RequestBody java.util.Map<String, String> body) {
+        String id = body.get("id");
+        if (id == null) {
+            return ResponseEntity.<Void>fail(400, "id required");
+        }
+        return marketingCampaignService.findById(id)
+                .map(campaign -> {
+                    String current = campaign.getStatus();
+                    String status = "paused".equals(current) ? "running" : "paused";
+                    marketingCampaignService.updateStatus(id, status);
+                    return ResponseEntity.<Void>success(null);
+                })
+                .orElse(ResponseEntity.<Void>fail(404, "Not Found"));
     }
 
     @PostMapping("/publish")
