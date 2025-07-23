@@ -87,6 +87,7 @@ import {
   deleteCustomer,
   updateCustomerStatus
 } from '@/api/customer'
+
 const list = ref([])
 const total = ref(0)
 const page = ref(1)

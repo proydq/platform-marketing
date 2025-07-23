@@ -16,7 +16,6 @@ export function getCustomerList(params) {
  * 新增客户
  * POST /v1/customers
  */
-
 export function createCustomer(data) {
   return request({
     url: '/v1/customers',
@@ -29,7 +28,6 @@ export function createCustomer(data) {
  * 编辑客户
  * PUT /v1/customers/{id}
  */
-
 export function updateCustomer(id, data) {
   return request({
     url: `/v1/customers/${id}`,
@@ -42,7 +40,6 @@ export function updateCustomer(id, data) {
  * 删除客户
  * DELETE /v1/customers/{id}
  */
-
 export function deleteCustomer(id) {
   return request({
     url: `/v1/customers/${id}`,
