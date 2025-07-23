@@ -56,6 +56,7 @@ import {
   Lock,
   UserFilled,
   Setting,
+  Menu,
   EditPen,
 } from '@element-plus/icons-vue'
 
@@ -77,10 +78,11 @@ const menuList = [
   { path: '/reports', title: '报表统计', icon: DataLine },
   { path: '/permission', title: '权限管理', icon: Lock },
   { path: '/settings', title: '系统设置', icon: Setting },
+  { path: '/system/menu', title: '菜单管理', icon: Menu },
   { path: '/content-generate', title: '内容生成', icon: EditPen },
 ]
 
-const systemPaths = ['/permission', '/settings']
+const systemPaths = ['/permission', '/settings', '/system/menu']
 const systemMenus = menuList.filter((m) => systemPaths.includes(m.path))
 const otherMenus = menuList.filter((m) => !systemPaths.includes(m.path))
 

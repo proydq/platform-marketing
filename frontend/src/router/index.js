@@ -17,6 +17,7 @@ import ReportsView from '../views/ReportsView.vue'
 import HelpCenterView from '../views/HelpCenterView.vue'
 import NotificationCenterView from '../views/NotificationCenterView.vue'
 import CampaignCenterView from '../views/CampaignCenterView.vue'
+import MenuManagement from '../views/system/MenuManagement.vue'
 const routes = [
   { path: '/login', name: 'Login', component: LoginView },
   {
@@ -28,6 +29,7 @@ const routes = [
       { path: 'customer-manage', name: 'CustomerManage', component: CustomerManageView },
       { path: 'permission', name: 'Permission', component: PermissionView },
       { path: 'settings', name: 'Settings', component: SettingsView },
+      { path: 'system/menu', name: 'MenuManagement', component: MenuManagement },
       { path: 'content-generate', name: 'ContentGenerate', component: ContentGenerateView },
       { path: 'email-marketing', name: 'EmailMarketing', component: EmailMarketingView },
       { path: 'social-media', name: 'SocialMedia', component: SocialMediaView },
