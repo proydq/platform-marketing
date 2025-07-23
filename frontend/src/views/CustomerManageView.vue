@@ -23,10 +23,21 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="180">
+      <el-table-column label="操作" width="220">
         <template #default="{ row }">
+          <el-button
+            v-if="hasPermission('customer:view')"
+            size="small"
+            type="primary"
+            @click="openDetail(row)"
+          >查看</el-button>
           <el-button size="small" @click="openEdit(row)">编辑</el-button>
-          <el-button size="small" type="danger" @click="remove(row)">删除</el-button>
+          <el-button
+            v-if="hasPermission('customer:delete')"
+            size="small"
+            type="danger"
+            @click="remove(row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,12 +85,15 @@
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
+    <CustomerDetailDrawer ref="detailDrawer" />
   </el-card>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { hasPermission } from '@/composables/permission'
+import CustomerDetailDrawer from '../components/customer/CustomerDetailDrawer.vue'
 import {
   getCustomerList,
   createCustomer,
@@ -98,6 +112,7 @@ const loading = ref(false)
 const dialogVisible = ref(false)
 const isEdit = ref(false)
 const saving = ref(false)
+const detailDrawer = ref()
 
 const form = reactive({
   id: '',
@@ -131,6 +146,10 @@ function openEdit(row) {
   isEdit.value = true
   Object.assign(form, row)
   dialogVisible.value = true
+}
+
+function openDetail(row) {
+  detailDrawer.value.open(row.id)
 }
 
 function save() {
