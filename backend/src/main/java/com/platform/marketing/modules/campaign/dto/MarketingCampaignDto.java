@@ -3,7 +3,6 @@ package com.platform.marketing.modules.campaign.dto;
 import java.time.LocalDateTime;
 
 import com.platform.marketing.modules.campaign.entity.MarketingCampaign;
-
 public class MarketingCampaignDto {
     private String id;
     private String name;
