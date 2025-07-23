@@ -75,6 +75,7 @@ import { Bell } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
 import data from '@/mock/notifications.json'
 
+
 const list = ref([...data])
 const typeFilter = ref('')
 const statusFilter = ref('')

@@ -95,6 +95,7 @@ import LineChart from '@/components/charts/LineChart.vue'
 import summaryData from '@/mock/reportSummary.json'
 import logData from '@/mock/behaviorLog.json'
 
+
 const dateRange = ref('')
 const dimension = ref('source')
 const period = ref('7')

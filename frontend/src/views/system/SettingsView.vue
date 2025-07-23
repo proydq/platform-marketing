@@ -98,6 +98,7 @@ import { useI18n } from 'vue-i18n'
 import { Setting } from '@element-plus/icons-vue'
 import data from '@/mock/settings.json'
 
+
 const activeTab = ref('basic')
 const basicForm = ref({ ...data.basic })
 const notifyForm = ref({ ...data.notification })

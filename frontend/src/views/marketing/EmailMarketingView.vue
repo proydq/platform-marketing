@@ -111,6 +111,7 @@ import RichTextEditor from '@/components/RichTextEditor.vue'
 import templatesData from '@/mock/emailCampaigns.json'
 import sendRecordsData from '@/mock/sendRecords.json'
 
+
 const activeTab = ref('templates')
 const templates = ref([])
 const sendRecords = ref([])
