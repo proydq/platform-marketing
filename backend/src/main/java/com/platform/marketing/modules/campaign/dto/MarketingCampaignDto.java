@@ -1,13 +1,16 @@
 package com.platform.marketing.modules.campaign.dto;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import com.platform.marketing.modules.campaign.entity.MarketingCampaign;
 public class MarketingCampaignDto {
     private String id;
     private String name;
     private String status;
-    private String channel;
+    private List<String> channels;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String description;
@@ -39,12 +42,12 @@ public class MarketingCampaignDto {
         this.status = status;
     }
 
-    public String getChannel() {
-        return channel;
+    public List<String> getChannels() {
+        return channels;
     }
 
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public void setChannels(List<String> channels) {
+        this.channels = channels;
     }
 
     public LocalDateTime getStartTime() {
@@ -100,7 +103,12 @@ public class MarketingCampaignDto {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setStatus(entity.getStatus());
-        dto.setChannel(entity.getChannel());
+        String channelStr = entity.getChannel();
+        if (channelStr != null && !channelStr.trim().isEmpty()) {
+            dto.setChannels(Arrays.asList(channelStr.split(",")));
+        } else {
+            dto.setChannels(Collections.emptyList());
+        }
         dto.setStartTime(entity.getStartTime());
         dto.setEndTime(entity.getEndTime());
         dto.setDescription(entity.getDescription());
@@ -113,7 +121,11 @@ public class MarketingCampaignDto {
     public static void copyToEntity(MarketingCampaignDto dto, MarketingCampaign entity) {
         entity.setName(dto.getName());
         entity.setStatus(dto.getStatus());
-        entity.setChannel(dto.getChannel());
+        if (dto.getChannels() != null && !dto.getChannels().isEmpty()) {
+            entity.setChannel(String.join(",", dto.getChannels()));
+        } else {
+            entity.setChannel(null);
+        }
         entity.setStartTime(dto.getStartTime());
         entity.setEndTime(dto.getEndTime());
         entity.setDescription(dto.getDescription());
