@@ -12,7 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/marketing-campaign")
+@RequestMapping("/v1/marketing-campaign")
 public class MarketingCampaignController {
 
     private final MarketingCampaignService marketingCampaignService;
