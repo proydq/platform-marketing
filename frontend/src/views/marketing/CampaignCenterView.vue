@@ -225,8 +225,15 @@ import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
 import FunnelChart from "../../components/charts/FunnelChart.vue";
 import RichTextEditor from "../../components/RichTextEditor.vue";
-import campaignList from "../../mock/campaignList.json";
-import campaignDetails from "../../mock/campaignDetail.json";
+import {
+  getCampaignList,
+  getCampaignDetail,
+  createCampaign,
+  updateCampaign,
+  deleteCampaign,
+  publishCampaign,
+  toggleCampaignStatus,
+} from "@/api/campaign";
 
 const campaigns = ref([]);
 const statusFilter = ref("");
@@ -258,9 +265,15 @@ const form = reactive({
   cycle: "once",
 });
 
-onMounted(() => {
-  campaigns.value = campaignList;
-});
+async function loadData() {
+  const res = await getCampaignList({
+    page: 0,
+    size: 100,
+    keyword: search.value,
+  });
+  campaigns.value = res.data?.content || [];
+}
+onMounted(loadData);
 
 const filtered = computed(() => {
   return campaigns.value.filter((c) => {
@@ -315,38 +328,41 @@ function addContent() {
   form.contents.push("");
 }
 
-function save() {
+async function save() {
   if (editMode.value) {
-    const idx = campaigns.value.findIndex((c) => c.id === form.id);
-    if (idx !== -1) campaigns.value[idx] = JSON.parse(JSON.stringify(form));
+    await updateCampaign(form.id, form);
   } else {
-    form.id = Math.max(0, ...campaigns.value.map((c) => c.id)) + 1;
-    campaigns.value.push(JSON.parse(JSON.stringify(form)));
+    await createCampaign(form);
   }
   editDrawer.value = false;
   ElMessage.success(t("common.saveSuccess"));
+  loadData();
 }
 
-function remove(row) {
-  campaigns.value = campaigns.value.filter((c) => c.id !== row.id);
+async function remove(row) {
+  await deleteCampaign(row.id);
   ElMessage.success(t("common.deleted"));
+  loadData();
 }
 
-function openDetail(row) {
-  current.value = { ...row, ...campaignDetails.find((d) => d.id === row.id) };
+async function openDetail(row) {
+  const res = await getCampaignDetail(row.id);
+  current.value = res.data;
   if (!current.value.contents) current.value.contents = row.contents || [];
   detailDrawer.value = true;
 }
 
-function publish(row) {
-  row.status = "running";
+async function publish(row) {
+  await publishCampaign({ id: row.id });
   ElMessage.success(t("campaign.publish"));
+  loadData();
 }
 
-function togglePause(row) {
-  row.status = row.status === "paused" ? "running" : "paused";
+async function togglePause(row) {
+  await toggleCampaignStatus({ id: row.id });
   ElMessage.success(
-    row.status === "paused" ? t("campaign.pause") : t("campaign.resume")
+    row.status === "paused" ? t("campaign.resume") : t("campaign.pause")
   );
+  loadData();
 }
 </script>
