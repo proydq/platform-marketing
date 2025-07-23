@@ -6,6 +6,7 @@ import com.platform.marketing.modules.campaign.dto.UpdateCampaignStatusDto;
 import com.platform.marketing.modules.campaign.service.MarketingCampaignService;
 import com.platform.marketing.util.ResponseEntity;
 import com.platform.marketing.util.ResponsePageDataEntity;
+import java.util.ArrayList;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,12 +44,24 @@ public class MarketingCampaignController {
     @PostMapping
     @PreAuthorize("hasPermission('campaign:create')")
     public ResponseEntity<MarketingCampaign> create(@RequestBody MarketingCampaignDto campaign) {
+        if (campaign.getChannels() == null) {
+            campaign.setChannels(new ArrayList<>());
+        }
+        if (campaign.getStatus() == null || campaign.getStatus().isBlank()) {
+            campaign.setStatus("pending");
+        }
         return ResponseEntity.success(marketingCampaignService.create(campaign));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasPermission('campaign:update')")
     public ResponseEntity<MarketingCampaign> update(@PathVariable String id, @RequestBody MarketingCampaignDto campaign) {
+        if (campaign.getChannels() == null) {
+            campaign.setChannels(new ArrayList<>());
+        }
+        if (campaign.getStatus() == null || campaign.getStatus().isBlank()) {
+            campaign.setStatus("pending");
+        }
         return ResponseEntity.success(marketingCampaignService.update(id, campaign));
     }
 
