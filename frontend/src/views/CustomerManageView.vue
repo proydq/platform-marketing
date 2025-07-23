@@ -85,7 +85,7 @@
         <el-button type="primary" :loading="saving" @click="save">保存</el-button>
       </template>
     </el-dialog>
-    <CustomerDetailDialog ref="detailDialog" />
+    <CustomerDetailDrawer ref="detailDrawer" />
   </el-card>
 </template>
 
@@ -93,7 +93,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { hasPermission } from '@/composables/permission'
-import CustomerDetailDialog from '../components/customer/CustomerDetailDialog.vue'
+import CustomerDetailDrawer from '../components/customer/CustomerDetailDrawer.vue'
 import {
   getCustomerList,
   createCustomer,
@@ -112,7 +112,7 @@ const loading = ref(false)
 const dialogVisible = ref(false)
 const isEdit = ref(false)
 const saving = ref(false)
-const detailDialog = ref()
+const detailDrawer = ref()
 
 const form = reactive({
   id: '',
@@ -149,7 +149,8 @@ function openEdit(row) {
 }
 
 function openDetail(row) {
-  detailDialog.value.open(row.id)
+  detailDrawer.value.open(row.id)
+
 }
 
 function save() {
