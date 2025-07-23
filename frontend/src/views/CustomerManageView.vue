@@ -81,13 +81,12 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
-  fetchCustomers,
+  getCustomerList,
   createCustomer,
   updateCustomer,
   deleteCustomer,
   updateCustomerStatus
-} from '../api/customer'
-
+} from '@/api/customer'
 const list = ref([])
 const total = ref(0)
 const page = ref(1)
@@ -113,7 +112,7 @@ onMounted(fetchData)
 
 function fetchData() {
   loading.value = true
-  fetchCustomers({ page: page.value - 1, size: size.value, keyword: keyword.value })
+  getCustomerList({ page: page.value - 1, size: size.value, keyword: keyword.value })
     .then(res => {
       list.value = res.data.rows || []
       total.value = res.data.total || 0
@@ -155,7 +154,7 @@ function remove(row) {
 }
 
 function changeStatus(row) {
-  updateCustomerStatus(row.id, row.status)
+  updateCustomerStatus({ id: row.id, status: row.status })
     .then(() => ElMessage.success('状态已更新'))
     .catch(() => ElMessage.error('更新失败'))
 }
