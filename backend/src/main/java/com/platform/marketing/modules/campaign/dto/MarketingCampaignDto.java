@@ -122,7 +122,7 @@ public class MarketingCampaignDto {
 
     public static void copyToEntity(MarketingCampaignDto dto, MarketingCampaign entity) {
         entity.setName(dto.getName());
-        if (dto.getStatus() != null && !dto.getStatus().isBlank()) {
+        if (dto.getStatus() != null && !dto.getStatus().trim().isEmpty()) {
             entity.setStatus(dto.getStatus());
         } else {
             entity.setStatus("pending");

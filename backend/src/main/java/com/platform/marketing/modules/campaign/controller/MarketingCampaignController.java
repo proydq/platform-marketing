@@ -47,7 +47,7 @@ public class MarketingCampaignController {
         if (campaign.getChannels() == null) {
             campaign.setChannels(new ArrayList<>());
         }
-        if (campaign.getStatus() == null || campaign.getStatus().isBlank()) {
+        if (campaign.getStatus() == null || campaign.getStatus().trim().isEmpty()) {
             campaign.setStatus("pending");
         }
         return ResponseEntity.success(marketingCampaignService.create(campaign));
@@ -59,10 +59,10 @@ public class MarketingCampaignController {
         if (campaign.getChannels() == null) {
             campaign.setChannels(new ArrayList<>());
         }
-        if (campaign.getStatus() == null || campaign.getStatus().isBlank()) {
+        if (campaign.getStatus() == null || campaign.getStatus().trim().isEmpty()) {
             campaign.setStatus("pending");
         }
-        return ResponseEntity.success(marketingCampaignService.update(id, campaign));
+        return ResponseEntity.success(marketingCampaignService.create(campaign));
     }
 
     @DeleteMapping("/{id}")
