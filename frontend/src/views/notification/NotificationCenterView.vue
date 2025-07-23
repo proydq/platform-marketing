@@ -9,7 +9,7 @@
         <el-row class="action-buttons" justify="space-between" align="middle">
           <el-space>
             <el-select
-              v-model="typeFilter"
+              v-model="filters.type"
               :placeholder="$t('notification.type')"
               style="width: 120px"
             >
@@ -19,7 +19,7 @@
               <el-option label="System" value="system" />
             </el-select>
             <el-select
-              v-model="statusFilter"
+              v-model="filters.status"
               :placeholder="$t('notification.status')"
               style="width: 120px"
             >
@@ -49,7 +49,7 @@
       <div class="notification-list">
         <transition-group name="fade-list" tag="div">
           <el-card
-            v-for="item in filtered"
+            v-for="item in list"
             :key="item.id"
             class="notify-card"
             body-style="padding:0;"
@@ -125,45 +125,43 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { Bell } from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
-import data from "@/mock/notifications.json";
+import {
+  getNotificationList,
+  markNotificationRead,
+  deleteNotification,
+  getNotificationDetail,
+  batchMarkRead,
+  batchDelete,
+} from "@/api/notification";
 
-const list = ref([...data]);
-const typeFilter = ref("");
-const statusFilter = ref("");
+const list = ref([]);
+const filters = ref({ type: "", status: "" });
 const selected = ref([]);
-
-const { t } = useI18n();
-
 const drawer = ref(false);
 const current = ref({});
 
-const iconMap = { message: "🔔", task: "📋", system: "⚠️" };
+const { t } = useI18n();
 
-const filtered = computed(() => {
-  return list.value.filter((n) => {
-    const typeOk = !typeFilter.value || n.type === typeFilter.value;
-    const statusOk = !statusFilter.value || n.status === statusFilter.value;
-    return typeOk && statusOk;
-  });
-});
+onMounted(loadData);
+
+async function loadData() {
+  const res = await getNotificationList(filters.value);
+  list.value = res.data?.rows || [];
+}
 
 function formatTime(t) {
   const time = new Date(t);
   const diff = Date.now() - time.getTime();
   const mins = Math.floor(diff / 60000);
   if (mins < 60) return `${mins}${t("notification.minutesAgo")}`;
-  const Y = time.getFullYear();
-  const M = String(time.getMonth() + 1).padStart(2, "0");
-  const D = String(time.getDate()).padStart(2, "0");
-  const h = String(time.getHours()).padStart(2, "0");
-  const m = String(time.getMinutes()).padStart(2, "0");
-  return `${Y}-${M}-${D} ${h}:${m}`;
+  return time.toLocaleString();
 }
 
+const iconMap = { message: "🔔", task: "📋", system: "⚠️" };
 function iconFor(item) {
   return iconMap[item.type] || "🔔";
 }
@@ -174,27 +172,29 @@ function toggleSelect(id) {
   else selected.value.splice(i, 1);
 }
 
-function view(item) {
-  current.value = item;
+async function view(item) {
+  const res = await getNotificationDetail(item.id);
+  current.value = res.data || item;
   drawer.value = true;
-  if (item.status === "unread") item.status = "read";
+  if (item.status === "unread") markRead(item);
 }
 
-function markRead(item) {
-  if (item.status !== "read") {
-    item.status = "read";
-    ElMessage.success(t("notification.markRead"));
-  }
+async function markRead(item) {
+  await markNotificationRead(item.id);
+  item.status = "read";
+  ElMessage.success(t("notification.markRead"));
   selected.value = selected.value.filter((i) => i !== item.id);
 }
 
-function remove(item) {
+async function remove(item) {
+  await deleteNotification(item.id);
   list.value = list.value.filter((n) => n.id !== item.id);
   selected.value = selected.value.filter((i) => i !== item.id);
   ElMessage.success(t("notification.delete"));
 }
 
-function markSelectedRead() {
+async function markSelectedRead() {
+  await batchMarkRead(selected.value);
   list.value.forEach((n) => {
     if (selected.value.includes(n.id)) n.status = "read";
   });
@@ -202,44 +202,10 @@ function markSelectedRead() {
   ElMessage.success(t("notification.markRead"));
 }
 
-function deleteSelected() {
+async function deleteSelected() {
+  await batchDelete(selected.value);
   list.value = list.value.filter((n) => !selected.value.includes(n.id));
   selected.value = [];
   ElMessage.success(t("notification.delete"));
 }
 </script>
-
-<style scoped>
-.text-gray {
-  color: #666;
-}
-.notification-list {
-  margin-top: 16px;
-}
-.notify-card {
-  margin-bottom: 16px;
-}
-.notify-row {
-  background: #fff;
-  padding: 0 16px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.3s;
-}
-.notify-row:hover {
-  background: #f5f7fa;
-}
-.action-col {
-  text-align: right;
-}
-.action-col .el-button + .el-button {
-  margin-left: 8px;
-}
-.title-line {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-</style>

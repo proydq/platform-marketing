@@ -271,7 +271,7 @@ async function loadData() {
     size: 100,
     keyword: search.value,
   });
-  campaigns.value = res.data?.content || [];
+  campaigns.value = res.data?.rows || [];
 }
 onMounted(loadData);
 
