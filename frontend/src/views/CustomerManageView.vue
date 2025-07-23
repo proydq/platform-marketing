@@ -150,6 +150,7 @@ function openEdit(row) {
 
 function openDetail(row) {
   detailDrawer.value.open(row.id)
+
 }
 
 function save() {
