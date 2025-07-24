@@ -54,7 +54,7 @@
             class="notify-card"
             body-style="padding:0;"
           >
-            <el-row class="notify-row" align="middle">
+            <el-row class="notify-row" align="middle" style="padding: 20px">
               <el-col :span="1">
                 <el-checkbox
                   :model-value="selected.includes(item.id)"
@@ -209,3 +209,8 @@ async function deleteSelected() {
   ElMessage.success(t("notification.delete"));
 }
 </script>
+<style>
+.notify-row {
+  padding: 10px;
+}
+</style>
