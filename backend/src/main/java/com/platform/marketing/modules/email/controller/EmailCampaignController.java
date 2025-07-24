@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/email-campaign")
+@RequestMapping("/v1/email-campaign")
 public class EmailCampaignController {
 
     private final EmailCampaignTemplateService templateService;
