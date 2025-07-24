@@ -1,9 +1,9 @@
 <template>
   <div class="page-wrapper">
     <div class="action-buttons">
-      <el-button type="primary" @click="openDialog(false)"
-        ><span class="icon">➕</span>新建任务</el-button
-      >
+      <el-button type="primary" @click="openDialog(false)">
+        <span class="icon">➕</span>新建任务
+      </el-button>
       <el-select v-model="filterStatus" placeholder="状态" style="width: 120px">
         <el-option label="全部" value="" />
         <el-option label="进行中" value="running" />
@@ -100,7 +100,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="标签">
-          <el-select v-model="form.tags" multiple placeholder="请选择标签">
+          <el-select
+            v-model="form.tags"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+            placeholder="请输入或选择标签"
+          >
             <el-option v-for="t in allTags" :key="t" :label="t" :value="t" />
           </el-select>
         </el-form-item>
@@ -135,28 +142,36 @@
         </el-descriptions-item>
         <el-descriptions-item label="标签">
           <el-tag
-            v-for="t in currentDetail.tags"
+            v-for="t in normalizeStringArray(currentDetail.tags)"
             :key="t"
             size="small"
             style="margin-right: 4px"
-            >{{ t }}</el-tag
           >
+            {{ t }}
+          </el-tag>
         </el-descriptions-item>
       </el-descriptions>
       <h4 style="margin: 20px 0 10px">运行日志</h4>
       <el-timeline>
-        <el-timeline-item v-for="n in 3" :key="n" timestamp="2024-06-10 08:00"
-          >执行日志 {{ n }}</el-timeline-item
-        >
+        <el-timeline-item v-for="n in 3" :key="n" timestamp="2024-06-10 08:00">
+          执行日志 {{ n }}
+        </el-timeline-item>
       </el-timeline>
     </el-drawer>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import data from "@/mock/taskList.json";
+import {
+  getTaskList,
+  createTask,
+  updateTask,
+  deleteTask,
+  toggleTask,
+  getTaskDetail,
+} from "@/api/scheduleTask";
 
 const tasks = ref([]);
 const allTags = ref([]);
@@ -181,36 +196,48 @@ const form = ref({
 
 const currentDetail = ref({});
 
-onMounted(() => {
-  tasks.value = data;
-  const tagSet = new Set();
-  data.forEach((t) => t.tags.forEach((tag) => tagSet.add(tag)));
-  allTags.value = Array.from(tagSet);
-});
+function normalizeStringArray(val) {
+  if (!Array.isArray(val)) return [];
+  return val
+    .flatMap((item) => {
+      try {
+        const parsed = JSON.parse(item);
+        return Array.isArray(parsed) ? parsed : [parsed];
+      } catch {
+        return [item];
+      }
+    })
+    .map((str) => String(str).trim());
+}
 
-const filtered = computed(() => {
-  let result = tasks.value;
-  if (filterStatus.value) {
-    result = result.filter((t) => t.status === filterStatus.value);
-  }
-  if (filterTags.value.length) {
-    result = result.filter((t) =>
-      filterTags.value.every((f) => t.tags.includes(f))
-    );
-  }
-  if (searchKey.value) {
-    result = result.filter(
-      (t) =>
-        t.name.includes(searchKey.value) || t.desc.includes(searchKey.value)
-    );
-  }
-  return result;
-});
+function loadTaskList() {
+  getTaskList({
+    status: filterStatus.value,
+    tags: filterTags.value,
+    keyword: searchKey.value,
+  }).then((res) => {
+    tasks.value = res.data.map((t) => ({
+      ...t,
+      tags: normalizeStringArray(t.tags),
+      actions: normalizeStringArray(t.actions),
+    }));
+    const tagSet = new Set();
+    tasks.value.forEach((t) => t.tags.forEach((tag) => tagSet.add(tag)));
+    allTags.value = Array.from(tagSet);
+  });
+}
+
+onMounted(loadTaskList);
+watch([filterStatus, filterTags, searchKey], loadTaskList);
 
 function openDialog(edit, row) {
   isEdit.value = edit;
   if (edit && row) {
-    form.value = { ...row };
+    form.value = {
+      ...row,
+      tags: normalizeStringArray(row.tags),
+      actions: normalizeStringArray(row.actions),
+    };
   } else {
     form.value = {
       id: null,
@@ -227,38 +254,48 @@ function openDialog(edit, row) {
 }
 
 function saveForm() {
-  if (isEdit.value) {
-    const idx = tasks.value.findIndex((t) => t.id === form.value.id);
-    tasks.value.splice(idx, 1, { ...form.value });
-    ElMessage.success("更新成功");
-  } else {
-    form.value.id = tasks.value.length
-      ? Math.max(...tasks.value.map((t) => t.id)) + 1
-      : 1;
-    form.value.status = "pending";
-    form.value.lastRun = "";
-    tasks.value.push({ ...form.value });
-    ElMessage.success("创建成功");
-  }
-  dialogVisible.value = false;
+  const payload = {
+    ...form.value,
+    description: form.value.desc,
+    tags: normalizeStringArray(form.value.tags),
+    actions: normalizeStringArray(form.value.actions),
+  };
+  const action = isEdit.value ? updateTask : createTask;
+  action(payload).then(() => {
+    ElMessage.success(isEdit.value ? "更新成功" : "创建成功");
+    dialogVisible.value = false;
+    loadTaskList();
+  });
 }
 
 function removeTask(row) {
   ElMessageBox.confirm("确定删除该任务吗?", "提示", { type: "warning" })
     .then(() => {
-      tasks.value = tasks.value.filter((t) => t.id !== row.id);
-      ElMessage.success("已删除");
+      deleteTask(row.id).then(() => {
+        ElMessage.success("已删除");
+        loadTaskList();
+      });
     })
     .catch(() => {});
 }
 
 function toggleEnabled(row) {
-  row.enabled = !row.enabled;
-  row.status = row.enabled ? "running" : "paused";
+  toggleTask(row.id).then(() => {
+    ElMessage.success("状态已切换");
+    loadTaskList();
+  });
 }
 
 function viewDetail(row) {
-  currentDetail.value = row;
-  drawerVisible.value = true;
+  getTaskDetail(row.id).then((res) => {
+    currentDetail.value = {
+      ...res.data,
+      tags: normalizeStringArray(res.data.tags),
+      actions: normalizeStringArray(res.data.actions),
+    };
+    drawerVisible.value = true;
+  });
 }
+
+const filtered = computed(() => tasks.value);
 </script>

@@ -121,32 +121,69 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
 import { Setting } from "@element-plus/icons-vue";
-import data from "@/mock/settings.json";
+import {
+  getSystemSettings,
+  updateBasicSettings,
+  updateNotifySettings,
+  updateSecuritySettings,
+} from "@/api/systemSettings";
 
-const activeTab = ref("basic");
-const basicForm = ref({ ...data.basic });
-const notifyForm = ref({ ...data.notification });
-const securityForm = ref({ ...data.security });
 const { t } = useI18n();
+const activeTab = ref("basic");
+
+const basicForm = ref({
+  siteName: "",
+  brandColor: "",
+  logoUrl: "",
+  language: "zh",
+});
+const notifyForm = ref({
+  enabled: false,
+  type: "Email",
+  channel: "",
+});
+const securityForm = ref({
+  passwordStrength: "中",
+  deviceLimit: 3,
+  twoFactor: false,
+});
+
+function loadSettings() {
+  getSystemSettings().then((res) => {
+    const data = res.data || {};
+    Object.assign(basicForm.value, data.basic || {});
+    Object.assign(notifyForm.value, data.notification || {});
+    Object.assign(securityForm.value, data.security || {});
+  });
+}
+
+onMounted(loadSettings);
 
 function onLogoChange(upload) {
   const file = upload.raw;
   if (file) {
     basicForm.value.logoUrl = URL.createObjectURL(file);
+    // 后端保存逻辑建议用 file 上传组件配合接口
   }
 }
 
 function saveBasic() {
-  ElMessage.success(t("settings.saveSuccess"));
+  updateBasicSettings(basicForm.value).then(() => {
+    ElMessage.success(t("settings.saveSuccess"));
+  });
 }
 function saveNotify() {
-  ElMessage.success(t("settings.saveSuccess"));
+  updateNotifySettings(notifyForm.value).then(() => {
+    ElMessage.success(t("settings.saveSuccess"));
+  });
 }
 function saveSecurity() {
-  ElMessage.success(t("settings.saveSuccess"));
+  updateSecuritySettings(securityForm.value).then(() => {
+    ElMessage.success(t("settings.saveSuccess"));
+  });
 }
 </script>
