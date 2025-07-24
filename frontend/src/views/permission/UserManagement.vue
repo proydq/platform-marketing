@@ -7,13 +7,7 @@
         clearable
         style="width: 240px"
       />
-      <el-button
-        v-if="hasPermission('user:create')"
-        type="primary"
-        icon="Plus"
-        @click="openCreateDialog"
-        >新增用户</el-button
-      >
+      <el-button type="primary" @click="openCreateDialog">新增用户</el-button>
     </div>
 
     <el-table

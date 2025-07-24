@@ -1,5 +1,6 @@
 <template>
   <div class="page-wrapper">
+    <!-- 筛选操作栏 -->
     <div class="action-buttons">
       <el-input
         v-model="keyword"
@@ -16,99 +17,118 @@
         <el-option label="邮件" value="邮件" />
         <el-option label="博客" value="博客" />
       </el-select>
-      <el-button type="primary" @click="generateContent"
-        ><span class="icon">⚡</span>生成内容</el-button
-      >
+      <el-button type="primary" @click="generateContent">
+        <span class="icon">⚡</span>生成内容
+      </el-button>
     </div>
 
-    <el-card>
-      <el-table :data="filtered" style="width: 100%">
-        <el-table-column prop="name" label="标题" min-width="160" />
-        <el-table-column prop="status" label="状态" width="100" />
-        <el-table-column prop="startTime" label="开始时间" width="160" />
-        <el-table-column prop="endTime" label="结束时间" width="160" />
-        <el-table-column prop="style" label="风格" width="80" />
-        <el-table-column prop="use" label="用途" width="100" />
-        <el-table-column prop="status" label="状态" width="100" />
-        <el-table-column label="操作" width="220">
-          <template #default="{ row }">
-            <el-button type="text" @click="viewDetail(row)">查看</el-button>
-            <el-button type="text" @click="openEditor(true, row)"
-              >编辑</el-button
-            >
-            <el-button type="text" @click="publishRow(row)">发布</el-button>
-            <el-button
-              type="text"
-              style="color: #f56c6c"
-              @click="removeRow(row)"
-              >删除</el-button
-            >
-          </template>
-        </el-table-column>
-      </el-table>
+    <!-- 表格区域 -->
+    <el-card class="content-card">
+      <div class="table-wrapper">
+        <el-table :data="filtered" style="width: 100%">
+          <el-table-column prop="name" label="标题" min-width="160" />
+          <el-table-column prop="status" label="状态" width="100" />
+          <el-table-column prop="startTime" label="开始时间" width="160" />
+          <el-table-column prop="endTime" label="结束时间" width="160" />
+          <el-table-column prop="style" label="风格" width="80" />
+          <el-table-column prop="use" label="用途" width="100" />
+          <el-table-column prop="status" label="状态" width="100" />
+          <el-table-column label="操作" width="220">
+            <template #default="{ row }">
+              <el-button type="text" @click="openDetail(row)">查看</el-button>
+              <el-button type="text" @click="openEdit(true, row)"
+                >编辑</el-button
+              >
+              <el-button type="text" @click="publish(row)">发布</el-button>
+              <el-button type="text" style="color: #f56c6c" @click="remove(row)"
+                >删除</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </el-card>
 
+    <!-- 编辑 Drawer -->
     <el-drawer
-      v-model="editorDrawer"
-      :title="isEdit ? '编辑文案' : '新建文案'"
+      v-model="editDrawer"
+      :title="editMode ? '编辑文案' : '新建文案'"
       size="40%"
       direction="rtl"
     >
-      <el-form :model="editorForm" label-width="90px" class="form-section">
+      <el-form :model="form" label-width="90px" class="form-section">
         <el-form-item label="标题">
-          <el-input v-model="editorForm.title" />
+          <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item label="正文">
-          <RichTextEditor v-model="editorForm.content" />
-        </el-form-item>
-        <el-form-item label="标签">
-          <el-input v-model="editorForm.tags" placeholder="使用逗号分隔" />
+          <RichTextEditor v-model="form.contents[0]" />
         </el-form-item>
         <el-form-item label="用途">
-          <el-select v-model="editorForm.use" placeholder="选择用途">
+          <el-select v-model="form.use">
             <el-option label="社交媒体" value="社交媒体" />
             <el-option label="邮件" value="邮件" />
             <el-option label="博客" value="博客" />
           </el-select>
         </el-form-item>
         <el-form-item label="发布渠道">
-          <el-select v-model="editorForm.channel" placeholder="选择渠道">
+          <el-select v-model="form.channels" multiple>
             <el-option label="Facebook" value="Facebook" />
             <el-option label="Email" value="Email" />
             <el-option label="Twitter" value="Twitter" />
           </el-select>
         </el-form-item>
+        <el-form-item label="周期">
+          <el-select v-model="form.cycle">
+            <el-option label="一次" value="once" />
+            <el-option label="每天" value="daily" />
+            <el-option label="每周" value="weekly" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="开始时间">
+          <el-date-picker
+            v-model="form.startTime"
+            type="datetime"
+            style="width: 100%"
+          />
+        </el-form-item>
+        <el-form-item label="结束时间">
+          <el-date-picker
+            v-model="form.endTime"
+            type="datetime"
+            style="width: 100%"
+          />
+        </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="editorDrawer = false">取消</el-button>
-        <el-button @click="saveDraft">保存为草稿</el-button>
-        <el-button type="primary" @click="publishNow">立即发布</el-button>
+        <el-button @click="editDrawer = false">取消</el-button>
+        <el-button @click="save">保存</el-button>
       </template>
     </el-drawer>
 
+    <!-- 详情 Drawer -->
     <el-drawer
       v-model="detailDrawer"
       title="文案详情"
       size="40%"
       direction="rtl"
     >
-      <h3>{{ currentDetail.title }}</h3>
+      <h3>{{ current.name }}</h3>
       <el-descriptions :column="1" style="margin: 10px 0">
         <el-descriptions-item label="风格">{{
-          currentDetail.style
+          current.style
         }}</el-descriptions-item>
         <el-descriptions-item label="用途">{{
-          currentDetail.use
+          current.use
         }}</el-descriptions-item>
         <el-descriptions-item label="状态">
-          <span :class="['status-badge', statusClass(currentDetail.status)]">{{
-            currentDetail.status
+          <span :class="['status-badge', current.status]">{{
+            current.status
           }}</span>
         </el-descriptions-item>
       </el-descriptions>
       <div
         style="max-height: 300px; overflow: auto"
-        v-html="currentDetail.content"
+        v-html="current.contents?.[0] || ''"
       ></div>
     </el-drawer>
   </div>
@@ -270,3 +290,11 @@ function togglePause(row) {
   );
 }
 </script>
+<style scoped>
+.content-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+</style>

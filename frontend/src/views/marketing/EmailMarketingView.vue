@@ -241,3 +241,55 @@ function sendNow() {
   getSendRecords().then((res) => (sendRecords.value = res.data?.rows || []));
 }
 </script>
+<style scoped>
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: #f6f9fc;
+  box-sizing: border-box;
+}
+
+.chart-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.chart-container .el-table {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.action-buttons {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+}
+.status-running {
+  background-color: #409eff;
+}
+.status-success {
+  background-color: #67c23a;
+}
+.status-failed {
+  background-color: #f56c6c;
+}
+</style>

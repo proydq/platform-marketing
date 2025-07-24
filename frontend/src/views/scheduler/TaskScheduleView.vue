@@ -62,18 +62,19 @@
       </el-table>
     </el-card>
 
+    <!-- 任务编辑弹窗 -->
     <el-dialog
       v-model="dialogVisible"
       :title="isEdit ? '编辑任务' : '新建任务'"
       width="600px"
     >
-      <el-form :model="form" label-width="90px" class="form-section">
-        <el-form-item label="任务名称">
-          <el-input v-model="form.name" />
-        </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.desc" />
-        </el-form-item>
+      <el-form :model="form" label-width="90px">
+        <el-form-item label="任务名称"
+          ><el-input v-model="form.name"
+        /></el-form-item>
+        <el-form-item label="描述"
+          ><el-input v-model="form.desc"
+        /></el-form-item>
         <el-form-item label="执行周期">
           <el-select v-model="form.cycle">
             <el-option label="每天" value="每天" />
@@ -85,13 +86,12 @@
           <el-date-picker
             v-model="form.startTime"
             type="datetime"
-            placeholder="选择日期时间"
             style="width: 100%"
           />
         </el-form-item>
-        <el-form-item label="是否启用">
-          <el-switch v-model="form.enabled" />
-        </el-form-item>
+        <el-form-item label="是否启用"
+          ><el-switch v-model="form.enabled"
+        /></el-form-item>
         <el-form-item label="营销动作">
           <el-select v-model="form.actions" multiple placeholder="选择动作">
             <el-option label="发送邮件" value="发送邮件" />
@@ -118,6 +118,7 @@
       </template>
     </el-dialog>
 
+    <!-- 任务详情抽屉 -->
     <el-drawer v-model="drawerVisible" title="任务详情" size="40%">
       <h3>{{ currentDetail.name }}</h3>
       <p>{{ currentDetail.desc }}</p>
@@ -232,34 +233,28 @@ watch([filterStatus, filterTags, searchKey], loadTaskList);
 
 function openDialog(edit, row) {
   isEdit.value = edit;
-  if (edit && row) {
-    form.value = {
-      ...row,
-      tags: normalizeStringArray(row.tags),
-      actions: normalizeStringArray(row.actions),
-    };
-  } else {
-    form.value = {
-      id: null,
-      name: "",
-      desc: "",
-      cycle: "每天",
-      startTime: "",
-      enabled: true,
-      actions: [],
-      tags: [],
-    };
-  }
+  form.value =
+    edit && row
+      ? {
+          ...row,
+          tags: normalizeStringArray(row.tags),
+          actions: normalizeStringArray(row.actions),
+        }
+      : {
+          id: null,
+          name: "",
+          desc: "",
+          cycle: "每天",
+          startTime: "",
+          enabled: true,
+          actions: [],
+          tags: [],
+        };
   dialogVisible.value = true;
 }
 
 function saveForm() {
-  const payload = {
-    ...form.value,
-    description: form.value.desc,
-    tags: normalizeStringArray(form.value.tags),
-    actions: normalizeStringArray(form.value.actions),
-  };
+  const payload = { ...form.value };
   const action = isEdit.value ? updateTask : createTask;
   action(payload).then(() => {
     ElMessage.success(isEdit.value ? "更新成功" : "创建成功");
@@ -270,12 +265,12 @@ function saveForm() {
 
 function removeTask(row) {
   ElMessageBox.confirm("确定删除该任务吗?", "提示", { type: "warning" })
-    .then(() => {
+    .then(() =>
       deleteTask(row.id).then(() => {
         ElMessage.success("已删除");
         loadTaskList();
-      });
-    })
+      })
+    )
     .catch(() => {});
 }
 
@@ -299,3 +294,25 @@ function viewDetail(row) {
 
 const filtered = computed(() => tasks.value);
 </script>
+
+<style scoped>
+.task-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.task-list .el-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+
+.task-list .el-table {
+  flex: 1;
+  overflow-y: auto;
+}
+</style>

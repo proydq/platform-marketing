@@ -1,9 +1,6 @@
 <template>
   <div class="page-wrapper">
     <el-card class="card-container">
-      <h2 style="margin-bottom: 20px">
-        <span class="icon">📊</span> {{ $t("campaign.center") }}
-      </h2>
       <el-row class="action-buttons" justify="space-between" align="middle">
         <el-space>
           <el-select

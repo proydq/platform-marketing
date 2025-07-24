@@ -18,7 +18,8 @@
     "campaignCenter": "Campaign Center",
     "notificationCenter": "Notification Center",
     "helpCenter": "Help Center",
-    "brand": "Overseas Marketing System"
+    "brand": "Overseas Marketing System",
+    "menuManage": "Menu Management"
   },
   "campaign": {
     "center": "Campaign Center",

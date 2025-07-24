@@ -1,15 +1,17 @@
 <template>
-  <el-tabs v-model="activeTab">
-    <el-tab-pane label="角色管理" name="roles">
-      <RoleManagement />
-    </el-tab-pane>
-    <el-tab-pane label="用户管理" name="users">
-      <UserManagement />
-    </el-tab-pane>
-    <el-tab-pane label="权限配置" name="permission-setting">
-      <PermissionConfig />
-    </el-tab-pane>
-  </el-tabs>
+  <div style="padding: 20px">
+    <el-tabs v-model="activeTab">
+      <el-tab-pane label="角色管理" name="roles">
+        <RoleManagement />
+      </el-tab-pane>
+      <el-tab-pane label="用户管理" name="users">
+        <UserManagement />
+      </el-tab-pane>
+      <el-tab-pane label="权限配置" name="permission-setting">
+        <PermissionConfig />
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script setup>
