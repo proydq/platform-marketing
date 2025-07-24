@@ -3,9 +3,9 @@
     <el-tabs v-model="activeTab">
       <el-tab-pane label="模板管理" name="templates">
         <div class="action-buttons">
-          <el-button type="primary" @click="openTemplateDialog(false)"
-            ><span class="icon">➕</span>新建模板</el-button
-          >
+          <el-button type="primary" @click="openTemplateDialog(false)">
+            <span class="icon">➕</span>新建模板
+          </el-button>
         </div>
         <el-card class="chart-container">
           <el-table :data="templates" style="width: 100%">
@@ -142,8 +142,15 @@
 import { ref, onMounted } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
 import RichTextEditor from "@/components/RichTextEditor.vue";
-import templatesData from "@/mock/emailCampaigns.json";
-import sendRecordsData from "@/mock/sendRecords.json";
+import {
+  getTemplates,
+  createTemplate,
+  updateTemplate,
+  deleteTemplate,
+  getSendRecords,
+  createSendRecord,
+  sendTestEmail,
+} from "@/api/emailCampaign";
 
 const activeTab = ref("templates");
 const templates = ref([]);
@@ -160,27 +167,23 @@ const currentTemplate = ref({
   createdAt: "",
 });
 
-const configForm = ref({
-  title: "",
-  templateId: "",
-  groups: [],
-  content: "",
-});
+const configForm = ref({ title: "", templateId: "", groups: [], content: "" });
 const groups = ["全部客户", "潜在客户", "VIP"];
 
 const testDialogVisible = ref(false);
 const testEmail = ref("");
 
-onMounted(() => {
-  templates.value = templatesData;
-  sendRecords.value = sendRecordsData;
+onMounted(async () => {
+  const tplRes = await getTemplates();
+  templates.value = tplRes.data?.rows || [];
+  const recRes = await getSendRecords();
+  sendRecords.value = recRes.data?.rows || [];
 });
 
 function openTemplateDialog(edit, tpl) {
   isEdit.value = edit;
-  if (edit && tpl) {
-    currentTemplate.value = { ...tpl };
-  } else {
+  if (edit && tpl) currentTemplate.value = { ...tpl };
+  else
     currentTemplate.value = {
       id: null,
       name: "",
@@ -188,26 +191,20 @@ function openTemplateDialog(edit, tpl) {
       content: "",
       createdAt: "",
     };
-  }
   templateDialogVisible.value = true;
 }
 
-function saveTemplate() {
+async function saveTemplate() {
   if (isEdit.value && currentTemplate.value.id) {
-    const idx = templates.value.findIndex(
-      (t) => t.id === currentTemplate.value.id
-    );
-    templates.value.splice(idx, 1, { ...currentTemplate.value });
+    await updateTemplate(currentTemplate.value.id, currentTemplate.value);
     ElMessage.success("模板已更新");
   } else {
-    currentTemplate.value.id = templates.value.length
-      ? Math.max(...templates.value.map((t) => t.id)) + 1
-      : 1;
-    currentTemplate.value.createdAt = new Date().toISOString().split("T")[0];
-    templates.value.push({ ...currentTemplate.value });
+    await createTemplate(currentTemplate.value);
     ElMessage.success("模板已创建");
   }
   templateDialogVisible.value = false;
+  const res = await getTemplates();
+  templates.value = res.data?.rows || [];
 }
 
 function viewTemplate(row) {
@@ -215,34 +212,32 @@ function viewTemplate(row) {
   drawerVisible.value = true;
 }
 
-function removeTemplate(row) {
-  ElMessageBox.confirm("确定删除该模板吗?", "提示", { type: "warning" })
-    .then(() => {
-      templates.value = templates.value.filter((t) => t.id !== row.id);
-      ElMessage.success("已删除");
-    })
-    .catch(() => {});
+async function removeTemplate(row) {
+  await ElMessageBox.confirm("确定删除该模板吗?", "提示", { type: "warning" });
+  await deleteTemplate(row.id);
+  ElMessage.success("已删除");
+  const res = await getTemplates();
+  templates.value = res.data?.rows || [];
 }
 
 function saveConfig() {
   ElMessage.success("配置已保存");
 }
 
-function sendTest() {
+async function sendTest() {
+  await sendTestEmail(testEmail.value);
   testDialogVisible.value = false;
   ElMessage.success("测试邮件已发送到 " + testEmail.value);
 }
 
 function sendNow() {
-  sendRecords.value.push({
-    id: sendRecords.value.length
-      ? Math.max(...sendRecords.value.map((r) => r.id)) + 1
-      : 1,
+  createSendRecord({
     title: configForm.value.title,
     status: "running",
     time: new Date().toLocaleString(),
     count: 0,
   });
   ElMessage.success("发送任务已创建");
+  getSendRecords().then((res) => (sendRecords.value = res.data?.rows || []));
 }
 </script>
