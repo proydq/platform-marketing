@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "content_generation")
+@Table(name = "content_campaign")
 public class ContentGeneration {
     @Id
     @GeneratedValue(generator = "uuid2")
