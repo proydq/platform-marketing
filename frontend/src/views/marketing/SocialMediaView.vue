@@ -5,6 +5,7 @@
         v-model="filterPlatform"
         placeholder="平台"
         style="width: 120px"
+        @change="loadAccounts"
       >
         <el-option label="全部" value="" />
         <el-option v-for="p in platforms" :key="p" :label="p" :value="p" />
@@ -14,10 +15,11 @@
         placeholder="搜索账号"
         clearable
         style="width: 200px"
+        @input="loadAccounts"
       />
-      <el-button type="primary" @click="openAdd"
-        ><span class="icon">➕</span>添加账号</el-button
-      >
+      <el-button type="primary" @click="openAdd">
+        <span class="icon">➕</span>添加账号
+      </el-button>
     </div>
 
     <el-row :gutter="20">
@@ -41,9 +43,9 @@
               <span>{{ acc.platform }}</span>
               <div>
                 <el-tooltip content="编辑">
-                  <el-button text size="small" @click="openEdit(acc)"
-                    ><el-icon><Edit /></el-icon
-                  ></el-button>
+                  <el-button text size="small" @click="openEdit(acc)">
+                    <el-icon><Edit /></el-icon>
+                  </el-button>
                 </el-tooltip>
                 <el-tooltip content="解绑">
                   <el-button
@@ -51,13 +53,14 @@
                     size="small"
                     style="color: #f56c6c"
                     @click="unbind(acc)"
-                    ><el-icon><Delete /></el-icon
-                  ></el-button>
+                  >
+                    <el-icon><Delete /></el-icon>
+                  </el-button>
                 </el-tooltip>
                 <el-tooltip content="推送日志">
-                  <el-button text size="small" @click="openLogs(acc)"
-                    ><el-icon><Document /></el-icon
-                  ></el-button>
+                  <el-button text size="small" @click="openLogs(acc)">
+                    <el-icon><Document /></el-icon>
+                  </el-button>
                 </el-tooltip>
               </div>
             </div>
@@ -68,8 +71,9 @@
                 'status-badge',
                 acc.status === '已绑定' ? 'status-success' : 'status-error',
               ]"
-              >{{ acc.status }}</span
             >
+              {{ acc.status }}
+            </span>
           </div>
           <p>{{ acc.name }}</p>
           <p style="color: #999; font-size: 12px">绑定于 {{ acc.bindTime }}</p>
@@ -118,8 +122,9 @@
                 'status-badge',
                 row.status === '成功' ? 'status-success' : 'status-error',
               ]"
-              >{{ row.status }}</span
             >
+              {{ row.status }}
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -131,8 +136,14 @@
 import { ref, computed, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { Edit, Delete, Document } from "@element-plus/icons-vue";
-import accountsData from "@/mock/socialAccounts.json";
-import logsData from "@/mock/socialPushLogs.json";
+import {
+  getSocialAccounts,
+  getSocialAccountById,
+  createSocialAccount,
+  updateSocialAccount,
+  deleteSocialAccount,
+  getPushLogs,
+} from "@/api/socialAccount";
 
 const accounts = ref([]);
 const logs = ref([]);
@@ -150,11 +161,6 @@ const form = ref({
 const logDialogVisible = ref(false);
 const currentAccountId = ref(null);
 
-onMounted(() => {
-  accounts.value = accountsData;
-  logs.value = logsData;
-});
-
 const platforms = computed(() => {
   const set = new Set(accounts.value.map((a) => a.platform));
   return Array.from(set);
@@ -162,61 +168,76 @@ const platforms = computed(() => {
 
 const filteredAccounts = computed(() => {
   let list = accounts.value;
-  if (filterPlatform.value)
+  if (filterPlatform.value) {
     list = list.filter((a) => a.platform === filterPlatform.value);
-  if (keyword.value) list = list.filter((a) => a.name.includes(keyword.value));
+  }
+  if (keyword.value) {
+    list = list.filter((a) => a.name.includes(keyword.value));
+  }
   return list;
 });
 
+onMounted(() => {
+  loadAccounts();
+});
+
+async function loadAccounts() {
+  const res = await getSocialAccounts({
+    platform: filterPlatform.value,
+    keyword: keyword.value,
+  });
+  accounts.value = res.data?.rows || [];
+}
+
 function openAdd() {
   drawerMode.value = "add";
-  form.value = { id: null, platform: "", name: "", accessToken: "", note: "" };
+  form.value = {
+    id: null,
+    platform: "",
+    name: "",
+    accessToken: "",
+    note: "",
+  };
   drawerVisible.value = true;
 }
 
 function openEdit(acc) {
   drawerMode.value = "edit";
-  form.value = {
-    id: acc.id,
-    platform: acc.platform,
-    name: acc.name,
-    accessToken: acc.accessToken,
-    note: acc.note,
-  };
+  form.value = { ...acc };
   drawerVisible.value = true;
 }
 
-function saveForm() {
-  if (drawerMode.value === "edit") {
-    const idx = accounts.value.findIndex((a) => a.id === form.value.id);
-    accounts.value.splice(idx, 1, { ...accounts.value[idx], ...form.value });
-    ElMessage.success("账号信息已更新");
+async function saveForm() {
+  const payload = {
+    platform: form.value.platform,
+    name: form.value.name,
+    accessToken: form.value.accessToken,
+    note: form.value.note,
+  };
+
+  if (drawerMode.value === "edit" && form.value.id) {
+    await updateSocialAccount(form.value.id, payload);
+    ElMessage.success("账号已更新");
   } else {
-    const id = accounts.value.length
-      ? Math.max(...accounts.value.map((a) => a.id)) + 1
-      : 1;
-    accounts.value.push({
-      id,
-      status: "已绑定",
-      bindTime: new Date().toISOString().split("T")[0],
-      ...form.value,
-    });
+    await createSocialAccount(payload);
     ElMessage.success("账号已添加");
   }
+
   drawerVisible.value = false;
+  await loadAccounts();
 }
 
-function unbind(acc) {
-  ElMessageBox.confirm("确定解绑该账号吗?", "提示", { type: "warning" })
-    .then(() => {
-      accounts.value = accounts.value.filter((a) => a.id !== acc.id);
-      ElMessage.success("已解绑");
-    })
-    .catch(() => {});
+async function unbind(acc) {
+  await ElMessageBox.confirm("确定解绑该账号吗?", "提示", { type: "warning" });
+  await deleteSocialAccount(acc.id);
+  ElMessage.success("已解绑");
+  await loadAccounts();
 }
 
-function openLogs(acc) {
+async function openLogs(acc) {
   currentAccountId.value = acc.id;
+  const res = await getPushLogs({ accountId: acc.id });
+  logs.value = res.data?.rows || [];
   logDialogVisible.value = true;
 }
 
