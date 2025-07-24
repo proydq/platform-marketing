@@ -2,9 +2,14 @@
 import { ref, onMounted } from "vue";
 import StatCard from "@/components/StatCard.vue";
 import LineChart from "@/components/charts/LineChart.vue";
-import statsData from "@/mock/stats.json";
-import tasksData from "@/mock/recentTasks.json";
-import summaryData from "@/mock/reportSummary.json";
+
+import {
+  getDashboardStats,
+  getSendTrend,
+  getCustomerTrend,
+  getRecentTasks,
+  getTaskDetail,
+} from "@/api/dashboard";
 
 const stats = ref({});
 const tasks = ref([]);
@@ -15,15 +20,17 @@ const sendTrend = ref([]);
 const customerTrend = ref([]);
 
 onMounted(() => {
-  stats.value = statsData;
-  tasks.value = tasksData;
-  sendTrend.value = summaryData.active7;
-  customerTrend.value = summaryData.active30.slice(0, 7);
+  getDashboardStats().then((res) => (stats.value = res));
+  getSendTrend().then((res) => (sendTrend.value = res));
+  getCustomerTrend().then((res) => (customerTrend.value = res));
+  getRecentTasks().then((res) => (tasks.value = res));
 });
 
 function viewTask(row) {
-  currentTask.value = row;
-  drawerVisible.value = true;
+  getTaskDetail(row.id).then((res) => {
+    currentTask.value = res;
+    drawerVisible.value = true;
+  });
 }
 </script>
 
