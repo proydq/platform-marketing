@@ -99,35 +99,50 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<com.platform.marketing.dto.PermissionTreeNode> getTree() {
         List<Permission> all = permissionRepository.findAll();
-        java.util.Map<String, com.platform.marketing.dto.PermissionTreeNode> map = new java.util.HashMap<>();
-        for (Permission p : all) {
-            com.platform.marketing.dto.PermissionTreeNode node = new com.platform.marketing.dto.PermissionTreeNode();
-            node.setId(p.getId());
-            node.setName(p.getName());
-            node.setCode(p.getCode());
-            node.setParentId(p.getParentId());
-            node.setType(p.getType());
-            node.setUrl(p.getUrl());
-            node.setMethod(p.getMethod());
-            node.setStatus(p.isStatus());
-            node.setDescription(p.getDescription());
-            node.setModule(p.getModule());
-            map.put(p.getId(), node);
-        }
-        List<com.platform.marketing.dto.PermissionTreeNode> roots = new java.util.ArrayList<>();
-        for (com.platform.marketing.dto.PermissionTreeNode n : map.values()) {
-            if (n.getParentId() == null || n.getParentId().isEmpty()) {
-                roots.add(n);
-            } else {
-                com.platform.marketing.dto.PermissionTreeNode parent = map.get(n.getParentId());
-                if (parent != null) {
-                    parent.getChildren().add(n);
+
+        java.util.Map<String, java.util.List<Permission>> byModule =
+                all.stream().collect(java.util.stream.Collectors.groupingBy(p ->
+                        p.getModule() == null ? "默认模块" : p.getModule()));
+
+        java.util.List<com.platform.marketing.dto.PermissionTreeNode> modules = new java.util.ArrayList<>();
+
+        for (java.util.Map.Entry<String, java.util.List<Permission>> entry : byModule.entrySet()) {
+            String moduleName = entry.getKey();
+            com.platform.marketing.dto.PermissionTreeNode moduleRoot = new com.platform.marketing.dto.PermissionTreeNode();
+            moduleRoot.setId("module:" + moduleName);
+            moduleRoot.setName(moduleName);
+            moduleRoot.setModule(moduleName);
+            moduleRoot.setType("module");
+
+            java.util.Map<String, com.platform.marketing.dto.PermissionTreeNode> map = new java.util.HashMap<>();
+            for (Permission p : entry.getValue()) {
+                com.platform.marketing.dto.PermissionTreeNode node = new com.platform.marketing.dto.PermissionTreeNode();
+                node.setId(p.getId());
+                node.setName(p.getName());
+                node.setCode(p.getCode());
+                node.setParentId(p.getParentId());
+                node.setType(p.getType());
+                node.setUrl(p.getUrl());
+                node.setMethod(p.getMethod());
+                node.setStatus(p.isStatus());
+                node.setDescription(p.getDescription());
+                node.setModule(p.getModule());
+                map.put(p.getId(), node);
+            }
+
+            for (com.platform.marketing.dto.PermissionTreeNode n : map.values()) {
+                if (n.getParentId() == null || n.getParentId().isEmpty() || !map.containsKey(n.getParentId())) {
+                    moduleRoot.getChildren().add(n);
                 } else {
-                    roots.add(n);
+                    com.platform.marketing.dto.PermissionTreeNode parent = map.get(n.getParentId());
+                    parent.getChildren().add(n);
                 }
             }
+
+            modules.add(moduleRoot);
         }
-        return roots;
+
+        return modules;
     }
 
     private String currentUser() {

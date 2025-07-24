@@ -105,7 +105,8 @@ function loadRoles() {
 
 function loadPermissionTree() {
   fetchPermissionTree().then((res) => {
-    treeData.value = res.data || [];
+    const data = res.data || [];
+    treeData.value = data.map(m => ({ ...m, disabled: true }));
   });
 }
 

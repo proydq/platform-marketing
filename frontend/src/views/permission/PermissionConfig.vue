@@ -42,6 +42,11 @@
             <el-option label="按钮" value="按钮" />
           </el-select>
         </el-form-item>
+        <el-form-item label="模块">
+          <el-select v-model="form.module" placeholder="请选择" style="width: 100%">
+            <el-option v-for="m in moduleOptions" :key="m.value" :label="m.label" :value="m.value" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="上级权限">
           <el-tree-select
             v-model="form.parent_id"
@@ -79,12 +84,14 @@ const dialogVisible = ref(false)
 const isEdit = ref(false)
 const saving = ref(false)
 const treeRef = ref()
+const moduleOptions = ref([])
 
 const form = reactive({
   id: '',
   name: '',
   code: '',
   type: '',
+  module: '',
   parent_id: ''
 })
 
@@ -92,13 +99,15 @@ onMounted(loadTree)
 
 function loadTree() {
   fetchPermissionTree().then(res => {
-    treeData.value = res.data || []
+    const data = res.data || []
+    treeData.value = data.map(m => ({ ...m, disabled: true }))
+    moduleOptions.value = data.map(m => ({ label: m.name, value: m.module }))
   })
 }
 
 function openAddDialog() {
   isEdit.value = false
-  Object.assign(form, { id: '', name: '', code: '', type: '', parent_id: '' })
+  Object.assign(form, { id: '', name: '', code: '', type: '', module: '', parent_id: '' })
   dialogVisible.value = true
 }
 
