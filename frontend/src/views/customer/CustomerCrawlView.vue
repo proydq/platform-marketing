@@ -25,11 +25,12 @@
           min-width="160"
           show-overflow-tooltip
         />
-        <el-table-column prop="website" label="平台" min-width="120">
+        <el-table-column prop="platform" label="平台" min-width="120">
           <template #default="{ row }">{{
-            Array.isArray(row.website) ? row.website.join(", ") : row.website
+            Array.isArray(row.platform) ? row.platform.join(", ") : row.platform
           }}</template>
         </el-table-column>
+
         <el-table-column prop="status" label="状态" width="120" align="center">
           <template #default="{ row }">
             <el-tag :type="tagType(row.status)" size="small">{{
@@ -56,7 +57,7 @@
             <el-button
               type="text"
               style="color: #f56c6c"
-              @click="removeRow(scope.$index)"
+              @click="removeRow(scope.row)"
               >删除</el-button
             >
           </template>
@@ -125,8 +126,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import ProgressRing from "@/components/ProgressRing.vue";
-import tasksJson from "@/mock/crawlTasks.json";
-import previewJson from "@/mock/previewData.json";
+import {
+  getCustomerList,
+  createCustomer,
+  deleteCustomer,
+  getCustomerDetail,
+} from "@/api/customerCollect";
 
 const tasks = ref([]);
 const previewData = ref([]);
@@ -148,15 +153,18 @@ const form = ref({
 });
 
 const editing = ref(false);
-const currentIndex = ref(-1);
+const currentId = ref(null);
 
-onMounted(() => {
-  tasks.value = tasksJson;
-  previewData.value = previewJson;
-});
+onMounted(loadData);
+
+async function loadData() {
+  const res = await getCustomerList();
+  tasks.value = res.data.rows || [];
+}
 
 function openCreate() {
   editing.value = false;
+  currentId.value = null;
   form.value = {
     name: "",
     platform: [],
@@ -168,14 +176,14 @@ function openCreate() {
   formDrawer.value = true;
 }
 
-function editRow(row, idx) {
+function editRow(row) {
   editing.value = true;
-  currentIndex.value = idx;
+  currentId.value = row.id;
   form.value = {
     name: row.name,
-    platform: Array.isArray(row.website)
-      ? row.website
-      : String(row.website).split(","),
+    platform: Array.isArray(row.platform)
+      ? row.platform
+      : String(row.platform).split(","),
     type: row.type || "customer",
     cycle: row.cycle || "once",
     fields: row.fields || [],
@@ -184,35 +192,31 @@ function editRow(row, idx) {
   formDrawer.value = true;
 }
 
-function removeRow(idx) {
-  tasks.value.splice(idx, 1);
+async function removeRow(row) {
+  await deleteCustomer(row.id);
+  loadData();
 }
 
-function saveTask() {
-  if (editing.value && currentIndex.value > -1) {
-    tasks.value.splice(currentIndex.value, 1, {
-      ...tasks.value[currentIndex.value],
-      name: form.value.name,
-      website: form.value.platform.join(","),
-      type: form.value.type,
-      cycle: form.value.cycle,
-      fields: form.value.fields,
-      amount: form.value.amount,
-    });
+async function saveTask() {
+  const payload = {
+    name: form.value.name,
+    platform: form.value.platform,
+    type: form.value.type,
+    cycle: form.value.cycle,
+    fields: form.value.fields,
+    amount: form.value.amount,
+  };
+  if (editing.value && currentId.value) {
+    // 调用更新接口（你可以补充 updateCustomer 方法）
   } else {
-    tasks.value.push({
-      id: Date.now(),
-      name: form.value.name,
-      website: form.value.platform.join(","),
-      status: "pending",
-      progress: 0,
-      createTime: new Date().toLocaleString(),
-    });
+    await createCustomer(payload);
   }
   formDrawer.value = false;
+  loadData();
 }
 
 function showPreview() {
+  // 可补充预览接口调用逻辑
   previewDialog.value = true;
 }
 
