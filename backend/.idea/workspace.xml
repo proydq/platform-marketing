@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/controller/ScheduledTaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/controller/ScheduledTaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/content/ContentGenerateView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/content/ContentGenerateView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerCrawlView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerCrawlView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/marketing/CampaignCenterView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/marketing/CampaignCenterView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/notification/NotificationCenterView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/notification/NotificationCenterView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/scheduler/TaskScheduleView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/scheduler/TaskScheduleView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
