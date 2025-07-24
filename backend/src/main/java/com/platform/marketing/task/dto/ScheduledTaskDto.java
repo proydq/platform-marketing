@@ -1,7 +1,5 @@
 package com.platform.marketing.task.dto;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.platform.marketing.task.entity.ScheduledTask;
 
 import java.time.LocalDateTime;
@@ -10,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ScheduledTaskDto {
-    private static final ObjectMapper mapper = new ObjectMapper();
 
     private String id;
     private String name;
@@ -112,19 +109,20 @@ public class ScheduledTaskDto {
         dto.setStartTime(entity.getStartTime());
         dto.setEnabled(entity.isEnabled());
         dto.setStatus(entity.getStatus());
+        dto.setLastRun(entity.getLastRun());
+
+        // ⚠️ actions 字符串以逗号分隔
         String actionsStr = entity.getActions();
         if (actionsStr != null && !actionsStr.trim().isEmpty()) {
-            try {
-                dto.setActions(mapper.readValue(actionsStr, new TypeReference<List<String>>(){}));
-            } catch (Exception e) {
-                dto.setActions(Arrays.asList(actionsStr.split("\n")));
-            }
+            dto.setActions(Arrays.asList(actionsStr.split(",")));
         }
+
+        // ⚠️ tags 字符串以逗号分隔
         String tagsStr = entity.getTags();
         if (tagsStr != null && !tagsStr.trim().isEmpty()) {
             dto.setTags(Arrays.asList(tagsStr.split(",")));
         }
-        dto.setLastRun(entity.getLastRun());
+
         return dto;
     }
 
@@ -135,20 +133,20 @@ public class ScheduledTaskDto {
         entity.setStartTime(dto.getStartTime());
         entity.setEnabled(dto.isEnabled());
         entity.setStatus(dto.getStatus());
+        entity.setLastRun(dto.getLastRun());
+
+        // ⚠️ actions 列表转为 , 拼接字符串
         if (dto.getActions() != null && !dto.getActions().isEmpty()) {
-            try {
-                entity.setActions(mapper.writeValueAsString(dto.getActions()));
-            } catch (Exception e) {
-                entity.setActions(String.join("\n", dto.getActions()));
-            }
+            entity.setActions(String.join(",", dto.getActions()));
         } else {
-            entity.setActions("[]");
+            entity.setActions("");
         }
+
+        // ⚠️ tags 列表转为 , 拼接字符串
         if (dto.getTags() != null && !dto.getTags().isEmpty()) {
             entity.setTags(String.join(",", dto.getTags()));
         } else {
             entity.setTags("");
         }
-        entity.setLastRun(dto.getLastRun());
     }
 }

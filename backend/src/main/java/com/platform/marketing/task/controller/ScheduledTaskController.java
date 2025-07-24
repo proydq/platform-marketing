@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/schedule-task")
+@RequestMapping("/v1/schedule-task")
 public class ScheduledTaskController {
 
     private final ScheduledTaskService service;
