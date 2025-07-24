@@ -25,10 +25,11 @@ public class PermissionController {
     @PreAuthorize("hasPermission('permission:list')")
     public ResponseEntity<ResponsePageDataEntity<Permission>> list(@RequestParam(defaultValue = "") String keyword,
                                                                    @RequestParam(defaultValue = "") String type,
+                                                                   @RequestParam(defaultValue = "") String module,
                                                                    @RequestParam(required = false) Boolean status,
                                                                    @RequestParam(defaultValue = "0") int page,
                                                                    @RequestParam(defaultValue = "10") int size) {
-        Page<Permission> p = permissionService.search(keyword, type, status, PageRequest.of(page, size));
+        Page<Permission> p = permissionService.search(keyword, type, module, status, PageRequest.of(page, size));
         return ResponseEntity.success(new ResponsePageDataEntity<>(p.getTotalElements(), p.getContent()));
     }
 

@@ -28,10 +28,11 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Page<Permission> search(String keyword, String type, Boolean status, Pageable pageable) {
+    public Page<Permission> search(String keyword, String type, String module, Boolean status, Pageable pageable) {
         if (keyword == null) keyword = "";
         if (type == null) type = "";
-        return permissionRepository.search(keyword, type, status, pageable);
+        if (module == null) module = "";
+        return permissionRepository.search(keyword, type, module, status, pageable);
     }
 
     @Override
@@ -67,6 +68,7 @@ public class PermissionServiceImpl implements PermissionService {
         existing.setUrl(permission.getUrl());
         existing.setMethod(permission.getMethod());
         existing.setGroup(permission.getGroup());
+        existing.setModule(permission.getModule());
         existing.setStatus(permission.isStatus());
         existing.setUpdatedBy(currentUser());
         return permissionRepository.save(existing);
@@ -109,6 +111,7 @@ public class PermissionServiceImpl implements PermissionService {
             node.setMethod(p.getMethod());
             node.setStatus(p.isStatus());
             node.setDescription(p.getDescription());
+            node.setModule(p.getModule());
             map.put(p.getId(), node);
         }
         List<com.platform.marketing.dto.PermissionTreeNode> roots = new java.util.ArrayList<>();

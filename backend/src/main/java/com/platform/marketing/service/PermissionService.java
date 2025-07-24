@@ -18,7 +18,7 @@ public interface PermissionService {
 
     void updateStatus(String id, boolean status);
 
-    Page<Permission> search(String keyword, String type, Boolean status, Pageable pageable);
+    Page<Permission> search(String keyword, String type, String module, Boolean status, Pageable pageable);
 
     List<com.platform.marketing.dto.PermissionTreeNode> getTree();
 }
