@@ -35,25 +35,40 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { getBehaviorLogs } from "@/api/report";
+import { ElMessage } from "element-plus";
+import { getBehaviorLogList, getBehaviorLogDetail } from "@/api/behaviorLog";
 
 const list = ref([]);
 const actionFilter = ref("");
+const searchKeyword = ref("");
 const drawer = ref(false);
 const current = ref({});
 
-onMounted(async () => {
-  const res = await getBehaviorLogs();
-  list.value = res.data?.rows || [];
-});
+onMounted(loadLogs);
+
+async function loadLogs() {
+  try {
+    const res = await getBehaviorLogList({
+      action: actionFilter.value,
+      keyword: searchKeyword.value,
+    });
+    list.value = res.data?.rows || [];
+  } catch (e) {
+    ElMessage.error("获取日志失败");
+  }
+}
 
 const filtered = computed(() => {
-  if (!actionFilter.value) return list.value;
-  return list.value.filter((i) => i.action.includes(actionFilter.value));
+  return list.value;
 });
 
-function view(row) {
-  current.value = row;
-  drawer.value = true;
+async function view(row) {
+  try {
+    const res = await getBehaviorLogDetail(row.id);
+    current.value = res.data || row;
+    drawer.value = true;
+  } catch (e) {
+    ElMessage.error("获取详情失败");
+  }
 }
 </script>
