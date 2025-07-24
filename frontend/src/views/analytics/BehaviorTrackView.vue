@@ -1,27 +1,3 @@
-<script setup>
-import { ref, onMounted, computed } from "vue";
-import logs from "@/mock/behaviorLog.json";
-
-const list = ref([]);
-const actionFilter = ref("");
-const drawer = ref(false);
-const current = ref({});
-
-onMounted(() => {
-  list.value = logs;
-});
-
-const filtered = computed(() => {
-  if (!actionFilter.value) return list.value;
-  return list.value.filter((i) => i.action.includes(actionFilter.value));
-});
-
-function view(row) {
-  current.value = row;
-  drawer.value = true;
-}
-</script>
-
 <template>
   <div class="page-wrapper">
     <el-card>
@@ -56,3 +32,28 @@ function view(row) {
     </el-drawer>
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted, computed } from "vue";
+import { getBehaviorLogs } from "@/api/report";
+
+const list = ref([]);
+const actionFilter = ref("");
+const drawer = ref(false);
+const current = ref({});
+
+onMounted(async () => {
+  const res = await getBehaviorLogs();
+  list.value = res.data?.rows || [];
+});
+
+const filtered = computed(() => {
+  if (!actionFilter.value) return list.value;
+  return list.value.filter((i) => i.action.includes(actionFilter.value));
+});
+
+function view(row) {
+  current.value = row;
+  drawer.value = true;
+}
+</script>
