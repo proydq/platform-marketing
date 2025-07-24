@@ -8,6 +8,7 @@
           <el-option label="菜单" value="菜单" />
           <el-option label="按钮" value="按钮" />
         </el-select>
+        <el-input v-model="searchModule" placeholder="模块" clearable style="width: 120px" />
         <el-select v-model="searchStatus" placeholder="状态" clearable style="width: 120px">
           <el-option label="启用" :value="true" />
           <el-option label="禁用" :value="false" />
@@ -32,6 +33,7 @@
       <el-table-column prop="name" label="权限名称" />
       <el-table-column prop="code" label="权限编码" />
       <el-table-column prop="type" label="类型" width="80" />
+      <el-table-column prop="module" label="模块" width="120" />
       <el-table-column prop="status" label="状态" width="100">
         <template #default="{ row }">
           <el-switch
@@ -82,6 +84,11 @@
             <el-option label="按钮" value="按钮" />
           </el-select>
         </el-form-item>
+        <el-form-item label="模块">
+          <el-select v-model="form.module" placeholder="请选择" style="width: 100%">
+            <el-option v-for="m in moduleOptions" :key="m.value" :label="m.label" :value="m.value" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="上级权限">
           <el-tree-select
             v-model="form.parent_id"
@@ -125,6 +132,7 @@ const page = ref(1)
 const size = ref(10)
 const searchKeyword = ref('')
 const searchType = ref('')
+const searchModule = ref('')
 const searchStatus = ref()
 const selection = ref([])
 const loading = ref(false)
@@ -132,12 +140,14 @@ const saving = ref(false)
 const drawerVisible = ref(false)
 const isEdit = ref(false)
 const treeOptions = ref([])
+const moduleOptions = ref([])
 
 const form = reactive({
   id: '',
   name: '',
   code: '',
   type: '',
+  module: '',
   parent_id: '',
   status: true
 })
@@ -154,6 +164,7 @@ function fetchData() {
     size: size.value,
     keyword: searchKeyword.value,
     type: searchType.value,
+    module: searchModule.value,
     status: searchStatus.value
   })
     .then(res => {
@@ -165,7 +176,9 @@ function fetchData() {
 
 function loadTree() {
   fetchPermissionTree().then(res => {
-    treeOptions.value = res.data || []
+    const data = res.data || []
+    treeOptions.value = data.map(m => ({ ...m, disabled: true }))
+    moduleOptions.value = data.map(m => ({ label: m.name, value: m.module }))
   })
 }
 
@@ -179,6 +192,7 @@ function openDialog(edit = false, data = null) {
       name: '',
       code: '',
       type: '',
+      module: '',
       parent_id: '',
       status: true
     })

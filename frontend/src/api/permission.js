@@ -3,7 +3,7 @@ import request from '../utils/request'
 /**
  * 查询权限分页列表
  * GET /v1/permissions
- * 支持查询参数：page, size, keyword, type, status
+ * 支持查询参数：page, size, keyword, type, module, status
  */
 export function fetchPermissions(params) {
   return request({

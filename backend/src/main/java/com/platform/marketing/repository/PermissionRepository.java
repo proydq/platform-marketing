@@ -26,9 +26,11 @@ public interface PermissionRepository extends JpaRepository<Permission, String> 
            "WHERE (:keyword = '' OR lower(p.name) LIKE lower(concat('%', :keyword, '%')) " +
            "OR lower(p.code) LIKE lower(concat('%', :keyword, '%'))) " +
            "AND (:type = '' OR p.type = :type) " +
+           "AND (:module = '' OR lower(p.module) LIKE lower(concat('%', :module, '%'))) " +
            "AND (:status IS NULL OR p.status = :status)")
     Page<Permission> search(@Param("keyword") String keyword,
                             @Param("type") String type,
+                            @Param("module") String module,
                             @Param("status") Boolean status,
                             Pageable pageable);
 

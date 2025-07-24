@@ -43,6 +43,12 @@ public class Permission {
 
     private boolean status = true;
 
+    /**
+     * Module to which this permission belongs
+     */
+    @Column(name = "module")
+    private String module;
+
     @Column(name = "created_by")
     private String createdBy;
 
@@ -129,6 +135,14 @@ public class Permission {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 
     public boolean isStatus() {
