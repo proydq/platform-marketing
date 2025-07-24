@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,15 +30,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username);
-        java.util.List<String> roleIds = userService.getRoleIdsByUser(user.getId());
-        java.util.Set<String> perms = new java.util.HashSet<>();
-        for (String rid : roleIds) {
-            perms.addAll(roleService.getPermissions(rid));
+        if (user == null) {
+            throw new UsernameNotFoundException("用户不存在: " + username);
         }
+
+        List<String> roleIds = userService.getRoleIdsByUser(user.getId());
+        Set<String> perms = roleIds.stream()
+                .flatMap(rid -> roleService.getPermissions(rid).stream())
+                .collect(Collectors.toSet());
+
         List<GrantedAuthority> authorities = perms.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+
+        // ✅ 打印调试日志
+        System.out.println("【认证系统】用户：" + username + "，加载权限：" + perms);
+
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(), authorities);
+                user.getUsername(),
+                user.getPassword(),
+                user.isStatus(), // enabled
+                true, // accountNonExpired
+                true, // credentialsNonExpired
+                true, // accountNonLocked
+                authorities
+        );
     }
 }

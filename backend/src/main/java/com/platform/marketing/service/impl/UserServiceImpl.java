@@ -14,7 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.UUID;
+import java.time.LocalDateTime;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -38,6 +39,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User create(User user) {
+        user.setId(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // 加密密码
+        user.setStatus(true);
+        user.setCreateTime(LocalDateTime.now());
         return userRepository.save(user);
     }
 
