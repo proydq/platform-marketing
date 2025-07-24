@@ -1,6 +1,7 @@
 package com.platform.marketing.controller;
 
 import com.platform.marketing.dto.PermissionRequest;
+import com.platform.marketing.dto.RoleDto;
 import com.platform.marketing.entity.Role;
 import com.platform.marketing.service.RoleService;
 import com.platform.marketing.util.ResponseEntity;
@@ -27,15 +28,16 @@ public class RoleController {
 
     @PostMapping
     @PreAuthorize("hasPermission('role:create')")
-    public ResponseEntity<Role> create(@RequestBody Role role) {
-        role.setId(java.util.UUID.randomUUID().toString());
-        return ResponseEntity.success(roleService.create(role));
+    public ResponseEntity<RoleDto> create(@RequestBody RoleDto dto) {
+        RoleDto created = roleService.createRoleWithPermissions(dto);
+        return ResponseEntity.success(created);
     }
 
     @PostMapping("/update")
     @PreAuthorize("hasPermission('role:update')")
-    public ResponseEntity<Role> updateRole(@RequestBody Role role) {
-        return ResponseEntity.success(roleService.update(role.getId(), role));
+    public ResponseEntity<RoleDto> updateRole(@RequestBody RoleDto dto) {
+        RoleDto updated = roleService.updateRoleWithPermissions(dto);
+        return ResponseEntity.success(updated);
     }
 
     @DeleteMapping("/{id}")
