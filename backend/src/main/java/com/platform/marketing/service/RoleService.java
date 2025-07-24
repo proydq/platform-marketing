@@ -1,5 +1,6 @@
 package com.platform.marketing.service;
 
+import com.platform.marketing.dto.RoleDto;
 import com.platform.marketing.entity.Permission;
 import com.platform.marketing.entity.Role;
 import com.platform.marketing.entity.RolePermission;
@@ -7,6 +8,7 @@ import com.platform.marketing.entity.RolePermissionId;
 import com.platform.marketing.repository.PermissionRepository;
 import com.platform.marketing.repository.RolePermissionRepository;
 import com.platform.marketing.repository.RoleRepository;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,5 +68,49 @@ public class RoleService {
             RolePermission rp = new RolePermission(id);
             rolePermissionRepository.save(rp);
         }
+    }
+
+    @Transactional
+    public RoleDto createRoleWithPermissions(RoleDto dto) {
+        Role role = new Role();
+        role.setId(UUID.randomUUID().toString());
+        RoleDto.copyToEntity(dto, role);
+        role.setStatus(true);
+        roleRepository.save(role);
+
+        if (dto.getPermissionIds() != null) {
+            for (String permId : dto.getPermissionIds()) {
+                Permission perm = permissionRepository.findById(permId)
+                        .orElseThrow(() -> new IllegalArgumentException("Permission not found: " + permId));
+                RolePermissionId id = new RolePermissionId(role.getId(), perm.getId());
+                rolePermissionRepository.save(new RolePermission(id));
+            }
+        }
+
+        RoleDto result = RoleDto.fromEntity(role);
+        result.setPermissionIds(dto.getPermissionIds());
+        return result;
+    }
+
+    @Transactional
+    public RoleDto updateRoleWithPermissions(RoleDto dto) {
+        Role role = roleRepository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Role not found"));
+        RoleDto.copyToEntity(dto, role);
+        roleRepository.save(role);
+
+        rolePermissionRepository.deleteByRoleId(role.getId());
+        if (dto.getPermissionIds() != null) {
+            for (String permId : dto.getPermissionIds()) {
+                Permission perm = permissionRepository.findById(permId)
+                        .orElseThrow(() -> new IllegalArgumentException("Permission not found: " + permId));
+                RolePermissionId id = new RolePermissionId(role.getId(), perm.getId());
+                rolePermissionRepository.save(new RolePermission(id));
+            }
+        }
+
+        RoleDto result = RoleDto.fromEntity(role);
+        result.setPermissionIds(dto.getPermissionIds());
+        return result;
     }
 }
