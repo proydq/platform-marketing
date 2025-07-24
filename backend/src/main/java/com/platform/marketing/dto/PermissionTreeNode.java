@@ -13,6 +13,7 @@ public class PermissionTreeNode {
     private String method;
     private boolean status;
     private String description;
+    private String module;
     private List<PermissionTreeNode> children = new ArrayList<>();
 
     public PermissionTreeNode() {}
@@ -42,6 +43,8 @@ public class PermissionTreeNode {
     public void setStatus(boolean status) { this.status = status; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+    public String getModule() { return module; }
+    public void setModule(String module) { this.module = module; }
     public List<PermissionTreeNode> getChildren() { return children; }
     public void setChildren(List<PermissionTreeNode> children) { this.children = children; }
 }
