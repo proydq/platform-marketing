@@ -11,4 +11,9 @@ import java.util.List;
 public interface RolePermissionRepository extends JpaRepository<RolePermission, RolePermissionId> {
     List<RolePermission> findByIdRoleId(String roleId);
     void deleteByIdRoleId(String roleId);
+
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.transaction.annotation.Transactional
+    @org.springframework.data.jpa.repository.Query("DELETE FROM RolePermission rp WHERE rp.id.roleId = :roleId")
+    void deleteByRoleId(@org.springframework.data.repository.query.Param("roleId") String roleId);
 }
