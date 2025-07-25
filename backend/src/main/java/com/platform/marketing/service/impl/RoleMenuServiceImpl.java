@@ -5,10 +5,12 @@ import com.platform.marketing.entity.SysRoleMenu;
 import com.platform.marketing.entity.SysRoleMenuId;
 import com.platform.marketing.entity.UserRole;
 import com.platform.marketing.entity.User;
+import com.platform.marketing.entity.Role;
 import com.platform.marketing.repository.MenuRepository;
 import com.platform.marketing.repository.RoleMenuRepository;
 import com.platform.marketing.repository.UserRoleRepository;
 import com.platform.marketing.repository.UserRepository;
+import com.platform.marketing.repository.RoleRepository;
 import com.platform.marketing.service.RoleMenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +24,18 @@ public class RoleMenuServiceImpl implements RoleMenuService {
     private final MenuRepository menuRepository;
     private final UserRoleRepository userRoleRepository;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     public RoleMenuServiceImpl(RoleMenuRepository roleMenuRepository,
                                MenuRepository menuRepository,
                                UserRoleRepository userRoleRepository,
-                               UserRepository userRepository) {
+                               UserRepository userRepository,
+                               RoleRepository roleRepository) {
         this.roleMenuRepository = roleMenuRepository;
         this.menuRepository = menuRepository;
         this.userRoleRepository = userRoleRepository;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -80,5 +85,30 @@ public class RoleMenuServiceImpl implements RoleMenuService {
             userIds.add(ur.getId().getUserId());
         }
         return userRepository.findAllById(userIds);
+    }
+
+    @Override
+    @Transactional
+    public void assignRolesToMenu(String menuId, List<String> roleIds) {
+        roleMenuRepository.deleteByMenuId(menuId);
+        if (roleIds != null) {
+            for (String roleId : roleIds) {
+                SysRoleMenuId id = new SysRoleMenuId(roleId, menuId);
+                roleMenuRepository.save(new SysRoleMenu(id));
+            }
+        }
+    }
+
+    @Override
+    public List<Role> getRolesByMenu(String menuId) {
+        List<SysRoleMenu> roleMenus = roleMenuRepository.findByIdMenuId(menuId);
+        if (roleMenus.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Set<String> roleIds = new HashSet<>();
+        for (SysRoleMenu rm : roleMenus) {
+            roleIds.add(rm.getId().getRoleId());
+        }
+        return roleRepository.findAllById(roleIds);
     }
 }
