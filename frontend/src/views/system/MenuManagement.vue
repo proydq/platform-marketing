@@ -10,6 +10,7 @@
           style="width: 240px"
         />
         <el-button type="primary" @click="openAddDialog">新增菜单</el-button>
+        <el-button size="small" @click="viewUsers(row)">查看用户</el-button>
       </div>
 
       <!-- 表格区域 -->
@@ -118,6 +119,17 @@
           >
         </template>
       </el-dialog>
+      <el-dialog
+        v-model="userDialogVisible"
+        title="拥有此权限的用户"
+        width="600px"
+      >
+        <el-table :data="usersOfMenu">
+          <el-table-column prop="username" label="用户名" />
+          <el-table-column prop="realName" label="姓名" />
+          <el-table-column prop="email" label="邮箱" />
+        </el-table>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -131,6 +143,7 @@ import {
   updateMenu,
   deleteMenu,
   updateMenuStatus,
+  fetchUsersByMenu,
 } from "../../api/menu";
 import "@/assets/css/permission-ui-enhanced.css";
 
@@ -140,7 +153,8 @@ const page = ref(1);
 const size = ref(10);
 const keyword = ref("");
 const loading = ref(false);
-
+const userDialogVisible = ref(false);
+const usersOfMenu = ref([]);
 const dialogVisible = ref(false);
 const isEdit = ref(false);
 const saving = ref(false);
@@ -208,7 +222,11 @@ function openEditDialog(row) {
   Object.assign(form, row);
   dialogVisible.value = true;
 }
-
+async function viewUsers(menu) {
+  const res = await fetchUsersByMenu(menu.id);
+  usersOfMenu.value = res.data || [];
+  userDialogVisible.value = true;
+}
 function save() {
   saving.value = true;
   const payload = { ...form };
