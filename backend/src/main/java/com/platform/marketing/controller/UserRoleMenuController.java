@@ -2,8 +2,10 @@ package com.platform.marketing.controller;
 
 import com.platform.marketing.entity.Menu;
 import com.platform.marketing.entity.User;
+import com.platform.marketing.entity.Role;
 import com.platform.marketing.service.RoleMenuService;
 import com.platform.marketing.service.UserService;
+import com.platform.marketing.service.RoleService;
 import com.platform.marketing.util.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,12 @@ public class UserRoleMenuController {
 
     private final UserService userService;
     private final RoleMenuService roleMenuService;
+    private final RoleService roleService;
 
-    public UserRoleMenuController(UserService userService, RoleMenuService roleMenuService) {
+    public UserRoleMenuController(UserService userService, RoleMenuService roleMenuService, RoleService roleService) {
         this.userService = userService;
         this.roleMenuService = roleMenuService;
+        this.roleService = roleService;
     }
 
     @PostMapping("/users/{userId}/roles")
@@ -46,5 +50,24 @@ public class UserRoleMenuController {
     @PreAuthorize("hasPermission('menu:view')")
     public ResponseEntity<List<User>> getUsersByMenu(@PathVariable String menuId) {
         return ResponseEntity.success(roleMenuService.getUsersByMenu(menuId));
+    }
+
+    @GetMapping("/menus/{menuId}/roles")
+    @PreAuthorize("hasPermission('menu:view')")
+    public ResponseEntity<List<Role>> getRolesByMenu(@PathVariable String menuId) {
+        return ResponseEntity.success(roleMenuService.getRolesByMenu(menuId));
+    }
+
+    @PostMapping("/menus/{menuId}/roles")
+    @PreAuthorize("hasPermission('menu:update')")
+    public ResponseEntity<Void> assignRolesToMenu(@PathVariable String menuId, @RequestBody List<String> roleIds) {
+        roleMenuService.assignRolesToMenu(menuId, roleIds);
+        return ResponseEntity.success(null);
+    }
+
+    @GetMapping("/roles/all")
+    @PreAuthorize("hasPermission('role:view')")
+    public ResponseEntity<List<Role>> getAllRoles() {
+        return ResponseEntity.success(roleService.findAllRoles());
     }
 }

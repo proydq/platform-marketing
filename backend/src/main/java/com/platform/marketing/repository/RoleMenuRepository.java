@@ -16,9 +16,15 @@ public interface RoleMenuRepository extends JpaRepository<SysRoleMenu, SysRoleMe
     List<SysRoleMenu> findByIdRoleId(String roleId);
     List<SysRoleMenu> findByIdMenuId(String menuId);
     void deleteByIdRoleId(String roleId);
+    void deleteByIdMenuId(String menuId);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM SysRoleMenu rm WHERE rm.id.roleId = :roleId")
     void deleteByRoleId(@Param("roleId") String roleId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM SysRoleMenu rm WHERE rm.id.menuId = :menuId")
+    void deleteByMenuId(@Param("menuId") String menuId);
 }
