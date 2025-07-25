@@ -138,6 +138,7 @@ import {
   getCustomerList,
   createCustomer,
   deleteCustomer,
+  updateCustomer,
 } from "@/api/customerCollect";
 
 const tasks = ref([]);
@@ -190,10 +191,16 @@ function editRow(row) {
     name: row.name,
     platform: Array.isArray(row.platform)
       ? row.platform
-      : String(row.platform).split(","),
+      : String(row.platform || "")
+          .split(",")
+          .filter(Boolean),
     type: row.type || "customer",
     cycle: row.cycle || "once",
-    fields: row.fields || [],
+    fields: Array.isArray(row.fields)
+      ? row.fields
+      : String(row.fields || "")
+          .split(",")
+          .filter(Boolean),
     amount: row.amount || 100,
   };
   formDrawer.value = true;
@@ -207,14 +214,14 @@ async function removeRow(row) {
 async function saveTask() {
   const payload = {
     name: form.value.name,
-    platform: form.value.platform,
+    platform: form.value.platform.join(","), // 改成字符串
+    fields: form.value.fields.join(","), // 改成字符串
     type: form.value.type,
     cycle: form.value.cycle,
-    fields: form.value.fields,
     amount: form.value.amount,
   };
   if (editing.value && currentId.value) {
-    // 你可以实现 update 接口
+    await updateCustomer(currentId.value, payload);
   } else {
     await createCustomer(payload);
   }

@@ -42,3 +42,6 @@ export function batchDeleteCustomer(ids) {
     data: ids,
   });
 }
+export function updateCustomer(id, data) {
+  return request.put(`/api/customer-collect/${id}`, data);
+}
