@@ -4,9 +4,11 @@ import com.platform.marketing.entity.Menu;
 import com.platform.marketing.entity.SysRoleMenu;
 import com.platform.marketing.entity.SysRoleMenuId;
 import com.platform.marketing.entity.UserRole;
+import com.platform.marketing.entity.User;
 import com.platform.marketing.repository.MenuRepository;
 import com.platform.marketing.repository.RoleMenuRepository;
 import com.platform.marketing.repository.UserRoleRepository;
+import com.platform.marketing.repository.UserRepository;
 import com.platform.marketing.service.RoleMenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +21,16 @@ public class RoleMenuServiceImpl implements RoleMenuService {
     private final RoleMenuRepository roleMenuRepository;
     private final MenuRepository menuRepository;
     private final UserRoleRepository userRoleRepository;
+    private final UserRepository userRepository;
 
     public RoleMenuServiceImpl(RoleMenuRepository roleMenuRepository,
                                MenuRepository menuRepository,
-                               UserRoleRepository userRoleRepository) {
+                               UserRoleRepository userRoleRepository,
+                               UserRepository userRepository) {
         this.roleMenuRepository = roleMenuRepository;
         this.menuRepository = menuRepository;
         this.userRoleRepository = userRoleRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -54,5 +59,26 @@ public class RoleMenuServiceImpl implements RoleMenuService {
             return Collections.emptyList();
         }
         return menuRepository.findAllById(menuIds);
+    }
+
+    @Override
+    public List<User> getUsersByMenu(String menuId) {
+        List<SysRoleMenu> roleMenus = roleMenuRepository.findByIdMenuId(menuId);
+        if (roleMenus.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Set<String> roleIds = new HashSet<>();
+        for (SysRoleMenu rm : roleMenus) {
+            roleIds.add(rm.getId().getRoleId());
+        }
+        List<UserRole> userRoles = userRoleRepository.findByIdRoleIdIn(roleIds);
+        if (userRoles.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Set<String> userIds = new HashSet<>();
+        for (UserRole ur : userRoles) {
+            userIds.add(ur.getId().getUserId());
+        }
+        return userRepository.findAllById(userIds);
     }
 }

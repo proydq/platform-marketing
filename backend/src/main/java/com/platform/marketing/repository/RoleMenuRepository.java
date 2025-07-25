@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 public interface RoleMenuRepository extends JpaRepository<SysRoleMenu, SysRoleMenuId> {
     List<SysRoleMenu> findByIdRoleId(String roleId);
+    List<SysRoleMenu> findByIdMenuId(String menuId);
     void deleteByIdRoleId(String roleId);
 
     @Modifying
