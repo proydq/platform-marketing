@@ -6,14 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/PermissionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/PermissionController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/PermissionTreeNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/PermissionTreeNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Permission.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Permission.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/PermissionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/PermissionRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/PermissionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/PermissionService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/PermissionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/PermissionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/entity/CustomerCollect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/entity/CustomerCollect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/controller/CustomerCollectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/controller/CustomerCollectController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/service/CustomerCollectService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/service/CustomerCollectService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/service/impl/CustomerCollectServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/service/impl/CustomerCollectServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/customerCollect.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/customerCollect.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerCrawlView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerCrawlView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/views/marketing/CampaignCenterView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/marketing/CampaignCenterView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
