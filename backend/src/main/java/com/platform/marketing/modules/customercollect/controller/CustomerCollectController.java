@@ -57,4 +57,5 @@ public class CustomerCollectController {
         customerCollectService.deleteBatch(ids);
         return ResponseEntity.success(null);
     }
+
 }
