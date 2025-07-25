@@ -9,9 +9,7 @@
           clearable
           style="width: 240px"
         />
-        <el-button type="primary" icon="Plus" @click="openAddDialog"
-          >新增菜单</el-button
-        >
+        <el-button type="primary" @click="openAddDialog">新增菜单</el-button>
       </div>
 
       <!-- 表格区域 -->

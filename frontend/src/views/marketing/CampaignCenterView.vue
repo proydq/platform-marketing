@@ -32,9 +32,9 @@
             style="width: 200px"
           />
         </el-space>
-        <el-button type="primary" @click="openEdit(false)"
-          ><span class="icon">➕</span>{{ $t("campaign.new") }}</el-button
-        >
+        <el-button type="primary" @click="openEdit(false)">{{
+          $t("campaign.new")
+        }}</el-button>
       </el-row>
 
       <el-table :data="filtered" style="width: 100%; margin-top: 20px">
@@ -43,17 +43,7 @@
           :label="$t('campaign.name')"
           min-width="150"
         />
-        <el-table-column :label="$t('campaign.channel')" width="160">
-          <template #default="{ row }">
-            <el-tag
-              v-for="c in row.channels"
-              :key="c"
-              size="small"
-              style="margin-right: 4px"
-              >{{ channelName(c) }}</el-tag
-            >
-          </template>
-        </el-table-column>
+
         <el-table-column :label="$t('campaign.status')" width="120">
           <template #default="{ row }">
             <span :class="'status-badge status-' + row.status">{{

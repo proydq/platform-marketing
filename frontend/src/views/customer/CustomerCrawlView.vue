@@ -3,12 +3,8 @@
     <el-card class="task-card">
       <el-row class="action-buttons" justify="space-between" align="middle">
         <el-space>
-          <el-button type="primary" @click="openCreate">
-            <span class="icon">➕</span>新增任务
-          </el-button>
-          <el-button type="success" @click="showPreview">
-            <span class="icon">📄</span>预览数据
-          </el-button>
+          <el-button type="primary" @click="openCreate"> 新增任务 </el-button>
+          <el-button type="success" @click="showPreview"> 预览数据 </el-button>
         </el-space>
       </el-row>
       <QuickCrawlForm />
