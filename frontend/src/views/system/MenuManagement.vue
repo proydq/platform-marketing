@@ -10,7 +10,6 @@
           style="width: 240px"
         />
         <el-button type="primary" @click="openAddDialog">新增菜单</el-button>
-        <el-button size="small" @click="viewUsers(row)">查看用户</el-button>
       </div>
 
       <!-- 表格区域 -->
@@ -36,13 +35,19 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="200">
+          <el-table-column label="操作" width="240">
             <template #default="{ row }">
               <el-button size="small" @click="openEditDialog(row)"
                 >编辑</el-button
               >
               <el-button size="small" type="danger" @click="remove(row.id)"
                 >删除</el-button
+              >
+              <el-button size="small" @click="viewUsers(row)"
+                >查看用户</el-button
+              >
+              <el-button size="small" @click="openBindRoleDialog(row)"
+                >绑定角色</el-button
               >
             </template>
           </el-table-column>
@@ -99,6 +104,20 @@
           <el-form-item label="排序号">
             <el-input-number v-model="form.sort" :min="0" />
           </el-form-item>
+
+          <!-- 新增部分：绑定用户 -->
+          <el-form-item label="绑定用户" v-if="isEdit && boundUsers.length > 0">
+            <el-tag
+              v-for="user in boundUsers"
+              :key="user.id"
+              class="mr-1"
+              size="small"
+              type="info"
+            >
+              {{ user.realName || user.username }}
+            </el-tag>
+          </el-form-item>
+
           <el-form-item label="是否缓存">
             <el-switch v-model="form.cache" />
           </el-form-item>
@@ -119,20 +138,21 @@
           >
         </template>
       </el-dialog>
-      <el-dialog
-        v-model="userDialogVisible"
-        title="拥有此权限的用户"
-        width="600px"
-      >
-        <el-table :data="usersOfMenu">
-          <el-table-column prop="username" label="用户名" />
-          <el-table-column prop="realName" label="姓名" />
-          <el-table-column prop="email" label="邮箱" />
-        </el-table>
+      <el-dialog v-model="bindRoleDialogVisible" title="绑定角色" width="500px">
+        <el-checkbox-group v-model="selectedRoleIds">
+          <el-checkbox v-for="role in allRoles" :key="role.id" :label="role.id">
+            {{ role.name }}
+          </el-checkbox>
+        </el-checkbox-group>
+        <template #footer>
+          <el-button @click="bindRoleDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="saveBindRoles">保存</el-button>
+        </template>
       </el-dialog>
     </el-card>
   </div>
 </template>
+
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -144,6 +164,8 @@ import {
   deleteMenu,
   updateMenuStatus,
   fetchUsersByMenu,
+  fetchAllRoles,
+  fetchRolesByMenu,
 } from "../../api/menu";
 import "@/assets/css/permission-ui-enhanced.css";
 
@@ -153,12 +175,11 @@ const page = ref(1);
 const size = ref(10);
 const keyword = ref("");
 const loading = ref(false);
-const userDialogVisible = ref(false);
-const usersOfMenu = ref([]);
 const dialogVisible = ref(false);
 const isEdit = ref(false);
 const saving = ref(false);
 const treeData = ref([]);
+const boundUsers = ref([]);
 
 const form = reactive({
   id: "",
@@ -214,19 +235,25 @@ function openAddDialog() {
     remark: "",
     status: true,
   });
+  boundUsers.value = []; // 清空绑定用户
   dialogVisible.value = true;
 }
 
-function openEditDialog(row) {
+async function openEditDialog(row) {
   isEdit.value = true;
   Object.assign(form, row);
   dialogVisible.value = true;
+
+  // 加载绑定用户
+  const res = await fetchUsersByMenu(row.id);
+  boundUsers.value = res.data || [];
 }
-async function viewUsers(menu) {
-  const res = await fetchUsersByMenu(menu.id);
-  usersOfMenu.value = res.data || [];
-  userDialogVisible.value = true;
+
+async function viewUsers(row) {
+  const res = await fetchUsersByMenu(row.id);
+  ElMessage.info(`${res.data?.length || 0} 个用户拥有此权限`);
 }
+
 function save() {
   saving.value = true;
   const payload = { ...form };
@@ -256,6 +283,29 @@ function toggleStatus(row) {
     .then(() => ElMessage.success("状态更新成功"))
     .catch(() => ElMessage.error("更新失败"));
 }
+const bindRoleDialogVisible = ref(false);
+const allRoles = ref([]);
+const selectedRoleIds = ref([]);
+const currentMenuId = ref("");
+
+// 打开绑定弹窗
+async function openBindRoleDialog(row) {
+  currentMenuId.value = row.id;
+  bindRoleDialogVisible.value = true;
+
+  const res1 = await fetchAllRoles(); // 获取所有角色
+  const res2 = await fetchRolesByMenu(row.id); // 获取已绑定的角色ID列表
+
+  allRoles.value = res1.data || [];
+  selectedRoleIds.value = res2.data.map((role) => role.id) || [];
+}
+
+// 保存绑定角色
+async function saveBindRoles() {
+  await assignRolesToMenu(currentMenuId.value, selectedRoleIds.value);
+  ElMessage.success("绑定成功");
+  bindRoleDialogVisible.value = false;
+}
 </script>
 
 <style scoped>
@@ -265,9 +315,11 @@ function toggleStatus(row) {
   flex-direction: column;
   overflow: hidden;
 }
-
 .table-wrapper {
   flex: 1;
   overflow: auto;
+}
+.mr-1 {
+  margin-right: 6px;
 }
 </style>

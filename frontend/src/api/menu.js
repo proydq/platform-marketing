@@ -48,3 +48,14 @@ export function updateMenuStatus(id, status) {
 export function fetchUsersByMenu(menuId) {
   return request.get(`/api/menus/${menuId}/users`);
 }
+export function fetchRolesByMenu(menuId) {
+  return request.get(`/api/menus/${menuId}/roles`);
+}
+
+export function assignRolesToMenu(menuId, roleIds) {
+  return request.post(`/api/menus/${menuId}/roles`, roleIds);
+}
+
+export function fetchAllRoles() {
+  return request.get(`/api/roles/all`); // 你可能需要这个接口
+}
