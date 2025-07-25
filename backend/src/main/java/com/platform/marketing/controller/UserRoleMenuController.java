@@ -1,6 +1,7 @@
 package com.platform.marketing.controller;
 
 import com.platform.marketing.entity.Menu;
+import com.platform.marketing.entity.User;
 import com.platform.marketing.service.RoleMenuService;
 import com.platform.marketing.service.UserService;
 import com.platform.marketing.util.ResponseEntity;
@@ -39,5 +40,11 @@ public class UserRoleMenuController {
     public ResponseEntity<Void> assignMenusToRole(@PathVariable String roleId, @RequestBody List<String> menuIds) {
         roleMenuService.assignMenusToRole(roleId, menuIds);
         return ResponseEntity.success(null);
+    }
+
+    @GetMapping("/menus/{menuId}/users")
+    @PreAuthorize("hasPermission('menu:view')")
+    public ResponseEntity<List<User>> getUsersByMenu(@PathVariable String menuId) {
+        return ResponseEntity.success(roleMenuService.getUsersByMenu(menuId));
     }
 }
