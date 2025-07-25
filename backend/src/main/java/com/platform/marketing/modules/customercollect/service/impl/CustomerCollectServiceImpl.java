@@ -39,6 +39,21 @@ public class CustomerCollectServiceImpl implements CustomerCollectService {
 
     @Override
     @Transactional
+    public CustomerCollect update(String id, CustomerCollect customerCollect) {
+        CustomerCollect existing = customerCollectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("CustomerCollect not found"));
+        existing.setName(customerCollect.getName());
+        existing.setPhone(customerCollect.getPhone());
+        existing.setEmail(customerCollect.getEmail());
+        existing.setCompany(customerCollect.getCompany());
+        existing.setJobTitle(customerCollect.getJobTitle());
+        existing.setSource(customerCollect.getSource());
+        existing.setNotes(customerCollect.getNotes());
+        return customerCollectRepository.save(existing);
+    }
+
+    @Override
+    @Transactional
     public void delete(String id) {
         customerCollectRepository.deleteById(id);
     }

@@ -11,6 +11,7 @@ public interface CustomerCollectService {
     Page<CustomerCollect> search(String keyword, Pageable pageable);
     Optional<CustomerCollect> findById(String id);
     CustomerCollect create(CustomerCollect customerCollect);
+    CustomerCollect update(String id, CustomerCollect customerCollect);
     void delete(String id);
     void deleteBatch(List<String> ids);
 }

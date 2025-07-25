@@ -44,6 +44,12 @@ public class CustomerCollectController {
         return ResponseEntity.success(customerCollectService.create(customerCollect));
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasPermission('customer-collect:update')")
+    public ResponseEntity<CustomerCollect> update(@PathVariable String id, @RequestBody CustomerCollect customerCollect) {
+        return ResponseEntity.success(customerCollectService.update(id, customerCollect));
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasPermission('customer-collect:delete')")
     public ResponseEntity<Void> delete(@PathVariable String id) {
