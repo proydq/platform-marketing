@@ -47,6 +47,7 @@ public class AuthController {
         UserInfoDTO dto = new UserInfoDTO();
         dto.setUsername(user.getUsername());
         dto.setRoleName(roleName);
+        dto.setId(user.getId());
         dto.setPermissions(perms);
         return ResponseEntity.success(dto);
     }

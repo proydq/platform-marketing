@@ -5,6 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SuperAdminInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SuperAdminInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserInfoDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserInfoDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserRoleMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserRoleMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RoleMenuRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RoleMenuRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/RoleMenuService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/RoleMenuService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/RoleMenuServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/RoleMenuServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/LoginForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/layouts/MainLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/layouts/MainLayout.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/system/MenuManagement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/system/MenuManagement.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,28 +44,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/2025项目/Beijing-Language-and-Culture-University3-main/Beijing-Language-and-Culture-University3/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.language.Kotlin",
-    "spring.configuration.checksum": "b43fdd98b1fd705ae4c3a10cf25aad8a",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/2025项目/Beijing-Language-and-Culture-University3-main/Beijing-Language-and-Culture-University3/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.language.Kotlin&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;b43fdd98b1fd705ae4c3a10cf25aad8a&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="backend" />
@@ -67,6 +85,7 @@
       <updated>1752660823515</updated>
       <workItem from="1752660824520" duration="23139000" />
       <workItem from="1753088557414" duration="18209000" />
+      <workItem from="1753666575527" duration="2967000" />
     </task>
     <servers />
   </component>

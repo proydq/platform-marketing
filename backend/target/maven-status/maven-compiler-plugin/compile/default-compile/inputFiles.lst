@@ -8,8 +8,10 @@ E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\en
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\config\MethodSecurityConfig.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\contentgeneration\repository\ContentGenerationRepository.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\task\entity\ScheduledTask.java
+E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\repository\RoleMenuRepository.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\customer\service\CustomerService.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\notification\controller\NotificationController.java
+E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\service\impl\RoleMenuServiceImpl.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\customercollect\service\impl\CustomerCollectServiceImpl.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\dashboard\controller\DashboardController.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\repository\UserRepository.java
@@ -24,12 +26,15 @@ E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\mo
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\entity\Permission.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\campaign\dto\MarketingCampaignDto.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\dto\PermissionTreeNode.java
+E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\dto\RoleDto.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\repository\PermissionRepository.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\system\dto\SystemSettingsDto.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\service\UserService.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\config\SuperAdminInitializer.java
+E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\entity\SysUserRole.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\campaign\repository\MarketingCampaignRepository.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\auth\AuthController.java
+E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\service\RoleMenuService.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\task\repository\ScheduledTaskRepository.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\service\PermissionService.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\campaign\controller\MarketingCampaignController.java
@@ -55,6 +60,7 @@ E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\mo
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\entity\User.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\dashboard\entity\RecentTask.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\controller\PermissionController.java
+E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\controller\UserRoleMenuController.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\customercollect\entity\CustomerCollect.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\customercollect\service\CustomerCollectService.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\email\controller\EmailCampaignController.java
@@ -84,6 +90,7 @@ E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\au
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\config\SecurityConfig.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\campaign\dto\UpdateCampaignStatusDto.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\task\controller\ScheduledTaskController.java
+E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\entity\SysRoleMenuId.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\system\service\SystemSettingsService.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\auth\UserDetailsServiceImpl.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\notification\repository\NotificationRepository.java
@@ -111,6 +118,7 @@ E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\mo
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\auth\JwtAuthenticationFilter.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\dashboard\service\DashboardService.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\repository\MenuRepository.java
+E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\entity\SysRoleMenu.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\behaviorlog\entity\BehaviorLog.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\modules\customer\service\impl\CustomerServiceImpl.java
 E:\2025项目\platform-marketing\backend\src\main\java\com\platform\marketing\auth\AuthService.java
