@@ -14,7 +14,7 @@
         <el-sub-menu index="system">
           <template #title>
             <el-icon><Setting /></el-icon>
-            <span>系统管理</span>
+            <span>{{ t('menu.system') }}</span>
           </template>
           <el-menu-item
             v-for="item in systemMenus"

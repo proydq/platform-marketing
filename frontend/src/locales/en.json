@@ -3,6 +3,22 @@
     "personalSettings": "Profile",
     "logout": "Logout"
   },
+  "menu": {
+    "dashboard": "Dashboard",
+    "campaign": "Marketing Campaign",
+    "notification": "Notification Center",
+    "lead": "Customer Acquisition",
+    "customer": "Customer Management",
+    "email": "Email Marketing",
+    "social": "Social Marketing",
+    "task": "Task Scheduler",
+    "behavior": "Behavior Tracking",
+    "content": "Content Generate",
+    "system": "System Settings",
+    "reports": "Reports",
+    "permission": "Permission",
+    "help": "Help Center"
+  },
   "sidebar": {
     "dashboard": "Dashboard",
     "customerCrawl": "Customer Crawl",

@@ -3,6 +3,22 @@
     "personalSettings": "个人设置",
     "logout": "退出登录"
   },
+  "menu": {
+    "dashboard": "控制台",
+    "campaign": "营销活动",
+    "notification": "通知中心",
+    "lead": "客户获取",
+    "customer": "客户管理",
+    "email": "邮件营销",
+    "social": "社交营销",
+    "task": "任务调度",
+    "behavior": "行为追踪",
+    "content": "内容生成",
+    "system": "系统设置",
+    "reports": "报表分析",
+    "permission": "权限管理",
+    "help": "帮助中心"
+  },
   "sidebar": {
     "dashboard": "控制台",
     "customerCrawl": "客户抓取",
