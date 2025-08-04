@@ -4,6 +4,7 @@ import com.platform.marketing.modules.email.entity.EmailSendRecord;
 import com.platform.marketing.modules.email.service.EmailService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
     private final List<EmailSendRecord> records = new ArrayList<>();
 
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -37,6 +42,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendEmail(String subject, String content, List<String> toList) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
+            message.setFrom(fromEmail);
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setSubject(subject);
             helper.setText(content, true);
