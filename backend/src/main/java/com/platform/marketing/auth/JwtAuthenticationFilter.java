@@ -12,10 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Filter that parses JWT token and sets Authentication in the security context.
- */
-@Component
+@Component // ✅ 必须添加注解，确保 Spring 能扫描
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -23,6 +20,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
+        System.out.println("✅ JwtAuthenticationFilter 初始化完成");
     }
 
     @Override
