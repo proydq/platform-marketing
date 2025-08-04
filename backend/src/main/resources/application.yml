@@ -8,6 +8,20 @@ spring:
     password: bunny
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 480075988@qq.com
+    password: vamuttsxbesqbgcg  # 这是你的 QQ 邮箱授权码
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   jpa:
     hibernate:
       ddl-auto: none
