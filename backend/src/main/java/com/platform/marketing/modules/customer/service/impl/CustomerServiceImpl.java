@@ -3,12 +3,19 @@ package com.platform.marketing.modules.customer.service.impl;
 import com.platform.marketing.modules.customer.entity.Customer;
 import com.platform.marketing.modules.customer.repository.CustomerRepository;
 import com.platform.marketing.modules.customer.service.CustomerService;
+import com.platform.marketing.dto.CustomerImportDto;
+import com.platform.marketing.util.ExcelUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -63,5 +70,24 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
         customer.setStatus(status);
         customerRepository.save(customer);
+    }
+
+    @Override
+    @Transactional
+    public void importCustomers(MultipartFile file) {
+        try (InputStream inputStream = file.getInputStream()) {
+            List<CustomerImportDto> importedList = ExcelUtils.parseExcel(inputStream);
+            List<Customer> customers = importedList.stream().map(dto -> {
+                Customer customer = new Customer();
+                customer.setName(dto.getName());
+                customer.setPhone(dto.getPhone());
+                customer.setEmail(dto.getEmail());
+                customer.setRemark(dto.getRemark());
+                return customer;
+            }).collect(Collectors.toList());
+            customerRepository.saveAll(customers);
+        } catch (IOException e) {
+            throw new RuntimeException("导入失败：" + e.getMessage());
+        }
     }
 }
