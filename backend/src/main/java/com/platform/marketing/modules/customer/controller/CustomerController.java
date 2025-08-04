@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/v1/customers")
@@ -65,5 +66,11 @@ public class CustomerController {
         }
         customerService.updateStatus(id, status);
         return ResponseEntity.success(null);
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<String> importCustomers(@RequestParam("file") MultipartFile file) {
+        customerService.importCustomers(file);
+        return ResponseEntity.success("导入成功");
     }
 }
