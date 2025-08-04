@@ -1,7 +1,8 @@
 package com.platform.marketing.config;
 
-import com.platform.marketing.auth.CustomPermissionEvaluator;
 import com.platform.marketing.auth.CustomMethodSecurityExpressionHandler;
+import com.platform.marketing.auth.CustomPermissionEvaluator;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
@@ -10,18 +11,16 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
-    private final CustomPermissionEvaluator permissionEvaluator;
-    private final CustomMethodSecurityExpressionHandler expressionHandler;
-
-    public MethodSecurityConfig(CustomPermissionEvaluator permissionEvaluator,
-                               CustomMethodSecurityExpressionHandler expressionHandler) {
-        this.permissionEvaluator = permissionEvaluator;
-        this.expressionHandler = expressionHandler;
+    @Bean
+    public CustomPermissionEvaluator customPermissionEvaluator() {
+        return new CustomPermissionEvaluator();
     }
 
     @Override
     protected CustomMethodSecurityExpressionHandler createExpressionHandler() {
-        expressionHandler.setPermissionEvaluator(permissionEvaluator);
+        CustomMethodSecurityExpressionHandler expressionHandler =
+                new CustomMethodSecurityExpressionHandler(customPermissionEvaluator());
+        expressionHandler.setPermissionEvaluator(customPermissionEvaluator());
         return expressionHandler;
     }
 }

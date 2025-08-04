@@ -33,13 +33,5 @@ export function getKeywordSearchCount(keyword) {
     method: 'get',
     params: { keyword }
   });
-}
 
-// 获取关键词搜索量
-export function getKeywordSearchCount(keyword) {
-  return request({
-    url: '/v1/dashboard/keyword-search-count',
-    method: 'get',
-    params: { keyword }
-  });
 }
