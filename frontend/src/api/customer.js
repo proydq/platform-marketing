@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 
 /**
  * 客户分页查询
@@ -6,10 +6,10 @@ import request from '@/utils/request'
  */
 export function getCustomerList(params) {
   return request({
-    url: '/v1/customers',
-    method: 'get',
-    params
-  })
+    url: "/v1/customers",
+    method: "get",
+    params,
+  });
 }
 
 /**
@@ -18,10 +18,10 @@ export function getCustomerList(params) {
  */
 export function createCustomer(data) {
   return request({
-    url: '/v1/customers',
-    method: 'post',
-    data
-  })
+    url: "/v1/customers",
+    method: "post",
+    data,
+  });
 }
 
 /**
@@ -31,9 +31,9 @@ export function createCustomer(data) {
 export function updateCustomer(id, data) {
   return request({
     url: `/v1/customers/${id}`,
-    method: 'put',
-    data
-  })
+    method: "put",
+    data,
+  });
 }
 
 /**
@@ -43,8 +43,8 @@ export function updateCustomer(id, data) {
 export function getCustomer(id) {
   return request({
     url: `/v1/customers/${id}`,
-    method: 'get'
-  })
+    method: "get",
+  });
 }
 
 /**
@@ -54,8 +54,8 @@ export function getCustomer(id) {
 export function deleteCustomer(id) {
   return request({
     url: `/v1/customers/${id}`,
-    method: 'delete'
-  })
+    method: "delete",
+  });
 }
 
 /**
@@ -64,8 +64,22 @@ export function deleteCustomer(id) {
  */
 export function updateCustomerStatus(data) {
   return request({
-    url: '/v1/customers/update-status',
-    method: 'post',
-    data
-  })
+    url: "/v1/customers/update-status",
+    method: "post",
+    data,
+  });
+}
+// 导入接口
+export function importCustomers(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return request({
+    url: "/v1/customers/import",
+    method: "post",
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }

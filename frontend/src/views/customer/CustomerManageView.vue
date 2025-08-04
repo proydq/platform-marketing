@@ -2,22 +2,29 @@
   <div class="page-wrapper">
     <el-card class="card-container">
       <div class="action-buttons">
-        <el-input
-          v-model="keyword"
-          placeholder="搜索客户"
-          clearable
-          style="width: 240px"
-          @keyup.enter="fetchData"
-        />
-        <el-button type="primary" @click="openAdd">新增客户</el-button>
-        <el-upload
-          action="#"
-          :show-file-list="false"
-          accept=".csv,.xlsx"
-          :before-upload="handleCustomerImport"
-        >
-          <el-button type="primary">导入客户</el-button>
-        </el-upload>
+        <!-- 左侧：搜索 -->
+        <div class="left-search">
+          <el-input
+            v-model="keyword"
+            placeholder="搜索客户"
+            clearable
+            style="width: 240px"
+            @keyup.enter="fetchData"
+          />
+        </div>
+
+        <!-- 右侧：按钮 -->
+        <div class="right-buttons">
+          <el-button type="primary" @click="openAdd">新增客户</el-button>
+          <el-upload
+            action="#"
+            :show-file-list="false"
+            accept=".csv,.xlsx"
+            :before-upload="handleCustomerImport"
+          >
+            <el-button type="primary">导入客户</el-button>
+          </el-upload>
+        </div>
       </div>
 
       <el-table
@@ -129,6 +136,7 @@ import {
   updateCustomer,
   deleteCustomer,
   updateCustomerStatus,
+  importCustomers,
 } from "@/api/customer";
 
 const list = ref([]);
@@ -222,9 +230,15 @@ function changeStatus(row) {
     .catch(() => ElMessage.error("更新失败"));
 }
 
-const handleCustomerImport = (file) => {
-  console.log("📦 导入客户文件名：", file.name);
-  return false; // 阻止自动上传，保留文件解析能力
+const handleCustomerImport = async (file) => {
+  try {
+    await importCustomers(file);
+    ElMessage.success("客户导入成功");
+    fetchData(); // 导入后刷新列表
+  } catch (err) {
+    ElMessage.error("导入失败：" + (err.message || ""));
+  }
+  return false; // 阻止默认上传
 };
 </script>
 
@@ -254,10 +268,14 @@ const handleCustomerImport = (file) => {
 
 .action-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* 左右分布 */
   align-items: center;
   margin-bottom: 16px;
-  gap: 16px;
+}
+
+.right-buttons {
+  display: flex;
+  gap: 16px; /* 按钮之间间距 */
 }
 
 .el-table {

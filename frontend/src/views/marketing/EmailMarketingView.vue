@@ -4,7 +4,7 @@
       <el-tab-pane label="模板管理" name="templates">
         <div class="action-buttons">
           <el-button type="primary" @click="openTemplateDialog(false)">
-            <span class="icon">➕</span>新建模板
+            新建模板
           </el-button>
         </div>
         <el-card class="chart-container">
