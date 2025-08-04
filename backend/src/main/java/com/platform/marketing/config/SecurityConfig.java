@@ -27,6 +27,7 @@ public class SecurityConfig {
     @Lazy
     private UserDetailsServiceImpl userDetailsService;
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
