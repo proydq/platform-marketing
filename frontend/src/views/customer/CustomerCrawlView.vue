@@ -73,9 +73,9 @@
 
     <!-- 表单抽屉 -->
     <el-drawer v-model="formDrawer" title="新建抓取任务" size="40%">
-      <el-form :model="form" label-width="90px">
-        <el-form-item label="任务名称">
-          <el-input v-model="form.name" />
+      <el-form :model="form" label-width="90px" :rules="rules" ref="formRef">
+        <el-form-item label="任务名称" prop="taskName">
+          <el-input v-model="form.taskName" placeholder="请输入任务名称" />
         </el-form-item>
         <el-form-item label="平台选择">
           <el-select v-model="form.platform" multiple style="width: 100%">
@@ -146,13 +146,18 @@ const previewData = ref([]);
 const formDrawer = ref(false);
 const previewDialog = ref(false);
 
+const formRef = ref();
+const rules = {
+  taskName: [{ required: true, message: '请输入任务名称', trigger: 'blur' }]
+};
+
 const platforms = [
   { label: "LinkedIn", value: "linkedin" },
   { label: "Facebook", value: "facebook" },
 ];
 
 const form = ref({
-  name: "",
+  taskName: "",
   platform: [],
   type: "customer",
   cycle: "once",
@@ -174,7 +179,7 @@ function openCreate() {
   editing.value = false;
   currentId.value = null;
   form.value = {
-    name: "",
+    taskName: "",
     platform: [],
     type: "customer",
     cycle: "once",
@@ -188,7 +193,7 @@ function editRow(row) {
   editing.value = true;
   currentId.value = row.id;
   form.value = {
-    name: row.name,
+    taskName: row.name,
     platform: Array.isArray(row.platform)
       ? row.platform
       : String(row.platform || "")
@@ -212,8 +217,13 @@ async function removeRow(row) {
 }
 
 async function saveTask() {
+  try {
+    await formRef.value.validate();
+  } catch (err) {
+    return;
+  }
   const payload = {
-    name: form.value.name,
+    name: form.value.taskName,
     platform: form.value.platform.join(","), // 改成字符串
     fields: form.value.fields.join(","), // 改成字符串
     type: form.value.type,
