@@ -220,7 +220,6 @@ function changeStatus(row) {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 16px;
   box-sizing: border-box;
   background-color: #f5f7fa;
 }

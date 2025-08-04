@@ -212,8 +212,7 @@ async function deleteSelected() {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 16px;
-  background-color: #f5f7fa;
+  background-color: #fff;
   box-sizing: border-box;
 }
 

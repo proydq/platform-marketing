@@ -246,10 +246,9 @@ function tagType(status) {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 16px;
   gap: 16px;
   box-sizing: border-box;
-  background-color: #f5f7fa;
+  background-color: #fff;
 }
 
 .chart-container {

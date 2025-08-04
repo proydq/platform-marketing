@@ -247,7 +247,7 @@ function sendNow() {
   flex-direction: column;
   min-height: 100vh;
   padding: 24px;
-  background-color: #f6f9fc;
+  background-color: #fff;
   box-sizing: border-box;
 }
 

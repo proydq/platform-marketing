@@ -1,7 +1,9 @@
 <template>
   <el-card class="page-card">
     <div class="toolbar mb-4 text-right gap-2">
-      <el-button type="primary" icon="Plus" @click="openAddDialog">新增权限</el-button>
+      <el-button type="primary" icon="Plus" @click="openAddDialog"
+        >新增权限</el-button
+      >
     </div>
 
     <el-tree
@@ -17,8 +19,19 @@
         <span class="tree-node">
           {{ data.name }}（{{ data.code }}）
           <span class="actions">
-            <el-button type="text" size="small" @click.stop="openEditDialog(data)">编辑</el-button>
-            <el-button type="text" size="small" style="color:red" @click.stop="remove(data.id)">删除</el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click.stop="openEditDialog(data)"
+              >编辑</el-button
+            >
+            <el-button
+              type="text"
+              size="small"
+              style="color: red"
+              @click.stop="remove(data.id)"
+              >删除</el-button
+            >
           </span>
         </span>
       </template>
@@ -26,7 +39,7 @@
 
     <el-dialog class="page-dialog" v-model="dialogVisible" width="500px">
       <template #title>
-        <strong>{{ isEdit ? '编辑权限' : '新增权限' }}</strong>
+        <strong>{{ isEdit ? "编辑权限" : "新增权限" }}</strong>
       </template>
       <el-form class="dialog-form" :model="form" label-width="100px">
         <el-form-item label="权限名称">
@@ -43,8 +56,17 @@
           </el-select>
         </el-form-item>
         <el-form-item label="模块">
-          <el-select v-model="form.module" placeholder="请选择" style="width: 100%">
-            <el-option v-for="m in moduleOptions" :key="m.value" :label="m.label" :value="m.value" />
+          <el-select
+            v-model="form.module"
+            placeholder="请选择"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="m in moduleOptions"
+              :key="m.value"
+              :label="m.label"
+              :value="m.value"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="上级权限">
@@ -61,81 +83,90 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="saving" @click="save">保存</el-button>
+        <el-button type="primary" :loading="saving" @click="save"
+          >保存</el-button
+        >
       </template>
     </el-dialog>
   </el-card>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref, reactive, onMounted } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   fetchPermissionTree,
   createPermission,
   updatePermission,
-  deletePermission
-} from '../../api/permission'
-import '@/assets/css/permission-ui-enhanced.css'
+  deletePermission,
+} from "../../api/permission";
+import "@/assets/css/permission-ui-enhanced.css";
 
-const treeData = ref([])
-const defaultProps = { label: 'name', children: 'children' }
-const dialogVisible = ref(false)
-const isEdit = ref(false)
-const saving = ref(false)
-const treeRef = ref()
-const moduleOptions = ref([])
+const treeData = ref([]);
+const defaultProps = { label: "name", children: "children" };
+const dialogVisible = ref(false);
+const isEdit = ref(false);
+const saving = ref(false);
+const treeRef = ref();
+const moduleOptions = ref([]);
 
 const form = reactive({
-  id: '',
-  name: '',
-  code: '',
-  type: '',
-  module: '',
-  parent_id: ''
-})
+  id: "",
+  name: "",
+  code: "",
+  type: "",
+  module: "",
+  parent_id: "",
+});
 
-onMounted(loadTree)
+onMounted(loadTree);
 
 function loadTree() {
-  fetchPermissionTree().then(res => {
-    const data = res.data || []
-    treeData.value = data.map(m => ({ ...m, disabled: true }))
-    moduleOptions.value = data.map(m => ({ label: m.name, value: m.module }))
-  })
+  fetchPermissionTree().then((res) => {
+    const data = res.data || [];
+    treeData.value = data.map((m) => ({ ...m, disabled: true }));
+    moduleOptions.value = data.map((m) => ({ label: m.name, value: m.module }));
+  });
 }
 
 function openAddDialog() {
-  isEdit.value = false
-  Object.assign(form, { id: '', name: '', code: '', type: '', module: '', parent_id: '' })
-  dialogVisible.value = true
+  isEdit.value = false;
+  Object.assign(form, {
+    id: "",
+    name: "",
+    code: "",
+    type: "",
+    module: "",
+    parent_id: "",
+  });
+  dialogVisible.value = true;
 }
 
 function openEditDialog(data) {
-  isEdit.value = true
-  Object.assign(form, data)
-  dialogVisible.value = true
+  isEdit.value = true;
+  Object.assign(form, data);
+  dialogVisible.value = true;
 }
 
 function save() {
-  saving.value = true
-  const fn = isEdit.value ? updatePermission : createPermission
+  saving.value = true;
+  const fn = isEdit.value ? updatePermission : createPermission;
   fn(form)
     .then(() => {
-      ElMessage.success('保存成功')
-      dialogVisible.value = false
-      loadTree()
+      ElMessage.success("保存成功");
+      dialogVisible.value = false;
+      loadTree();
     })
-    .finally(() => (saving.value = false))
+    .finally(() => (saving.value = false));
 }
 
 function remove(id) {
-  ElMessageBox.confirm('确认删除该权限？', '提示', { type: 'warning' })
+  ElMessageBox.confirm("确认删除该权限？", "提示", { type: "warning" })
     .then(() => deletePermission(id))
     .then(() => {
-      ElMessage.success('删除成功')
-      loadTree()
-    })
+      ElMessage.success("删除成功");
+      loadTree();
+    });
 }
 </script>
 
