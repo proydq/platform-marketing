@@ -129,5 +129,16 @@
     "remember": "Remember me",
     "forgot": "Forgot password?",
     "submit": "Login"
+  },
+  "email": {
+    "subject": "Subject",
+    "content": "Content",
+    "recipients": "Recipients",
+    "uploadCSV": "Upload CSV",
+    "send": "Send Email",
+    "test": "Send Test Email",
+    "history": "Send Records",
+    "insertImage": "Insert Image",
+    "requiredField": "Required field cannot be empty"
   }
 }

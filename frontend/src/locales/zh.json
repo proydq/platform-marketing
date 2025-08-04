@@ -129,5 +129,16 @@
     "remember": "记住我",
     "forgot": "忘记密码？",
     "submit": "登录"
+  },
+  "email": {
+    "subject": "邮件主题",
+    "content": "邮件内容",
+    "recipients": "收件人",
+    "uploadCSV": "上传CSV",
+    "send": "发送邮件",
+    "test": "发送测试邮件",
+    "history": "发送记录",
+    "insertImage": "插入图片",
+    "requiredField": "必填项不能为空"
   }
 }
