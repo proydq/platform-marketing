@@ -10,6 +10,14 @@
           @keyup.enter="fetchData"
         />
         <el-button type="primary" @click="openAdd">新增客户</el-button>
+        <el-upload
+          action="#"
+          :show-file-list="false"
+          accept=".csv,.xlsx"
+          :before-upload="handleCustomerImport"
+        >
+          <el-button type="primary">导入客户</el-button>
+        </el-upload>
       </div>
 
       <el-table
@@ -213,6 +221,11 @@ function changeStatus(row) {
     .then(() => ElMessage.success("状态已更新"))
     .catch(() => ElMessage.error("更新失败"));
 }
+
+const handleCustomerImport = (file) => {
+  console.log("📦 导入客户文件名：", file.name);
+  return false; // 阻止自动上传，保留文件解析能力
+};
 </script>
 
 <style scoped>
