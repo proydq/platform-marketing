@@ -9,15 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.17",
-    "vue-router": "^4.2.5",
-    "pinia": "^2.1.7",
-    "element-plus": "^2.7.0",
-    "vue-i18n": "^9.9.0",
+    "axios": "^1.11.0",
     "echarts": "^5.5.0",
+    "element-plus": "^2.7.0",
+    "papaparse": "^5.5.3",
+    "pinia": "^2.1.7",
+    "quill": "^2.0.3",
+    "vue": "^3.5.17",
     "vue-echarts": "^6.4.0",
-    "papaparse": "^5.4.1",
-    "vue3-quill": "^0.2.6"
+    "vue-i18n": "^9.9.0",
+    "vue-router": "^4.2.5",
+    "vue3-quill": "^0.2.9"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.0",
