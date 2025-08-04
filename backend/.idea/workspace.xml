@@ -6,24 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserInfoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SuperAdminInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SuperAdminInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserInfoDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserInfoDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserRoleMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserRoleMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RoleMenuRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RoleMenuRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/RoleMenuService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/RoleMenuService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/RoleMenuServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/RoleMenuServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/api/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/LoginForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/layouts/MainLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/layouts/MainLayout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/views/system/MenuManagement.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/system/MenuManagement.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerManageView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerManageView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
