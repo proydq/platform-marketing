@@ -25,6 +25,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import java.time.LocalDateTime;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import java.time.LocalDateTime;
+
 @Service
 public class EmailServiceImpl implements EmailService {
 
@@ -35,6 +40,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Value("${spring.mail.username}")
     private String fromEmail;
+
 
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
