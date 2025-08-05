@@ -140,10 +140,5 @@
     "history": "Send Records",
     "insertImage": "Insert Image",
     "requiredField": "Required field cannot be empty"
-  },
-  "dashboard": {
-    "keyword": "Keyword",
-    "search": "Search",
-    "keywordSearchCount": "Keyword Search Volume"
   }
 }

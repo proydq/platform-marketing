@@ -1,16 +1,20 @@
 <template>
+  <el-button type="primary" @click="dialogVisible = true">
+    {{ t("email.send") }}
+  </el-button>
   <div class="email-marketing">
-    <el-button type="primary" @click="dialogVisible = true">
-      {{ t("email.send") }}
-    </el-button>
-
     <el-dialog
       v-model="dialogVisible"
       :title="t('email.send')"
       width="600px"
       align-center
     >
-      <el-form ref="formRef" :model="form" label-width="100px" class="dialog-form">
+      <el-form
+        ref="formRef"
+        :model="form"
+        label-width="100px"
+        class="dialog-form"
+      >
         <el-form-item
           :label="t('email.subject')"
           prop="subject"
@@ -56,17 +60,17 @@
     <el-card class="history-card">
       <el-table :data="records" style="width: 100%">
         <el-table-column prop="subject" :label="t('email.subject')" />
-        <el-table-column prop="sendTime" label="Send Time" width="180" />
+        <el-table-column prop="content" :label="t('email.content')" />
+        <el-table-column prop="sentAt" label="Send Time" />
         <el-table-column
-          prop="recipients"
+          prop="toList"
           :label="t('email.recipients')"
-          width="120"
+          width="300"
         >
           <template #default="{ row }">
-            {{ Array.isArray(row.recipients) ? row.recipients.length : row.recipients }}
+            {{ Array.isArray(row.toList) ? row.toList.join(", ") : row.toList }}
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="Status" width="120" />
       </el-table>
 
       <div class="text-right mt-4">
@@ -86,22 +90,27 @@
 import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
-import $api from "@/utils/request";
+import {
+  uploadRecipientsCSV,
+  sendEmail as sendEmailAPI,
+  sendTestEmail as sendTestEmailAPI,
+  getEmailRecords,
+} from "@/api/email";
 
 const { t } = useI18n();
 const formRef = ref();
 const dialogVisible = ref(false);
 const form = ref({ subject: "", content: "", recipients: [] });
+
 const records = ref([]);
 const total = ref(0);
 const page = ref(1);
 const pageSize = 10;
 
+// 获取历史记录
 async function fetchHistory() {
   try {
-    const res = await $api.get("/email/history", {
-      params: { page: page.value, size: pageSize },
-    });
+    const res = await getEmailRecords({ page: page.value, size: pageSize });
     const data = res?.data || res;
     records.value = data?.rows || data?.list || data || [];
     total.value = data?.total || records.value.length;
@@ -113,14 +122,11 @@ async function fetchHistory() {
 
 onMounted(fetchHistory);
 
+// 上传 CSV
 async function handleCsvUpload({ file, onError, onSuccess }) {
-  const formData = new FormData();
-  formData.append("file", file);
   try {
-    const res = await $api.post("/email/uploadRecipients", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    form.value.recipients = res?.recipients || [];
+    const res = await uploadRecipientsCSV(file);
+    form.value.recipients = res?.data?.emails || [];
     ElMessage.success(t("email.uploadCSV") + " success");
     onSuccess && onSuccess(res);
   } catch (err) {
@@ -128,14 +134,14 @@ async function handleCsvUpload({ file, onError, onSuccess }) {
     onError && onError(err);
   }
 }
-
+// 发送正式邮件
 async function sendEmail() {
   await formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await $api.post("/email/send", {
+    await sendEmailAPI({
       subject: form.value.subject,
       content: form.value.content,
-      recipients: form.value.recipients,
+      toList: form.value.recipients.filter((e) => e && e !== "email"), // 去掉表头
     });
     ElMessage.success(t("email.send") + " success");
     dialogVisible.value = false;
@@ -143,28 +149,38 @@ async function sendEmail() {
   });
 }
 
+// 发送测试邮件
 async function sendTestEmail() {
-  await $api.post("/email/test", {
+  await sendTestEmailAPI({
     subject: form.value.subject,
     content: form.value.content,
   });
   ElMessage.success(t("email.test") + " success");
 }
 
+// 分页
 function handlePageChange(p) {
   page.value = p;
   fetchHistory();
 }
 </script>
+
 <style scoped>
 .email-marketing {
-  padding: 24px;
-  max-width: 800px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  gap: 16px;
+  box-sizing: border-box;
+  background-color: #fff;
 }
 
 .history-card {
-  margin-top: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 .dialog-form {

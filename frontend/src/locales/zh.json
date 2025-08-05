@@ -140,10 +140,5 @@
     "history": "发送记录",
     "insertImage": "插入图片",
     "requiredField": "必填项不能为空"
-  },
-  "dashboard": {
-    "keyword": "关键词",
-    "search": "搜索",
-    "keywordSearchCount": "关键词搜索量"
   }
 }

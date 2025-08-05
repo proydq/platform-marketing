@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
 import StatCard from "@/components/StatCard.vue";
 import LineChart from "@/components/charts/LineChart.vue";
 
@@ -10,7 +9,6 @@ import {
   getCustomerTrend,
   getRecentTasks,
   getTaskDetail,
-  getKeywordSearchCount,
 } from "@/api/dashboard";
 
 const stats = ref({});
@@ -20,10 +18,6 @@ const currentTask = ref({});
 const chartTab = ref("send");
 const sendTrend = ref([]);
 const customerTrend = ref([]);
-
-const keyword = ref("");
-const keywordStat = ref(null);
-const { t } = useI18n();
 
 onMounted(() => {
   getDashboardStats().then((res) => (stats.value = res));
@@ -38,13 +32,6 @@ function viewTask(row) {
     drawerVisible.value = true;
   });
 }
-
-function searchKeyword() {
-  if (!keyword.value) return;
-  getKeywordSearchCount(keyword.value).then((res) => {
-    keywordStat.value = res.data;
-  });
-}
 </script>
 
 <template>
@@ -54,22 +41,6 @@ function searchKeyword() {
       <StatCard title="今日邮件发送" :value="stats.emailsSent" />
       <StatCard title="邮件打开率" :value="stats.openRate + '%'" />
       <StatCard title="运行中任务" :value="stats.runningTasks" />
-      <StatCard
-        v-if="keywordStat"
-        :title="`${t('dashboard.keywordSearchCount')} - ${keywordStat.keyword}`"
-        :value="keywordStat.count"
-      />
-    </div>
-
-    <div class="keyword-search">
-      <el-input
-        v-model="keyword"
-        :placeholder="t('dashboard.keyword')"
-        class="keyword-input"
-      />
-      <el-button type="primary" @click="searchKeyword">
-        {{ t('dashboard.search') }}
-      </el-button>
     </div>
 
     <el-card class="chart-container">
@@ -133,15 +104,3 @@ function searchKeyword() {
     </el-drawer>
   </div>
 </template>
-
-<style scoped>
-.keyword-search {
-  margin: 20px 0;
-  display: flex;
-  gap: 10px;
-  max-width: 400px;
-}
-.keyword-input {
-  flex: 1;
-}
-</style>

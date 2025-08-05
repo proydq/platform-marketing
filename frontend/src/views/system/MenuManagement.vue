@@ -23,8 +23,8 @@
         >
           <el-table-column prop="name" label="菜单名" />
           <el-table-column prop="path" label="路径" />
-          <el-table-column prop="type" label="类型" width="100" />
-          <el-table-column prop="status" label="状态" width="100">
+          <el-table-column prop="type" label="类型" />
+          <el-table-column prop="status" label="状态">
             <template #default="{ row }">
               <el-switch
                 v-model="row.status"
@@ -35,7 +35,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="240">
+          <el-table-column label="操作" width="350">
             <template #default="{ row }">
               <el-button size="small" @click="openEditDialog(row)"
                 >编辑</el-button
