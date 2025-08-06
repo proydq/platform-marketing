@@ -1,6 +1,5 @@
 package com.platform.marketing.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -12,15 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component // ✅ 必须添加注解，确保 Spring 能扫描
+/**
+ * Filter that parses JWT token and sets Authentication in the security context.
+ */
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    @Autowired
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        System.out.println("✅ JwtAuthenticationFilter 初始化完成");
     }
 
     @Override

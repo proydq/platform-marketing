@@ -5,10 +5,143 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/views/marketing/EmailMarketingView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/marketing/EmailMarketingView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/BackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/BackendApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/CustomMethodSecurityExpressionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/CustomMethodSecurityExpressionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/CustomMethodSecurityExpressionRoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/CustomMethodSecurityExpressionRoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/auth/UserDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/MethodSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/MethodSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SuperAdminInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/config/SuperAdminInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/PermissionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/PermissionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/RoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/UserRoleMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/controller/UserRoleMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/dto/DashboardMetricsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/dto/DashboardMetricsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/dto/RecentTaskDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/dto/RecentTaskDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/dto/TrendPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/dto/TrendPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/entity/DashboardMetrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/entity/DashboardMetrics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/entity/RecentTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/entity/RecentTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/repository/DashboardMetricsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/repository/DashboardMetricsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/repository/RecentTaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/repository/RecentTaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/service/DashboardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dashboard/service/DashboardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/CustomerImportDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/CustomerImportDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/MenuTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/MenuTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/PermissionTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/PermissionTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/RoleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/dto/RoleDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/Permission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/SysRoleMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/SysRoleMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/SysRoleMenuId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/SysRoleMenuId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/SysUserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/SysUserRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/UserRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/UserRoleId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/entity/UserRoleId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/controller/BehaviorLogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/controller/BehaviorLogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/entity/BehaviorLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/entity/BehaviorLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/repository/BehaviorLogRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/repository/BehaviorLogRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/service/BehaviorLogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/service/BehaviorLogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/service/impl/BehaviorLogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/behaviorlog/service/impl/BehaviorLogServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/controller/MarketingCampaignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/controller/MarketingCampaignController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/dto/MarketingCampaignDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/dto/MarketingCampaignDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/dto/UpdateCampaignStatusDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/dto/UpdateCampaignStatusDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/entity/MarketingCampaign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/entity/MarketingCampaign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/repository/MarketingCampaignRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/repository/MarketingCampaignRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/service/MarketingCampaignService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/service/MarketingCampaignService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/service/impl/MarketingCampaignServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/campaign/service/impl/MarketingCampaignServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/controller/ContentGenerationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/controller/ContentGenerationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/dto/ContentGenerationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/dto/ContentGenerationDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/entity/ContentGeneration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/entity/ContentGeneration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/repository/ContentGenerationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/repository/ContentGenerationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/service/ContentGenerationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/service/ContentGenerationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/service/impl/ContentGenerationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/contentgeneration/service/impl/ContentGenerationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/entity/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/repository/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/service/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/service/impl/CustomerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customer/service/impl/CustomerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/controller/CustomerCollectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/controller/CustomerCollectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/entity/CustomerCollect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/entity/CustomerCollect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/repository/CustomerCollectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/repository/CustomerCollectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/service/CustomerCollectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/service/CustomerCollectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/service/impl/CustomerCollectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/customercollect/service/impl/CustomerCollectServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/dashboard/controller/DashboardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/dashboard/dto/KeywordSearchCountDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/dashboard/service/DashboardService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/dashboard/service/impl/DashboardServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/controller/EmailCampaignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/controller/EmailCampaignController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/controller/EmailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/controller/EmailController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/dto/EmailSendRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/dto/EmailSendRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/entity/EmailCampaignRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/entity/EmailCampaignRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/entity/EmailCampaignTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/entity/EmailCampaignTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/entity/EmailSendRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/entity/EmailSendRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/repository/EmailCampaignRecordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/repository/EmailCampaignRecordRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/repository/EmailCampaignTemplateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/repository/EmailCampaignTemplateRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/EmailCampaignRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/EmailCampaignRecordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/EmailCampaignTemplateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/EmailCampaignTemplateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/impl/EmailCampaignRecordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/impl/EmailCampaignRecordServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/impl/EmailCampaignTemplateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/impl/EmailCampaignTemplateServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/impl/EmailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/email/service/impl/EmailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/controller/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/controller/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/entity/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/entity/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/repository/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/repository/NotificationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/service/impl/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/notification/service/impl/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/controller/SocialAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/controller/SocialAccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/controller/SocialPushLogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/controller/SocialPushLogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/entity/SocialAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/entity/SocialAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/entity/SocialPushLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/entity/SocialPushLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/repository/SocialAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/repository/SocialAccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/repository/SocialPushLogRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/repository/SocialPushLogRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/service/SocialAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/service/SocialAccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/service/SocialPushLogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/service/SocialPushLogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/service/impl/SocialAccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/service/impl/SocialAccountServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/service/impl/SocialPushLogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/modules/social/service/impl/SocialPushLogServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/MenuRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/MenuRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/PermissionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/PermissionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/RoleMenuRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/RoleMenuRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/RolePermissionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/RolePermissionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/UserRoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/repository/UserRoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/MenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/MenuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/PermissionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/PermissionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/RoleMenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/RoleMenuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/RoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/MenuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/MenuServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/PermissionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/PermissionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/RoleMenuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/RoleMenuServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/controller/SystemSettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/controller/SystemSettingsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/dto/BasicSettingsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/dto/BasicSettingsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/dto/NotifySettingsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/dto/NotifySettingsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/dto/SecuritySettingsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/dto/SecuritySettingsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/dto/SystemSettingsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/dto/SystemSettingsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/entity/SystemSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/entity/SystemSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/repository/SystemSettingsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/repository/SystemSettingsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/service/SystemSettingsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/service/SystemSettingsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/service/impl/SystemSettingsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/system/service/impl/SystemSettingsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/controller/ScheduledTaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/controller/ScheduledTaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/dto/ScheduledTaskDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/dto/ScheduledTaskDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/entity/ScheduledTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/entity/ScheduledTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/repository/ScheduledTaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/repository/ScheduledTaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/service/ScheduledTaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/service/ScheduledTaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/service/impl/ScheduledTaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/task/service/impl/ScheduledTaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/platform/marketing/util/ExcelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/platform/marketing/util/ExcelUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/PermissionMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/PermissionMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/platform/marketing/config/MethodSecurityConfig.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,28 +162,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/2025项目/Beijing-Language-and-Culture-University3-main/Beijing-Language-and-Culture-University3/backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.language.Kotlin&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;b43fdd98b1fd705ae4c3a10cf25aad8a&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "E:/bt_backend_v3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.language.Kotlin",
+    "spring.configuration.checksum": "b43fdd98b1fd705ae4c3a10cf25aad8a",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="backend" />
@@ -71,6 +204,7 @@
       <workItem from="1752660824520" duration="23139000" />
       <workItem from="1753088557414" duration="18209000" />
       <workItem from="1753666575527" duration="2967000" />
+      <workItem from="1754366071504" duration="6350000" />
     </task>
     <servers />
   </component>

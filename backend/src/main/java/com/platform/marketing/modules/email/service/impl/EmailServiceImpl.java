@@ -18,12 +18,6 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -36,8 +30,6 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
     private final List<EmailSendRecord> records = new ArrayList<>();
 
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$");
-
     @Value("${spring.mail.username}")
     private String fromEmail;
 
@@ -48,11 +40,6 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendEmail(String subject, String content, List<String> toList) {
-        for (String recipient : toList) {
-            if (!EMAIL_PATTERN.matcher(recipient).matches()) {
-                throw new IllegalArgumentException("Invalid email address: " + recipient);
-            }
-        }
         try {
             MimeMessage message = mailSender.createMimeMessage();
             message.setFrom(fromEmail);
