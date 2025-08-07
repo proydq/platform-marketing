@@ -7,6 +7,8 @@
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/customer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/com/platform/marketing/config/MethodSecurityConfig.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +72,7 @@
       <workItem from="1752660824520" duration="23139000" />
       <workItem from="1753088557414" duration="18209000" />
       <workItem from="1753666575527" duration="2967000" />
-      <workItem from="1754366071504" duration="7709000" />
+      <workItem from="1754366071504" duration="11657000" />
     </task>
     <servers />
   </component>
