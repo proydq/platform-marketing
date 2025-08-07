@@ -21,6 +21,7 @@ import MenuManagement from "../views/system/MenuManagement.vue";
 const CustomerListView = () => import("../views/customer/CustomerListView.vue");
 const CustomerAcquisitionView = () => import("../views/customer/CustomerAcquisitionView.vue");
 const CustomerAnalyticsView = () => import("../views/customer/CustomerAnalyticsView.vue");
+const ProductListView = () => import("../views/product/ProductListView.vue");
 const routes = [
   { path: "/login", name: "Login", component: LoginView },
   {
@@ -95,6 +96,12 @@ const routes = [
         component: CampaignCenterView,
       },
       
+      {
+        path: "product",
+        name: "Product",
+        component: ProductListView,
+        meta: { title: "product.name", requiresAuth: true, permissions: ["product:list"] }
+      },
       // 其他功能模块
       {
         path: "task-schedule",
