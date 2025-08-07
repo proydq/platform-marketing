@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout 30 npm run build)",
+      "Bash(mvn clean:*)"
     ],
     "deny": []
   }
