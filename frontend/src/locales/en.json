@@ -140,5 +140,16 @@
     "history": "Send Records",
     "insertImage": "Insert Image",
     "requiredField": "Required field cannot be empty"
+  },
+  "product": {
+    "name": "Product Name",
+    "category": "Category",
+    "priceUSD": "Price (USD)",
+    "priceCNY": "Price (CNY)",
+    "priceEUR": "Price (EUR)",
+    "specPdf": "Specification PDF",
+    "imageList": "Product Images",
+    "videoUrl": "Video URL",
+    "tags": "Tags"
   }
 }

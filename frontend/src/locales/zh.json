@@ -140,5 +140,16 @@
     "history": "发送记录",
     "insertImage": "插入图片",
     "requiredField": "必填项不能为空"
+  },
+  "product": {
+    "name": "产品名",
+    "category": "分类",
+    "priceUSD": "美元价格",
+    "priceCNY": "人民币价格",
+    "priceEUR": "欧元价格",
+    "specPdf": "PDF规格书",
+    "imageList": "产品图片",
+    "videoUrl": "视频链接",
+    "tags": "标签"
   }
 }
