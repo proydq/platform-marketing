@@ -1,74 +1,91 @@
 <template>
-  <div class="page-wrapper">
-    <el-card class="task-card">
-      <el-row class="action-buttons" justify="space-between" align="middle">
-        <el-space>
-          <el-button type="primary" @click="openCreate"> 新增任务 </el-button>
-          <el-button type="success" @click="showPreview"> 预览数据 </el-button>
-        </el-space>
-      </el-row>
-      <QuickCrawlForm />
-      <div class="task-table-wrapper">
-        <el-table
-          :data="tasks"
-          height="100%"
-          style="width: 100%"
-          stripe
-          size="small"
-        >
-          <el-table-column
-            prop="name"
-            label="任务名称"
-            min-width="160"
-            show-overflow-tooltip
-          />
-          <el-table-column prop="platform" label="平台" min-width="120">
-            <template #default="{ row }">
-              {{
-                Array.isArray(row.platform)
-                  ? row.platform.join(", ")
-                  : row.platform
-              }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="status"
-            label="状态"
-            width="120"
-            align="center"
-          >
-            <template #default="{ row }">
-              <el-tag :type="tagType(row.status)" size="small">{{
-                row.status
-              }}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="progress"
-            label="进度"
-            width="120"
-            align="center"
-          >
-            <template #default="{ row }">
-              <ProgressRing :percentage="row.progress" />
-            </template>
-          </el-table-column>
-          <el-table-column prop="createTime" label="创建时间" min-width="160" />
-          <el-table-column label="操作" width="160" align="center">
-            <template #default="scope">
-              <el-button type="text" @click="editRow(scope.row)"
-                >编辑</el-button
-              >
-              <el-button
-                type="text"
-                style="color: #f56c6c"
-                @click="removeRow(scope.row)"
-                >删除</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
+  <div class="crawl-container">
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>客户抓取</h1>
+          <p>管理并执行客户抓取任务</p>
+        </div>
+        <div class="header-actions">
+          <el-button type="primary" size="large" @click="openCreate">
+            <el-icon><Plus /></el-icon>
+            新增任务
+          </el-button>
+          <el-button size="large" @click="showPreview">
+            <el-icon><View /></el-icon>
+            预览数据
+          </el-button>
+        </div>
       </div>
+    </div>
+
+    <el-card class="task-card" shadow="hover">
+      <template #header>
+        <div class="task-header">
+          <div class="header-left">
+            <div class="header-icon">
+              <el-icon><List /></el-icon>
+            </div>
+            <div class="header-info">
+              <h3>抓取任务列表</h3>
+              <p>管理当前所有抓取任务</p>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <el-table :data="tasks" stripe style="width: 100%" size="small">
+        <el-table-column
+          prop="name"
+          label="任务名称"
+          min-width="160"
+          show-overflow-tooltip
+        />
+        <el-table-column prop="platform" label="平台" min-width="120">
+          <template #default="{ row }">
+            {{
+              Array.isArray(row.platform)
+                ? row.platform.join(', ')
+                : row.platform
+            }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          label="状态"
+          width="120"
+          align="center"
+        >
+          <template #default="{ row }">
+            <el-tag :type="tagType(row.status)" size="small">
+              {{ row.status }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="progress"
+          label="进度"
+          width="120"
+          align="center"
+        >
+          <template #default="{ row }">
+            <ProgressRing :percentage="row.progress" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="createTime" label="创建时间" min-width="160" />
+        <el-table-column label="操作" width="160" align="center">
+          <template #default="scope">
+            <el-button type="text" @click="editRow(scope.row)">编辑</el-button>
+            <el-button
+              type="text"
+              style="color: #f56c6c"
+              @click="removeRow(scope.row)"
+            >
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-card>
 
     <!-- 表单抽屉 -->
@@ -133,6 +150,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { Plus, View, List } from "@element-plus/icons-vue";
 import ProgressRing from "@/components/ProgressRing.vue";
 import {
   getCustomerList,
@@ -148,7 +166,7 @@ const previewDialog = ref(false);
 
 const formRef = ref();
 const rules = {
-  taskName: [{ required: true, message: '请输入任务名称', trigger: 'blur' }]
+  taskName: [{ required: true, message: "请输入任务名称", trigger: "blur" }],
 };
 
 const platforms = [
@@ -252,36 +270,132 @@ function tagType(status) {
 </script>
 
 <style scoped>
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  gap: 16px;
-  box-sizing: border-box;
-  background-color: #fff;
+.crawl-container {
+  padding: 24px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
+  position: relative;
 }
 
-.chart-container {
-  border-radius: 12px;
+.crawl-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.02) 0%,
+    rgba(118, 75, 162, 0.02) 100%
+  );
+  z-index: -1;
+}
+
+.page-header {
+  margin-bottom: 32px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.95) 100%
+  );
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.header-text h1 {
+  margin: 0 0 12px 0;
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+}
+
+.header-text p {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .task-card {
-  flex: 1;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.95) 100%
+  );
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.task-card:hover {
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.12);
+  transform: translateY(-2px);
+}
+
+.task-header {
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  align-items: center;
+  gap: 16px;
+  padding: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 12px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-.task-card .el-card__body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
+.header-icon .el-icon {
+  font-size: 18px;
 }
 
-.task-table-wrapper {
-  flex: 1;
-  overflow-y: auto;
+.header-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.header-info p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
 }
 </style>
+
