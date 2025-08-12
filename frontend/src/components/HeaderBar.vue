@@ -31,7 +31,7 @@ function changeLang(lang) {
 
 <template>
   <div class="header">
-    <h2 style="margin: 0; color: #333">{{ t(titleMap[route.path] || "") }}</h2>
+    <h2>{{ t(titleMap[route.path] || "") }}</h2>
     <div class="user-info">
       <el-badge :value="3" type="primary">
         <el-button type="text" size="large"
@@ -50,9 +50,7 @@ function changeLang(lang) {
         </template>
       </el-dropdown>
       <el-dropdown>
-        <div
-          style="display: flex; align-items: center; gap: 8px; cursor: pointer"
-        >
+        <div class="user-trigger">
           <el-avatar :src="store.currentUser?.avatar" />
           <span>{{ store.currentUser?.name }}</span>
         </div>
@@ -74,3 +72,40 @@ function changeLang(lang) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: var(--om-font-lg);
+  font-weight: var(--om-font-bold);
+  color: var(--om-text-primary);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-4);
+  color: var(--om-text-primary);
+}
+
+.lang-select {
+  cursor: pointer;
+}
+
+.icon {
+  font-size: var(--om-font-lg);
+}
+
+.user-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-2);
+  cursor: pointer;
+}
+</style>
