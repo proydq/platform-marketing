@@ -118,11 +118,11 @@ export function getCustomerSources() {
 
 /**
  * 获取采集任务列表
- * GET /api/v1/customer-acquisition/tasks
+ * GET /api/acquisition/tasks
  */
 export function getAcquisitionTasks(params) {
   return request({
-    url: "/api/v1/customer-acquisition/tasks",
+    url: "/api/acquisition/tasks",
     method: "get",
     params,
   });
@@ -130,22 +130,22 @@ export function getAcquisitionTasks(params) {
 
 /**
  * 获取采集任务详情
- * GET /api/v1/customer-acquisition/tasks/{id}
+ * GET /api/acquisition/tasks/{id}
  */
 export function getAcquisitionTask(id) {
   return request({
-    url: `/api/v1/customer-acquisition/tasks/${id}`,
+    url: `/api/acquisition/tasks/${id}`,
     method: "get",
   });
 }
 
 /**
  * 创建采集任务
- * POST /api/v1/customer-acquisition/tasks
+ * POST /api/acquisition/tasks
  */
 export function createAcquisitionTask(data) {
   return request({
-    url: "/api/v1/customer-acquisition/tasks",
+    url: "/api/acquisition/tasks",
     method: "post",
     data,
   });
@@ -153,11 +153,11 @@ export function createAcquisitionTask(data) {
 
 /**
  * 更新采集任务
- * PUT /api/v1/customer-acquisition/tasks/{id}
+ * PUT /api/acquisition/tasks/{id}
  */
 export function updateAcquisitionTask(id, data) {
   return request({
-    url: `/api/v1/customer-acquisition/tasks/${id}`,
+    url: `/api/acquisition/tasks/${id}`,
     method: "put",
     data,
   });
@@ -165,44 +165,44 @@ export function updateAcquisitionTask(id, data) {
 
 /**
  * 删除采集任务
- * DELETE /api/v1/customer-acquisition/tasks/{id}
+ * DELETE /api/acquisition/tasks/{id}
  */
 export function deleteAcquisitionTask(id) {
   return request({
-    url: `/api/v1/customer-acquisition/tasks/${id}`,
+    url: `/api/acquisition/tasks/${id}`,
     method: "delete",
   });
 }
 
 /**
  * 启动采集任务
- * POST /api/v1/customer-acquisition/tasks/{id}/start
+ * POST /api/acquisition/tasks/{id}/start
  */
 export function startAcquisitionTask(id) {
   return request({
-    url: `/api/v1/customer-acquisition/tasks/${id}/start`,
+    url: `/api/acquisition/tasks/${id}/start`,
     method: "post",
   });
 }
 
 /**
  * 停止采集任务
- * POST /api/v1/customer-acquisition/tasks/{id}/stop
+ * POST /api/acquisition/tasks/{id}/stop
  */
 export function stopAcquisitionTask(id) {
   return request({
-    url: `/api/v1/customer-acquisition/tasks/${id}/stop`,
+    url: `/api/acquisition/tasks/${id}/stop`,
     method: "post",
   });
 }
 
 /**
  * 创建快速采集任务
- * POST /api/v1/customer-acquisition/quick
+ * POST /api/acquisition/tasks/quick
  */
 export function createQuickAcquisition(data) {
   return request({
-    url: "/api/v1/customer-acquisition/quick",
+    url: "/api/acquisition/tasks/quick",
     method: "post",
     data,
   });
@@ -210,11 +210,11 @@ export function createQuickAcquisition(data) {
 
 /**
  * 获取采集预览数据
- * GET /api/v1/customer-acquisition/preview
+ * GET /api/acquisition/tasks/preview
  */
 export function getAcquisitionPreview(params) {
   return request({
-    url: "/api/v1/customer-acquisition/preview",
+    url: "/api/acquisition/tasks/preview",
     method: "get",
     params,
   });
@@ -222,12 +222,12 @@ export function getAcquisitionPreview(params) {
 
 /**
  * 导出任务数据
- * POST /api/v1/customer-acquisition/tasks/{id}/export
+ * GET /api/acquisition/tasks/{id}/export
  */
 export function exportTaskData(id) {
   return request({
-    url: `/api/v1/customer-acquisition/tasks/${id}/export`,
-    method: "post",
+    url: `/api/acquisition/tasks/${id}/export`,
+    method: "get",
     responseType: 'blob',
   });
 }

@@ -30,7 +30,7 @@ public class MarketingCampaignController {
                                                                          @RequestParam(defaultValue = "0") int page,
                                                                          @RequestParam(defaultValue = "10") int size) {
         Page<MarketingCampaign> p = marketingCampaignService.search(status, channel, keyword, PageRequest.of(page, size));
-        return ResponseEntity.success(new ResponsePageDataEntity<>(p.getTotalElements(), p.getContent()));
+        return ResponseEntity.success(new ResponsePageDataEntity<MarketingCampaign>(p.getTotalElements(), p.getContent()));
     }
 
     @GetMapping("/{id}")

@@ -1,0 +1,1 @@
+export { default as OmPagination } from './OmPagination.vue'

@@ -7,13 +7,17 @@ import com.platform.marketing.dto.CustomerImportDto;
 import com.platform.marketing.util.ExcelUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.criteria.Predicate;
 import java.util.Optional;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +34,38 @@ public class CustomerServiceImpl implements CustomerService {
     public Page<Customer> search(String keyword, Pageable pageable) {
         if (keyword == null) keyword = "";
         return customerRepository.search(keyword, pageable);
+    }
+
+    @Override
+    public Page<Customer> search(String keyword, String status, String source, Pageable pageable) {
+        Specification<Customer> spec = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            
+            // 关键词搜索（姓名、邮箱、电话）
+            if (StringUtils.hasText(keyword)) {
+                String likePattern = "%" + keyword + "%";
+                Predicate keywordPredicate = criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("name"), likePattern),
+                    criteriaBuilder.like(root.get("email"), likePattern),
+                    criteriaBuilder.like(root.get("phone"), likePattern)
+                );
+                predicates.add(keywordPredicate);
+            }
+            
+            // 状态筛选
+            if (StringUtils.hasText(status)) {
+                predicates.add(criteriaBuilder.equal(root.get("status"), status));
+            }
+            
+            // 来源筛选
+            if (StringUtils.hasText(source)) {
+                predicates.add(criteriaBuilder.equal(root.get("source"), source));
+            }
+            
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+        
+        return customerRepository.findAll(spec, pageable);
     }
 
     @Override
@@ -74,7 +110,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void importCustomers(MultipartFile file) {
+    public void batchDelete(List<String> customerIds) {
+        if (customerIds != null && !customerIds.isEmpty()) {
+            customerRepository.deleteAllById(customerIds);
+        }
+    }
+
+    @Override
+    @Transactional
+    public String importCustomers(MultipartFile file) {
         try (InputStream inputStream = file.getInputStream()) {
             List<CustomerImportDto> importedList = ExcelUtils.parseExcel(inputStream);
             List<Customer> customers = importedList.stream().map(dto -> {
@@ -83,11 +127,26 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setPhone(dto.getPhone());
                 customer.setEmail(dto.getEmail());
                 customer.setRemark(dto.getRemark());
+                customer.setStatus("active"); // 默认状态
+                customer.setSource("import"); // 导入来源
                 return customer;
             }).collect(Collectors.toList());
             customerRepository.saveAll(customers);
+            return "成功导入 " + customers.size() + " 条客户记录";
         } catch (IOException e) {
             throw new RuntimeException("导入失败：" + e.getMessage());
         }
+    }
+
+    @Override
+    public String exportCustomers(String keyword, String status, String source) {
+        // 这里可以实现导出逻辑，返回文件URL或路径
+        // 暂时返回简单消息
+        return "导出功能正在开发中";
+    }
+
+    @Override
+    public List<String> getDistinctSources() {
+        return customerRepository.findDistinctSources();
     }
 }

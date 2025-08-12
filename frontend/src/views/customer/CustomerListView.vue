@@ -2,8 +2,8 @@
   <div class="customer-list-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h2>{{ $t('customer.title') }}</h2>
-      <p>{{ $t('customer.description') }}</p>
+      <h2>{{ $t("customer.title") }}</h2>
+      <p>{{ $t("customer.description") }}</p>
     </div>
 
     <el-card class="content-card">
@@ -23,7 +23,7 @@
               <el-icon><Search /></el-icon>
             </template>
           </el-input>
-          
+
           <el-select
             v-model="searchForm.status"
             :placeholder="$t('customer.statusFilter')"
@@ -32,7 +32,10 @@
             @change="handleSearch"
           >
             <el-option :label="$t('customer.statusActive')" value="active" />
-            <el-option :label="$t('customer.statusInactive')" value="inactive" />
+            <el-option
+              :label="$t('customer.statusInactive')"
+              value="inactive"
+            />
           </el-select>
 
           <el-select
@@ -42,7 +45,12 @@
             style="width: 150px; margin-left: 12px"
             @change="handleSearch"
           >
-            <el-option v-for="source in sourcesOptions" :key="source" :label="source" :value="source" />
+            <el-option
+              v-for="source in sourcesOptions"
+              :key="source"
+              :label="source"
+              :value="source"
+            />
           </el-select>
         </div>
 
@@ -50,14 +58,14 @@
         <div class="action-buttons">
           <el-button @click="refreshData">
             <el-icon><Refresh /></el-icon>
-            {{ $t('common.refresh') }}
+            {{ $t("common.refresh") }}
           </el-button>
-          
+
           <el-button type="primary" @click="handleAdd">
             <el-icon><Plus /></el-icon>
-            {{ $t('customer.addCustomer') }}
+            {{ $t("customer.addCustomer") }}
           </el-button>
-          
+
           <el-upload
             action="#"
             :show-file-list="false"
@@ -67,13 +75,13 @@
           >
             <el-button :loading="importing">
               <el-icon><Upload /></el-icon>
-              {{ $t('customer.importCustomer') }}
+              {{ $t("customer.importCustomer") }}
             </el-button>
           </el-upload>
-          
+
           <el-button @click="handleExport" :loading="exporting">
             <el-icon><Download /></el-icon>
-            {{ $t('customer.exportCustomer') }}
+            {{ $t("customer.exportCustomer") }}
           </el-button>
         </div>
       </div>
@@ -89,12 +97,37 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="name" :label="$t('customer.name')" min-width="120" />
-        <el-table-column prop="email" :label="$t('customer.email')" min-width="180" />
-        <el-table-column prop="phone" :label="$t('customer.phone')" min-width="140" />
-        <el-table-column prop="company" :label="$t('customer.company')" min-width="150" />
-        <el-table-column prop="source" :label="$t('customer.source')" width="120" />
-        <el-table-column prop="status" :label="$t('customer.status')" width="100" align="center">
+        <el-table-column
+          prop="name"
+          :label="$t('customer.name')"
+          min-width="120"
+        />
+        <el-table-column
+          prop="email"
+          :label="$t('customer.email')"
+          min-width="180"
+        />
+        <el-table-column
+          prop="phone"
+          :label="$t('customer.phone')"
+          min-width="140"
+        />
+        <el-table-column
+          prop="company"
+          :label="$t('customer.company')"
+          min-width="150"
+        />
+        <el-table-column
+          prop="source"
+          :label="$t('customer.source')"
+          width="120"
+        />
+        <el-table-column
+          prop="status"
+          :label="$t('customer.status')"
+          width="100"
+          align="center"
+        >
           <template #default="{ row }">
             <el-switch
               v-model="row.status"
@@ -107,12 +140,20 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="createdAt" :label="$t('customer.createdAt')" width="180">
+        <el-table-column
+          prop="createdAt"
+          :label="$t('customer.createdAt')"
+          width="180"
+        >
           <template #default="{ row }">
             {{ formatDate(row.createdAt) }}
           </template>
         </el-table-column>
-        <el-table-column :label="$t('common.actions')" width="200" fixed="right">
+        <el-table-column
+          :label="$t('common.actions')"
+          width="200"
+          fixed="right"
+        >
           <template #default="{ row }">
             <el-button
               v-if="hasPermission('customer:view')"
@@ -122,18 +163,14 @@
               @click="handleView(row)"
             >
               <el-icon><View /></el-icon>
-              {{ $t('common.view') }}
+              {{ $t("common.view") }}
             </el-button>
-            
-            <el-button
-              size="small"
-              link
-              @click="handleEdit(row)"
-            >
+
+            <el-button size="small" link @click="handleEdit(row)">
               <el-icon><Edit /></el-icon>
-              {{ $t('common.edit') }}
+              {{ $t("common.edit") }}
             </el-button>
-            
+
             <el-button
               v-if="hasPermission('customer:delete')"
               size="small"
@@ -142,7 +179,7 @@
               @click="handleDelete(row)"
             >
               <el-icon><Delete /></el-icon>
-              {{ $t('common.delete') }}
+              {{ $t("common.delete") }}
             </el-button>
           </template>
         </el-table-column>
@@ -172,193 +209,190 @@
     />
 
     <!-- 客户详情抽屉 -->
-    <CustomerDetail
-      v-model="detailVisible"
-      :customer-id="selectedCustomerId"
-    />
+    <CustomerDetail v-model="detailVisible" :customer-id="selectedCustomerId" />
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { 
-  Search, 
-  Refresh, 
-  Plus, 
-  Upload, 
-  Download, 
-  View, 
-  Edit, 
-  Delete 
-} from '@element-plus/icons-vue'
-import { useI18n } from 'vue-i18n'
-import { hasPermission } from '@/composables/permission'
-import { useCustomerStore } from '@/stores/modules/customer'
-import { formatDate } from '@/utils/date'
-import CustomerForm from './components/CustomerForm.vue'
-import CustomerDetail from './components/CustomerDetail.vue'
+import { ref, reactive, onMounted, computed } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
+import {
+  Search,
+  Refresh,
+  Plus,
+  Upload,
+  Download,
+  View,
+  Edit,
+  Delete,
+} from "@element-plus/icons-vue";
+import { useI18n } from "vue-i18n";
+import { hasPermission } from "@/composables/permission";
+import { useCustomerStore } from "@/stores/modules/customer";
+import { formatDate } from "@/utils/date";
+import CustomerForm from "./components/CustomerForm.vue";
+import CustomerDetail from "./components/CustomerDetail.vue";
 
-const { t } = useI18n()
-const customerStore = useCustomerStore()
+const { t } = useI18n();
+const customerStore = useCustomerStore();
 
 // 响应式数据
-const loading = ref(false)
-const importing = ref(false)
-const exporting = ref(false)
-const formVisible = ref(false)
-const detailVisible = ref(false)
-const isEdit = ref(false)
-const selectedCustomer = ref(null)
-const selectedCustomerId = ref(null)
-const selectedCustomers = ref([])
+const loading = ref(false);
+const importing = ref(false);
+const exporting = ref(false);
+const formVisible = ref(false);
+const detailVisible = ref(false);
+const isEdit = ref(false);
+const selectedCustomer = ref(null);
+const selectedCustomerId = ref(null);
+const selectedCustomers = ref([]);
 
 // 搜索表单
 const searchForm = reactive({
-  keyword: '',
-  status: '',
-  source: ''
-})
+  keyword: "",
+  status: "",
+  source: "",
+});
 
 // 分页数据
 const pagination = reactive({
   page: 1,
   size: 20,
-  total: 0
-})
+  total: 0,
+});
 
 // 计算属性
-const customerList = computed(() => customerStore.customerList)
-const sourcesOptions = computed(() => customerStore.sourcesOptions)
+const customerList = computed(() => customerStore.customerList);
+const sourcesOptions = computed(() => customerStore.sourcesOptions);
 
 // 生命周期
 onMounted(() => {
-  fetchData()
-  customerStore.fetchSourcesOptions()
-})
+  fetchData();
+  customerStore.fetchSourcesOptions();
+});
 
 // 方法
 const fetchData = async () => {
-  loading.value = true
+  loading.value = true;
   try {
     await customerStore.fetchCustomerList({
       page: pagination.page - 1,
       size: pagination.size,
       keyword: searchForm.keyword,
       status: searchForm.status,
-      source: searchForm.source
-    })
-    pagination.total = customerStore.total
+      source: searchForm.source,
+    });
+    pagination.total = customerStore.total;
   } catch (error) {
-    ElMessage.error(t('common.fetchError'))
+    ElMessage.error(t("common.fetchError"));
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 const handleSearch = () => {
-  pagination.page = 1
-  fetchData()
-}
+  pagination.page = 1;
+  fetchData();
+};
 
 const refreshData = () => {
-  fetchData()
-}
+  fetchData();
+};
 
 const handleAdd = () => {
-  isEdit.value = false
-  selectedCustomer.value = null
-  formVisible.value = true
-}
+  isEdit.value = false;
+  selectedCustomer.value = null;
+  formVisible.value = true;
+};
 
 const handleEdit = (customer) => {
-  isEdit.value = true
-  selectedCustomer.value = { ...customer }
-  formVisible.value = true
-}
+  isEdit.value = true;
+  selectedCustomer.value = { ...customer };
+  formVisible.value = true;
+};
 
 const handleView = (customer) => {
-  selectedCustomerId.value = customer.id
-  detailVisible.value = true
-}
+  selectedCustomerId.value = customer.id;
+  detailVisible.value = true;
+};
 
 const handleDelete = async (customer) => {
   try {
     await ElMessageBox.confirm(
-      t('customer.deleteConfirmMessage', { name: customer.name }),
-      t('common.warning'),
+      t("customer.deleteConfirmMessage", { name: customer.name }),
+      t("common.warning"),
       {
-        confirmButtonText: t('common.confirm'),
-        cancelButtonText: t('common.cancel'),
-        type: 'warning'
+        confirmButtonText: t("common.confirm"),
+        cancelButtonText: t("common.cancel"),
+        type: "warning",
       }
-    )
-    
-    await customerStore.deleteCustomer(customer.id)
-    ElMessage.success(t('common.deleteSuccess'))
-    await fetchData()
+    );
+
+    await customerStore.deleteCustomer(customer.id);
+    ElMessage.success(t("common.deleteSuccess"));
+    await fetchData();
   } catch (error) {
-    if (error !== 'cancel') {
-      ElMessage.error(t('common.deleteError'))
+    if (error !== "cancel") {
+      ElMessage.error(t("common.deleteError"));
     }
   }
-}
+};
 
 const handleStatusChange = async (customer) => {
   try {
-    await customerStore.updateCustomerStatus(customer.id, customer.status)
-    ElMessage.success(t('common.updateSuccess'))
+    await customerStore.updateCustomerStatus(customer.id, customer.status);
+    ElMessage.success(t("common.updateSuccess"));
   } catch (error) {
-    ElMessage.error(t('common.updateError'))
+    ElMessage.error(t("common.updateError"));
     // 回滚状态
-    customer.status = customer.status === 'active' ? 'inactive' : 'active'
+    customer.status = customer.status === "active" ? "inactive" : "active";
   }
-}
+};
 
 const handleImport = async (file) => {
-  importing.value = true
+  importing.value = true;
   try {
-    await customerStore.importCustomers(file)
-    ElMessage.success(t('customer.importSuccess'))
-    await fetchData()
+    await customerStore.importCustomers(file);
+    ElMessage.success(t("customer.importSuccess"));
+    await fetchData();
   } catch (error) {
-    ElMessage.error(t('customer.importError'))
+    ElMessage.error(t("customer.importError"));
   } finally {
-    importing.value = false
+    importing.value = false;
   }
-  return false // 阻止默认上传
-}
+  return false; // 阻止默认上传
+};
 
 const handleExport = async () => {
-  exporting.value = true
+  exporting.value = true;
   try {
-    await customerStore.exportCustomers(searchForm)
-    ElMessage.success(t('customer.exportSuccess'))
+    await customerStore.exportCustomers(searchForm);
+    ElMessage.success(t("customer.exportSuccess"));
   } catch (error) {
-    ElMessage.error(t('customer.exportError'))
+    ElMessage.error(t("customer.exportError"));
   } finally {
-    exporting.value = false
+    exporting.value = false;
   }
-}
+};
 
 const handleSelectionChange = (selection) => {
-  selectedCustomers.value = selection
-}
+  selectedCustomers.value = selection;
+};
 
 const handlePageChange = (page) => {
-  pagination.page = page
-  fetchData()
-}
+  pagination.page = page;
+  fetchData();
+};
 
 const handleSizeChange = (size) => {
-  pagination.size = size
-  pagination.page = 1
-  fetchData()
-}
+  pagination.size = size;
+  pagination.page = 1;
+  fetchData();
+};
 
 const handleFormSuccess = () => {
-  fetchData()
-}
+  fetchData();
+};
 </script>
 
 <style scoped>
@@ -424,12 +458,12 @@ const handleFormSuccess = () => {
   .customer-list-container {
     padding: 12px;
   }
-  
+
   .action-bar {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .search-section,
   .action-buttons {
     justify-content: center;

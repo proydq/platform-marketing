@@ -6,156 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="51dfd6cc-f960-4e54-9591-8471f752e860" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/backend-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/BackendApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/AuthController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/AuthService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/CustomMethodSecurityExpressionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/CustomMethodSecurityExpressionRoot.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/CustomPermissionEvaluator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/JwtAuthenticationFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/JwtUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/LoginRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/LoginResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserDetailsServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/auth/UserInfoDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/MethodSecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SecurityConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/config/SuperAdminInitializer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/MenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/PermissionController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/RoleController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/controller/UserRoleMenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/controller/DashboardController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/dto/DashboardMetricsDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/dto/RecentTaskDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/dto/TrendPoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/entity/DashboardMetrics.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/entity/RecentTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/repository/DashboardMetricsRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/repository/RecentTaskRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/service/DashboardService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dashboard/service/impl/DashboardServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/CustomerImportDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/MenuTreeNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/PermissionRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/PermissionTreeNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/dto/RoleDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Permission.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/Role.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/RolePermission.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/RolePermissionId.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/SysRoleMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/SysRoleMenuId.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/SysUserRole.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/UserRole.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/entity/UserRoleId.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/behaviorlog/controller/BehaviorLogController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/behaviorlog/entity/BehaviorLog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/behaviorlog/repository/BehaviorLogRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/behaviorlog/service/BehaviorLogService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/behaviorlog/service/impl/BehaviorLogServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/controller/MarketingCampaignController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/dto/MarketingCampaignDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/dto/UpdateCampaignStatusDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/entity/MarketingCampaign.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/repository/MarketingCampaignRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/service/MarketingCampaignService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/campaign/service/impl/MarketingCampaignServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/contentgeneration/controller/ContentGenerationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/contentgeneration/dto/ContentGenerationDto$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/contentgeneration/dto/ContentGenerationDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/contentgeneration/entity/ContentGeneration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/contentgeneration/repository/ContentGenerationRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/contentgeneration/service/ContentGenerationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/contentgeneration/service/impl/ContentGenerationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customer/controller/CustomerController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customer/entity/Customer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customer/repository/CustomerRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customer/service/CustomerService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customer/service/impl/CustomerServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/controller/CustomerCollectController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/entity/CustomerCollect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/repository/CustomerCollectRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/service/CustomerCollectService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/customercollect/service/impl/CustomerCollectServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/controller/EmailCampaignController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/controller/EmailController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/dto/EmailSendRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/entity/EmailCampaignRecord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/entity/EmailCampaignTemplate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/entity/EmailSendRecord.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/repository/EmailCampaignRecordRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/repository/EmailCampaignTemplateRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/service/EmailCampaignRecordService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/service/EmailCampaignTemplateService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/service/EmailService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/service/impl/EmailCampaignRecordServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/service/impl/EmailCampaignTemplateServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/email/service/impl/EmailServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/notification/controller/NotificationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/notification/entity/Notification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/notification/repository/NotificationRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/notification/service/NotificationService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/notification/service/impl/NotificationServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/controller/SocialAccountController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/controller/SocialPushLogController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/entity/SocialAccount.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/entity/SocialPushLog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/repository/SocialAccountRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/repository/SocialPushLogRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/service/SocialAccountService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/service/SocialPushLogService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/service/impl/SocialAccountServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/modules/social/service/impl/SocialPushLogServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/MenuRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/PermissionRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RoleMenuRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RolePermissionRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/RoleRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/UserRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/repository/UserRoleRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/MenuService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/PermissionService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/RoleMenuService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/RoleService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/MenuServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/PermissionServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/RoleMenuServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/service/impl/UserServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/controller/SystemSettingsController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/dto/BasicSettingsDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/dto/NotifySettingsDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/dto/SecuritySettingsDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/dto/SystemSettingsDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/entity/SystemSettings.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/repository/SystemSettingsRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/service/SystemSettingsService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/system/service/impl/SystemSettingsServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/task/controller/ScheduledTaskController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/task/dto/ScheduledTaskDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/task/entity/ScheduledTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/task/repository/ScheduledTaskRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/task/service/ScheduledTaskService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/task/service/impl/ScheduledTaskServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/util/ExcelUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/util/ResponseEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/platform/marketing/util/ResponsePageDataEntity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mapper/PermissionMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/api/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/customer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/SidebarMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/SidebarMenu.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/locales/en.json" afterDir="false" />
@@ -163,6 +15,8 @@
       <change beforePath="$PROJECT_DIR$/../frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerAcquisitionView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerAcquisitionView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerAnalyticsView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerAnalyticsView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerListView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/views/customer/CustomerListView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/vite.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/com/platform/marketing/config/MethodSecurityConfig.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -195,7 +49,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/bt_backend_v3",
+    "last_opened_file_path": "E:/2024项目/haiwai/marketing-backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -226,7 +80,7 @@
       <workItem from="1752660824520" duration="23139000" />
       <workItem from="1753088557414" duration="18209000" />
       <workItem from="1753666575527" duration="2967000" />
-      <workItem from="1754366071504" duration="25535000" />
+      <workItem from="1754366071504" duration="30400000" />
     </task>
     <servers />
   </component>

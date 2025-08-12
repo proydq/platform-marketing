@@ -19,8 +19,10 @@ import MenuManagement from "../views/system/MenuManagement.vue";
 
 // 客户模块组件 - 使用懒加载
 const CustomerListView = () => import("../views/customer/CustomerListView.vue");
-const CustomerAcquisitionView = () => import("../views/customer/CustomerAcquisitionView.vue");
-const CustomerAnalyticsView = () => import("../views/customer/CustomerAnalyticsView.vue");
+const CustomerAcquisitionView = () =>
+  import("../views/customer/CustomerAcquisitionView.vue");
+const CustomerAnalyticsView = () =>
+  import("../views/customer/CustomerAnalyticsView.vue");
 const ProductListView = () => import("../views/product/ProductListView.vue");
 const routes = [
   { path: "/login", name: "Login", component: LoginView },
@@ -29,7 +31,7 @@ const routes = [
     component: MainLayout,
     children: [
       { path: "dashboard", name: "Dashboard", component: DashboardView },
-      
+
       // 客户管理模块 - 重构后的嵌套路由
       {
         path: "customer",
@@ -43,32 +45,32 @@ const routes = [
             meta: {
               title: "customer.title",
               requiresAuth: true,
-              permissions: ["customer:view"]
-            }
+              permissions: ["customer:view"],
+            },
           },
           {
-            path: "acquisition", 
+            path: "acquisition",
             name: "CustomerAcquisition",
             component: CustomerAcquisitionView,
             meta: {
               title: "customer.acquisition.title",
               requiresAuth: true,
-              permissions: ["customer:acquisition"]
-            }
+              permissions: ["customer:acquisition"],
+            },
           },
           {
             path: "analytics",
-            name: "CustomerAnalytics", 
+            name: "CustomerAnalytics",
             component: CustomerAnalyticsView,
             meta: {
               title: "customer.analytics.title",
               requiresAuth: true,
-              permissions: ["customer:analytics"]
-            }
-          }
-        ]
+              permissions: ["customer:analytics"],
+            },
+          },
+        ],
       },
-      
+
       // 系统管理模块
       { path: "permission", name: "Permission", component: PermissionView },
       { path: "settings", name: "Settings", component: SettingsView },
@@ -77,7 +79,7 @@ const routes = [
         name: "MenuManagement",
         component: MenuManagement,
       },
-      
+
       // 营销模块
       {
         path: "content-generate",
@@ -95,12 +97,16 @@ const routes = [
         name: "CampaignCenter",
         component: CampaignCenterView,
       },
-      
+
       {
         path: "product",
         name: "Product",
         component: ProductListView,
-        meta: { title: "product.name", requiresAuth: true, permissions: ["product:list"] }
+        meta: {
+          title: "product.name",
+          requiresAuth: true,
+          permissions: ["product:list"],
+        },
       },
       // 其他功能模块
       {
@@ -120,10 +126,10 @@ const routes = [
         name: "NotificationCenter",
         component: NotificationCenterView,
       },
-      
+
       // 向下兼容的路由重定向
       { path: "customer-manage", redirect: "/customer/list" },
-      { path: "customer-crawl", redirect: "/customer/acquisition" }
+      { path: "customer-crawl", redirect: "/customer/acquisition" },
     ],
   },
 ];

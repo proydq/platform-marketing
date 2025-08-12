@@ -1,94 +1,241 @@
 <template>
-  <div class="page-wrapper">
-    <el-card class="card-container">
-      <el-row class="action-buttons" justify="space-between" align="middle">
-        <el-space>
-          <el-select
-            v-model="statusFilter"
-            :placeholder="$t('campaign.status')"
-            style="width: 120px"
-          >
-            <el-option :label="$t('common.all')" value="" />
-            <el-option :label="$t('campaign.pending')" value="pending" />
-            <el-option :label="$t('campaign.running')" value="running" />
-            <el-option :label="$t('campaign.success')" value="success" />
-            <el-option :label="$t('campaign.pause')" value="paused" />
-          </el-select>
-          <el-select
-            v-model="channelFilter"
-            :placeholder="$t('campaign.channel')"
-            style="width: 120px"
-          >
-            <el-option :label="$t('common.all')" value="" />
-            <el-option label="Email" value="email" />
-            <el-option :label="$t('sidebar.socialMedia')" value="social" />
-            <el-option label="Wechat" value="wechat" />
-            <el-option :label="$t('common.custom')" value="custom" />
-          </el-select>
-          <el-input
-            v-model="search"
-            :placeholder="$t('campaign.search')"
-            clearable
-            style="width: 200px"
-          />
-        </el-space>
-        <el-button type="primary" @click="openEdit(false)">{{
-          $t("campaign.new")
-        }}</el-button>
-      </el-row>
+  <div class="om-page-container">
+    <!-- 页面头部 -->
+    <div class="om-page-header">
+      <div class="om-page-header__content">
+        <div class="om-page-header__text">
+          <h1>{{ $t("menu.campaign") }}</h1>
+          <p>创建和管理多渠道营销活动，提升品牌影响力和转化效果</p>
+        </div>
+        <div class="om-page-header__actions">
+          <el-button type="primary" size="large" @click="openEdit(false)">
+            <el-icon><Plus /></el-icon>
+            {{ $t("campaign.new") }}
+          </el-button>
+          <el-button size="large" @click="loadData">
+            <el-icon><Refresh /></el-icon>
+            刷新数据
+          </el-button>
+        </div>
+      </div>
+    </div>
 
-      <el-table :data="filtered" style="width: 100%; margin-top: 20px">
-        <el-table-column
-          prop="name"
-          :label="$t('campaign.name')"
-          min-width="150"
-        />
+    <!-- 统计卡片 -->
+    <div class="om-stats-grid">
+      <div class="om-stat-card om-stat-card--neon-blue">
+        <div class="om-stat-card__icon">
+          <span>🚀</span>
+        </div>
+        <div class="om-stat-card__content">
+          <div class="om-stat-card__value">{{ campaignStats.total }}</div>
+          <div class="om-stat-card__label">总活动数</div>
+          <div class="om-stat-card__trend om-stat-card__trend--up">
+            <span>+{{ campaignStats.newThisMonth }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="om-stat-card om-stat-card--neon-green">
+        <div class="om-stat-card__icon">
+          <span>▶️</span>
+        </div>
+        <div class="om-stat-card__content">
+          <div class="om-stat-card__value">{{ campaignStats.running }}</div>
+          <div class="om-stat-card__label">进行中</div>
+          <div class="om-stat-card__trend om-stat-card__trend--up">
+            <span>+{{ campaignStats.runningIncrease }}%</span>
+          </div>
+        </div>
+      </div>
 
-        <el-table-column :label="$t('campaign.status')" width="120">
-          <template #default="{ row }">
-            <span :class="'status-badge status-' + row.status">{{
-              statusText(row.status)
-            }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="startTime"
-          :label="$t('campaign.start')"
-          width="140"
-        />
-        <el-table-column
-          prop="endTime"
-          :label="$t('campaign.end')"
-          width="140"
-        />
-        <el-table-column :label="$t('campaign.operation')" width="260">
-          <template #default="{ row }">
-            <el-button type="text" size="small" @click="openDetail(row)">{{
-              $t("campaign.view")
-            }}</el-button>
-            <el-button type="text" size="small" @click="openEdit(true, row)">{{
-              $t("campaign.edit")
-            }}</el-button>
-            <el-button type="text" size="small" @click="publish(row)">{{
-              $t("campaign.publish")
-            }}</el-button>
-            <el-button type="text" size="small" @click="togglePause(row)">{{
-              row.status === "paused"
-                ? $t("campaign.resume")
-                : $t("campaign.pause")
-            }}</el-button>
-            <el-popconfirm
-              :title="$t('common.deleteConfirm')"
-              @confirm="remove(row)"
+      <div class="om-stat-card om-stat-card--neon-purple">
+        <div class="om-stat-card__icon">
+          <span>✅</span>
+        </div>
+        <div class="om-stat-card__content">
+          <div class="om-stat-card__value">{{ campaignStats.completed }}</div>
+          <div class="om-stat-card__label">已完成</div>
+          <div class="om-stat-card__trend om-stat-card__trend--up">
+            <span>+{{ campaignStats.completedIncrease }}%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="om-stat-card om-stat-card--neon-pink">
+        <div class="om-stat-card__icon">
+          <span>📊</span>
+        </div>
+        <div class="om-stat-card__content">
+          <div class="om-stat-card__value">{{ campaignStats.avgClickRate }}%</div>
+          <div class="om-stat-card__label">平均点击率</div>
+          <div class="om-stat-card__trend om-stat-card__trend--up">
+            <span>+{{ campaignStats.clickRateIncrease }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 营销活动管理卡片 -->
+    <div class="om-content-card">
+      <div class="om-content-card__header">
+        <div class="om-content-card__header-left">
+          <div class="om-content-card__icon">
+            <el-icon><Operation /></el-icon>
+          </div>
+          <div class="om-content-card__info">
+            <h3>营销活动管理</h3>
+            <p>管理所有营销活动的执行状态和效果数据</p>
+          </div>
+        </div>
+        <div class="om-content-card__header-right">
+          <div class="om-toolbar__filters">
+            <el-select
+              v-model="statusFilter"
+              :placeholder="$t('campaign.status')"
+              clearable
+              style="width: 140px"
             >
-              <el-button type="text" size="small" style="color: #f56c6c">{{
-                $t("campaign.delete")
-              }}</el-button>
-            </el-popconfirm>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
+              <el-option :label="$t('common.all')" value="" />
+              <el-option :label="$t('campaign.pending')" value="pending" />
+              <el-option :label="$t('campaign.running')" value="running" />
+              <el-option :label="$t('campaign.success')" value="success" />
+              <el-option :label="$t('campaign.pause')" value="paused" />
+            </el-select>
+            <el-select
+              v-model="channelFilter"
+              :placeholder="$t('campaign.channel')"
+              clearable
+              style="width: 140px"
+            >
+              <el-option :label="$t('common.all')" value="" />
+              <el-option label="Email" value="email" />
+              <el-option :label="$t('sidebar.socialMedia')" value="social" />
+              <el-option label="Wechat" value="wechat" />
+              <el-option :label="$t('common.custom')" value="custom" />
+            </el-select>
+          </div>
+          <div class="om-view-search">
+            <el-input
+              v-model="search"
+              :placeholder="$t('campaign.search')"
+              clearable
+              style="width: 250px"
+            >
+              <template #prefix>
+                <el-icon><Search /></el-icon>
+              </template>
+            </el-input>
+          </div>
+        </div>
+      </div>
+      
+      <div class="om-content-card__body">
+        <div class="om-table-container">
+          <el-table 
+            :data="filtered" 
+            style="width: 100%"
+            v-loading="loading"
+            :empty-text="'暂无活动数据'"
+          >
+            <el-table-column
+              prop="name"
+              :label="$t('campaign.name')"
+              min-width="200"
+              show-overflow-tooltip
+            >
+              <template #default="{ row }">
+                <div class="campaign-name-cell">
+                  <div class="campaign-title">{{ row.name }}</div>
+                  <div class="campaign-meta">
+                    <el-tag 
+                      v-for="channel in (row.channels || []).slice(0, 2)" 
+                      :key="channel"
+                      size="small" 
+                      class="channel-tag"
+                    >
+                      {{ channelName(channel) }}
+                    </el-tag>
+                    <el-tag 
+                      v-if="(row.channels || []).length > 2"
+                      size="small"
+                      type="info"
+                    >
+                      +{{ (row.channels || []).length - 2 }}
+                    </el-tag>
+                  </div>
+                </div>
+              </template>
+            </el-table-column>
+
+            <el-table-column :label="$t('campaign.status')" width="120" align="center">
+              <template #default="{ row }">
+                <el-tag :type="getStatusType(row.status)" size="small" effect="dark">
+                  {{ statusText(row.status) }}
+                </el-tag>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              prop="startTime"
+              :label="$t('campaign.start')"
+              width="150"
+              align="center"
+            />
+
+            <el-table-column
+              prop="endTime"
+              :label="$t('campaign.end')"
+              width="150"
+              align="center"
+            />
+
+            <el-table-column :label="$t('campaign.operation')" width="180" fixed="right" align="center">
+              <template #default="{ row }">
+                <div class="action-buttons">
+                  <el-tooltip content="查看详情" placement="top">
+                    <el-button size="small" type="primary" @click="openDetail(row)" circle>
+                      <el-icon><View /></el-icon>
+                    </el-button>
+                  </el-tooltip>
+
+                  <el-tooltip content="编辑活动" placement="top">
+                    <el-button size="small" type="warning" @click="openEdit(true, row)" circle>
+                      <el-icon><Edit /></el-icon>
+                    </el-button>
+                  </el-tooltip>
+
+                  <el-dropdown trigger="click" @command="(command) => handleCampaignAction(command, row)">
+                    <el-button size="small" circle>
+                      <el-icon><More /></el-icon>
+                    </el-button>
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item command="publish">
+                          <el-icon><VideoPlay /></el-icon>
+                          {{ $t("campaign.publish") }}
+                        </el-dropdown-item>
+                        <el-dropdown-item command="pause">
+                          <el-icon><VideoPause /></el-icon>
+                          {{ row.status === "paused" ? $t("campaign.resume") : $t("campaign.pause") }}
+                        </el-dropdown-item>
+                        <el-dropdown-item command="duplicate">
+                          <el-icon><DocumentCopy /></el-icon>
+                          复制活动
+                        </el-dropdown-item>
+                        <el-dropdown-item command="delete" divided>
+                          <el-icon><Delete /></el-icon>
+                          {{ $t("campaign.delete") }}
+                        </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </div>
 
     <el-drawer
       v-model="editDrawer"

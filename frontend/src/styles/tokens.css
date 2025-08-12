@@ -1,0 +1,424 @@
+/* === 海外营销平台深色科技风设计令牌 === */
+:root {
+  /* === 深色科技风品牌色彩 === */
+  --om-color-primary: #00d9ff;
+  --om-color-primary-light: #4fffb0;
+  --om-color-primary-dark: #0099cc;
+  --om-color-brand-gradient: linear-gradient(135deg, #667eea 0%, #00d9ff 25%, #4fffb0 50%, #ffd700 75%, #ff6b6b 100%);
+  --om-color-brand-gradient-soft: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(79, 255, 176, 0.1) 50%, rgba(255, 215, 0, 0.1) 100%);
+  
+  /* === 霓虹色彩系统 === */
+  --om-color-neon-blue: #00d9ff;
+  --om-color-neon-green: #4fffb0;
+  --om-color-neon-purple: #a855f7;
+  --om-color-neon-pink: #ec4899;
+  --om-color-neon-yellow: #ffd700;
+  --om-color-neon-orange: #ff8c42;
+  
+  /* === 语义色彩 === */
+  --om-color-success: #4fffb0;
+  --om-color-success-light: #6fffcc;
+  --om-color-success-gradient: linear-gradient(135deg, #4fffb0 0%, #00ff88 100%);
+  --om-color-warning: #ffd700;
+  --om-color-warning-light: #ffed4a;
+  --om-color-warning-gradient: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+  --om-color-danger: #ff6b6b;
+  --om-color-danger-light: #ff8e8e;
+  --om-color-danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+  --om-color-info: #00d9ff;
+  --om-color-info-light: #42daff;
+  --om-color-info-gradient: linear-gradient(135deg, #00d9ff 0%, #42daff 100%);
+  
+  /* === 深色背景系统 === */
+  --om-color-dark-900: #0a0a0f;
+  --om-color-dark-800: #111118;
+  --om-color-dark-700: #1a1a24;
+  --om-color-dark-600: #242433;
+  --om-color-dark-500: #2d2d42;
+  --om-color-dark-400: #373751;
+  --om-color-dark-300: #454560;
+  --om-color-dark-200: #5a5a6f;
+  --om-color-dark-100: #70707e;
+  --om-color-dark-50: #85858d;
+  
+  /* === 现代文本色彩 === */
+  --om-text-primary: #ffffff;
+  --om-text-secondary: #b8b8d1;
+  --om-text-tertiary: #9999aa;
+  --om-text-disabled: #666677;
+  --om-text-inverse: #0a0a0f;
+  --om-text-brand: var(--om-color-neon-blue);
+  --om-text-success: var(--om-color-success);
+  --om-text-warning: var(--om-color-warning);
+  --om-text-danger: var(--om-color-danger);
+  --om-text-neon: #4fffb0;
+  
+  /* === 深色背景系统 === */
+  --om-bg-primary: var(--om-color-dark-900);
+  --om-bg-secondary: var(--om-color-dark-800);
+  --om-bg-tertiary: var(--om-color-dark-700);
+  --om-bg-gradient-primary: linear-gradient(135deg, #0a0a0f 0%, #111118 25%, #1a1a24 50%, #242433 100%);
+  --om-bg-gradient-brand: var(--om-color-brand-gradient);
+  --om-bg-gradient-card: linear-gradient(135deg, rgba(26, 26, 36, 0.8) 0%, rgba(36, 36, 51, 0.9) 100%);
+  --om-bg-gradient-overlay: linear-gradient(135deg, rgba(0, 217, 255, 0.03) 0%, rgba(79, 255, 176, 0.03) 50%, rgba(255, 215, 0, 0.03) 100%);
+  
+  /* === 现代圆角系统 === */
+  --om-radius-none: 0;
+  --om-radius-xs: 6px;
+  --om-radius-sm: 8px;
+  --om-radius-md: 12px;
+  --om-radius-lg: 16px;
+  --om-radius-xl: 20px;
+  --om-radius-2xl: 28px;
+  --om-radius-3xl: 36px;
+  --om-radius-full: 9999px;
+  
+  /* === 现代间距系统 === */
+  --om-space-0: 0;
+  --om-space-1: 4px;
+  --om-space-2: 8px;
+  --om-space-3: 12px;
+  --om-space-4: 16px;
+  --om-space-5: 20px;
+  --om-space-6: 24px;
+  --om-space-7: 28px;
+  --om-space-8: 32px;
+  --om-space-10: 40px;
+  --om-space-12: 48px;
+  --om-space-16: 64px;
+  --om-space-20: 80px;
+  --om-space-24: 96px;
+  
+  /* 兼容旧的间距变量 */
+  --om-space-xs: var(--om-space-1);
+  --om-space-sm: var(--om-space-2);
+  --om-space-md: var(--om-space-4);
+  --om-space-lg: var(--om-space-6);
+  --om-space-xl: var(--om-space-8);
+  --om-space-2xl: var(--om-space-12);
+  
+  /* === 霓虹阴影系统 === */
+  --om-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --om-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --om-shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --om-shadow-lg: 0 12px 16px -4px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --om-shadow-xl: 0 20px 24px -4px rgba(0, 0, 0, 0.4), 0 8px 8px -4px rgba(0, 0, 0, 0.2);
+  --om-shadow-2xl: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
+  --om-shadow-3xl: 0 32px 64px -12px rgba(0, 0, 0, 0.6);
+  
+  /* 霓虹发光阴影 */
+  --om-shadow-neon-blue: 0 0 20px rgba(0, 217, 255, 0.4), 0 0 40px rgba(0, 217, 255, 0.2), 0 0 80px rgba(0, 217, 255, 0.1);
+  --om-shadow-neon-green: 0 0 20px rgba(79, 255, 176, 0.4), 0 0 40px rgba(79, 255, 176, 0.2), 0 0 80px rgba(79, 255, 176, 0.1);
+  --om-shadow-neon-purple: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 40px rgba(168, 85, 247, 0.2), 0 0 80px rgba(168, 85, 247, 0.1);
+  --om-shadow-neon-pink: 0 0 20px rgba(236, 72, 153, 0.4), 0 0 40px rgba(236, 72, 153, 0.2), 0 0 80px rgba(236, 72, 153, 0.1);
+  --om-shadow-neon-yellow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2), 0 0 80px rgba(255, 215, 0, 0.1);
+  
+  /* 品牌阴影 */
+  --om-shadow-brand: var(--om-shadow-neon-blue);
+  --om-shadow-brand-hover: 0 0 30px rgba(0, 217, 255, 0.6), 0 0 60px rgba(0, 217, 255, 0.3), 0 0 120px rgba(0, 217, 255, 0.2);
+  --om-shadow-success: var(--om-shadow-neon-green);
+  --om-shadow-warning: var(--om-shadow-neon-yellow);
+  --om-shadow-danger: 0 0 20px rgba(255, 107, 107, 0.4), 0 0 40px rgba(255, 107, 107, 0.2);
+  
+  /* === 深色玻璃态效果 === */
+  --om-glass-bg: rgba(26, 26, 36, 0.6);
+  --om-glass-bg-strong: rgba(36, 36, 51, 0.8);
+  --om-glass-border: rgba(79, 255, 176, 0.1);
+  --om-glass-border-strong: rgba(79, 255, 176, 0.2);
+  --om-glass-border-neon: rgba(0, 217, 255, 0.3);
+  --om-glass-blur: blur(20px);
+  --om-glass-backdrop: blur(16px);
+  --om-glass-backdrop-strong: blur(24px);
+  
+  /* === 现代层级系统 === */
+  --om-z-hide: -1;
+  --om-z-base: 0;
+  --om-z-docked: 10;
+  --om-z-dropdown: 1000;
+  --om-z-sticky: 1100;
+  --om-z-banner: 1200;
+  --om-z-overlay: 1300;
+  --om-z-modal: 1400;
+  --om-z-popover: 1500;
+  --om-z-skiplink: 1600;
+  --om-z-notification: 1700;
+  --om-z-tooltip: 1800;
+  
+  /* === 现代字体系统 === */
+  --om-font-2xs: 10px;
+  --om-font-xs: 12px;
+  --om-font-sm: 14px;
+  --om-font-md: 16px;
+  --om-font-lg: 18px;
+  --om-font-xl: 20px;
+  --om-font-2xl: 24px;
+  --om-font-3xl: 30px;
+  --om-font-4xl: 36px;
+  --om-font-5xl: 48px;
+  --om-font-6xl: 60px;
+  --om-font-7xl: 72px;
+  --om-font-8xl: 96px;
+  --om-font-9xl: 128px;
+  
+  /* === 现代字体权重 === */
+  --om-font-thin: 100;
+  --om-font-light: 300;
+  --om-font-normal: 400;
+  --om-font-medium: 500;
+  --om-font-semibold: 600;
+  --om-font-bold: 700;
+  --om-font-extrabold: 800;
+  --om-font-black: 900;
+  
+  /* === 现代行高系统 === */
+  --om-line-none: 1;
+  --om-line-tight: 1.25;
+  --om-line-snug: 1.375;
+  --om-line-normal: 1.5;
+  --om-line-relaxed: 1.625;
+  --om-line-loose: 2;
+  
+  /* === 现代动画系统 === */
+  --om-transition-none: none;
+  --om-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --om-transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --om-transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --om-transition-slower: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 科技感动画曲线 */
+  --om-ease-cyber: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --om-ease-neon: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --om-ease-glow: cubic-bezier(0.4, 0, 0.6, 1);
+  
+  /* === 现代组件样式变量 === */
+  
+  /* 按钮系统 */
+  --om-button-radius: var(--om-radius-lg);
+  --om-button-radius-sm: var(--om-radius-md);
+  --om-button-radius-lg: var(--om-radius-xl);
+  --om-button-padding-xs: var(--om-space-2) var(--om-space-4);
+  --om-button-padding-sm: var(--om-space-3) var(--om-space-5);
+  --om-button-padding: var(--om-space-4) var(--om-space-8);
+  --om-button-padding-lg: var(--om-space-5) var(--om-space-10);
+  --om-button-padding-xl: var(--om-space-6) var(--om-space-12);
+  --om-button-font-xs: var(--om-font-xs);
+  --om-button-font-sm: var(--om-font-sm);
+  --om-button-font: var(--om-font-md);
+  --om-button-font-lg: var(--om-font-lg);
+  --om-button-font-xl: var(--om-font-xl);
+  
+  /* 输入框系统 */
+  --om-input-radius: var(--om-radius-lg);
+  --om-input-padding: var(--om-space-4) var(--om-space-5);
+  --om-input-padding-sm: var(--om-space-3) var(--om-space-4);
+  --om-input-padding-lg: var(--om-space-5) var(--om-space-6);
+  --om-input-bg: var(--om-glass-bg);
+  --om-input-bg-focus: var(--om-glass-bg-strong);
+  --om-input-border: var(--om-glass-border);
+  --om-input-border-hover: var(--om-glass-border-strong);
+  --om-input-border-focus: var(--om-glass-border-neon);
+  --om-input-shadow: var(--om-shadow-xs);
+  --om-input-shadow-hover: var(--om-shadow-sm);
+  --om-input-shadow-focus: var(--om-shadow-neon-blue);
+  
+  /* 卡片系统 */
+  --om-card-bg: var(--om-glass-bg);
+  --om-card-bg-hover: var(--om-glass-bg-strong);
+  --om-card-border: 1px solid var(--om-glass-border);
+  --om-card-border-hover: 1px solid var(--om-glass-border-strong);
+  --om-card-border-neon: 1px solid var(--om-glass-border-neon);
+  --om-card-radius: var(--om-radius-2xl);
+  --om-card-shadow: var(--om-shadow-lg);
+  --om-card-shadow-hover: var(--om-shadow-xl);
+  --om-card-shadow-neon: var(--om-shadow-neon-blue);
+  --om-card-backdrop: var(--om-glass-backdrop);
+  --om-card-transition: all var(--om-transition-normal);
+  --om-card-padding: var(--om-space-8);
+  --om-card-padding-sm: var(--om-space-6);
+  --om-card-padding-lg: var(--om-space-10);
+  
+  /* 统计卡片系统 */
+  --om-stat-card-bg: var(--om-glass-bg-strong);
+  --om-stat-card-border: 1px solid var(--om-glass-border);
+  --om-stat-card-border-neon: 1px solid var(--om-glass-border-neon);
+  --om-stat-card-radius: var(--om-radius-xl);
+  --om-stat-card-shadow: var(--om-shadow-md);
+  --om-stat-card-shadow-hover: var(--om-shadow-neon-green);
+  --om-stat-card-backdrop: var(--om-glass-backdrop);
+  --om-stat-card-transition: all var(--om-transition-normal);
+  --om-stat-card-padding: var(--om-space-8);
+  
+  /* 表格系统 */
+  --om-table-bg: var(--om-glass-bg);
+  --om-table-border: 1px solid var(--om-glass-border);
+  --om-table-radius: var(--om-radius-xl);
+  --om-table-shadow: var(--om-shadow-lg);
+  --om-table-backdrop: var(--om-glass-backdrop);
+  --om-table-header-bg: var(--om-color-dark-700);
+  --om-table-header-border: var(--om-glass-border-strong);
+  --om-table-row-bg: transparent;
+  --om-table-row-hover-bg: rgba(0, 217, 255, 0.1);
+  --om-table-row-selected-bg: rgba(79, 255, 176, 0.15);
+  --om-table-cell-padding: var(--om-space-4) var(--om-space-5);
+  
+  /* 导航系统 */
+  --om-nav-bg: var(--om-glass-bg-strong);
+  --om-nav-border: var(--om-glass-border-strong);
+  --om-nav-shadow: var(--om-shadow-2xl);
+  --om-nav-backdrop: var(--om-glass-backdrop-strong);
+  --om-nav-item-radius: var(--om-radius-lg);
+  --om-nav-item-padding: var(--om-space-3) var(--om-space-5);
+  
+  /* 模态框系统 */
+  --om-modal-bg: var(--om-glass-bg-strong);
+  --om-modal-border: var(--om-glass-border-strong);
+  --om-modal-radius: var(--om-radius-3xl);
+  --om-modal-shadow: var(--om-shadow-3xl);
+  --om-modal-backdrop: var(--om-glass-backdrop-strong);
+  --om-modal-overlay-bg: rgba(10, 10, 15, 0.8);
+}
+
+/* === 科技感滚动条 === */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--om-color-dark-800);
+  border-radius: var(--om-radius-md);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--om-color-neon-blue) 0%, var(--om-color-neon-green) 100%);
+  border-radius: var(--om-radius-md);
+  border: 2px solid var(--om-color-dark-800);
+  transition: all var(--om-transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--om-color-neon-green) 0%, var(--om-color-neon-blue) 100%);
+  box-shadow: var(--om-shadow-neon-blue);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--om-color-dark-800);
+}
+
+/* === 霓虹选择文本样式 === */
+::selection {
+  background: rgba(0, 217, 255, 0.3);
+  color: var(--om-text-primary);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
+}
+
+::-moz-selection {
+  background: rgba(0, 217, 255, 0.3);
+  color: var(--om-text-primary);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
+}
+
+/* === 霓虹发光关键帧 === */
+@keyframes neon-pulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 15px currentColor,
+      0 0 20px var(--om-color-neon-blue);
+  }
+  50% {
+    text-shadow: 
+      0 0 2px currentColor,
+      0 0 5px currentColor,
+      0 0 8px currentColor,
+      0 0 12px var(--om-color-neon-blue);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(0, 217, 255, 0.4),
+      0 0 10px rgba(0, 217, 255, 0.3),
+      0 0 15px rgba(0, 217, 255, 0.2),
+      0 0 20px rgba(0, 217, 255, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(0, 217, 255, 0.6),
+      0 0 20px rgba(0, 217, 255, 0.4),
+      0 0 30px rgba(0, 217, 255, 0.3),
+      0 0 40px rgba(0, 217, 255, 0.2);
+  }
+}
+
+@keyframes border-glow {
+  0%, 100% {
+    border-color: rgba(0, 217, 255, 0.3);
+    box-shadow: 
+      inset 0 0 10px rgba(0, 217, 255, 0.2),
+      0 0 10px rgba(0, 217, 255, 0.3);
+  }
+  50% {
+    border-color: rgba(0, 217, 255, 0.6);
+    box-shadow: 
+      inset 0 0 20px rgba(0, 217, 255, 0.3),
+      0 0 20px rgba(0, 217, 255, 0.5);
+  }
+}
+
+/* === 深色主题已是默认主题 === */
+/* 浅色主题作为可选项 */
+[data-theme="light"] {
+  --om-bg-primary: #ffffff;
+  --om-bg-secondary: #f8fafc;
+  --om-bg-tertiary: #f1f5f9;
+  --om-text-primary: #1a1a24;
+  --om-text-secondary: #475569;
+  --om-text-tertiary: #64748b;
+  --om-glass-bg: rgba(255, 255, 255, 0.8);
+  --om-glass-bg-strong: rgba(255, 255, 255, 0.95);
+  --om-glass-border: rgba(0, 217, 255, 0.2);
+  --om-glass-border-strong: rgba(0, 217, 255, 0.3);
+}
+
+/* === 高对比度主题支持 === */
+@media (prefers-contrast: high) {
+  :root {
+    --om-glass-bg: var(--om-color-dark-700);
+    --om-glass-bg-strong: var(--om-color-dark-600);
+    --om-glass-border: var(--om-color-neon-blue);
+    --om-glass-border-strong: var(--om-color-neon-green);
+    --om-card-border: 2px solid var(--om-color-neon-blue);
+    --om-input-border: 2px solid var(--om-color-neon-blue);
+    --om-button-border: 2px solid var(--om-color-neon-blue);
+  }
+}
+
+/* === 减少动画偏好支持 === */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --om-transition-fast: none;
+    --om-transition-normal: none;
+    --om-transition-slow: none;
+    --om-transition-slower: none;
+    --om-glass-backdrop: none;
+    --om-glass-backdrop-strong: none;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .neon-pulse,
+  .glow-pulse,
+  .border-glow {
+    animation: none !important;
+  }
+}

@@ -37,3 +37,31 @@ logging:
   level:
     root: info
     com.platform: debug
+
+# AI Services Configuration
+openai:
+  api:
+    key: ${OPENAI_API_KEY:your-openai-api-key-here}
+    url: https://api.openai.com/v1/chat/completions
+  model: gpt-3.5-turbo
+
+# Translation Service Configuration  
+google:
+  translate:
+    api:
+      key: ${GOOGLE_TRANSLATE_API_KEY:your-google-translate-key}
+
+# WhatsApp Business API Configuration
+whatsapp:
+  business:
+    api:
+      token: ${WHATSAPP_API_TOKEN:your-whatsapp-token}
+      phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:your-phone-number-id}
+      webhook-verify-token: ${WHATSAPP_WEBHOOK_TOKEN:your-webhook-token}
+
+# LinkedIn API Configuration (for future integration)
+linkedin:
+  api:
+    client-id: ${LINKEDIN_CLIENT_ID:your-linkedin-client-id}
+    client-secret: ${LINKEDIN_CLIENT_SECRET:your-linkedin-client-secret}
+    redirect-uri: ${LINKEDIN_REDIRECT_URI:http://localhost:8080/api/linkedin/callback}

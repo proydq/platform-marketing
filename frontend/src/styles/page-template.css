@@ -1,0 +1,634 @@
+/* === 海外营销平台页面模板样式 - 深色科技风版本 === */
+/* 基于客户获取页面的设计模式，统一所有页面样式 */
+
+/* === 页面容器基础样式 === */
+.om-page-container {
+  padding: var(--om-space-6);
+  background: var(--om-bg-gradient-primary);
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+}
+
+.om-page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--om-bg-gradient-overlay);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* === 页面头部区域 === */
+.om-page-header {
+  margin-bottom: var(--om-space-8);
+  background: var(--om-glass-bg-strong);
+  border: 1px solid var(--om-glass-border-strong);
+  border-radius: var(--om-radius-3xl);
+  box-shadow: var(--om-shadow-lg);
+  backdrop-filter: var(--om-glass-backdrop-strong);
+  padding: var(--om-space-8);
+  overflow: hidden;
+  position: relative;
+}
+
+.om-page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--om-color-brand-gradient);
+}
+
+.om-page-header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--om-space-6);
+}
+
+.om-page-header__text h1 {
+  margin: 0 0 var(--om-space-3) 0;
+  font-size: var(--om-font-4xl);
+  font-weight: var(--om-font-extrabold);
+  background: var(--om-color-brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.025em;
+  line-height: var(--om-line-tight);
+}
+
+.om-page-header__text p {
+  margin: 0;
+  color: var(--om-text-secondary);
+  font-size: var(--om-font-lg);
+  font-weight: var(--om-font-normal);
+  opacity: 0.9;
+  max-width: 60ch;
+  line-height: var(--om-line-relaxed);
+}
+
+.om-page-header__actions {
+  display: flex;
+  gap: var(--om-space-3);
+  flex-shrink: 0;
+  align-items: flex-start;
+}
+
+/* === 统计卡片网格 === */
+.om-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--om-space-6);
+  margin-bottom: var(--om-space-8);
+}
+
+.om-stat-card {
+  position: relative;
+  background: var(--om-stat-card-bg);
+  border: var(--om-stat-card-border);
+  border-radius: var(--om-stat-card-radius);
+  box-shadow: var(--om-stat-card-shadow);
+  backdrop-filter: var(--om-stat-card-backdrop);
+  padding: var(--om-space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-4);
+  transition: var(--om-stat-card-transition);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.om-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--om-color-brand-gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--om-transition-normal);
+}
+
+.om-stat-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--om-stat-card-shadow-hover);
+}
+
+.om-stat-card:hover::before {
+  transform: scaleX(1);
+}
+
+.om-stat-card__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--om-glass-bg-strong);
+  border-radius: var(--om-radius-xl);
+  box-shadow: var(--om-shadow-sm);
+  font-size: var(--om-font-2xl);
+  transition: all var(--om-transition-normal);
+}
+
+.om-stat-card:hover .om-stat-card__icon {
+  transform: scale(1.1);
+  box-shadow: var(--om-shadow-neon-blue);
+}
+
+.om-stat-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.om-stat-card__value {
+  font-size: var(--om-font-3xl);
+  font-weight: var(--om-font-extrabold);
+  line-height: var(--om-line-tight);
+  color: var(--om-text-primary);
+  margin-bottom: var(--om-space-1);
+  background: var(--om-color-brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.om-stat-card__label {
+  font-size: var(--om-font-sm);
+  font-weight: var(--om-font-medium);
+  color: var(--om-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* === 内容卡片样式 === */
+.om-content-card {
+  margin-bottom: var(--om-space-8);
+  border-radius: var(--om-radius-3xl);
+  box-shadow: var(--om-shadow-lg);
+  border: 1px solid var(--om-glass-border);
+  background: var(--om-glass-bg-strong);
+  backdrop-filter: var(--om-glass-backdrop-strong);
+  transition: all var(--om-transition-normal);
+  overflow: hidden;
+}
+
+.om-content-card:hover {
+  box-shadow: var(--om-shadow-xl);
+  transform: translateY(-2px);
+  border-color: var(--om-glass-border-strong);
+}
+
+.om-content-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--om-space-7) var(--om-space-8) 0 var(--om-space-8);
+  border-bottom: none;
+  background: transparent;
+}
+
+.om-content-card__header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-4);
+}
+
+.om-content-card__header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-4);
+  flex-wrap: wrap;
+}
+
+.om-content-card__icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--om-color-brand-gradient);
+  border-radius: var(--om-radius-lg);
+  color: var(--om-text-inverse);
+  box-shadow: var(--om-shadow-brand);
+  font-size: var(--om-font-xl);
+}
+
+.om-content-card__info h3 {
+  margin: 0 0 var(--om-space-1) 0;
+  font-size: var(--om-font-xl);
+  font-weight: var(--om-font-bold);
+  color: var(--om-text-primary);
+}
+
+.om-content-card__info p {
+  margin: 0;
+  color: var(--om-text-secondary);
+  font-size: var(--om-font-sm);
+  font-weight: var(--om-font-medium);
+}
+
+.om-content-card__body {
+  padding: var(--om-space-6) var(--om-space-8) var(--om-space-8) var(--om-space-8);
+}
+
+/* === 工具栏样式 === */
+.om-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--om-space-4) 0;
+  margin-bottom: var(--om-space-6);
+  border-bottom: 1px solid var(--om-glass-border);
+}
+
+.om-toolbar__left {
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-4);
+}
+
+.om-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-4);
+  flex-wrap: wrap;
+}
+
+.om-toolbar__filters {
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-2);
+}
+
+.om-toolbar__actions {
+  display: flex;
+  gap: var(--om-space-3);
+  flex-wrap: wrap;
+}
+
+/* === 视图控制 === */
+.om-view-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--om-space-6);
+  padding: var(--om-space-4) 0;
+  border-bottom: 1px solid var(--om-glass-border);
+}
+
+.om-view-toggles {
+  display: flex;
+  align-items: center;
+  gap: var(--om-space-3);
+  background: var(--om-glass-bg);
+  border: 1px solid var(--om-glass-border);
+  border-radius: var(--om-radius-lg);
+  padding: var(--om-space-1);
+}
+
+.om-view-search {
+  flex-shrink: 0;
+  max-width: 320px;
+}
+
+/* === 表格容器 === */
+.om-table-container {
+  background: var(--om-table-bg);
+  border: var(--om-table-border);
+  border-radius: var(--om-table-radius);
+  box-shadow: var(--om-table-shadow);
+  backdrop-filter: var(--om-table-backdrop);
+  overflow: hidden;
+  margin-bottom: var(--om-space-6);
+}
+
+/* === 卡片网格 === */
+.om-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: var(--om-space-6);
+  margin-bottom: var(--om-space-6);
+}
+
+/* === 分页容器 === */
+.om-pagination-wrapper {
+  margin-top: var(--om-space-8);
+  display: flex;
+  justify-content: center;
+  padding-top: var(--om-space-6);
+  border-top: 1px solid var(--om-glass-border);
+}
+
+.om-pagination {
+  background: var(--om-glass-bg-strong);
+  border: 1px solid var(--om-glass-border);
+  border-radius: var(--om-radius-xl);
+  box-shadow: var(--om-shadow-md);
+  backdrop-filter: var(--om-glass-backdrop);
+  padding: var(--om-space-4) var(--om-space-6);
+}
+
+/* === 空状态 === */
+.om-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--om-space-16);
+  text-align: center;
+  min-height: 300px;
+}
+
+.om-empty-state__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: var(--om-color-brand-gradient-soft);
+  border-radius: var(--om-radius-full);
+  margin-bottom: var(--om-space-4);
+  font-size: var(--om-font-4xl);
+  color: var(--om-color-primary);
+}
+
+.om-empty-state__text {
+  font-size: var(--om-font-xl);
+  font-weight: var(--om-font-semibold);
+  color: var(--om-text-primary);
+  margin-bottom: var(--om-space-2);
+}
+
+.om-empty-state__description {
+  font-size: var(--om-font-md);
+  color: var(--om-text-secondary);
+  max-width: 40ch;
+  line-height: var(--om-line-relaxed);
+  margin-bottom: var(--om-space-6);
+}
+
+/* === 页面动画 === */
+.om-page-container {
+  animation: om-fade-in-up 0.6s var(--om-ease-cyber);
+}
+
+.om-page-header {
+  animation: om-slide-in-right 0.8s var(--om-ease-cyber) 0.1s both;
+}
+
+.om-stats-grid .om-stat-card:nth-child(1) {
+  animation: om-fade-in-up 0.6s var(--om-ease-cyber) 0.2s both;
+}
+.om-stats-grid .om-stat-card:nth-child(2) {
+  animation: om-fade-in-up 0.6s var(--om-ease-cyber) 0.3s both;
+}
+.om-stats-grid .om-stat-card:nth-child(3) {
+  animation: om-fade-in-up 0.6s var(--om-ease-cyber) 0.4s both;
+}
+.om-stats-grid .om-stat-card:nth-child(4) {
+  animation: om-fade-in-up 0.6s var(--om-ease-cyber) 0.5s both;
+}
+
+.om-content-card {
+  animation: om-scale-in 0.5s var(--om-ease-neon) 0.6s both;
+}
+
+/* === Element Plus 组件样式增强 === */
+:deep(.el-card) {
+  border: none;
+  background: transparent;
+}
+
+:deep(.el-card__header) {
+  background: transparent;
+  padding: var(--om-space-7) var(--om-space-8) 0 var(--om-space-8);
+  border-bottom: none;
+}
+
+:deep(.el-card__body) {
+  padding: var(--om-space-6) var(--om-space-8) var(--om-space-8) var(--om-space-8);
+}
+
+:deep(.el-table) {
+  border-radius: var(--om-radius-xl);
+  overflow: hidden;
+  box-shadow: none;
+  background: var(--om-glass-bg);
+  backdrop-filter: var(--om-glass-backdrop);
+  border: 1px solid var(--om-glass-border);
+}
+
+:deep(.el-table__header) {
+  background: var(--om-table-header-bg);
+}
+
+:deep(.el-table__header th) {
+  background: transparent;
+  border: none;
+  color: var(--om-text-secondary);
+  font-weight: var(--om-font-semibold);
+  padding: var(--om-table-cell-padding);
+  font-size: var(--om-font-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+:deep(.el-table__body tr) {
+  background: var(--om-table-row-bg);
+  transition: background-color var(--om-transition-fast);
+  border-bottom: 1px solid var(--om-glass-border);
+}
+
+:deep(.el-table__body tr:hover) {
+  background: var(--om-table-row-hover-bg);
+}
+
+:deep(.el-table__body td) {
+  border: none;
+  padding: var(--om-table-cell-padding);
+  vertical-align: middle;
+}
+
+:deep(.el-button) {
+  border-radius: var(--om-button-radius);
+  font-weight: var(--om-font-medium);
+  transition: all var(--om-transition-normal);
+  backdrop-filter: var(--om-glass-backdrop);
+}
+
+:deep(.el-button--primary) {
+  background: var(--om-color-brand-gradient);
+  border: none;
+  box-shadow: var(--om-shadow-brand);
+  color: var(--om-text-inverse);
+}
+
+:deep(.el-button--primary:hover) {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--om-shadow-brand-hover);
+}
+
+:deep(.el-button--success) {
+  background: var(--om-color-success-gradient);
+  border: none;
+  box-shadow: var(--om-shadow-success);
+}
+
+:deep(.el-button--warning) {
+  background: var(--om-color-warning-gradient);
+  border: none;
+  box-shadow: var(--om-shadow-warning);
+}
+
+:deep(.el-button--danger) {
+  background: var(--om-color-danger-gradient);
+  border: none;
+  box-shadow: var(--om-shadow-danger);
+}
+
+:deep(.el-input__wrapper) {
+  border-radius: var(--om-input-radius);
+  box-shadow: var(--om-input-shadow);
+  border: 1px solid var(--om-input-border);
+  background: var(--om-input-bg);
+  transition: all var(--om-transition-normal);
+  backdrop-filter: var(--om-glass-backdrop);
+}
+
+:deep(.el-input__wrapper:hover) {
+  border-color: var(--om-input-border-hover);
+  box-shadow: var(--om-input-shadow-hover);
+}
+
+:deep(.el-input__wrapper.is-focus) {
+  border-color: var(--om-input-border-focus);
+  box-shadow: var(--om-input-shadow-focus);
+  background: var(--om-input-bg-focus);
+}
+
+:deep(.el-select .el-input__wrapper) {
+  border-radius: var(--om-radius-lg);
+}
+
+:deep(.el-dropdown-menu) {
+  border-radius: var(--om-radius-xl);
+  box-shadow: var(--om-shadow-xl);
+  border: 1px solid var(--om-glass-border);
+  background: var(--om-glass-bg-strong);
+  backdrop-filter: var(--om-glass-backdrop-strong);
+}
+
+:deep(.el-pagination) {
+  background: transparent;
+}
+
+/* === 响应式设计 === */
+@media (max-width: 768px) {
+  .om-page-container {
+    padding: var(--om-space-4);
+  }
+
+  .om-page-header__content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--om-space-4);
+  }
+
+  .om-page-header__actions {
+    justify-content: center;
+  }
+
+  .om-page-header__text h1 {
+    font-size: var(--om-font-3xl);
+  }
+
+  .om-stats-grid {
+    grid-template-columns: 1fr;
+    gap: var(--om-space-4);
+  }
+
+  .om-stat-card {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--om-space-4);
+  }
+
+  .om-cards-grid {
+    grid-template-columns: 1fr;
+    gap: var(--om-space-4);
+  }
+
+  .om-toolbar {
+    flex-direction: column;
+    gap: var(--om-space-3);
+    align-items: stretch;
+  }
+
+  .om-toolbar__right {
+    justify-content: space-between;
+  }
+
+  .om-view-controls {
+    flex-direction: column;
+    gap: var(--om-space-3);
+  }
+
+  .om-view-search {
+    max-width: none;
+  }
+
+  .om-content-card__header {
+    flex-direction: column;
+    gap: var(--om-space-3);
+    align-items: stretch;
+  }
+
+  .om-content-card__header-right {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .om-page-container {
+    padding: var(--om-space-3);
+  }
+
+  .om-page-header {
+    border-radius: var(--om-radius-2xl);
+    margin-bottom: var(--om-space-6);
+  }
+
+  .om-page-header__content {
+    padding: var(--om-space-6);
+  }
+
+  .om-page-header__text h1 {
+    font-size: var(--om-font-2xl);
+  }
+
+  .om-content-card__header,
+  .om-content-card__body {
+    padding: var(--om-space-4);
+  }
+
+  .om-stat-card {
+    padding: var(--om-space-3);
+  }
+
+  .om-stat-card__icon {
+    width: 48px;
+    height: 48px;
+    font-size: var(--om-font-xl);
+  }
+}

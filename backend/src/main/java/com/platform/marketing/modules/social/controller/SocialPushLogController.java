@@ -26,6 +26,6 @@ public class SocialPushLogController {
                                                                      @RequestParam(defaultValue = "0") int page,
                                                                      @RequestParam(defaultValue = "10") int size) {
         Page<SocialPushLog> p = socialPushLogService.search(accountId, status, PageRequest.of(page, size));
-        return ResponseEntity.success(new ResponsePageDataEntity<>(p.getTotalElements(), p.getContent()));
+        return ResponseEntity.success(new ResponsePageDataEntity<SocialPushLog>(p.getTotalElements(), p.getContent()));
     }
 }

@@ -17,8 +17,24 @@ public class ResponseEntity<T> {
         this.requestId = UUID.randomUUID().toString();
     }
 
+    public ResponseEntity(String status, String message, T data) {
+        this.code = "success".equals(status) ? 0 : 1;
+        this.message = message;
+        this.data = data;
+        this.timestamp = System.currentTimeMillis();
+        this.requestId = UUID.randomUUID().toString();
+    }
+
     public static <T> ResponseEntity<T> success(T data) {
         return new ResponseEntity<>(0, "success", data);
+    }
+
+    public static <T> ResponseEntity<T> success(String message, T data) {
+        return new ResponseEntity<>(0, message, data);
+    }
+
+    public static <T> ResponseEntity<T> error(String message) {
+        return new ResponseEntity<>(1, message, null);
     }
 
     public static <T> ResponseEntity<T> fail(int code, String message) {

@@ -28,7 +28,7 @@ public class ContentGenerationController {
                                                                           @RequestParam(defaultValue = "0") int page,
                                                                           @RequestParam(defaultValue = "10") int size) {
         Page<ContentGeneration> p = service.search(status, channel, keyword, PageRequest.of(page, size));
-        return ResponseEntity.success(new ResponsePageDataEntity<>(p.getTotalElements(), p.getContent()));
+        return ResponseEntity.success(new ResponsePageDataEntity<ContentGeneration>(p.getTotalElements(), p.getContent()));
     }
 
     @GetMapping("/{id}")

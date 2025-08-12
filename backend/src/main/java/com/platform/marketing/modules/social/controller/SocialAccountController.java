@@ -27,7 +27,7 @@ public class SocialAccountController {
                                                                      @RequestParam(defaultValue = "0") int page,
                                                                      @RequestParam(defaultValue = "10") int size) {
         Page<SocialAccount> p = socialAccountService.search(platform, status, keyword, PageRequest.of(page, size));
-        return ResponseEntity.success(new ResponsePageDataEntity<>(p.getTotalElements(), p.getContent()));
+        return ResponseEntity.success(new ResponsePageDataEntity<SocialAccount>(p.getTotalElements(), p.getContent()));
     }
 
     @GetMapping("/{id}")
