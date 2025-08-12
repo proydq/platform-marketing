@@ -1,75 +1,100 @@
 <template>
-  <div class="page-wrapper">
-    <el-card class="task-card">
-      <el-row class="action-buttons" justify="space-between" align="middle">
-        <el-space>
-          <el-button type="primary" @click="openCreate"> 新增任务 </el-button>
-          <el-button type="success" @click="showPreview"> 预览数据 </el-button>
-        </el-space>
-      </el-row>
-      <QuickCrawlForm />
-      <div class="task-table-wrapper">
-        <el-table
-          :data="tasks"
-          height="100%"
-          style="width: 100%"
-          stripe
-          size="small"
-        >
-          <el-table-column
-            prop="name"
-            label="任务名称"
-            min-width="160"
-            show-overflow-tooltip
-          />
-          <el-table-column prop="platform" label="平台" min-width="120">
-            <template #default="{ row }">
-              {{
-                Array.isArray(row.platform)
-                  ? row.platform.join(", ")
-                  : row.platform
-              }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="status"
-            label="状态"
-            width="120"
-            align="center"
-          >
-            <template #default="{ row }">
-              <el-tag :type="tagType(row.status)" size="small">{{
-                row.status
-              }}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="progress"
-            label="进度"
-            width="120"
-            align="center"
-          >
-            <template #default="{ row }">
-              <ProgressRing :percentage="row.progress" />
-            </template>
-          </el-table-column>
-          <el-table-column prop="createTime" label="创建时间" min-width="160" />
-          <el-table-column label="操作" width="160" align="center">
-            <template #default="scope">
-              <el-button type="text" @click="editRow(scope.row)"
-                >编辑</el-button
-              >
-              <el-button
-                type="text"
-                style="color: #f56c6c"
-                @click="removeRow(scope.row)"
-                >删除</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
+  <div class="om-page-container">
+    <div class="om-page-header">
+      <div class="om-page-header__content">
+        <div class="om-page-header__text">
+          <h1>客户抓取</h1>
+          <p>管理并执行客户抓取任务</p>
+        </div>
+        <div class="om-page-header__actions">
+          <el-button type="primary" @click="openCreate">
+            <el-icon><Plus /></el-icon>
+            新增任务
+          </el-button>
+          <el-button type="success" @click="showPreview">
+            <el-icon><View /></el-icon>
+            预览数据
+          </el-button>
+        </div>
       </div>
-    </el-card>
+    </div>
+
+    <div class="om-content-card">
+      <div class="om-content-card__header">
+        <div class="om-content-card__header-left">
+          <div class="om-content-card__icon">
+            <el-icon><List /></el-icon>
+          </div>
+          <div class="om-content-card__info">
+            <h3>抓取任务列表</h3>
+            <p>管理当前所有抓取任务</p>
+          </div>
+        </div>
+      </div>
+      <div class="om-content-card__body">
+        <QuickCrawlForm />
+        <div class="task-table-wrapper">
+          <el-table
+            :data="tasks"
+            height="100%"
+            style="width: 100%"
+            stripe
+            size="small"
+          >
+            <el-table-column
+              prop="name"
+              label="任务名称"
+              min-width="160"
+              show-overflow-tooltip
+            />
+            <el-table-column prop="platform" label="平台" min-width="120">
+              <template #default="{ row }">
+                {{
+                  Array.isArray(row.platform)
+                    ? row.platform.join(', ')
+                    : row.platform
+                }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="status"
+              label="状态"
+              width="120"
+              align="center"
+            >
+              <template #default="{ row }">
+                <el-tag :type="tagType(row.status)" size="small">
+                  {{ row.status }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="progress"
+              label="进度"
+              width="120"
+              align="center"
+            >
+              <template #default="{ row }">
+                <ProgressRing :percentage="row.progress" />
+              </template>
+            </el-table-column>
+            <el-table-column prop="createTime" label="创建时间" min-width="160" />
+            <el-table-column label="操作" width="160" align="center">
+              <template #default="scope">
+                <el-button type="text" @click="editRow(scope.row)">编辑</el-button>
+                <el-button
+                  type="text"
+                  style="color: #f56c6c"
+                  @click="removeRow(scope.row)"
+                >
+                  删除
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </div>
 
     <!-- 表单抽屉 -->
     <el-drawer v-model="formDrawer" title="新建抓取任务" size="40%">
@@ -133,6 +158,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { Plus, View, List } from "@element-plus/icons-vue";
 import ProgressRing from "@/components/ProgressRing.vue";
 import {
   getCustomerList,
@@ -148,7 +174,7 @@ const previewDialog = ref(false);
 
 const formRef = ref();
 const rules = {
-  taskName: [{ required: true, message: '请输入任务名称', trigger: 'blur' }]
+  taskName: [{ required: true, message: "请输入任务名称", trigger: "blur" }],
 };
 
 const platforms = [
@@ -252,36 +278,9 @@ function tagType(status) {
 </script>
 
 <style scoped>
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  gap: 16px;
-  box-sizing: border-box;
-  background-color: #fff;
-}
-
-.chart-container {
-  border-radius: 12px;
-}
-
-.task-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.task-card .el-card__body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-}
-
 .task-table-wrapper {
-  flex: 1;
+  margin-top: var(--om-space-6);
   overflow-y: auto;
 }
 </style>
+
