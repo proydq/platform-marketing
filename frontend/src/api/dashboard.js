@@ -25,3 +25,23 @@ export function getRecentTasks() {
 export function getTaskDetail(id) {
   return request.get(`/api/dashboard/tasks/${id}`);
 }
+
+// 创建新任务
+export function createTask(data) {
+  return request.post("/api/dashboard/tasks", data);
+}
+
+// 更新任务状态
+export function updateTaskStatus(id, status) {
+  return request.put(`/api/dashboard/tasks/${id}/status`, { status });
+}
+
+// 删除任务
+export function deleteTask(id) {
+  return request.delete(`/api/dashboard/tasks/${id}`);
+}
+
+// 重启任务
+export function retryTask(id) {
+  return request.post(`/api/dashboard/tasks/${id}/retry`);
+}

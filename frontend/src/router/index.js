@@ -23,19 +23,26 @@ const CustomerAcquisitionView = () =>
   import("../views/customer/CustomerAcquisitionView.vue");
 const CustomerAnalyticsView = () =>
   import("../views/customer/CustomerAnalyticsView.vue");
-const ProductListView = () => import("../views/product/ProductListView.vue");
+const DataImportView = () => import("../views/customer/DataImportView.vue");
+const CustomerTagsView = () => import("../views/customer/CustomerTagsView.vue");
+const CrawlDataView = () => import("../views/customer/CrawlDataView.vue");
+const WhatsAppView = () => import("../views/marketing/WhatsAppView.vue");
+const ProductCenterView = () => import("../views/product/ProductCenterView.vue");
+const ProductEditView = () => import("../views/product/ProductEditView.vue");
+const AIMarketingAssistantView = () => import("../views/ai/AIMarketingAssistantView.vue");
 const routes = [
   { path: "/login", name: "Login", component: LoginView },
   {
     path: "/",
     component: MainLayout,
     children: [
+      { path: "", redirect: "/dashboard" },
       { path: "dashboard", name: "Dashboard", component: DashboardView },
 
       // 客户管理模块 - 重构后的嵌套路由
       {
         path: "customer",
-        name: "Customer",
+        name: "CustomerManage",
         redirect: "/customer/list",
         children: [
           {
@@ -68,6 +75,36 @@ const routes = [
               permissions: ["customer:analytics"],
             },
           },
+          {
+            path: "import",
+            name: "DataImport",
+            component: DataImportView,
+            meta: {
+              title: "dataImport.title",
+              requiresAuth: true,
+              permissions: ["customer:import"],
+            },
+          },
+          {
+            path: "tags",
+            name: "CustomerTags",
+            component: CustomerTagsView,
+            meta: {
+              title: "customerTags.title",
+              requiresAuth: true,
+              permissions: ["customer:tags"],
+            },
+          },
+          {
+            path: "crawl-data",
+            name: "CrawlData",
+            component: CrawlDataView,
+            meta: {
+              title: "crawlData.title",
+              requiresAuth: true,
+              permissions: ["crawl:data:view"],
+            },
+          },
         ],
       },
 
@@ -97,16 +134,54 @@ const routes = [
         name: "CampaignCenter",
         component: CampaignCenterView,
       },
+      {
+        path: "whatsapp",
+        name: "WhatsApp",
+        component: WhatsAppView,
+        meta: {
+          title: "whatsapp.title",
+          requiresAuth: true,
+          permissions: ["whatsapp:send"],
+        },
+      },
 
+      // 产品内容中心模块
       {
         path: "product",
         name: "Product",
-        component: ProductListView,
-        meta: {
-          title: "product.name",
-          requiresAuth: true,
-          permissions: ["product:list"],
-        },
+        redirect: "/product/center",
+        children: [
+          {
+            path: "center",
+            name: "ProductCenter",
+            component: ProductCenterView,
+            meta: {
+              title: "product.center",
+              requiresAuth: true,
+              permissions: ["product:view"],
+            },
+          },
+          {
+            path: "edit",
+            name: "ProductCreate",
+            component: ProductEditView,
+            meta: {
+              title: "product.newProduct",
+              requiresAuth: true,
+              permissions: ["product:create"],
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "ProductEdit",
+            component: ProductEditView,
+            meta: {
+              title: "product.editProduct",
+              requiresAuth: true,
+              permissions: ["product:edit"],
+            },
+          },
+        ],
       },
       // 其他功能模块
       {
@@ -125,6 +200,30 @@ const routes = [
         path: "notifications",
         name: "NotificationCenter",
         component: NotificationCenterView,
+      },
+
+      // 渠道管理模块
+      {
+        path: "channels",
+        name: "ChannelManage",
+        component: () => import("../views/channel/ChannelManageView.vue"),
+        meta: {
+          title: "channels.management",
+          requiresAuth: true,
+          permissions: ["channel:manage"],
+        },
+      },
+
+      // AI营销助手模块
+      {
+        path: "ai-assistant",
+        name: "AIMarketingAssistant",
+        component: AIMarketingAssistantView,
+        meta: {
+          title: "AI营销助手",
+          requiresAuth: true,
+          permissions: ["ai:assistant"],
+        },
       },
 
       // 向下兼容的路由重定向

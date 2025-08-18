@@ -1,579 +1,668 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { hasPermission } from "../composables/permission";
 import { useI18n } from "vue-i18n";
+import { useUserStore } from "@/store";
+import { ElMessage } from "element-plus";
 
 const router = useRouter();
 const route = useRoute();
+const userStore = useUserStore();
 
 const activeMenu = ref(route.name || "Dashboard");
 const { t } = useI18n();
 
-// 现代化菜单项配置 - 使用统一的科技风格设计
+// 确保用户信息被正确初始化 - 在组件创建时立即初始化
+if (!userStore.currentUser) {
+  console.log('立即初始化默认用户...');
+  userStore.setDefaultUser();
+}
+
+// 确保有token
+if (!userStore.token) {
+  userStore.setToken('dev-token-123456');
+}
+
+onMounted(async () => {
+  console.log('组件挂载完成');
+  
+  // 确保用户数据已初始化
+  if (!userStore.currentUser) {
+    userStore.setDefaultUser();
+  }
+  
+  // 等待下一个tick确保响应式更新
+  await nextTick();
+  
+  console.log('当前用户:', userStore.currentUser);
+  console.log('用户权限数量:', userStore.currentUser?.permissions?.length || 0);
+  console.log('可见菜单项数量:', visibleItems.value.length);
+});
+
 const menuItems = [
-  { 
-    name: "Dashboard", 
-    label: "menu.dashboard", 
-    icon: "💻",
-    color: "neon-blue",
-    description: "系统总览与核心数据"
+  // 1. 产品内容中心 - 集中管理产品信息、素材、多语言版本
+  {
+    name: "ProductCenter",
+    label: "menu.productContentCenter",
+    icon: "📦",
+    permission: "product:dir",
+    description: "产品内容中心"
+  },
+  
+  // 2. 数据采集模块 - 多源数据导入、去重、验证、清洗
+  {
+    name: "DataImport",
+    label: "menu.dataCollectionModule",
+    icon: "🔍",
+    permission: "customer-collect:dir",
+    description: "数据采集模块"
+  },
+  
+  // 2.1 爬虫数据管理 - 查看和管理爬虫采集的数据
+  {
+    name: "CrawlData",
+    label: "menu.crawlDataManagement", 
+    icon: "📊",
+    permission: "crawl:data:view",
+    description: "爬虫数据管理"
+  },
+  
+  // 3. 客户管理模块 - 客户信息、行为数据、画像、评分
+  {
+    name: "CustomerManage", 
+    label: "menu.customerManagementModule",
+    icon: "👥",
+    permission: "customer:dir",
+    description: "客户管理模块"
+  },
+  
+  // 4. AI营销助手 - 内容生成、关键词研究、智能推荐、策略优化
+  {
+    name: "ContentGenerate",
+    label: "menu.aiMarketingAssistant",
+    icon: "🤖",
+    permission: "content-generation:dir",
+    description: "AI营销助手"
+  },
+  
+  // 5. 渠道触达模块 - 多渠道发送、统一排程、频率控制
+  {
+    name: "CampaignCenter", 
+    label: "menu.channelReachModule", 
+    icon: "📡",
+    permission: "campaign:dir",
+    description: "渠道触达模块"
+  },
+  
+  // 7. 行为跟踪与分析 - 全渠道记录、转化分析、ROI计算
+  {
+    name: "BehaviorTrack",
+    label: "menu.behaviorTrackingAnalysis",
+    icon: "📈",
+    permission: "behavior-log:dir",
+    description: "行为跟踪与分析"
+  },
+  
+  // 8. 系统设置 - 系统配置
+  {
+    name: "Settings",
+    label: "menu.systemSettings",
+    icon: "⚙️",
+    permission: "settings:dir",
+    description: "系统设置"
+  },
+
+  // 控制台
+  {
+    name: "Dashboard",
+    label: "menu.dataOverview",
+    icon: "📊",
+    permission: "dashboard:dir",
+    description: "数据控制台"
   },
   {
     name: "CustomerCrawl",
-    label: "menu.lead",
-    icon: "🎯",
-    color: "neon-green",
-    description: "智能化客户获取",
+    label: "menu.customerAcquisition",
+    icon: "🔍",
     permission: "customer:crawl",
-  },
-  {
-    name: "CustomerManage",
-    label: "menu.customer",
-    icon: "👥",
-    color: "neon-purple",
-    description: "客户关系管理",
-    permission: "customer:manage",
-  },
-  {
-    name: "CampaignCenter", 
-    label: "menu.campaign", 
-    icon: "🚀",
-    color: "neon-pink",
-    description: "营销活动管理"
-  },
-  {
-    name: "NotificationCenter", 
-    label: "menu.notification", 
-    icon: "📡",
-    color: "neon-yellow",
-    description: "消息通知中心"
+    hidden: true
   },
   {
     name: "EmailMarketing",
-    label: "menu.email",
-    icon: "📬",
-    color: "neon-orange",
-    description: "邮件营销系统",
+    label: "menu.email", 
+    icon: "📧",
     permission: "email:send",
+    hidden: true
   },
   {
     name: "SocialMedia",
     label: "menu.social",
-    icon: "🌐",
-    color: "neon-blue",
-    description: "社交媒体营销",
+    icon: "📱", 
     permission: "social:manage",
+    hidden: true
+  },
+  {
+    name: "WhatsApp",
+    label: "menu.whatsapp",
+    icon: "💬",
+    permission: "whatsapp:send",
+    hidden: true
   },
   {
     name: "TaskSchedule",
     label: "menu.task",
-    icon: "⚡",
-    color: "neon-green",
-    description: "任务调度管理",
+    icon: "⏰",
     permission: "task:schedule",
+    hidden: true
   },
   {
-    name: "BehaviorTrack",
-    label: "menu.behavior",
-    icon: "📊",
-    color: "neon-purple",
-    description: "用户行为分析",
-    permission: "behavior:track",
-  },
-  {
-    name: "ContentGenerate",
-    label: "menu.content",
-    icon: "🎨",
-    color: "neon-pink",
-    description: "AI内容生成",
-    permission: "content:generate",
+    name: "CustomerTags",
+    label: "menu.customerTags",
+    icon: "🏷️",
+    permission: "customer:tags",
+    hidden: true
   },
   {
     name: "Reports",
     label: "menu.reports",
-    icon: "📈",
-    color: "neon-yellow",
-    description: "数据报表分析",
+    icon: "📋",
     permission: "report:view",
+    hidden: true
   },
+  // 权限管理
   {
     name: "Permission",
     label: "menu.permission",
-    icon: "🔒",
-    color: "neon-orange",
-    description: "权限管理系统",
-    permission: "system:permission",
+    icon: "🔐",
+    permission: "permission:dir",
+    description: "权限管理"
+  },
+  
+  // 菜单管理
+  {
+    name: "MenuManagement",
+    label: "menu.menuManage",
+    icon: "📋",
+    permission: "menu:dir",
+    description: "菜单管理"
   },
   {
-    name: "Settings",
-    label: "menu.system",
-    icon: "⚙️",
-    color: "neon-blue",
-    description: "系统配置管理",
-    permission: "system:setting",
+    name: "NotificationCenter", 
+    label: "menu.notification", 
+    icon: "🔔",
+    hidden: true
   },
   { 
     name: "HelpCenter", 
     label: "menu.help", 
-    icon: "💡",
-    color: "neon-green",
-    description: "帮助与支持"
+    icon: "❓",
+    hidden: true
   },
 ];
 
-const visibleItems = computed(() => 
-  menuItems.filter(item => !item.permission || hasPermission(item.permission))
+// 使用 computed 确保响应式更新
+const visibleItems = computed(() => {
+  // 通过访问 userStore.currentUser 确保响应性
+  const currentUser = userStore.currentUser;
+  
+  // 确保用户已经初始化
+  if (!currentUser) {
+    console.log('菜单计算: 用户未初始化，返回空菜单');
+    return [];
+  }
+  
+  const filtered = menuItems.filter(
+    (i) => !i.hidden && (!i.permission || hasPermission(i.permission))
+  );
+  
+  console.log('菜单过滤结果:', {
+    totalMenuItems: menuItems.length,
+    hiddenItems: menuItems.filter(i => i.hidden).length,
+    visibleItems: filtered.length,
+    visibleNames: filtered.map(i => i.name),
+    userPermissions: currentUser?.permissions?.length || 0
+  });
+  
+  return filtered;
+});
+
+// 分类菜单项 - 使用 computed
+const dashboardItems = computed(() => 
+  visibleItems.value.filter(item => 
+    ['Dashboard'].includes(item.name)
+  )
 );
 
-function handleMenuSelect(menuName) {
-  activeMenu.value = menuName;
-  router.push({ name: menuName });
+const coreItems = computed(() => 
+  visibleItems.value.filter(item => 
+    ['ProductCenter', 'DataImport', 'CrawlData', 'CustomerManage', 'ContentGenerate', 'CampaignCenter'].includes(item.name)
+  ).map(item => ({
+    ...item,
+    badge: item.name === 'ContentGenerate' ? 'AI' : null
+  }))
+);
+
+const analyticsItems = computed(() => 
+  visibleItems.value.filter(item => 
+    ['BehaviorTrack'].includes(item.name)
+  )
+);
+
+const systemItems = computed(() => 
+  visibleItems.value.filter(item => 
+    ['Permission', 'MenuManagement', 'Settings'].includes(item.name)
+  )
+);
+
+
+function handleMenuSelect(index) {
+  activeMenu.value = index;
+  router.push({ name: index });
 }
 
-// 获取颜色类名
-function getColorClass(color) {
-  return `sidebar-menu__item--${color}`;
-}
-
-// 检查是否为当前活跃菜单
-function isActive(menuName) {
-  return activeMenu.value === menuName || route.name === menuName;
+// 退出登录功能
+function handleLogout() {
+  try {
+    userStore.logout();
+    ElMessage.success("退出登录成功");
+    router.push("/login");
+  } catch (error) {
+    ElMessage.error("退出登录失败");
+  }
 }
 </script>
 
 <template>
-  <div class="sidebar-menu">
-    <!-- 品牌标识区域 -->
-    <div class="sidebar-menu__brand">
-      <div class="sidebar-menu__logo">
-        <span class="sidebar-menu__logo-icon">🌐</span>
-        <span class="sidebar-menu__logo-text">{{ t("sidebar.brand") }}</span>
+  <div class="enhanced-sidebar">
+    <!-- 品牌标识 -->
+    <div class="sidebar-brand">
+      <div class="brand-icon">🌍</div>
+      <div class="brand-info">
+        <div class="brand-name">{{ t("sidebar.brand") }}</div>
+        <div class="brand-subtitle">海外营销系统</div>
       </div>
-      <div class="sidebar-menu__version">v2.0</div>
     </div>
 
-    <!-- 导航菜单区域 -->
-    <div class="sidebar-menu__nav">
-      <div 
-        v-for="item in visibleItems" 
-        :key="item.name"
-        :class="[
-          'sidebar-menu__item',
-          getColorClass(item.color),
-          { 'sidebar-menu__item--active': isActive(item.name) }
-        ]"
-        @click="handleMenuSelect(item.name)"
+    <!-- 导航菜单 -->
+    <div class="sidebar-menu">
+      <el-menu 
+        :default-active="activeMenu" 
+        @select="handleMenuSelect"
+        class="nav-menu"
+        :collapse="false"
       >
-        <div class="sidebar-menu__item-content">
-          <div class="sidebar-menu__item-icon">
-            <span>{{ item.icon }}</span>
-            <div class="sidebar-menu__item-glow"></div>
-          </div>
-          <div class="sidebar-menu__item-text">
-            <div class="sidebar-menu__item-title">{{ t(item.label) }}</div>
-            <div class="sidebar-menu__item-desc">{{ item.description }}</div>
-          </div>
+        <div class="menu-section">
+          <div class="section-title">数据总览 ({{ dashboardItems.length }})</div>
+          <el-menu-item
+            v-for="item in dashboardItems"
+            :key="item.name"
+            :index="item.name"
+            class="menu-item"
+          >
+            <div class="item-icon">{{ item.icon }}</div>
+            <span class="item-text">{{ t(item.label) }}</span>
+            <div class="item-badge" v-if="item.badge">{{ item.badge }}</div>
+          </el-menu-item>
         </div>
-        <div class="sidebar-menu__item-indicator"></div>
-      </div>
+
+        <div class="menu-section">
+          <div class="section-title">核心功能 ({{ coreItems.length }})</div>
+          <el-menu-item
+            v-for="item in coreItems"
+            :key="item.name"
+            :index="item.name"
+            class="menu-item"
+          >
+            <div class="item-icon">{{ item.icon }}</div>
+            <span class="item-text">{{ t(item.label) }}</span>
+            <div class="item-badge" v-if="item.badge">{{ item.badge }}</div>
+          </el-menu-item>
+        </div>
+
+        <div class="menu-section">
+          <div class="section-title">分析工具 ({{ analyticsItems.length }})</div>
+          <el-menu-item
+            v-for="item in analyticsItems"
+            :key="item.name"
+            :index="item.name"
+            class="menu-item"
+          >
+            <div class="item-icon">{{ item.icon }}</div>
+            <span class="item-text">{{ t(item.label) }}</span>
+            <div class="item-badge" v-if="item.badge">{{ item.badge }}</div>
+          </el-menu-item>
+        </div>
+
+        <div class="menu-section">
+          <div class="section-title">系统设置 ({{ systemItems.length }})</div>
+          <el-menu-item
+            v-for="item in systemItems"
+            :key="item.name"
+            :index="item.name"
+            class="menu-item"
+          >
+            <div class="item-icon">{{ item.icon }}</div>
+            <span class="item-text">{{ t(item.label) }}</span>
+            <div class="item-badge" v-if="item.badge">{{ item.badge }}</div>
+          </el-menu-item>
+        </div>
+      </el-menu>
     </div>
 
-    <!-- 底部信息区域 -->
-    <div class="sidebar-menu__footer">
-      <div class="sidebar-menu__stats">
-        <div class="sidebar-menu__stat-item">
-          <span class="sidebar-menu__stat-value">{{ visibleItems.length }}</span>
-          <span class="sidebar-menu__stat-label">模块</span>
-        </div>
-        <div class="sidebar-menu__stat-item">
-          <span class="sidebar-menu__stat-value">100%</span>
-          <span class="sidebar-menu__stat-label">在线</span>
-        </div>
+    <!-- 用户信息 -->
+    <div class="sidebar-user">
+      <div class="user-avatar">
+        <div class="avatar-circle">👤</div>
+      </div>
+      <div class="user-info">
+        <div class="user-name">营销专员</div>
+        <div class="user-role">管理员</div>
+      </div>
+      <div class="user-actions">
+        <el-dropdown>
+          <span class="dropdown-trigger">⚙️</span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>个人设置</el-dropdown-item>
+              <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-/* === 侧边栏菜单深色科技风样式 === */
-.sidebar-menu {
-  width: 280px;
+<style scoped lang="scss">
+
+.enhanced-sidebar {
+  width: 240px; // 使用风格指南标准宽度
   height: 100vh;
-  background: var(--om-bg-gradient-primary);
-  border-right: 1px solid var(--om-glass-border);
-  backdrop-filter: var(--om-glass-backdrop-strong);
+  background: #FFFFFF;
+  border-right: 1px solid #DCDFE6;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
-.sidebar-menu::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--om-bg-gradient-overlay);
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* 品牌标识区域 */
-.sidebar-menu__brand {
-  padding: var(--om-space-6);
-  border-bottom: 1px solid var(--om-glass-border);
-  background: var(--om-glass-bg-strong);
-  backdrop-filter: var(--om-glass-backdrop);
-}
-
-.sidebar-menu__logo {
+/* 品牌标识 */
+.sidebar-brand {
+  padding: 20px;
   display: flex;
   align-items: center;
-  gap: var(--om-space-3);
-  margin-bottom: var(--om-space-2);
+  gap: 15px;
+  border-bottom: 1px solid #E4E7ED;
+  background: #409EFF;
+  height: 60px; // 与风格指南header高度一致
 }
 
-.sidebar-menu__logo-icon {
-  font-size: var(--om-font-2xl);
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px; // 使用风格指南圆角
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: var(--om-color-brand-gradient);
-  border-radius: var(--om-radius-lg);
-  box-shadow: var(--om-shadow-neon-blue);
+  font-size: 18px;
 }
 
-.sidebar-menu__logo-text {
-  font-size: var(--om-font-lg);
-  font-weight: var(--om-font-bold);
-  background: var(--om-color-brand-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.brand-info {
+  flex: 1;
 }
 
-.sidebar-menu__version {
-  font-size: var(--om-font-xs);
-  color: var(--om-text-tertiary);
-  font-weight: var(--om-font-medium);
+.brand-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 2px 0;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+  margin: 0;
+}
+
+/* 导航菜单 */
+.sidebar-menu {
+  flex: 1;
+  padding: 15px 0;
+  overflow-y: auto;
+  background: #FFFFFF;
+}
+
+.nav-menu {
+  background: transparent;
+  border: none;
+}
+
+.menu-section {
+  margin-bottom: 30px;
+  
+  &:first-child {
+    margin-top: 15px;
+  }
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #909399;
   text-transform: uppercase;
   letter-spacing: 1px;
+  padding: 0 20px;
+  margin-bottom: 10px;
 }
 
-/* 导航菜单区域 */
-.sidebar-menu__nav {
-  flex: 1;
-  padding: var(--om-space-4);
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.sidebar-menu__item {
-  position: relative;
-  margin-bottom: var(--om-space-3);
-  border-radius: var(--om-radius-xl);
-  background: var(--om-glass-bg);
-  border: 1px solid var(--om-glass-border);
-  backdrop-filter: var(--om-glass-backdrop);
-  transition: all var(--om-transition-normal);
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.sidebar-menu__item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
+.menu-item {
+  margin: 0 15px 5px;
+  border-radius: 4px;
+  transition: all 0.3s;
   background: transparent;
-  transition: all var(--om-transition-normal);
-}
-
-.sidebar-menu__item-content {
+  color: #606266;
+  height: 40px;
   display: flex;
   align-items: center;
-  gap: var(--om-space-4);
-  padding: var(--om-space-4);
+  padding: 0 20px;
+  cursor: pointer;
   position: relative;
-  z-index: 1;
+  
+  &:hover {
+    background: #ecf5ff;
+    color: #409EFF;
+  }
+  
+  &.is-active {
+    background: #409EFF;
+    color: white;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 20px;
+      background: white;
+      border-radius: 0 2px 2px 0;
+    }
+  }
 }
 
-.sidebar-menu__item-icon {
-  position: relative;
+.item-icon {
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: var(--om-glass-bg-strong);
-  border-radius: var(--om-radius-lg);
-  font-size: var(--om-font-xl);
-  transition: all var(--om-transition-normal);
+  margin-right: 10px;
+  font-size: 13px;
+  flex-shrink: 0;
 }
 
-.sidebar-menu__item-glow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: inherit;
-  opacity: 0;
-  transition: all var(--om-transition-normal);
+.item-text {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 400;
 }
 
-.sidebar-menu__item-text {
+.item-badge {
+  background: #E6A23C;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 2px;
+  margin-left: 5px;
+}
+
+/* 用户信息 */
+.sidebar-user {
+  padding: 20px;
+  border-top: 1px solid #E4E7ED;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #F0F2F5;
+}
+
+.user-avatar {
+  flex-shrink: 0;
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #409EFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: white;
+}
+
+.user-info {
   flex: 1;
   min-width: 0;
 }
 
-.sidebar-menu__item-title {
-  font-size: var(--om-font-md);
-  font-weight: var(--om-font-semibold);
-  color: var(--om-text-primary);
-  margin-bottom: var(--om-space-1);
-  transition: color var(--om-transition-normal);
+.user-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #303133;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.sidebar-menu__item-desc {
-  font-size: var(--om-font-xs);
-  color: var(--om-text-tertiary);
-  line-height: var(--om-line-tight);
-  transition: color var(--om-transition-normal);
+.user-role {
+  font-size: 12px;
+  color: #909399;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.sidebar-menu__item-indicator {
-  position: absolute;
-  right: var(--om-space-4);
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: var(--om-radius-full);
-  background: var(--om-text-tertiary);
-  opacity: 0;
-  transition: all var(--om-transition-normal);
+.user-actions {
+  flex-shrink: 0;
 }
 
-/* 悬停效果 */
-.sidebar-menu__item:hover {
-  background: var(--om-glass-bg-strong);
-  border-color: var(--om-glass-border-strong);
-  transform: translateX(4px) scale(1.02);
-  box-shadow: var(--om-shadow-lg);
+.dropdown-trigger {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  font-size: 13px;
+  color: #909399;
+  
+  &:hover {
+    background: #F2F6FC;
+    color: #409EFF;
+  }
 }
 
-.sidebar-menu__item:hover .sidebar-menu__item-icon {
-  transform: scale(1.1);
+/* 覆盖Element Plus菜单样式 */
+.nav-menu .el-menu-item {
+  background: transparent !important;
+  border: none !important;
+  color: inherit !important;
+  height: auto !important;
+  line-height: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-.sidebar-menu__item:hover .sidebar-menu__item-indicator {
-  opacity: 1;
+.nav-menu .el-menu-item:hover {
+  background: transparent !important;
+  color: inherit !important;
 }
 
-/* 激活状态 */
-.sidebar-menu__item--active {
-  background: var(--om-color-dark-600);
-  border-color: var(--om-glass-border-neon);
-  box-shadow: var(--om-shadow-neon-blue);
-  transform: translateX(8px);
+.nav-menu .el-menu-item.is-active {
+  background: transparent !important;
+  color: inherit !important;
 }
 
-.sidebar-menu__item--active::before {
-  background: var(--om-color-brand-gradient);
+/* 滚动条样式 */
+.sidebar-menu::-webkit-scrollbar {
+  width: 8px;
 }
 
-.sidebar-menu__item--active .sidebar-menu__item-title {
-  background: var(--om-color-brand-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.sidebar-menu::-webkit-scrollbar-track {
+  background: #F2F6FC;
 }
 
-.sidebar-menu__item--active .sidebar-menu__item-desc {
-  color: var(--om-text-secondary);
-}
-
-.sidebar-menu__item--active .sidebar-menu__item-indicator {
-  opacity: 1;
-  background: var(--om-color-neon-blue);
-  box-shadow: var(--om-shadow-neon-blue);
-}
-
-/* 颜色主题变体 */
-.sidebar-menu__item--neon-blue:hover {
-  border-color: var(--om-color-neon-blue);
-  box-shadow: var(--om-shadow-neon-blue);
-}
-
-.sidebar-menu__item--neon-blue:hover .sidebar-menu__item-glow {
-  opacity: 0.2;
-  box-shadow: inset 0 0 20px var(--om-color-neon-blue);
-}
-
-.sidebar-menu__item--neon-green:hover {
-  border-color: var(--om-color-neon-green);
-  box-shadow: var(--om-shadow-neon-green);
-}
-
-.sidebar-menu__item--neon-green:hover .sidebar-menu__item-glow {
-  opacity: 0.2;
-  box-shadow: inset 0 0 20px var(--om-color-neon-green);
-}
-
-.sidebar-menu__item--neon-purple:hover {
-  border-color: var(--om-color-neon-purple);
-  box-shadow: var(--om-shadow-neon-purple);
-}
-
-.sidebar-menu__item--neon-purple:hover .sidebar-menu__item-glow {
-  opacity: 0.2;
-  box-shadow: inset 0 0 20px var(--om-color-neon-purple);
-}
-
-.sidebar-menu__item--neon-pink:hover {
-  border-color: var(--om-color-neon-pink);
-  box-shadow: var(--om-shadow-neon-pink);
-}
-
-.sidebar-menu__item--neon-pink:hover .sidebar-menu__item-glow {
-  opacity: 0.2;
-  box-shadow: inset 0 0 20px var(--om-color-neon-pink);
-}
-
-.sidebar-menu__item--neon-yellow:hover {
-  border-color: var(--om-color-neon-yellow);
-  box-shadow: var(--om-shadow-neon-yellow);
-}
-
-.sidebar-menu__item--neon-yellow:hover .sidebar-menu__item-glow {
-  opacity: 0.2;
-  box-shadow: inset 0 0 20px var(--om-color-neon-yellow);
-}
-
-.sidebar-menu__item--neon-orange:hover {
-  border-color: var(--om-color-neon-orange);
-  box-shadow: 0 0 20px rgba(255, 140, 66, 0.4);
-}
-
-.sidebar-menu__item--neon-orange:hover .sidebar-menu__item-glow {
-  opacity: 0.2;
-  box-shadow: inset 0 0 20px var(--om-color-neon-orange);
-}
-
-/* 底部信息区域 */
-.sidebar-menu__footer {
-  padding: var(--om-space-4);
-  border-top: 1px solid var(--om-glass-border);
-  background: var(--om-glass-bg-strong);
-  backdrop-filter: var(--om-glass-backdrop);
-}
-
-.sidebar-menu__stats {
-  display: flex;
-  gap: var(--om-space-4);
-}
-
-.sidebar-menu__stat-item {
-  flex: 1;
-  text-align: center;
-  padding: var(--om-space-3);
-  background: var(--om-glass-bg);
-  border-radius: var(--om-radius-lg);
-  border: 1px solid var(--om-glass-border);
-}
-
-.sidebar-menu__stat-value {
-  display: block;
-  font-size: var(--om-font-lg);
-  font-weight: var(--om-font-bold);
-  color: var(--om-color-neon-green);
-  margin-bottom: var(--om-space-1);
-}
-
-.sidebar-menu__stat-label {
-  font-size: var(--om-font-xs);
-  color: var(--om-text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: #E4E7ED;
+  border-radius: 4px;
+  
+  &:hover {
+    background: #DCDFE6;
+  }
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .sidebar-menu {
-    width: 100%;
-    height: auto;
+  .enhanced-sidebar {
+    width: 200px;
   }
   
-  .sidebar-menu__nav {
-    padding: var(--om-space-3);
+  .sidebar-brand {
+    padding: 15px;
   }
   
-  .sidebar-menu__item {
-    margin-bottom: var(--om-space-2);
+  .brand-name {
+    font-size: 13px;
   }
   
-  .sidebar-menu__item-content {
-    padding: var(--om-space-3);
+  .brand-subtitle {
+    display: none;
   }
   
-  .sidebar-menu__item-icon {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* 动画增强 */
-.sidebar-menu__item {
-  animation: fadeInUp 0.6s var(--om-ease-cyber);
-}
-
-.sidebar-menu__item:nth-child(1) { animation-delay: 0ms; }
-.sidebar-menu__item:nth-child(2) { animation-delay: 50ms; }
-.sidebar-menu__item:nth-child(3) { animation-delay: 100ms; }
-.sidebar-menu__item:nth-child(4) { animation-delay: 150ms; }
-.sidebar-menu__item:nth-child(5) { animation-delay: 200ms; }
-.sidebar-menu__item:nth-child(6) { animation-delay: 250ms; }
-.sidebar-menu__item:nth-child(7) { animation-delay: 300ms; }
-.sidebar-menu__item:nth-child(8) { animation-delay: 350ms; }
-.sidebar-menu__item:nth-child(9) { animation-delay: 400ms; }
-.sidebar-menu__item:nth-child(10) { animation-delay: 450ms; }
-.sidebar-menu__item:nth-child(11) { animation-delay: 500ms; }
-.sidebar-menu__item:nth-child(12) { animation-delay: 550ms; }
-.sidebar-menu__item:nth-child(13) { animation-delay: 600ms; }
-.sidebar-menu__item:nth-child(14) { animation-delay: 650ms; }
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 减少动画偏好支持 */
-@media (prefers-reduced-motion: reduce) {
-  .sidebar-menu__item {
-    animation: none;
-    transition: none;
+  .sidebar-user {
+    padding: 15px;
   }
   
-  .sidebar-menu__item:hover {
-    transform: none;
+  .user-name {
+    font-size: 12px;
   }
   
-  .sidebar-menu__item--active {
-    transform: none;
+  .user-role {
+    display: none;
+  }
+  
+  .item-text {
+    font-size: 12px;
+  }
+  
+  .section-title {
+    font-size: 10px;
   }
 }
 </style>
