@@ -8,7 +8,7 @@ import request from "@/utils/request";
  */
 export function getCustomerList(params) {
   return request({
-    url: "/api/v1/customers",
+    url: "/v1/customers",
     method: "get",
     params,
   });
@@ -31,7 +31,7 @@ export function getCustomer(id) {
  */
 export function createCustomer(data) {
   return request({
-    url: "/api/v1/customers",
+    url: "/v1/customers",
     method: "post",
     data,
   });
@@ -81,7 +81,7 @@ export function importCustomers(file) {
   formData.append("file", file);
 
   return request({
-    url: "/api/v1/customers/import",
+    url: "/v1/customers/import",
     method: "post",
     data: formData,
     headers: {
@@ -96,7 +96,7 @@ export function importCustomers(file) {
  */
 export function exportCustomers(params) {
   return request({
-    url: "/api/v1/customers/export",
+    url: "/v1/customers/export",
     method: "post",
     data: params,
     responseType: 'blob',
@@ -109,7 +109,7 @@ export function exportCustomers(params) {
  */
 export function getCustomerSources() {
   return request({
-    url: "/api/v1/customers/sources",
+    url: "/v1/customers/sources",
     method: "get",
   });
 }
@@ -122,7 +122,7 @@ export function getCustomerSources() {
  */
 export function getAcquisitionTasks(params) {
   return request({
-    url: "/api/acquisition/tasks",
+    url: "/v1/acquisition/tasks",
     method: "get",
     params,
   });
@@ -145,7 +145,7 @@ export function getAcquisitionTask(id) {
  */
 export function createAcquisitionTask(data) {
   return request({
-    url: "/api/acquisition/tasks",
+    url: "/v1/acquisition/tasks",
     method: "post",
     data,
   });
@@ -202,7 +202,7 @@ export function stopAcquisitionTask(id) {
  */
 export function createQuickAcquisition(data) {
   return request({
-    url: "/api/acquisition/tasks/quick",
+    url: "/v1/acquisition/tasks/quick",
     method: "post",
     data,
   });
@@ -214,7 +214,7 @@ export function createQuickAcquisition(data) {
  */
 export function getAcquisitionPreview(params) {
   return request({
-    url: "/api/acquisition/tasks/preview",
+    url: "/v1/acquisition/tasks/preview",
     method: "get",
     params,
   });
@@ -240,7 +240,7 @@ export function exportTaskData(id) {
  */
 export function getCustomerAnalytics(params) {
   return request({
-    url: "/api/v1/customer-analytics/overview",
+    url: "/v1/customer-analytics/overview",
     method: "get",
     params,
   });
@@ -252,7 +252,7 @@ export function getCustomerAnalytics(params) {
  */
 export function getGrowthTrendData(params) {
   return request({
-    url: "/api/v1/customer-analytics/growth-trend",
+    url: "/v1/customer-analytics/growth-trend",
     method: "get",
     params,
   });
@@ -264,7 +264,7 @@ export function getGrowthTrendData(params) {
  */
 export function getSourceDistributionData(params) {
   return request({
-    url: "/api/v1/customer-analytics/source-distribution",
+    url: "/v1/customer-analytics/source-distribution",
     method: "get",
     params,
   });
@@ -276,7 +276,7 @@ export function getSourceDistributionData(params) {
  */
 export function getStatusDistributionData(params) {
   return request({
-    url: "/api/v1/customer-analytics/status-distribution",
+    url: "/v1/customer-analytics/status-distribution",
     method: "get",
     params,
   });
@@ -288,7 +288,7 @@ export function getStatusDistributionData(params) {
  */
 export function getConversionRateData(params) {
   return request({
-    url: "/api/v1/customer-analytics/conversion-rate",
+    url: "/v1/customer-analytics/conversion-rate",
     method: "get",
     params,
   });
@@ -300,7 +300,7 @@ export function getConversionRateData(params) {
  */
 export function getAnalyticsTableData(params) {
   return request({
-    url: "/api/v1/customer-analytics/table-data",
+    url: "/v1/customer-analytics/table-data",
     method: "get",
     params,
   });
@@ -312,7 +312,7 @@ export function getAnalyticsTableData(params) {
  */
 export function exportAnalyticsReport(params) {
   return request({
-    url: "/api/v1/customer-analytics/export",
+    url: "/v1/customer-analytics/export",
     method: "post",
     data: params,
     responseType: 'blob',

@@ -3,11 +3,11 @@
     <div class="preview-header">
       <div class="language-selector">
         <el-select v-model="currentLanguage" @change="changeLanguage">
-          <el-option 
-            v-for="lang in availableLanguages" 
+          <el-option
+            v-for="lang in availableLanguages"
             :key="lang.code"
-            :label="lang.name" 
-            :value="lang.code" 
+            :label="lang.name"
+            :value="lang.code"
           />
         </el-select>
       </div>
@@ -16,11 +16,17 @@
     <div class="preview-content">
       <div class="product-gallery">
         <div class="main-image">
-          <img :src="currentImage || '/default-product.png'" :alt="currentContent.name" />
+          <img
+            :src="currentImage || '/default-product.png'"
+            :alt="currentContent.name"
+          />
         </div>
-        <div v-if="product.images && product.images.length > 1" class="thumbnail-list">
-          <div 
-            v-for="(image, index) in product.images" 
+        <div
+          v-if="product.images && product.images.length > 1"
+          class="thumbnail-list"
+        >
+          <div
+            v-for="(image, index) in product.images"
             :key="index"
             class="thumbnail"
             :class="{ active: currentImage === image }"
@@ -35,19 +41,25 @@
         <div class="product-header">
           <h1 class="product-title">{{ currentContent.name }}</h1>
           <div class="product-meta">
-            <el-tag 
-              :type="getStatusType(product.status)" 
+            <el-tag
+              :type="getStatusType(product.status)"
               size="large"
               effect="light"
             >
               {{ getStatusText(product.status) }}
             </el-tag>
-            <span class="product-sku">{{ t('product.sku') }}: {{ product.sku }}</span>
+            <span class="product-sku"
+              >{{ t("product.sku") }}: {{ product.sku }}</span
+            >
           </div>
         </div>
 
         <div class="product-pricing">
-          <div v-for="price in product.prices" :key="price.currency" class="price-item">
+          <div
+            v-for="price in product.prices"
+            :key="price.currency"
+            class="price-item"
+          >
             <span class="currency">{{ price.currency }}</span>
             <span class="price">{{ formatPrice(price.value) }}</span>
           </div>
@@ -55,21 +67,21 @@
 
         <div class="product-info">
           <div v-if="product.brand" class="info-item">
-            <span class="info-label">{{ t('product.brand') }}:</span>
+            <span class="info-label">{{ t("product.brand") }}:</span>
             <span class="info-value">{{ product.brand }}</span>
           </div>
           <div v-if="product.category" class="info-item">
-            <span class="info-label">{{ t('product.category') }}:</span>
+            <span class="info-label">{{ t("product.category") }}:</span>
             <span class="info-value">{{ product.category }}</span>
           </div>
           <div v-if="product.tags && product.tags.length > 0" class="info-item">
-            <span class="info-label">{{ t('product.tags') }}:</span>
+            <span class="info-label">{{ t("product.tags") }}:</span>
             <div class="product-tags">
-              <el-tag 
-                v-for="tag in product.tags" 
+              <el-tag
+                v-for="tag in product.tags"
                 :key="tag"
-                size="small" 
-                type="info" 
+                size="small"
+                type="info"
                 effect="plain"
               >
                 {{ tag }}
@@ -79,27 +91,44 @@
         </div>
 
         <div v-if="currentContent.shortDescription" class="product-summary">
-          <h3>{{ t('product.summary') }}</h3>
+          <h3>{{ t("product.summary") }}</h3>
           <p>{{ currentContent.shortDescription }}</p>
         </div>
 
         <div v-if="currentContent.description" class="product-description">
-          <h3>{{ t('product.description') }}</h3>
-          <div class="description-content" v-html="currentContent.description"></div>
+          <h3>{{ t("product.description") }}</h3>
+          <div
+            class="description-content"
+            v-html="currentContent.description"
+          ></div>
         </div>
 
-        <div v-if="product.specifications && product.specifications.length > 0" class="product-specifications">
-          <h3>{{ t('product.specifications') }}</h3>
+        <div
+          v-if="product.specifications && product.specifications.length > 0"
+          class="product-specifications"
+        >
+          <h3>{{ t("product.specifications") }}</h3>
           <el-table :data="product.specifications" size="small">
-            <el-table-column prop="name" :label="t('product.specName')" width="150" />
+            <el-table-column
+              prop="name"
+              :label="t('product.specName')"
+              width="150"
+            />
             <el-table-column prop="value" :label="t('product.specValue')" />
           </el-table>
         </div>
 
-        <div v-if="product.documents && product.documents.length > 0" class="product-documents">
-          <h3>{{ t('product.documents') }}</h3>
+        <div
+          v-if="product.documents && product.documents.length > 0"
+          class="product-documents"
+        >
+          <h3>{{ t("product.documents") }}</h3>
           <div class="document-list">
-            <div v-for="doc in product.documents" :key="doc.id" class="document-item">
+            <div
+              v-for="doc in product.documents"
+              :key="doc.id"
+              class="document-item"
+            >
               <el-link :href="doc.url" :download="doc.name" type="primary">
                 <el-icon><Document /></el-icon>
                 {{ doc.name }}
@@ -109,13 +138,16 @@
           </div>
         </div>
 
-        <div v-if="product.videos && product.videos.length > 0" class="product-videos">
-          <h3>{{ t('product.videos') }}</h3>
+        <div
+          v-if="product.videos && product.videos.length > 0"
+          class="product-videos"
+        >
+          <h3>{{ t("product.videos") }}</h3>
           <div class="video-list">
-            <video 
-              v-for="video in product.videos" 
+            <video
+              v-for="video in product.videos"
               :key="video.id"
-              :src="video.url" 
+              :src="video.url"
               controls
               class="product-video"
             ></video>
@@ -127,61 +159,63 @@
     <div class="preview-actions">
       <el-button @click="editProduct">
         <el-icon><Edit /></el-icon>
-        {{ t('product.editProduct') }}
+        {{ t("product.editProduct") }}
       </el-button>
       <el-button type="primary" @click="duplicateProduct">
         <el-icon><CopyDocument /></el-icon>
-        {{ t('product.duplicateProduct') }}
+        {{ t("product.duplicateProduct") }}
       </el-button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { ElMessage } from 'element-plus';
-import { useI18n } from 'vue-i18n';
-import { Document, Edit, CopyDocument } from '@element-plus/icons-vue';
-import { duplicateProduct as apiDuplicateProduct } from '@/api/product';
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
+import { useI18n } from "vue-i18n";
+import { Document, Edit, CopyDocument } from "@element-plus/icons-vue";
+import { duplicateProduct as apiDuplicateProduct } from "@/api/product";
 
 const props = defineProps({
   product: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const router = useRouter();
 const { t } = useI18n();
 
-const currentLanguage = ref('zh-CN');
-const currentImage = ref('');
+const currentLanguage = ref("zh-CN");
+const currentImage = ref("");
 
 // 可用语言
 const availableLanguages = ref([
-  { code: 'zh-CN', name: '中文' },
-  { code: 'en-US', name: 'English' },
-  { code: 'es-ES', name: 'Español' },
-  { code: 'fr-FR', name: 'Français' },
-  { code: 'de-DE', name: 'Deutsch' },
-  { code: 'ja-JP', name: '日本語' }
+  { code: "zh-CN", name: "中文" },
+  { code: "en-US", name: "English" },
+  { code: "es-ES", name: "Español" },
+  { code: "fr-FR", name: "Français" },
+  { code: "de-DE", name: "Deutsch" },
+  { code: "ja-JP", name: "日本語" },
 ]);
 
 // 当前语言的内容
 const currentContent = computed(() => {
   if (props.product.languages) {
-    const langContent = props.product.languages.find(l => l.code === currentLanguage.value);
+    const langContent = props.product.languages.find(
+      (l) => l.code === currentLanguage.value
+    );
     if (langContent) {
       return langContent;
     }
   }
-  
+
   // 返回默认内容
   return {
-    name: props.product.name || '',
-    shortDescription: props.product.shortDescription || '',
-    description: props.product.description || ''
+    name: props.product.name || "",
+    shortDescription: props.product.shortDescription || "",
+    description: props.product.description || "",
   };
 });
 
@@ -190,7 +224,7 @@ onMounted(() => {
   if (props.product.images && props.product.images.length > 0) {
     currentImage.value = props.product.images[0];
   }
-  
+
   // 设置默认语言
   if (props.product.languages && props.product.languages.length > 0) {
     currentLanguage.value = props.product.languages[0].code;
@@ -203,35 +237,35 @@ function changeLanguage(langCode) {
 
 function getStatusType(status) {
   const typeMap = {
-    published: 'success',
-    draft: 'warning',
-    archived: 'info'
+    published: "success",
+    draft: "warning",
+    archived: "info",
   };
-  return typeMap[status] || 'info';
+  return typeMap[status] || "info";
 }
 
 function getStatusText(status) {
   const textMap = {
-    published: t('product.published'),
-    draft: t('product.draft'),
-    archived: t('product.archived')
+    published: t("product.published"),
+    draft: t("product.draft"),
+    archived: t("product.archived"),
   };
   return textMap[status] || status;
 }
 
 function formatPrice(price) {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   }).format(price);
 }
 
 function formatFileSize(bytes) {
-  if (!bytes) return '0 B';
+  if (!bytes) return "0 B";
   const k = 1024;
-  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const sizes = ["B", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 }
 
 function editProduct() {
@@ -241,9 +275,9 @@ function editProduct() {
 async function duplicateProduct() {
   try {
     await apiDuplicateProduct(props.product.id);
-    ElMessage.success(t('product.duplicateSuccess'));
+    ElMessage.success(t("product.duplicateSuccess"));
   } catch (error) {
-    ElMessage.error(t('product.duplicateFailed'));
+    ElMessage.error(t("product.duplicateFailed"));
   }
 }
 </script>
@@ -310,7 +344,7 @@ async function duplicateProduct() {
 }
 
 .thumbnail.active {
-  border-color: #409EFF;
+  border-color: #409eff;
 }
 
 .thumbnail img {
@@ -483,20 +517,20 @@ async function duplicateProduct() {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  
+
   .product-title {
     font-size: 24px;
   }
-  
+
   .price {
     font-size: 20px;
   }
-  
+
   .info-item {
     flex-direction: column;
     gap: 4px;
   }
-  
+
   .info-label {
     min-width: auto;
   }

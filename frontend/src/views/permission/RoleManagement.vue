@@ -1,73 +1,75 @@
 <template>
-  <el-card class="page-card">
-    <div class="toolbar mb-4 flex gap-2">
-      <el-button type="primary" icon="Plus" @click="openDialog(false)"
-        >新建角色</el-button
-      >
+  <div class="role-management">
+    <div class="action-bar">
+      <el-button type="primary" class="btn-primary" @click="openDialog(false)">
+        <el-icon><Plus /></el-icon>
+        新建角色
+      </el-button>
     </div>
 
     <el-table
       :data="roles"
-      border
-      size="small"
       v-loading="loading"
       style="width: 100%"
+      :empty-text="'暂无角色数据'"
+      class="modern-table"
     >
       <el-table-column prop="name" label="角色名称" />
       <el-table-column prop="description" label="角色描述" />
-      <el-table-column label="操作" width="180">
+      <el-table-column label="操作" width="180" fixed="right">
         <template #default="{ row }">
-          <el-button type="primary" size="small" @click="openDialog(true, row)"
-            >编辑</el-button
-          >
-          <el-button type="danger" size="small" @click="remove(row.id)"
-            >删除</el-button
-          >
+          <el-button size="small" link @click="openDialog(true, row)">
+            <el-icon><Edit /></el-icon>
+            编辑
+          </el-button>
+          <el-button size="small" type="danger" link @click="remove(row.id)">
+            <el-icon><Delete /></el-icon>
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
+  </div>
 
-    <el-drawer
-      class="page-dialog"
-      v-model="drawerVisible"
-      direction="rtl"
-      size="400px"
-    >
-      <template #title>
-        <strong>{{ isEdit ? "编辑角色" : "新增角色" }}</strong>
-      </template>
-      <el-form class="dialog-form" :model="form" label-width="80px">
-        <el-form-item label="名称">
-          <el-input v-model="form.name" />
-        </el-form-item>
-        <el-form-item label="描述">
-          <el-input v-model="form.description" />
-        </el-form-item>
-      </el-form>
+  <el-drawer
+    class="page-dialog"
+    v-model="drawerVisible"
+    direction="rtl"
+    size="400px"
+  >
+    <template #title>
+      <strong>{{ isEdit ? "编辑角色" : "新增角色" }}</strong>
+    </template>
+    <el-form class="dialog-form" :model="form" label-width="80px">
+      <el-form-item label="名称">
+        <el-input v-model="form.name" />
+      </el-form-item>
+      <el-form-item label="描述">
+        <el-input v-model="form.description" />
+      </el-form-item>
+    </el-form>
 
-      <el-tree
-        ref="treeRef"
-        :data="treeData"
-        node-key="id"
-        show-checkbox
-        :props="{ label: 'name', children: 'children' }"
-        :default-checked-keys="checkedKeys"
-        class="permission-tree"
-      />
+    <el-tree
+      ref="treeRef"
+      :data="treeData"
+      node-key="id"
+      show-checkbox
+      :props="{ label: 'name', children: 'children' }"
+      :default-checked-keys="checkedKeys"
+      class="permission-tree"
+    />
 
-      <template #footer>
-        <el-button @click="drawerVisible = false">取消</el-button>
-        <el-button type="primary" :loading="saving" @click="save"
-          >保存</el-button
-        >
-      </template>
-    </el-drawer>
-  </el-card>
+    <template #footer>
+      <el-button @click="drawerVisible = false">取消</el-button>
+      <el-button type="primary" :loading="saving" @click="save">保存</el-button>
+    </template>
+  </el-drawer>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { ElMessage } from "element-plus";
+import { Plus, Edit, Delete } from "@element-plus/icons-vue";
 import {
   fetchRoles,
   createRole,
@@ -106,7 +108,7 @@ function loadRoles() {
 function loadPermissionTree() {
   fetchPermissionTree().then((res) => {
     const data = res.data || [];
-    treeData.value = data.map(m => ({ ...m, disabled: true }));
+    treeData.value = data.map((m) => ({ ...m, disabled: true }));
   });
 }
 
@@ -158,12 +160,37 @@ function remove(id) {
 </script>
 
 <style scoped>
+.role-management {
+  padding: var(--spacing-4);
+}
+
+.action-bar {
+  margin-bottom: var(--spacing-6);
+  display: flex;
+  justify-content: flex-start;
+}
+
 .permission-tree {
-  margin-top: 10px;
-  border: 1px solid #ebeef5;
-  border-radius: 6px;
-  padding: 10px;
+  margin-top: var(--spacing-4);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
   max-height: 300px;
   overflow: auto;
+  background: var(--bg-secondary);
+}
+
+/* Element Plus 样式覆盖 */
+:deep(.el-table tr:hover > td) {
+  background-color: var(--primary-bg-hover) !important;
+}
+
+:deep(.el-drawer__header) {
+  padding: var(--spacing-6);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+:deep(.el-drawer__body) {
+  padding: var(--spacing-6);
 }
 </style>

@@ -2,17 +2,17 @@
 import request from "@/utils/request";
 
 export function getSystemSettings() {
-  return request.get("/api/system/settings");
+  return request.get("/v1/system/settings");
 }
 
 export function updateBasicSettings(data) {
-  return request.post("/api/system/settings/basic", data);
+  return request.post("/v1/system/settings/basic", data);
 }
 
 export function updateNotifySettings(data) {
-  return request.post("/api/system/settings/notify", data);
+  return request.post("/v1/system/settings/notify", data);
 }
 
 export function updateSecuritySettings(data) {
-  return request.post("/api/system/settings/security", data);
+  return request.post("/v1/system/settings/security", data);
 }

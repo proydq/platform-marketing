@@ -5,7 +5,7 @@ import request from '@/utils/request'
 // 关键词研究相关
 export const analyzeKeywords = (data) => {
   return request({
-    url: '/api/ai/keywords/analyze',
+    url: '/v1/ai/keywords/analyze',
     method: 'post',
     data
   })
@@ -13,7 +13,7 @@ export const analyzeKeywords = (data) => {
 
 export const getKeywordSuggestions = (params) => {
   return request({
-    url: '/api/ai/keywords/suggestions',
+    url: '/v1/ai/keywords/suggestions',
     method: 'get',
     params
   })
@@ -22,7 +22,7 @@ export const getKeywordSuggestions = (params) => {
 // 产品推荐相关
 export const getProductRecommendations = (data) => {
   return request({
-    url: '/api/ai/products/recommendations',
+    url: '/v1/ai/products/recommendations',
     method: 'post',
     data
   })
@@ -38,7 +38,7 @@ export const getPersonalizedProducts = (customerId) => {
 // 策略推荐相关
 export const generateMarketingStrategy = (data) => {
   return request({
-    url: '/api/ai/strategy/generate',
+    url: '/v1/ai/strategy/generate',
     method: 'post',
     data
   })
@@ -46,7 +46,7 @@ export const generateMarketingStrategy = (data) => {
 
 export const getStrategyTemplates = (params) => {
   return request({
-    url: '/api/ai/strategy/templates',
+    url: '/v1/ai/strategy/templates',
     method: 'get',
     params
   })
@@ -55,7 +55,7 @@ export const getStrategyTemplates = (params) => {
 // 内容生成相关
 export const generateIntelligentContent = (data) => {
   return request({
-    url: '/api/ai/content/generate',
+    url: '/v1/ai/content/generate',
     method: 'post',
     data
   })
@@ -63,7 +63,7 @@ export const generateIntelligentContent = (data) => {
 
 export const optimizeContent = (data) => {
   return request({
-    url: '/api/ai/content/optimize',
+    url: '/v1/ai/content/optimize',
     method: 'post',
     data
   })
@@ -72,7 +72,7 @@ export const optimizeContent = (data) => {
 // 市场分析相关
 export const analyzeMarketTrends = (params) => {
   return request({
-    url: '/api/ai/market/trends',
+    url: '/v1/ai/market/trends',
     method: 'get',
     params
   })
@@ -80,7 +80,7 @@ export const analyzeMarketTrends = (params) => {
 
 export const getCompetitorAnalysis = (params) => {
   return request({
-    url: '/api/ai/market/competitors',
+    url: '/v1/ai/market/competitors',
     method: 'get',
     params
   })
@@ -96,7 +96,7 @@ export const getCustomerInsights = (customerId) => {
 
 export const predictCustomerBehavior = (data) => {
   return request({
-    url: '/api/ai/insights/predict',
+    url: '/v1/ai/insights/predict',
     method: 'post',
     data
   })
@@ -105,7 +105,7 @@ export const predictCustomerBehavior = (data) => {
 // AI助手对话相关
 export const askAIAssistant = (data) => {
   return request({
-    url: '/api/ai/assistant/chat',
+    url: '/v1/ai/assistant/chat',
     method: 'post',
     data
   })
@@ -113,7 +113,7 @@ export const askAIAssistant = (data) => {
 
 export const getAIRecommendations = (params) => {
   return request({
-    url: '/api/ai/assistant/recommendations',
+    url: '/v1/ai/assistant/recommendations',
     method: 'get',
     params
   })

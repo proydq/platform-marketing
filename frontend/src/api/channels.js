@@ -9,7 +9,7 @@ import request from '@/utils/request';
  */
 export function getChannels(params = {}) {
   return request({
-    url: '/api/channels',
+    url: '/v1/channels',
     method: 'get',
     params
   });
@@ -32,7 +32,7 @@ export function getChannel(id) {
  */
 export function createChannel(data) {
   return request({
-    url: '/api/channels',
+    url: '/v1/channels',
     method: 'post',
     data
   });
@@ -91,7 +91,7 @@ export function testChannel(id, testData = {}) {
  */
 export function getChannelStats(params = {}) {
   return request({
-    url: '/api/channels/stats',
+    url: '/v1/channels/stats',
     method: 'get',
     params
   });

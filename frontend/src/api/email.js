@@ -31,6 +31,15 @@ export function getEmailRecords() {
     method: "get",
   });
 }
+
+// 获取邮件发送记录
+export function getEmailSendRecords(page = 1, size = 10) {
+  return request({
+    url: "/v1/email/records",
+    method: "get",
+    params: { page, size }
+  });
+}
 export function uploadRecipientsCSV(file) {
   const formData = new FormData();
   formData.append("file", file);

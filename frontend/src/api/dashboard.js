@@ -3,22 +3,22 @@ import request from "@/utils/request";
 
 // 获取统计卡片数据
 export function getDashboardStats() {
-  return request.get("/api/dashboard/stats");
+  return request.get("/v1/dashboard/stats");
 }
 
 // 获取邮件发送趋势图
 export function getSendTrend() {
-  return request.get("/api/dashboard/trend/send");
+  return request.get("/v1/dashboard/trend/send");
 }
 
 // 获取客户增长趋势图
 export function getCustomerTrend() {
-  return request.get("/api/dashboard/trend/customers");
+  return request.get("/v1/dashboard/trend/customers");
 }
 
 // 获取最近任务列表
 export function getRecentTasks() {
-  return request.get("/api/dashboard/tasks");
+  return request.get("/v1/dashboard/tasks");
 }
 
 // 获取任务详情
@@ -28,7 +28,7 @@ export function getTaskDetail(id) {
 
 // 创建新任务
 export function createTask(data) {
-  return request.post("/api/dashboard/tasks", data);
+  return request.post("/v1/dashboard/tasks", data);
 }
 
 // 更新任务状态

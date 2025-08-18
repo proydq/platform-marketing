@@ -108,6 +108,18 @@ const routes = [
         ],
       },
 
+      // 数据导入模块 - 独立路由
+      {
+        path: "data-import",
+        name: "DataImport", 
+        component: DataImportView,
+        meta: {
+          title: "dataImport.title",
+          requiresAuth: true,
+          permissions: ["customer-collect:dir"],
+        },
+      },
+
       // 系统管理模块
       { path: "permission", name: "Permission", component: PermissionView },
       { path: "settings", name: "Settings", component: SettingsView },
@@ -119,9 +131,14 @@ const routes = [
 
       // 营销模块
       {
-        path: "content-generate",
+        path: "content-generate", 
         name: "ContentGenerate",
-        component: ContentGenerateView,
+        component: AIMarketingAssistantView,
+        meta: {
+          title: "AI营销助手",
+          requiresAuth: true,
+          permissions: ["content-generation:dir"],
+        },
       },
       {
         path: "email-marketing",
@@ -147,20 +164,20 @@ const routes = [
 
       // 产品内容中心模块
       {
+        path: "product-center",
+        name: "ProductCenter", 
+        component: ProductCenterView,
+        meta: {
+          title: "product.center",
+          requiresAuth: true,
+          permissions: ["product:view"],
+        },
+      },
+      {
         path: "product",
         name: "Product",
-        redirect: "/product/center",
+        redirect: "/product-center",
         children: [
-          {
-            path: "center",
-            name: "ProductCenter",
-            component: ProductCenterView,
-            meta: {
-              title: "product.center",
-              requiresAuth: true,
-              permissions: ["product:view"],
-            },
-          },
           {
             path: "edit",
             name: "ProductCreate",
@@ -214,17 +231,6 @@ const routes = [
         },
       },
 
-      // AI营销助手模块
-      {
-        path: "ai-assistant",
-        name: "AIMarketingAssistant",
-        component: AIMarketingAssistantView,
-        meta: {
-          title: "AI营销助手",
-          requiresAuth: true,
-          permissions: ["ai:assistant"],
-        },
-      },
 
       // 向下兼容的路由重定向
       { path: "customer-manage", redirect: "/customer/list" },

@@ -28,6 +28,18 @@ export const useUserStore = defineStore('user', {
         username: 'admin',
         roleName: '超级管理员',
         permissions: [
+          // 目录级权限（用于菜单显示）
+          'dashboard:dir',
+          'product:dir', 
+          'customer-collect:dir',
+          'customer:dir',
+          'content-generation:dir',
+          'campaign:dir',
+          'behavior-log:dir',
+          'permission:dir',
+          'menu:dir',
+          'settings:dir',
+          
           // 具体权限
           'permission:list',
           'user:add',
@@ -53,6 +65,9 @@ export const useUserStore = defineStore('user', {
           'customer-collect:delete',
           'customer-collect:batch-delete',
           'product:upload',
+          'product:view',
+          'product:create',
+          'product:edit',
           'content-generation:list',
           'content-generation:view',
           'content-generation:create',
@@ -64,7 +79,18 @@ export const useUserStore = defineStore('user', {
           'crawl:data:view',
           'crawl:data:export',
           'crawl:data:delete',
-          'crawl:data:manage'
+          'crawl:data:manage',
+          // 渠道相关权限
+          'campaign:create',
+          'campaign:edit',
+          'campaign:delete',
+          'campaign:publish',
+          'campaign:view',
+          'channel:manage',
+          // AI助手权限
+          'ai:assistant',
+          'ai:content:generate',
+          'ai:keywords:analyze'
         ]
       }
     },

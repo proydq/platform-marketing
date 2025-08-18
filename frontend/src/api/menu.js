@@ -46,16 +46,16 @@ export function updateMenuStatus(id, status) {
   });
 }
 export function fetchUsersByMenu(menuId) {
-  return request.get(`/api/menus/${menuId}/users`);
+  return request.get(`/v1/menus/${menuId}/users`);
 }
 export function fetchRolesByMenu(menuId) {
-  return request.get(`/api/menus/${menuId}/roles`);
+  return request.get(`/v1/menus/${menuId}/roles`);
 }
 
 export function assignRolesToMenu(menuId, roleIds) {
-  return request.post(`/api/menus/${menuId}/roles`, roleIds);
+  return request.post(`/v1/menus/${menuId}/roles`, roleIds);
 }
 
 export function fetchAllRoles() {
-  return request.get(`/api/roles/all`); // 你可能需要这个接口
+  return request.get(`/v1/roles/all`); // 你可能需要这个接口
 }

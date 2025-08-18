@@ -399,13 +399,50 @@ const form = reactive({
   cycle: "once",
 });
 
+// 添加统计数据
+const campaignStats = ref({
+  total: 0,
+  newThisMonth: 0,
+  running: 0,
+  runningIncrease: 0,
+  completed: 0,
+  completedIncrease: 0,
+  avgClickRate: 0,
+  clickRateIncrease: 0
+});
+
 async function loadData() {
-  const res = await getCampaignList({
-    page: 0,
-    size: 100,
-    keyword: search.value,
-  });
-  campaigns.value = res.data?.rows || [];
+  try {
+    const res = await getCampaignList({
+      page: 0,
+      size: 100,
+      keyword: search.value,
+    });
+    campaigns.value = res.data?.rows || [];
+    
+    // 计算统计数据
+    updateCampaignStats();
+  } catch (error) {
+    console.error('加载活动数据失败:', error);
+    ElMessage.error('加载数据失败');
+  }
+}
+
+function updateCampaignStats() {
+  const total = campaigns.value.length;
+  const running = campaigns.value.filter(c => c.status === 'running').length;
+  const completed = campaigns.value.filter(c => c.status === 'completed').length;
+  
+  campaignStats.value = {
+    total,
+    newThisMonth: Math.floor(total * 0.2), // 模拟数据
+    running,
+    runningIncrease: 15, // 模拟增长率
+    completed,
+    completedIncrease: 8, // 模拟增长率
+    avgClickRate: 3.2, // 模拟点击率
+    clickRateIncrease: 12 // 模拟增长率
+  };
 }
 onMounted(loadData);
 

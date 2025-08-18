@@ -3,7 +3,7 @@ import request from "@/utils/request";
 // 获取客户采集分页列表
 export function getCustomerList(params) {
   return request({
-    url: "/api/customer-collect",
+    url: "/v1/customer-collect",
     method: "get",
     params,
   });
@@ -20,7 +20,7 @@ export function getCustomerDetail(id) {
 // 新增客户
 export function createCustomer(data) {
   return request({
-    url: "/api/customer-collect",
+    url: "/v1/customer-collect",
     method: "post",
     data,
   });
@@ -37,7 +37,7 @@ export function deleteCustomer(id) {
 // 批量删除客户
 export function batchDeleteCustomer(ids) {
   return request({
-    url: "/api/customer-collect",
+    url: "/v1/customer-collect",
     method: "delete",
     data: ids,
   });
