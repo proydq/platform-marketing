@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/v1/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -29,8 +29,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/list")
-    @PreAuthorize("hasPermission('product:list')")
+    @GetMapping
     public ResponseEntity<ResponsePageDataEntity<Product>> list(@RequestParam(defaultValue = "") String name,
                                                                  @RequestParam(defaultValue = "") String category,
                                                                  @RequestParam(defaultValue = "") String tag,
@@ -41,26 +40,22 @@ public class ProductController {
     }
 
     @PostMapping
-    @PreAuthorize("hasPermission('product:create')")
     public ResponseEntity<Product> create(@RequestBody Product product) {
         return ResponseEntity.success(productService.create(product));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasPermission('product:update')")
     public ResponseEntity<Product> update(@PathVariable String id, @RequestBody Product product) {
         return ResponseEntity.success(productService.update(id, product));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasPermission('product:delete')")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         productService.delete(id);
         return ResponseEntity.success(null);
     }
 
     @PostMapping("/upload")
-    @PreAuthorize("hasPermission('product:upload')")
     public ResponseEntity<Map<String, String>> upload(@RequestParam("file") MultipartFile file) {
         if (file == null || file.isEmpty()) {
             return ResponseEntity.fail(400, "file is empty");

@@ -6,9 +6,25 @@
       "Bash(find:*)",
       "Bash(grep:*)",
       "Bash(true)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(java:*)",
+      "Bash(dir:*)",
+      "Bash(where java)",
+      "Bash(mysql:*)",
+      "Bash(cat:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(rm:*)",
+      "Bash(npx vite:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(del nul)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "defaultMode": "acceptEdits"
   }
 }

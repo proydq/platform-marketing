@@ -23,7 +23,7 @@ export function getRecentTasks() {
 
 // 获取任务详情
 export function getTaskDetail(id) {
-  return request.get(`/api/dashboard/tasks/${id}`);
+  return request.get(`/v1/dashboard/tasks/${id}`);
 }
 
 // 创建新任务
@@ -33,15 +33,15 @@ export function createTask(data) {
 
 // 更新任务状态
 export function updateTaskStatus(id, status) {
-  return request.put(`/api/dashboard/tasks/${id}/status`, { status });
+  return request.put(`/v1/dashboard/tasks/${id}/status`, { status });
 }
 
 // 删除任务
 export function deleteTask(id) {
-  return request.delete(`/api/dashboard/tasks/${id}`);
+  return request.delete(`/v1/dashboard/tasks/${id}`);
 }
 
 // 重启任务
 export function retryTask(id) {
-  return request.post(`/api/dashboard/tasks/${id}/retry`);
+  return request.post(`/v1/dashboard/tasks/${id}/retry`);
 }

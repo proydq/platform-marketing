@@ -44,6 +44,10 @@ export const deleteCategory = (id) => {
   return axios.delete(`${API_BASE}/product-categories/${id}`);
 };
 
+export const duplicateProduct = (id) => {
+  return axios.post(`${API_BASE}/products/${id}/duplicate`);
+};
+
 // 文件上传相关
 export const uploadProductFile = (file) => {
   const formData = new FormData();

@@ -95,7 +95,7 @@ public class SuperAdminInitializer implements CommandLineRunner {
             User admin = new User();
             admin.setId(UUID.randomUUID().toString());
             admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("123456"));
+            admin.setPassword(passwordEncoder.encode("admin"));
             userRepository.save(admin);
             userRoleRepository.save(new com.platform.marketing.entity.UserRole(
                     new com.platform.marketing.entity.UserRoleId(admin.getId(), role.getId())));
