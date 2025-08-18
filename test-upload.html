@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试文件上传</title>
+</head>
+<body>
+    <h2>产品文件上传测试</h2>
+    
+    <form id="uploadForm" enctype="multipart/form-data">
+        <div>
+            <label>选择文件:</label>
+            <input type="file" id="fileInput" name="file" accept="image/*,video/*,.pdf,.doc,.docx" required>
+        </div>
+        <br>
+        <button type="submit">上传文件</button>
+    </form>
+    
+    <div id="result" style="margin-top: 20px;"></div>
+    
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('请选择文件');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                // 测试直接访问后端API
+                const response = await fetch('http://localhost:8080/api/product/upload', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': 'Bearer dev-token-123456' // 模拟token
+                    }
+                });
+                
+                const result = await response.text();
+                
+                document.getElementById('result').innerHTML = `
+                    <h3>响应结果:</h3>
+                    <p><strong>状态:</strong> ${response.status} ${response.statusText}</p>
+                    <p><strong>内容:</strong> ${result}</p>
+                `;
+                
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <h3>错误:</h3>
+                    <p style="color: red;">${error.message}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

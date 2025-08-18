@@ -1,0 +1,73 @@
+package com.platform.marketing.modules.product.dto;
+
+import com.platform.marketing.modules.product.entity.Product;
+import java.util.List;
+import java.util.Map;
+
+public class ProductCreateRequest {
+    private String name;
+    private String sku;
+    private String categoryId;
+    private String brand;
+    private String shortDescription;
+    private String description;
+    private String status;
+    private Boolean featured;
+    private String seoKeywords;
+    private List<String> images;
+    private List<String> videos;
+    private List<String> documents;
+    private List<Map<String, Object>> prices;
+    private List<Map<String, Object>> specifications;
+    private List<Map<String, Object>> languages;
+    private List<String> tags;
+
+    // Getters and Setters
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getSku() { return sku; }
+    public void setSku(String sku) { this.sku = sku; }
+
+    public String getCategoryId() { return categoryId; }
+    public void setCategoryId(String categoryId) { this.categoryId = categoryId; }
+
+    public String getBrand() { return brand; }
+    public void setBrand(String brand) { this.brand = brand; }
+
+    public String getShortDescription() { return shortDescription; }
+    public void setShortDescription(String shortDescription) { this.shortDescription = shortDescription; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public Boolean getFeatured() { return featured; }
+    public void setFeatured(Boolean featured) { this.featured = featured; }
+
+    public String getSeoKeywords() { return seoKeywords; }
+    public void setSeoKeywords(String seoKeywords) { this.seoKeywords = seoKeywords; }
+
+    public List<String> getImages() { return images; }
+    public void setImages(List<String> images) { this.images = images; }
+
+    public List<String> getVideos() { return videos; }
+    public void setVideos(List<String> videos) { this.videos = videos; }
+
+    public List<String> getDocuments() { return documents; }
+    public void setDocuments(List<String> documents) { this.documents = documents; }
+
+    public List<Map<String, Object>> getPrices() { return prices; }
+    public void setPrices(List<Map<String, Object>> prices) { this.prices = prices; }
+
+    public List<Map<String, Object>> getSpecifications() { return specifications; }
+    public void setSpecifications(List<Map<String, Object>> specifications) { this.specifications = specifications; }
+
+    public List<Map<String, Object>> getLanguages() { return languages; }
+    public void setLanguages(List<Map<String, Object>> languages) { this.languages = languages; }
+
+    public List<String> getTags() { return tags; }
+    public void setTags(List<String> tags) { this.tags = tags; }
+}
