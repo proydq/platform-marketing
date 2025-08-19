@@ -33,6 +33,11 @@ spring:
     time-zone: Asia/Shanghai
     date-format: yyyy-MM-dd HH:mm:ss
 
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:uploads/
+      add-mappings: true
+
 logging:
   level:
     root: info

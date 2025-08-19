@@ -53,14 +53,21 @@ public class ProductServiceImpl implements ProductService {
         Product existing = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
         existing.setName(product.getName());
-        existing.setCategory(product.getCategory());
-        existing.setImageList(product.getImageList());
-        existing.setVideoUrl(product.getVideoUrl());
-        existing.setPriceUSD(product.getPriceUSD());
-        existing.setPriceCNY(product.getPriceCNY());
-        existing.setPriceEUR(product.getPriceEUR());
-        existing.setSpecPdf(product.getSpecPdf());
+        existing.setCategoryId(product.getCategoryId());
+        existing.setBrand(product.getBrand());
+        existing.setShortDescription(product.getShortDescription());
+        existing.setDescription(product.getDescription());
+        existing.setStatus(product.getStatus());
+        existing.setFeatured(product.getFeatured());
         existing.setTags(product.getTags());
+        existing.setSeoKeywords(product.getSeoKeywords());
+        existing.setImages(product.getImages());
+        existing.setVideos(product.getVideos());
+        existing.setDocuments(product.getDocuments());
+        existing.setPrices(product.getPrices());
+        existing.setSpecifications(product.getSpecifications());
+        existing.setLanguages(product.getLanguages());
+        existing.setSortOrder(product.getSortOrder());
         return productRepository.save(existing);
     }
 

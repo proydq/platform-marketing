@@ -75,7 +75,7 @@ const previewVisible = ref(false);
 const previewImage = ref('');
 
 // 上传相关配置
-const uploadUrl = ref('/api/product/upload');
+const uploadUrl = ref('/api/v1/products/upload');
 const uploadHeaders = computed(() => {
   const token = localStorage.getItem('token');
   return token ? {
@@ -115,7 +115,7 @@ function beforeUpload(file) {
 
 // 上传成功
 function handleSuccess(response, file) {
-  if (response.success) {
+  if (response.code === 0 && response.data?.url) {
     file.url = response.data.url;
     updateModelValue();
     ElMessage.success(t('upload.uploadSuccess'));

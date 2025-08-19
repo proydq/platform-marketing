@@ -1,12 +1,9 @@
 package com.platform.marketing.modules.product.entity;
 
-import com.platform.marketing.modules.product.converter.StringListConverter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -20,30 +17,58 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
-    private String category;
+    @Column(nullable = false, unique = true)
+    private String sku;
 
-    @Convert(converter = StringListConverter.class)
-    @Column(name = "image_list", columnDefinition = "text")
-    private List<String> imageList;
+    @Column(name = "category_id", length = 36)
+    private String categoryId;
 
-    @Column(name = "video_url")
-    private String videoUrl;
+    private String brand;
 
-    @Column(name = "price_usd", precision = 10, scale = 2)
-    private BigDecimal priceUSD;
+    @Column(name = "short_description", length = 500)
+    private String shortDescription;
 
-    @Column(name = "price_cny", precision = 10, scale = 2)
-    private BigDecimal priceCNY;
+    @Lob
+    private String description;
 
-    @Column(name = "price_eur", precision = 10, scale = 2)
-    private BigDecimal priceEUR;
+    @Column(length = 50)
+    private String status = "draft";
 
-    @Column(name = "spec_pdf")
-    private String specPdf;
+    @Column(name = "featured")
+    private Boolean featured = false;
 
-    @Convert(converter = StringListConverter.class)
-    @Column(columnDefinition = "text")
-    private List<String> tags;
+    @Column(length = 1000)
+    private String tags;
+
+    @Column(name = "seo_keywords", length = 1000)
+    private String seoKeywords;
+
+    @Lob
+    private String images;
+
+    @Lob
+    private String videos;
+
+    @Lob
+    private String documents;
+
+    @Lob
+    private String prices;
+
+    @Lob
+    private String specifications;
+
+    @Lob
+    private String languages;
+
+    @Column(name = "view_count")
+    private Integer viewCount = 0;
+
+    @Column(name = "sort_order")
+    private Integer sortOrder = 0;
+
+    @Column(name = "created_by", length = 36)
+    private String createdBy;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -55,6 +80,9 @@ public class Product {
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        if (this.sku == null || this.sku.isEmpty()) {
+            this.sku = "SKU-" + System.currentTimeMillis();
+        }
     }
 
     @PreUpdate
@@ -63,36 +91,65 @@ public class Product {
     }
 
     // getters and setters
-
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
+    public String getSku() { return sku; }
+    public void setSku(String sku) { this.sku = sku; }
 
-    public List<String> getImageList() { return imageList; }
-    public void setImageList(List<String> imageList) { this.imageList = imageList; }
+    public String getCategoryId() { return categoryId; }
+    public void setCategoryId(String categoryId) { this.categoryId = categoryId; }
 
-    public String getVideoUrl() { return videoUrl; }
-    public void setVideoUrl(String videoUrl) { this.videoUrl = videoUrl; }
+    public String getBrand() { return brand; }
+    public void setBrand(String brand) { this.brand = brand; }
 
-    public BigDecimal getPriceUSD() { return priceUSD; }
-    public void setPriceUSD(BigDecimal priceUSD) { this.priceUSD = priceUSD; }
+    public String getShortDescription() { return shortDescription; }
+    public void setShortDescription(String shortDescription) { this.shortDescription = shortDescription; }
 
-    public BigDecimal getPriceCNY() { return priceCNY; }
-    public void setPriceCNY(BigDecimal priceCNY) { this.priceCNY = priceCNY; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public BigDecimal getPriceEUR() { return priceEUR; }
-    public void setPriceEUR(BigDecimal priceEUR) { this.priceEUR = priceEUR; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public String getSpecPdf() { return specPdf; }
-    public void setSpecPdf(String specPdf) { this.specPdf = specPdf; }
+    public Boolean getFeatured() { return featured; }
+    public void setFeatured(Boolean featured) { this.featured = featured; }
 
-    public List<String> getTags() { return tags; }
-    public void setTags(List<String> tags) { this.tags = tags; }
+    public String getTags() { return tags; }
+    public void setTags(String tags) { this.tags = tags; }
+
+    public String getSeoKeywords() { return seoKeywords; }
+    public void setSeoKeywords(String seoKeywords) { this.seoKeywords = seoKeywords; }
+
+    public String getImages() { return images; }
+    public void setImages(String images) { this.images = images; }
+
+    public String getVideos() { return videos; }
+    public void setVideos(String videos) { this.videos = videos; }
+
+    public String getDocuments() { return documents; }
+    public void setDocuments(String documents) { this.documents = documents; }
+
+    public String getPrices() { return prices; }
+    public void setPrices(String prices) { this.prices = prices; }
+
+    public String getSpecifications() { return specifications; }
+    public void setSpecifications(String specifications) { this.specifications = specifications; }
+
+    public String getLanguages() { return languages; }
+    public void setLanguages(String languages) { this.languages = languages; }
+
+    public Integer getViewCount() { return viewCount; }
+    public void setViewCount(Integer viewCount) { this.viewCount = viewCount; }
+
+    public Integer getSortOrder() { return sortOrder; }
+    public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
+
+    public String getCreatedBy() { return createdBy; }
+    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

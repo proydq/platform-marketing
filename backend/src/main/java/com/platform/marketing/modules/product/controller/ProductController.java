@@ -31,11 +31,18 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ResponsePageDataEntity<Product>> list(@RequestParam(defaultValue = "") String name,
+                                                                 @RequestParam(defaultValue = "") String keyword,
                                                                  @RequestParam(defaultValue = "") String category,
+                                                                 @RequestParam(defaultValue = "") String categoryId,
                                                                  @RequestParam(defaultValue = "") String tag,
+                                                                 @RequestParam(defaultValue = "") String status,
                                                                  @RequestParam(defaultValue = "0") int page,
                                                                  @RequestParam(defaultValue = "10") int size) {
-        Page<Product> p = productService.search(name, category, tag, PageRequest.of(page, size));
+        // 处理参数兼容性
+        String searchName = !keyword.isEmpty() ? keyword : name;
+        String searchCategory = !categoryId.isEmpty() ? categoryId : category;
+        
+        Page<Product> p = productService.search(searchName, searchCategory, tag, PageRequest.of(page, size));
         return ResponseEntity.success(new ResponsePageDataEntity<Product>(p.getTotalElements(), p.getContent()));
     }
 

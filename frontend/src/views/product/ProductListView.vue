@@ -195,7 +195,7 @@
 
         <el-form-item :label="$t('product.images')">
           <el-upload
-            action="/v1/products/upload"
+            action="/api/v1/products/upload"
             list-type="picture-card"
             :on-success="handleImageSuccess"
             :on-remove="handleImageRemove"
@@ -210,7 +210,7 @@
 
         <el-form-item :label="$t('product.specPdf')">
           <el-upload
-            action="/v1/products/upload"
+            action="/api/v1/products/upload"
             :on-success="handlePdfSuccess"
             :file-list="pdfList"
             :limit="1"
@@ -321,17 +321,54 @@ async function loadData() {
     const response = await getProductList(params);
     
     if (response.data) {
+      let rawProducts = [];
       // 处理分页数据结构
       if (response.data.rows !== undefined) {
-        products.value = response.data.rows || [];
+        rawProducts = response.data.rows || [];
         pagination.total = response.data.total || 0;
       } else if (Array.isArray(response.data)) {
-        products.value = response.data;
+        rawProducts = response.data;
         pagination.total = response.data.length;
       } else {
-        products.value = [];
+        rawProducts = [];
         pagination.total = 0;
       }
+      
+      // 处理产品数据，将JSON字符串解析为数组/对象
+      products.value = rawProducts.map(product => {
+        try {
+          const processed = { ...product };
+          
+          // 解析JSON字符串字段
+          if (typeof product.images === 'string' && product.images) {
+            processed.imageList = JSON.parse(product.images);
+          } else {
+            processed.imageList = [];
+          }
+          
+          if (typeof product.prices === 'string' && product.prices) {
+            const pricesArray = JSON.parse(product.prices);
+            processed.priceUSD = pricesArray.find(p => p.currency === 'USD')?.value || '';
+            processed.priceCNY = pricesArray.find(p => p.currency === 'CNY')?.value || '';
+            processed.priceEUR = pricesArray.find(p => p.currency === 'EUR')?.value || '';
+          } else {
+            processed.priceUSD = '';
+            processed.priceCNY = '';
+            processed.priceEUR = '';
+          }
+          
+          if (typeof product.tags === 'string' && product.tags) {
+            processed.tags = JSON.parse(product.tags);
+          } else {
+            processed.tags = [];
+          }
+          
+          return processed;
+        } catch (e) {
+          console.error('解析产品数据失败:', e, product);
+          return { ...product, imageList: [], tags: [] };
+        }
+      });
     } else {
       products.value = [];
       pagination.total = 0;
@@ -466,17 +503,43 @@ async function submitForm() {
     
     const submitData = {
       ...form,
-      // 确保数字字段正确转换
-      priceUSD: form.priceUSD ? Number(form.priceUSD) : null,
-      priceCNY: form.priceCNY ? Number(form.priceCNY) : null,
-      priceEUR: form.priceEUR ? Number(form.priceEUR) : null
+      // 将数组字段转换为JSON字符串以匹配后端期望，空数组用null而不是空字符串
+      images: form.imageList && form.imageList.length > 0 ? JSON.stringify(form.imageList) : null,
+      prices: (() => {
+        const pricesArray = [
+          ...(form.priceUSD ? [{currency: 'USD', value: Number(form.priceUSD)}] : []),
+          ...(form.priceCNY ? [{currency: 'CNY', value: Number(form.priceCNY)}] : []),
+          ...(form.priceEUR ? [{currency: 'EUR', value: Number(form.priceEUR)}] : [])
+        ];
+        return pricesArray.length > 0 ? JSON.stringify(pricesArray) : null;
+      })(),
+      tags: form.tags && form.tags.length > 0 ? JSON.stringify(form.tags) : null,
+      videos: null,
+      documents: null,
+      specifications: null,
+      languages: form.name ? JSON.stringify([{
+        code: 'zh-CN',
+        name: form.name || '',
+        shortDescription: form.shortDescription || '',
+        description: form.description || ''
+      }]) : null,
+      seoKeywords: form.seoKeywords || null
     };
+    
+    // 移除前端特有的字段
+    delete submitData.imageList;
+    delete submitData.priceUSD;
+    delete submitData.priceCNY;
+    delete submitData.priceEUR;
+    
+    console.log('提交的数据:', submitData);
     
     if (form.id) {
       await updateProduct(form.id, submitData);
       ElMessage.success('产品更新成功');
     } else {
-      await createProduct(submitData);
+      const result = await createProduct(submitData);
+      console.log('创建结果:', result);
       ElMessage.success('产品创建成功');
     }
     

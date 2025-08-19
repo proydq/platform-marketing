@@ -15,7 +15,4 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
     List<ProductCategory> findByParentIdOrderBySortOrderAsc(String parentId);
     
     List<ProductCategory> findByParentIdIsNullOrderBySortOrderAsc();
-    
-    @Query("SELECT COUNT(p) FROM Product p WHERE p.category = ?1")
-    long countProductsByCategoryId(String categoryId);
 }
